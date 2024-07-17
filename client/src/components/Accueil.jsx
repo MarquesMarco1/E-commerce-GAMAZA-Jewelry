@@ -9,9 +9,11 @@ export default function Accueil() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/products`);
-      const data = await response.json();
-      console.log(data);
-      setAllProduct(data.allArticle);
+      if(response.status === 200){
+        const data = await response.json();
+        console.log(data);
+        setAllProduct(data.allArticle);
+      }
     };
     fetchData();
   }, [refresh]);
