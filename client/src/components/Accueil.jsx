@@ -9,9 +9,11 @@ export default function Accueil() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/products`);
-      const data = await response.json();
-      console.log(data);
-      setAllProduct(data.allArticle);
+      if(response.status === 200){
+        // console.log(data);
+        const data = await response.json();
+        setAllProduct(data.allArticle);
+      }
     };
     fetchData();
   }, [refresh]);
@@ -37,6 +39,7 @@ export default function Accueil() {
         </ul>
         <Link to={`/createArticle`}>Ajouter un produit</Link>
         <Link to={`/createCategory`}>Ajouter une categorie</Link>
+        <Link to={`/register`}>S'inscrire</Link>
       </header>
     </div>
   );

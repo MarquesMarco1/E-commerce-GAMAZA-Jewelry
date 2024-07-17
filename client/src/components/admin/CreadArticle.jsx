@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
 export default function CreadArticle() {
