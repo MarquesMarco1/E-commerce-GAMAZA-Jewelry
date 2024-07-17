@@ -119,14 +119,7 @@ class DefaultController extends AbstractController
                 'imageURL' => 'https://randomuser.me/api/portraits/men/89.jpg'
             ]
         ];
-    
-        $response = new Response();
 
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-
-        $response->setContent(json_encode($users));
-        
-        return $response;
+        return $this->json(['allUsers' => $users]);
     }
 }
