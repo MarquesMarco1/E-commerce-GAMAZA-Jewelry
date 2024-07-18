@@ -1,12 +1,25 @@
 <?php
 
-// namespace App\Middleware;
-// use App\Repository
+namespace App\Middleware;
+use App\Repository\UserRepository;
 
-// class Admin implements Middleware
-// {
-//     public function wrap(Driver $driver): Driver
-//     {
-//         return new PreventRootConnectionDriver($driver);
-//     }
-// }
+class Admin
+{
+    private ?string $email;
+
+    public function __construct(string $email = null) {
+        $this->email = $email;
+    }
+
+    public function isAdmin(UserRepository $userRepository)
+    {        
+        if($this->email !== null){
+            $role = $userRepository->getRoles($this->email);
+            if($role[0]['roles'] === '["ROLE_ADMIN"]') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+}
