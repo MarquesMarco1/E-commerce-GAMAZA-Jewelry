@@ -41,6 +41,13 @@ class CategoryController extends AbstractController
         $categories = $repository->findAll();
         return $this->json(['allCategory' => $categories], 200);
     }
+    #[Route("/api/category/{id}",name : "categoryId")]
+    public function getCategoryId(EntityManagerInterface $entityManager, int $id)
+    {
+        $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
+        return $this->json(['products' => $products], 200);
+
+    }
 
     #[Route("/api/isAdmin/{id}", name:"isAdmin")]
     public function isAdmin(CategoryRepository $repository, UserRepository $userRepository, $id){

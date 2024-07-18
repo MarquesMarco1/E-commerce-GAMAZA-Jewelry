@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
-export default function CreadArticle() {
+export default function EditProduct() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
@@ -18,25 +19,40 @@ export default function CreadArticle() {
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
   let navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(id);
       const response = await fetch(`${localhost}/api/categorie`);
       if (response.status === 200) {
         const data = await response.json();
         setAllCategorie(data.allCategory);
       }
       const response_material = await fetch(`${localhost}/api/material`);
-      console.log(response_material);
       if (response_material.status === 200) {
         const data_material = await response_material.json();
-        console.log(data_material);
         setAllMaterial(data_material.allMaterial);
       }
       const response_stone = await fetch(`${localhost}/api/stone`);
       if (response_stone.status === 200) {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
+      }
+      const response_product = await fetch(`${localhost}/api/products/${id}`);
+      if (response_product.status === 200) {
+        const data_product = await response_product.json();
+        setNom(data_product.products[0].name);
+        setCategory_id(data_product.products[0].category.id);
+        setMaterial(data_product.products[0].material.id);
+        setStone(data_product.products[0].stone.id);
+        setImage(data_product.products[0].image);
+        setColor(data_product.products[0].color);
+        setSize(data_product.products[0].size);
+        setWeight(data_product.products[0].weight);
+        setPrice(data_product.products[0].price);
+        setStockQty(data_product.products[0].stockQty);
+        setDescription(data_product.products[0].description);
       }
     };
     fetchData();
@@ -57,7 +73,7 @@ export default function CreadArticle() {
       stockQty: stockQty,
       description: description,
     };
-    const response = await fetch(`${localhost}/api/admin/addArticle`, {
+    const response = await fetch(`${localhost}/api/editProduct/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +82,7 @@ export default function CreadArticle() {
     });
     console.log(response);
     if (response.status === 200) {
+      const data = await response.json();
       navigate("/admin", { replace: true });
     }
   };
@@ -81,12 +98,14 @@ export default function CreadArticle() {
         id="nom"
         placeholder="Nom"
         required
+        value={nom}
         onChange={(e) => setNom(e.target.value)}
       />
       <label for="categorie">Choose a category:</label>
       <select
         name="cat"
         id="categorie"
+        value={category_id}
         onChange={(e) => setCategory_id(e.target.value)}
       >
         <option value="">--Please choose an option--</option>
@@ -100,6 +119,7 @@ export default function CreadArticle() {
       <select
         name="material"
         id="material"
+        value={material}
         onChange={(e) => setMaterial(e.target.value)}
       >
         <option value="">--Please choose an option--</option>
@@ -112,6 +132,7 @@ export default function CreadArticle() {
       <select
         name="stone"
         id="stone"
+        value={stone}
         onChange={(e) => setStone(e.target.value)}
       >
         <option value="">--Please choose an option--</option>
@@ -125,6 +146,7 @@ export default function CreadArticle() {
         id="image"
         placeholder="Image"
         required
+        value={image}
         onChange={(e) => setImage(e.target.value)}
       />
       <label for="color">color</label>
@@ -134,6 +156,7 @@ export default function CreadArticle() {
         id="color"
         placeholder="Color"
         required
+        value={color}
         onChange={(e) => setColor(e.target.value)}
       />
       <label for="size">size</label>
@@ -143,6 +166,7 @@ export default function CreadArticle() {
         id="size"
         placeholder="Size"
         required
+        value={size}
         onChange={(e) => setSize(e.target.value)}
       />
       <label for="weight">weight</label>
@@ -152,6 +176,7 @@ export default function CreadArticle() {
         id="weight"
         placeholder="Weight"
         required
+        value={weight}
         onChange={(e) => setWeight(e.target.value)}
       />
       <label for="price">price</label>
@@ -161,6 +186,7 @@ export default function CreadArticle() {
         id="price"
         placeholder="Price"
         required
+        value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
       <label for="stockQty">stockQty</label>
@@ -170,6 +196,7 @@ export default function CreadArticle() {
         id="stockQty"
         placeholder="StockQty"
         required
+        value={stockQty}
         onChange={(e) => setStockQty(e.target.value)}
       />
       <label for="content">description</label>
@@ -178,10 +205,11 @@ export default function CreadArticle() {
         id="content"
         placeholder="Description"
         required
+        value={description}
         onChange={(e) => setDescription(e.target.value)}
       ></textarea>
       <button type="submit" id="submit">
-        Add a product
+        Edit the product
       </button>
     </form>
   );
