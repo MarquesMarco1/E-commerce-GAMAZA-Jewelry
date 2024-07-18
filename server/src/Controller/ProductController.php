@@ -41,13 +41,13 @@ class ProductController extends AbstractController
         }
     }
 
-    // #[Route("/api/products",name : "products")]
-    // public function getProducts(ProductRepository $repository)
-    // {
-    //     $products = $repository->findAll();
-    //     return $this->json(['allArticle' => $products], 200);
+    #[Route("/api/products",name : "productsAll")]
+    public function getAllProducts(ProductRepository $repository)
+    {
+        $products = $repository->findAll();
+        return $this->json(['allArticle' => $products], 200);
 
-    // }
+    }
     #[Route("/api/products/{id}",name : "products")]
     public function getProducts(EntityManagerInterface $entityManager, int $id)
     {
