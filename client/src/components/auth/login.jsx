@@ -28,7 +28,7 @@ export default function Login() {
     });
     console.log(response);
     if (response.status === 200) {
-      const data = await response.json();
+      localStorage.setItem("user", email);
       navigate("/", { replace: true });
     } else {
       setError("Incorrect email or password.");
@@ -41,7 +41,7 @@ export default function Login() {
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <label htmlFor="mail">Adresse mail</label>
+        <label htmlFor="mail">Email</label>
         <input
           type="mail"
           name="mail"
@@ -51,7 +51,7 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label htmlFor="password">Mot de passe</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
@@ -62,7 +62,7 @@ export default function Login() {
           required
         />
         <button type="submit" id="submit">
-          Se connecter
+          Login
         </button>
       </form>
       {error && <p>{error}</p>}

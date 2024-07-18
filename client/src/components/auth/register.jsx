@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
 export default function Register() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,18 +28,20 @@ export default function Register() {
     });
     console.log(response);
     if (response.status === 200) {
-        const data= response.json();
-        console.log(data);
+      localStorage.setItem("user", email);
       navigate("/", { replace: true });
-    }else{
-      setError("Email already exists.")
+    } else {
+      setError("Email already exists.");
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-        <label htmlFor="mail">Adresse mail</label>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <label htmlFor="mail">Email</label>
         <input
           type="mail"
           name="mail"
@@ -49,7 +51,7 @@ export default function Register() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label htmlFor="password">Mot de passe</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
@@ -60,7 +62,7 @@ export default function Register() {
           required
         />
         <button type="submit" id="submit">
-          Se connecter
+          Register
         </button>
       </form>
       {error && <p>{error}</p>}

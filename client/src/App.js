@@ -5,7 +5,6 @@ import CreateArticle from "./components/admin/CreadArticle";
 import CreateCategory from "./components/admin/CreateCategory";
 import Register from "./components/auth/register";
 import Profile from "./components/auth/Profile";
-import localhost from "./config";
 import Login from "./components/auth/login";
 import CategoryPage from "./components/CategoryPage";
 import SpecProduct from "./components/SpecProduct";
