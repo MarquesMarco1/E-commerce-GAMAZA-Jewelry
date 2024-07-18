@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
+use App\Middleware\Admin;
 
 class CategoryController extends AbstractController
 {
@@ -35,9 +37,15 @@ class CategoryController extends AbstractController
     }
 
     #[Route("/api/categorie", name:"category")]
-    public function getCategory(CategoryRepository $repository){
+    public function getCategory(CategoryRepository $repository, UserRepository $userRepository){
         $categories = $repository->findAll();
         return $this->json(['allCategory' => $categories], 200);
+    }
 
+    #[Route("/api/isAdmin/{id}", name:"isAdmin")]
+    public function isAdmin(CategoryRepository $repository, UserRepository $userRepository, $id){
+        $user = new Admin($id);
+        $role = $user->isAdmin($userRepository);
+        return $this->json(['isAdmin' => $role], 200);
     }
 }

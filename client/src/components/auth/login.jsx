@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   let navigate = useNavigate();
 
@@ -28,8 +28,7 @@ export default function Login() {
     });
     console.log(response);
     if (response.status === 200) {
-        const data= await response.json();
-        console.log(data);
+      const data = await response.json();
       navigate("/", { replace: true });
     } else {
       setError("Incorrect email or password.");
@@ -38,7 +37,10 @@ export default function Login() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <label htmlFor="mail">Adresse mail</label>
         <input
           type="mail"
