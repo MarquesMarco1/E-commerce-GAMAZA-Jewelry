@@ -29,10 +29,32 @@ class RegisController extends AbstractController
                 $userPasswordHasher->hashPassword(
                 $user,$formData["password"])
             );
-            
+                        
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->json(['success' => true], 200);
         }
+    }
+
+    #[Route('/api/auth/login', name: 'authLogin')]
+    public function authLogin(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $formData = $data["formData"];
+
+        $email = $formData["email"];
+        $password = $formData["password"];
+
+        if (!$email || !$password) {
+            return $this->json(['error' => 'Email and password are required'], 400);
+        }
+
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        if (!$user || !$userPasswordHasher->isPasswordValid($user, $password)) {
+            return $this->json(['error' => 'Invalid informations'], 400);
+        }
+
+        return $this->json(['success' => true], 200);
     }
 }
