@@ -4,7 +4,7 @@ import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/CreadArticle";
 import CreateCategory from "./components/admin/CreateCategory";
 import Register from "./components/auth/register";
-
+import Profile from "./components/auth/Profile";
 import localhost from "./config";
 import CategoryPage from "./components/CategoryPage";
 import SpecProduct from "./components/SpecProduct";
@@ -19,6 +19,7 @@ function App() {
         <Route path="/createArticle" element={<CreateArticle />}></Route>
         <Route path="/createCategory" element={<CreateCategory />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
     </BrowserRouter>
   );
