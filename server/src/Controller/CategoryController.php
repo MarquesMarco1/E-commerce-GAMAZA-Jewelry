@@ -39,8 +39,8 @@ class CategoryController extends AbstractController
     #[Route("/api/categorie", name:"category")]
     public function getCategory(CategoryRepository $repository, UserRepository $userRepository){
         $categories = $repository->findAll();
-        $user = new Admin('loulou2@gmail.com');
-        $role = $user->isAdmin($userRepository);
-        return $this->json(['allCategory' => $categories, 'isAdmin' => $role], 200);
+        // $user = new Admin('loulou2@gmail.com');
+        // $role = $user->isAdmin($userRepository);
+        return $this->json(['allCategory' => $categories], 200);
     }
 }
