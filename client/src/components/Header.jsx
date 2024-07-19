@@ -8,7 +8,7 @@ import localhost from "../config";
 
 export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
-  const email = localStorage.getItem("user");
+  const email = localStorage.getItem('user');
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
