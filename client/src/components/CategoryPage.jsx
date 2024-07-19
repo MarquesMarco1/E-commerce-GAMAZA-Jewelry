@@ -8,7 +8,7 @@ export default function CategoryPage() {
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/products/${id}`);
+      const response = await fetch(`${localhost}/api/category/${id}`);
       if (response.status === 200) {
         const data = await response.json();
         console.log(data);

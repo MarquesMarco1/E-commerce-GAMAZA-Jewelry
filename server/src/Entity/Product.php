@@ -45,6 +45,14 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Material $material = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Stone $stone = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -166,6 +174,30 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): static
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    public function getStone(): ?Stone
+    {
+        return $this->stone;
+    }
+
+    public function setStone(?Stone $stone): static
+    {
+        $this->stone = $stone;
 
         return $this;
     }
