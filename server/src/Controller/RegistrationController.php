@@ -22,42 +22,60 @@ class RegistrationController extends AbstractController
     {
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/swcw<c', name: 'cwxc', methods: ['POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        $formData = $data["formData"];
+        return $this->json($formData);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+        // $user = new User();
+        // $form = $this->createForm(RegistrationFormType::class, $user);
+        // $form->handleRequest($request);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     // encode the plain password
+        //     $user->setPassword(
+        //             $userPasswordHasher->hashPassword(
+        //             $user,
+        //             $form->get('plainPassword')->getData()
+        //         )
+        //     );
+            
+        //     $entityManager->persist($user);
+        //     $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mailer@your-domain.com', 'mail Bot'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+        //     // generate a signed url and email it to the user
+        //     $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        //         (new TemplatedEmail())
+        //             ->from(new Address('mailer@your-domain.com', 'mail Bot'))
+        //             ->to($user->getEmail())
+        //             ->subject('Please Confirm your Email')
+        //             ->htmlTemplate('registration/confirmation_email.html.twig')
+        //     );
 
-            // do anything else you need here, like send an email
+        //     // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('_profiler_home');
+        //     return $this->redirectToRoute('_profiler_home');
+        // }
+
+        // return $this->render('registration/register.html.twig', [
+        //     'registrationForm' => $form,
+        // ]);
+    }
+
+    #[Route('/gvhbjn', name: 'sdfg')]
+    public function addArticle(Request $request, EntityManagerInterface $entityManager)
+    {
+        $data = json_decode($request->getContent(), true);
+        $formData = $data["formData"];
+        $user = new User;
+        return $this->json($formData);
+        if($formData){
+            $user->setEmail($formData["email"]);
+            $user->setPassword($formData["password"]);
+            return $this->json(['success' => true], 200);
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
-        ]);
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]

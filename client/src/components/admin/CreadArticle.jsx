@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
 export default function CreadArticle() {
   const [allCategorie, setAllCategorie] = useState([]);
+  const [allMaterial, setAllMaterial] = useState([]);
+  const [allStone, setAllStone] = useState([]);
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
   const [color, setColor] = useState("");
@@ -13,16 +15,28 @@ export default function CreadArticle() {
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
   const [description, setDescription] = useState("");
+  const [material, setMaterial] = useState("");
+  const [stone, setStone] = useState("");
   let navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/categorie`);
-      console.log(response);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         setAllCategorie(data.allCategory);
+      }
+      const response_material = await fetch(`${localhost}/api/material`);
+      console.log(response_material);
+      if (response_material.status === 200) {
+        const data_material = await response_material.json();
+        console.log(data_material);
+        setAllMaterial(data_material.allMaterial);
+      }
+      const response_stone = await fetch(`${localhost}/api/stone`);
+      if (response_stone.status === 200) {
+        const data_stone = await response_stone.json();
+        setAllStone(data_stone.allStone);
       }
     };
     fetchData();
@@ -32,6 +46,8 @@ export default function CreadArticle() {
     e.preventDefault();
     const formData = {
       category_id: parseInt(category_id),
+      material_id: parseInt(material),
+      stone_id: parseInt(stone),
       image: image,
       color: color,
       nom: nom,
@@ -50,7 +66,7 @@ export default function CreadArticle() {
     });
     console.log(response);
     if (response.status === 200) {
-      navigate("/", { replace: true });
+      navigate("/admin", { replace: true });
     }
   };
   return (
@@ -79,7 +95,30 @@ export default function CreadArticle() {
             <option value={elem.id}>{elem.name}</option>
           ))}
       </select>
-      <label for="image">imageLien</label>
+
+      <label for="material">Choose a material:</label>
+      <select
+        name="material"
+        id="material"
+        onChange={(e) => setMaterial(e.target.value)}
+      >
+        <option value="">--Please choose an option--</option>
+        {allMaterial &&
+          allMaterial.map((elem) => (
+            <option value={elem.id}>{elem.name}</option>
+          ))}
+      </select>
+      <label for="stone">Choose a stone:</label>
+      <select
+        name="stone"
+        id="stone"
+        onChange={(e) => setStone(e.target.value)}
+      >
+        <option value="">--Please choose an option--</option>
+        {allStone &&
+          allStone.map((elem) => <option value={elem.id}>{elem.name}</option>)}
+      </select>
+      <label for="image">image link</label>
       <input
         type="text"
         name="image"
@@ -142,7 +181,7 @@ export default function CreadArticle() {
         onChange={(e) => setDescription(e.target.value)}
       ></textarea>
       <button type="submit" id="submit">
-        Creer un article
+        Add a product
       </button>
     </form>
   );
