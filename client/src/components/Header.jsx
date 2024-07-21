@@ -20,7 +20,7 @@ export default function Header() {
     fetchData();
   }, [isAdmin, email]);
   return (
-    <header className="flex items-center justify-between bg-light-purple h-24 mt-10">
+    <header className="flex items-center justify-between bg-light-purple bg-opacity-20 h-24 mt-10">
       <Link to={`/`}>
         <img
           src={lotus}
