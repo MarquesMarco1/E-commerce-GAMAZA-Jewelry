@@ -50,12 +50,12 @@ const SpecProduct = () => {
             <Link to={`/`}>Homepage</Link>
           </li>
           <li>/</li>
-          <li className="font-semibold">{product.name}</li>
+          <li className="font-semibold font-primary">{product.name}</li>
         </ul>
       </nav>
       <main className="py-6 px-4 max-w-4xl mx-auto">
-        <h1 className="text-gold text-5xl mb-9 text-center">{product.name}</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <h1 className="text-gold text-5xl mb-9 text-center font-primary">{product.name}</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border border-gold rounded-lg">
           <div className="flex justify-center">
             {product.image && (
               <img
@@ -66,17 +66,17 @@ const SpecProduct = () => {
             )}
           </div>
           <div className="space-y-4">
-            <p className="text-lg font-semibold">{product.description}</p>
-            <p className="text-lg">
-              Price: <span className="text-green-500">${product.price}</span>
+            <p className="text-lg font-semibold font-primary">{product.description}</p>
+            <p className="text- font-primary">
+              Price: <span className="text-green-500 font-primary">${product.price}</span>
             </p>
-            <p className="text-lg">Category ID: {product.category.name}</p>
-            <p className="text-lg">Material ID: {product.material.name}</p>
-            <p className="text-lg">Stone ID: {product.stone.name}</p>
-            <p className="text-lg">Color: {product.color}</p>
-            <p className="text-lg">Size: {product.size}</p>
-            <p className="text-lg">Weight: {product.weight}g</p>
-            <p className="text-lg">Stock Quantity: {product.stock_qty}</p>
+            <p className="text-lg font-primary">Category ID: {product.category.name}</p>
+            <p className="text-lg font-primary">Material ID: {product.material.name}</p>
+            <p className="text-lg font-primary">Stone ID: {product.stone.name}</p>
+            <p className="text-lg font-primary">Color: {product.color}</p>
+            <p className="text-lg font-primary">Size: {product.size}</p>
+            <p className="text-lg font-primary">Weight: {product.weight}g</p>
+            <p className="text-lg font-primary">Stock Quantity: {product.stock_qty}</p>
           </div>
         </div>
       </main>

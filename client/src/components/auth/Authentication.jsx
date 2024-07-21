@@ -29,7 +29,7 @@ const Authentication = () => {
           password: password,
         };
     
-        const response = await fetch(`${localhost}/api/auth/register`, {
+        const response = await fetch(`${localhost}/api/authregister/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

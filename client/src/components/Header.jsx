@@ -29,7 +29,7 @@ export default function Header() {
         />
       </Link>
       <h1 className="text-gold font-primary font-normal text-6xl">
-        Gamaza Jewelry
+        G.A.M.A.Z.A .Co
       </h1>
       <div className="flex mr-24">
         {isAdmin ? (
