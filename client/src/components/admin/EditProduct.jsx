@@ -27,7 +27,6 @@ export default function EditProduct() {
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
-      console.log("response   ", response);
       if (response.status === 200) {
         const data = await response.json();
         if (data.isAdmin) {
@@ -41,7 +40,6 @@ export default function EditProduct() {
     };
     fetchIsAdmin();
     const fetchData = async () => {
-      console.log(id);
       const response = await fetch(`${localhost}/api/categorie`);
       if (response.status === 200) {
         const data = await response.json();
@@ -98,7 +96,6 @@ export default function EditProduct() {
       },
       body: JSON.stringify({ formData }),
     });
-    console.log(response);
     if (response.status === 200) {
       const data = await response.json();
       navigate("/admin", { replace: true });
@@ -205,6 +202,7 @@ export default function EditProduct() {
           name="weight"
           id="weight"
           placeholder="Weight"
+          step="0.01"
           required
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
@@ -217,6 +215,7 @@ export default function EditProduct() {
           id="price"
           placeholder="Price"
           required
+          step="0.01"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />

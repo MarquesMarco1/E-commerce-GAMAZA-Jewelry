@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import localhost from "../../config";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header";
-import ManageProducts from "./ManageProduct";
 import ManageUsers from "./ManageUsers";
 import Footer from "../Footer";
 
@@ -27,6 +26,16 @@ export default function Admin() {
     fetchData();
     setRefresh(false);
   }, [refresh]);
+  const deleteProduct = async (id) => {
+    const response = await fetch(`${localhost}/api/delete/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      setRefresh(true);
+    }
+  };
+  const editProduct = async (id) => {
+    navigate(`/editProduct/${id}`, { replace: true });
+  };
   return (
     <>
       <Header></Header>
@@ -45,7 +54,30 @@ export default function Admin() {
         </div>
         <div className="flex justify-between	">
           <ManageUsers data={users} />
-          <ManageProducts data={products} />
+          <div className="flex flex-col w-full	">
+            <h2 className="text-gold">Manage Articles :</h2>
+            {products.length > 0 &&
+              products.map((elem) => (
+                <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
+                  <div>
+                    <li>Title : {elem.name}</li>
+                    <li>Size : {elem.size}</li>
+                    <li>Color : {elem.color}</li>
+                    <li>Price : ${elem.price}</li>
+                  </div>
+                  <div style={{ textAlign: "end" }}>
+                    <li>
+                      <button onClick={() => editProduct(elem.id)}>Edit</button>
+                    </li>
+                    <li>
+                      <button onClick={() => deleteProduct(elem.id)}>
+                        Delete
+                      </button>
+                    </li>
+                  </div>
+                </ul>
+              ))}
+          </div>
         </div>
       </div>
       <Footer></Footer>

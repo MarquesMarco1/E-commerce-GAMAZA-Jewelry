@@ -8,7 +8,6 @@ export default function ManageUsers(data) {
   let navigate = useNavigate();
   useEffect(() => {
     setUsers(data.data);
-    console.log(data.data);
   }, [data, refresh]);
 
   const deleteUser = async (id) => {

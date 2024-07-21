@@ -28,7 +28,6 @@ export default function CreateCategory() {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    console.log(categorie, description, image);
     const formData = {
       nom: categorie,
       description: description,

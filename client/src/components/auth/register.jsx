@@ -12,12 +12,11 @@ import register from "../../assets/register.jpg";
 import localhost from "../../config";
 
 export default function Register() {
-  // FORM
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // POP-UP
   const [open, setOpen] = useState(true);
 
   let navigate = useNavigate();
@@ -99,7 +98,7 @@ export default function Register() {
                           required
                         />
                       </div>
-                      {/* PASSWORD */}
+                   
                       <div className="flex w-full">
                         <label
                           htmlFor="password"

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import localhost from "../config";
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -16,14 +16,14 @@ const SpecProduct = () => {
         const response = await fetch(`${localhost}/api/products/${id}`);
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+
           if (data.products && data.products.length > 0) {
             setProduct(data.products[0]);
           } else {
-            setError(new Error('Product not found'));
+            setError(new Error("Product not found"));
           }
         } else {
-          setError(new Error('Failed to fetch product'));
+          setError(new Error("Failed to fetch product"));
         }
       } catch (err) {
         setError(err);
@@ -33,7 +33,12 @@ const SpecProduct = () => {
     fetchProduct();
   }, [id]);
 
-  if (error) return <div className="text-center py-4 text-red-500">Error: {error.message}</div>;
+  if (error)
+    return (
+      <div className="text-center py-4 text-red-500">
+        Error: {error.message}
+      </div>
+    );
   if (!product) return <div className="text-center py-4">No product found</div>;
 
   return (
@@ -52,11 +57,19 @@ const SpecProduct = () => {
         <h1 className="text-gold text-5xl mb-9 text-center">{product.name}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex justify-center">
-            {product.image && <img className="max-w-full h-auto" src={product.image} alt={product.name} />}
+            {product.image && (
+              <img
+                className="max-w-full h-auto"
+                src={product.image}
+                alt={product.name}
+              />
+            )}
           </div>
           <div className="space-y-4">
             <p className="text-lg font-semibold">{product.description}</p>
-            <p className="text-lg">Price: <span className="text-green-500">${product.price}</span></p>
+            <p className="text-lg">
+              Price: <span className="text-green-500">${product.price}</span>
+            </p>
             <p className="text-lg">Category ID: {product.category.name}</p>
             <p className="text-lg">Material ID: {product.material.name}</p>
             <p className="text-lg">Stone ID: {product.stone.name}</p>

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import localhost from "../config";
 import { Link } from "react-router-dom";
 
-
 export default function Accueil() {
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -11,7 +10,7 @@ export default function Accueil() {
       const response = await fetch(`${localhost}/api/categorie`);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
+
         setCategory(data.allCategory);
       }
     };
@@ -25,7 +24,9 @@ export default function Accueil() {
           {category &&
             category.map((elem) => (
               <Link to={`/category/${elem.id}`}>
-                <li className="flex justify-center font-primary text-gold text-5xl">{elem.name}</li>
+                <li className="flex justify-center font-primary text-gold text-5xl">
+                  {elem.name}
+                </li>
               </Link>
             ))}
         </ul>

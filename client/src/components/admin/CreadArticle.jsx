@@ -25,7 +25,6 @@ export default function CreadArticle() {
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
-      console.log("response   ", response);
       if (response.status === 200) {
         const data = await response.json();
         if (data.isAdmin) {
@@ -45,10 +44,8 @@ export default function CreadArticle() {
         setAllCategorie(data.allCategory);
       }
       const response_material = await fetch(`${localhost}/api/material`);
-      console.log(response_material);
       if (response_material.status === 200) {
         const data_material = await response_material.json();
-        console.log(data_material);
         setAllMaterial(data_material.allMaterial);
       }
       const response_stone = await fetch(`${localhost}/api/stone`);
@@ -81,7 +78,6 @@ export default function CreadArticle() {
       },
       body: JSON.stringify({ formData }),
     });
-    console.log(response);
     if (response.status === 200) {
       navigate("/admin", { replace: true });
     }
@@ -175,6 +171,7 @@ export default function CreadArticle() {
           name="weight"
           id="weight"
           placeholder="Weight"
+          step="0.01"
           required
           onChange={(e) => setWeight(e.target.value)}
         />
@@ -184,6 +181,7 @@ export default function CreadArticle() {
           name="price"
           id="price"
           placeholder="Price"
+          step="0.01"
           required
           onChange={(e) => setPrice(e.target.value)}
         />

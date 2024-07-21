@@ -15,6 +15,7 @@ export default function ManageProducts(data) {
     const response = await fetch(`${localhost}/api/delete/${id}`);
     const data = await response.json();
     if (data.success) {
+      // window.location.reload();
       setRefresh(true);
     }
   };
