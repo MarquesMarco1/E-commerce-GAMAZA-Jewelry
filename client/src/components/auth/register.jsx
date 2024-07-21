@@ -10,6 +10,7 @@ import {
 } from "@headlessui/react";
 import register from "../../assets/register.jpg";
 import localhost from "../../config";
+import register from '../../assets/register.jpg';
 
 export default function Register() {
 
@@ -49,90 +50,80 @@ export default function Register() {
   };
 
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10">
-      <DialogBackdrop
-        transition
-        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
-      />
+    // <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="relative overflow-hidden min-h-[480px] w-[768px] max-w-full bg-white rounded-[10px] shadow-[0_8px_24px_rgba(0,32,63,.45),0_8px_8px_rgba(0,32,63,.45)]">
+        <img src={register} 
+        alt="little lady wearing our jewelry" 
+        className="mx-auto h-auto w-auto"
+        />
+        <h2 className="mt-10 text-center font-primary text-2xl font-bold leading-9 tracking-tight text-gold">
+        Register
+        </h2>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {/* <div class="absolute top-0 h-full transition-all duration-600 ease-in-out"> */}
 
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <DialogPanel
-            transition
-            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
-          >
-            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
-                <div className="">
-                  <img
-                    src={register}
-                    alt="little lady wearing our jewelry"
-                    className=""
-                  />
-                </div>
-                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                  <DialogTitle
-                    as="h3"
-                    className="font-primary text-gold text-6xl"
-                  >
-                    Register
-                  </DialogTitle>
-                  <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit}
-                      style={{ display: "flex", flexDirection: "column" }}
-                    >
-                      {/* EMAIL */}
-                      <div className="flex w-full">
-                        <label htmlFor="mail" className="font-primary text-4xl">
-                          Email :
-                        </label>
-                        <input
-                          type="mail"
-                          name="mail"
-                          id="mail"
-                          className="border-gold border-2 rounded-full h-8 mt-2 ml-4 p-1.5"
-                          placeholder=""
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                   
-                      <div className="flex w-full">
-                        <label
-                          htmlFor="password"
-                          className="font-primary text-4xl"
-                        >
-                          Password:
-                        </label>
-                        <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          className="border-gold border-2 rounded-full h-8 mt-2 ml-4 p-1.5"
-                          placeholder=""
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        id="submit"
-                        className="rounded-3xl bg-dark-purple/20 mt-4"
-                      >
-                        <p className="font-primary text-5xl p-4">Register</p>
-                      </button>
-                    </form>
-                    {error && <p>{error}</p>}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DialogPanel>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6"
+      >
+        <div>
+
+        <label htmlFor="mail"
+        className="block text-md font-primary font-bold leading-6 text-black">
+          Email
+        </label>
+        
+        <div className="mt-2">
+        <input
+          type="mail"
+          name="mail"
+          id="mail"
+          placeholder="Your email"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 border-gold shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gold sm:text-sm sm:leading-6"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         </div>
       </div>
-    </Dialog>
+
+      <div>
+        <div className="flex items-center justify-between">
+        <label htmlFor="password"
+        className="block text-sm font-medium leading-6 text-black">Password
+        </label>
+        <div className="text-sm">
+            <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                Forgot password?
+            </a>
+          </div>
+        </div>
+        <div className="mt-2">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Your password"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 border-gold shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gold sm:text-sm sm:leading-6"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        </div>
+    </div>
+    <div>
+        <button type="submit"
+                className="flex w-full justify-center rounded-md bg-light-purple px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                id="submit">
+          Create your account
+        </button>
+      </div>
+      </form>
+      {error && <p>{error}</p>}
+    </div>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      Test
+    </div>
+  </div>
   );
 }
