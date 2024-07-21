@@ -2,7 +2,7 @@ import Header from "./Header";
 import { useEffect, useState } from "react";
 import localhost from "../config";
 import { Link } from "react-router-dom";
-
+import bague_homepage from '../assets/bague_homepage.PNG'
 
 export default function Accueil() {
   const [category, setCategory] = useState([]);
@@ -18,18 +18,23 @@ export default function Accueil() {
     fetchData();
   }, []);
   return (
-    <>
-      <Header></Header>
-      <div className="w-full mt-20">
-        <ul className="flex justify-around">
-          {category &&
-            category.map((elem) => (
-              <Link to={`/category/${elem.id}`}>
-                <li className="flex justify-center font-primary text-gold text-5xl">{elem.name}</li>
-              </Link>
-            ))}
-        </ul>
+      <div>
+        <Header></Header>
+        <div className="w-full mt-20 flex">
+          <ul className="flex justify-around">
+            {category &&
+              category.map((elem) => (
+                <Link to={`/category/${elem.id}`}>
+                  <li className="flex justify-center font-primary text-gold text-5xl">{elem.name}</li>
+                </Link>
+              ))}
+          </ul>
+        </div>
+        <img 
+        src={bague_homepage}
+        alt="ring with blue diamond"
+        className="mx-auto h-auto w-auto"
+        />
       </div>
-    </>
-  );
+    );
 }
