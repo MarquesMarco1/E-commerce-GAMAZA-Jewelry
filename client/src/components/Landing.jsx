@@ -4,6 +4,7 @@ import localhost from "../config";
 import { Link } from "react-router-dom";
 import bague_homepage from '../assets/bague_homepage.PNG'
 
+
 export default function Accueil() {
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function Accueil() {
       const response = await fetch(`${localhost}/api/categorie`);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
+
         setCategory(data.allCategory);
       }
     };
@@ -35,6 +36,7 @@ export default function Accueil() {
         alt="ring with blue diamond"
         className="mx-auto h-auto w-auto"
         />
+
       </div>
     );
 }

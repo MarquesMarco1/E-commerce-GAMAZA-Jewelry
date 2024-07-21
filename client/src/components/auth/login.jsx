@@ -28,7 +28,6 @@ export default function Login() {
       },
       body: JSON.stringify({ formData }),
     });
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("user", email);
       navigate("/", { replace: true });

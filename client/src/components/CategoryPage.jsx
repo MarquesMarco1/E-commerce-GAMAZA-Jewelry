@@ -11,14 +11,16 @@ export default function CategoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const { id } = useParams();
 
-  const itemsPerPage = 6; 
+  const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/category/${id}`);
       if (response.status === 200) {
         const data = await response.json();
-        setName(data.products[0].category.name);
+        if (data.products.length > 0) {
+          setName(data.products[0].category.name);
+        }
         setProducts(data.products);
       }
     };
@@ -47,7 +49,11 @@ export default function CategoryPage() {
           currentProducts.map((elem) => (
             <li key={elem.id} className="border border-gray-300 p-4 rounded-lg">
               <Link to={`/product/${elem.id}`}>
-                <img className="w-full h-48 object-cover mb-4" src={elem.image} alt={elem.name} />
+                <img
+                  className="w-full h-48 object-cover mb-4"
+                  src={elem.image}
+                  alt={elem.name}
+                />
                 <p className="text-center">{elem.name}</p>
               </Link>
             </li>

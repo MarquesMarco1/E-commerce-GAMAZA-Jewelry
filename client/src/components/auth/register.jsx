@@ -13,12 +13,11 @@ import localhost from "../../config";
 import register from '../../assets/register.jpg';
 
 export default function Register() {
-  // FORM
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // POP-UP
   const [open, setOpen] = useState(true);
 
   let navigate = useNavigate();
