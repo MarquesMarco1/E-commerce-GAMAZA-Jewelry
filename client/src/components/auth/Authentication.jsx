@@ -139,7 +139,7 @@ const Authentication = () => {
                                 Forgot password?
                             </a>
                             <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary ">Login</button>
-                            <p className="mt-4 cursor-pointer text-blue-500" onClick={() => setIsSignUp(true)}>You doesn't have an account?</p>
+                            <p className="mt-4 cursor-pointer text-blue-500" onClick={() => setIsSignUp(true)}>You don't have an account?</p>
                         </form>
                         {error && <p>{error}</p>}
                     </div>
