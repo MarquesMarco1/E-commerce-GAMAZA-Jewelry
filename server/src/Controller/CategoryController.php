@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
-use App\Middleware\Admin;
 
 class CategoryController extends AbstractController
 {
@@ -41,18 +40,37 @@ class CategoryController extends AbstractController
         $categories = $repository->findAll();
         return $this->json(['allCategory' => $categories], 200);
     }
-    #[Route("/api/category/{id}",name : "categoryId")]
+    #[Route("/api/TrueCategory/{id}",name : "TrueCategory")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
-        $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
-        return $this->json(['products' => $products], 200);
+        $products = $entityManager->getRepository(Category::class)->findBy(['id' => $id]);
+        return $this->json(['category' => $products], 200);
 
     }
 
-    #[Route("/api/isAdmin/{id}", name:"isAdmin")]
-    public function isAdmin(CategoryRepository $repository, UserRepository $userRepository, $id){
-        $user = new Admin($id);
-        $role = $user->isAdmin($userRepository);
-        return $this->json(['isAdmin' => $role], 200);
+    #[Route('/api/editCategory/{id}', name: 'editCategorie')]
+    public function editCategorie(Request $request, EntityManagerInterface $entityManager, Category $category, int $id)
+    {
+        $data = json_decode($request->getContent(), true);
+        $formData = $data["formData"];
+        if($formData){
+            $category->setName($formData["name"]);
+            $category->setImage($formData["image"]);
+            $category->setDescription($formData["description"]);
+            $now = new DateTime();
+            $now->format("Y-m-d H:i:s");
+            $category->setLastUpdated($now);
+            $entityManager->persist($category);
+            $entityManager->flush();
+            return $this->json(['success' => true], 200);
+        }
+    }
+
+    #[Route("/api/delete/category/{id}",name : "deleteCategory")]
+    public function deleteCategory(Category $category, EntityManagerInterface $entityManager, int $id)
+    {
+        $entityManager->remove($category);
+        $entityManager->flush();
+        return $this->json(['success' => true], 200);
     }
 }

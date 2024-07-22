@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import ManageUsers from "./ManageUsers";
 import Footer from "../Footer";
+import ManageCategory from "./ManageCategory";
 
 export default function Admin() {
   const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [users, setUsers] = useState([]);
   let navigate = useNavigate();
@@ -17,10 +19,16 @@ export default function Admin() {
         const data = await response.json();
         setProducts(data.allArticle);
       }
+
       const response_users = await fetch(`${localhost}/api/users`);
       if (response_users.status === 200) {
         const data_users = await response_users.json();
         setUsers(data_users.allUsers);
+      }
+      const response_category = await fetch(`${localhost}/api/categorie`);
+      if (response.status === 200) {
+        const data_category = await response_category.json();
+        setCategory(data_category.allCategory);
       }
     };
     fetchData();
@@ -80,6 +88,8 @@ export default function Admin() {
           </div>
         </div>
       </div>
+      <ManageCategory data={category} />
+
       <Footer></Footer>
     </>
   );

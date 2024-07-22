@@ -9,7 +9,7 @@ import CategoryPage from "./components/CategoryPage";
 import SpecProduct from "./components/SpecProduct";
 import Admin from "./components/admin/Admin";
 import EditProduct from "./components/admin/EditProduct";
-
+import EditCategory from "./components/admin/EditCategory";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
         <Route path="/editProduct/:id" element={<EditProduct />}></Route>
+        <Route path="/editCategory/:id" element={<EditCategory />}></Route>
         {/* <Route path="/authentication" element={<Authentication />}></Route> */}
       </Routes>
     </BrowserRouter>
