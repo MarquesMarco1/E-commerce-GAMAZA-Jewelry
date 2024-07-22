@@ -9,6 +9,8 @@ const SpecProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -19,6 +21,7 @@ const SpecProduct = () => {
 
           if (data.products && data.products.length > 0) {
             setProduct(data.products[0]);
+            setSelectedImage(data.products[0].image);
           } else {
             setError(new Error("Product not found"));
           }
@@ -32,6 +35,10 @@ const SpecProduct = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleAddToCart = () => {
+    console.log(`Added ${quantity} of ${product.name} to cart`);
+  };
 
   if (error)
     return (
@@ -55,29 +62,55 @@ const SpecProduct = () => {
       </nav>
       <main className="py-6 px-4 max-w-4xl mx-auto">
         <h1 className="text-gold text-5xl mb-9 text-center font-primary">{product.name}</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border border-gold rounded-lg">
-          <div className="flex justify-center">
-            {product.image && (
-              <img
-                className="max-w-full h-auto"
-                src={product.image}
-                alt={product.name}
-              />
+        <div className="flex flex-col items-center">
+          <div className="flex items-center justify-center mb-4">
+            {selectedImage && (
+              <img className="max-w-full max-h-80" src={selectedImage} alt={product.name} />
             )}
           </div>
-          <div className="space-y-4">
-            <p className="text-lg font-semibold font-primary">{product.description}</p>
-            <p className="text- font-primary">
-              Price: <span className="text-green-500 font-primary">${product.price}</span>
-            </p>
-            <p className="text-lg font-primary">Category ID: {product.category.name}</p>
-            <p className="text-lg font-primary">Material ID: {product.material.name}</p>
-            <p className="text-lg font-primary">Stone ID: {product.stone.name}</p>
-            <p className="text-lg font-primary">Color: {product.color}</p>
-            <p className="text-lg font-primary">Size: {product.size}</p>
-            <p className="text-lg font-primary">Weight: {product.weight}g</p>
-            <p className="text-lg font-primary">Stock Quantity: {product.stock_qty}</p>
+          <div className="flex space-x-2">
+            {product.images && product.images.map((image, index) => (
+              <img
+                key={index}
+                className={`w-20 h-20 cursor-pointer border-2 ${selectedImage === image ? 'border-gold' : 'border-gray-300'}`}
+                src={image}
+                alt={`Thumbnail ${index + 1}`}
+                onClick={() => setSelectedImage(image)}
+              />
+            ))}
           </div>
+        </div>
+        <div className="mt-10 space-y-2">
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Category: {product.category.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Material: {product.material.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stone: {product.stone.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Color: {product.color}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Size: {product.size}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stock_qty}</p>
+        </div>
+        <div className="mt-10">
+          <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
+          <select
+            id="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="mt-2 p-2 border border-gray-300 rounded-lg"
+          >
+            {[...Array(10).keys()].map(num => (
+              <option key={num + 1} value={num + 1}>{num + 1}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg">Add to Cart
+          </button>
         </div>
       </main>
       <Footer />
