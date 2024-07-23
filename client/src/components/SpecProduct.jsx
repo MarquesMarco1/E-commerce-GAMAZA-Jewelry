@@ -12,7 +12,7 @@ const SpecProduct = () => {
 
   // STATS COUNTER
   const newEntry = async () => {
-    await fetch(`${localhost}/api/setStats/products/${id}`, {
+    await fetch(`${localhost}/api/stats/products/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

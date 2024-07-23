@@ -15,7 +15,7 @@ use DateTime;
 class StatsController extends AbstractController
 {
     // SETTERS
-    #[Route("/api/setStats/products/{id}", name: "statsProducts")]
+    #[Route("/api/stats/products/{id}")]
     public function newEntry(int $id, StatsProductRepository $statsProductRepository, ProductRepository $productRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         $product = $productRepository->find($id);
@@ -43,7 +43,7 @@ class StatsController extends AbstractController
     }
     
     // GETTERS
-    #[Route("/api/getStats/trending", name: "statsProducts")]
+    #[Route("/api/getStats/trending")]
 
     public function getStatsTrending(StatsProductRepository $statsProductRepository, UserRepository $userRepository):JsonResponse
     {
