@@ -45,6 +45,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $resultSet->fetchAllAssociative();
         }
     }
+
+    public function getTrending($product_id) {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT * FROM product WHERE id = :product_id';
+
+        $resultSet = $conn->executeQuery($sql, ['product_id' => $product_id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+    
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

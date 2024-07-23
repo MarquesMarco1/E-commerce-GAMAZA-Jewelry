@@ -16,6 +16,16 @@ class StatsProductRepository extends ServiceEntityRepository
         parent::__construct($registry, StatsProduct::class);
     }
 
+    public function getTrending() {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT product_id, count FROM stats_product ORDER BY count DESC LIMIT 6';
+
+        $resultSet = $conn->executeQuery($sql);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return StatsProduct[] Returns an array of StatsProduct objects
 //     */

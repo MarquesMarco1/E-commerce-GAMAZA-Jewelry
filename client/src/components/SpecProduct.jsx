@@ -10,6 +10,23 @@ const SpecProduct = () => {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
 
+  // STATS COUNTER
+  const newEntry = async () => {
+    await fetch(`${localhost}/api/setStats/products/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+  }
+
+  useEffect(() => {
+    newEntry();
+  }, []);
+
+
+  // FETCH PRODUCT
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -94,21 +111,7 @@ const SpecProduct = () => {
               Material: {product.material.name}
             </p>
             <p className="text-lg font-primary">Stone: {product.stone.name}</p>
-            <p
-              className="logo of a lotus that redirect to the landing/home page
-G.A.M.A.Z.A .Co
-logo of a person that redirect to your profile and the edition or suppression of your profile
-logo of an admin that redirect to your dashboard and the edition or suppression of some products
-logo of a cart that redirect to your cart and the finalization of your order
-
-    Homepage
-    /
-    Necklaces
-    /
-    Serti Griffes Oxydes De Zirconium Mailletext-lg font-primary"
-            >
-              Color: {product.color}
-            </p>
+            <p className="text-lg font-primary">Color: {product.color}</p>
             <p className="text-lg font-primary">Size: {product.size}</p>
             <p className="text-lg font-primary">Weight: {product.weight}g</p>
             <p className="text-lg font-primary">
