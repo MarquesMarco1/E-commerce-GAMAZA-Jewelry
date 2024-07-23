@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import localhost from "../config";  // Assurez-vous que ce module exporte une URL ou une partie d'URL valide
+import localhost from "../config";
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
