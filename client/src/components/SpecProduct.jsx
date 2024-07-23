@@ -9,6 +9,10 @@ const SpecProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
 
   // STATS COUNTER
   const newEntry = async () => {
@@ -50,6 +54,26 @@ const SpecProduct = () => {
     fetchProduct();
   }, [id]);
 
+  const handleNextImage = () => {
+    if (product.images && currentIndex < product.images.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      setSelectedImage(product.images[newIndex]);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (product.images && currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      setSelectedImage(product.images[newIndex]);
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log(`Added ${quantity} of ${product.name} to cart`);
+  };
+
   if (error)
     return (
       <div className="text-center py-4 text-red-500">
@@ -81,43 +105,74 @@ const SpecProduct = () => {
         </ul>
       </nav>
       <main className="py-6 px-4 max-w-4xl mx-auto">
-        <h1 className="text-gold text-5xl mb-9 text-center font-primary">
-          {product.name}
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border border-gold rounded-lg">
-          <div className="flex justify-center">
-            {product.image && (
+        <h1 className="text-gold text-5xl mb-9 text-center font-primary">{product.name}</h1>
+        <div className="flex flex-col items-center">
+          <div className="relative flex items-center justify-center mb-4">
+            <button
+              className="absolute left-0 bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full"
+              onClick={handlePrevImage}
+            >
+              &lt;
+            </button>
+            {selectedImage && (
               <img
-                className="max-w-full h-auto"
-                src={product.image}
+                className="max-w-full max-h-80"
+                src={selectedImage}
                 alt={product.name}
               />
             )}
+            <button
+              className="absolute right-0 bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full"
+              onClick={handleNextImage}
+            >
+              &gt;
+            </button>
           </div>
-          <div className="space-y-4">
-            <p className="text-lg font-semibold font-primary">
-              {product.description}
-            </p>
-            <p className="text-lg font-primary">
-              Price:{" "}
-              <span className="text-green-500 font-primary">
-                ${product.price}
-              </span>
-            </p>
-            <p className="text-lg font-primary">
-              Category: {product.category.name}
-            </p>
-            <p className="text-lg font-primary">
-              Material: {product.material.name}
-            </p>
-            <p className="text-lg font-primary">Stone: {product.stone.name}</p>
-            <p className="text-lg font-primary">Color: {product.color}</p>
-            <p className="text-lg font-primary">Size: {product.size}</p>
-            <p className="text-lg font-primary">Weight: {product.weight}g</p>
-            <p className="text-lg font-primary">
-              Stock Quantity: {product.stock_qty}
-            </p>
+          <div className="flex space-x-2 mt-4">
+            {product.images && product.images.map((image, index) => (
+              <img
+                key={index}
+                className={`w-20 h-20 cursor-pointer ${selectedImage === image ? 'border-2 border-gold' : 'border-2 border-gray-300'}`}
+                src={image}
+                alt={`Thumbnail ${index + 1}`}
+                onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
+              />
+            ))}
           </div>
+        </div>
+        <div className="mt-10 space-y-2">
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Category: {product.category.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Material: {product.material.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Stone: {product.stone.name}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Color: {product.color}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Size: {product.size}</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Weight: {product.weight}g</p>
+          <div className="border-b-2 border-gray-300"></div>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-20 p-2 h-24">Stock Quantity: {product.stock_qty}</p>
+        </div>
+        <div className="mt-10">
+          <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
+          <select
+            id="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="mt-2 p-2 border border-gray-300 rounded-lg"
+          >
+            {[...Array(10).keys()].map(num => (
+              <option key={num + 1} value={num + 1}>{num + 1}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
+          >
+            Add to Cart
+          </button>
         </div>
       </main>
       <Footer />
