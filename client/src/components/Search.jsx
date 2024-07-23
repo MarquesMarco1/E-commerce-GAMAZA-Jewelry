@@ -8,21 +8,21 @@ export default function Search() {
     const [categories, setCategories] =  useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     let navigate = useNavigate();
-    let { id } = useParams();
+    // let { id } = useParams();
 
-    useEffect(() => {
-        const fetchData = async () => {
-          const response = await fetch(`${localhost}/api/search/${id}`);
-          if (response.status === 200) {
-            const data = await response.json();
-            if (data.products.length > 0) {
-              setSelectedCategory(data.products[0].category.name);
-            }
-            setProducts(data.products);
-          }
-        };
-        fetchData();
-      }, [id]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       const response = await fetch(`${localhost}/api/search`);
+    //       if (response.status === 200) {
+    //         const data = await response.json();
+    //         if (data.products.length > 0) {
+    //           setSelectedCategory(data.products[0].category.name);
+    //         }
+    //         setProducts(data.products);
+    //       }
+    //     };
+    //     fetchData();
+    //   }, [id]);
       
     const handleSearch = async (e) => {
         e.preventDefault();
