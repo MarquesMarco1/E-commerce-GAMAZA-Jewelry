@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
-import localhost from "../config";
+import { Link, useParams } from "react-router-dom";
+import localhost from "../config";  // Assurez-vous que ce module exporte une URL ou une partie d'URL valide
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -11,20 +10,26 @@ const SpecProduct = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const newEntry = async () => {
-    await fetch(`${localhost}/api/stats/products/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
-  }
+    try {
+      await fetch(`${localhost}/api/stats/products/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+    } catch (err) {
+      console.error("Failed to post new entry:", err);
+    }
+  };
 
   useEffect(() => {
     newEntry();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,9 +37,9 @@ const SpecProduct = () => {
         const response = await fetch(`${localhost}/api/products/${id}`);
         if (response.ok) {
           const data = await response.json();
-
           if (data.products && data.products.length > 0) {
             setProduct(data.products[0]);
+            console.log(data.products)
             setSelectedImage(data.products[0].image);
           } else {
             setError(new Error("Product not found"));
@@ -51,16 +56,36 @@ const SpecProduct = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${product.name} to cart`);
+    if (product) {
+      console.log(`Added ${quantity} of ${product.name} to cart`);
+    }
   };
 
-  if (error)
+  const openModal = () => {
+    setIsModalOpen(true);
+    setIsZoomed(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsZoomed(false);
+  };
+
+  const toggleZoom = () => {
+    setIsZoomed(!isZoomed);
+  };
+
+  if (error) {
     return (
       <div className="text-center py-4 text-red-500">
         Error: {error.message}
       </div>
     );
-  if (!product) return <div className="text-center py-4">No product found</div>;
+  }
+
+  if (!product) {
+    return <div className="text-center py-4">No product found</div>;
+  }
 
   return (
     <>
@@ -89,7 +114,12 @@ const SpecProduct = () => {
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-center mb-4">
             {selectedImage && (
-              <img className="max-w-full max-h-80" src={selectedImage} alt={product.name} />
+              <img
+                className="max-w-full max-h-80 cursor-pointer"
+                src={selectedImage}
+                alt={product.name}
+                onClick={openModal}
+              />
             )}
           </div>
           <div className="flex space-x-2">
@@ -117,7 +147,7 @@ const SpecProduct = () => {
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stock_qty}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stockQty}</p>
         </div>
         <div className="mt-10">
           <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
@@ -133,11 +163,34 @@ const SpecProduct = () => {
           </select>
           <button
             onClick={handleAddToCart}
-            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg">Add to Cart
+            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
+          >
+            Add to Cart
           </button>
         </div>
       </main>
       <Footer />
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="relative bg-white p-4 max-w-3xl max-h-full overflow-auto">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            >
+              &times;
+            </button>
+            <div className="flex justify-center">
+              <img
+                className={`cursor-zoom-in ${isZoomed ? 'transform scale-150' : 'transform scale-100'}`}
+                src={selectedImage}
+                alt={product.name}
+                onClick={toggleZoom}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
