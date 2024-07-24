@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import localhost from "../../config";
-import Header from "../Header";
-import Footer from "../Footer";
+import localhost from "../../../config";
+import Header from "../../Header";
+import Footer from "../../Footer";
 
 export default function EditProduct() {
   const [allCategorie, setAllCategorie] = useState([]);

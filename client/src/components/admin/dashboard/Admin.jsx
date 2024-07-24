@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import localhost from "../../config";
+import localhost from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../Header";
+import Header from "../../Header";
 import ManageUsers from "./ManageUsers";
-import Footer from "../Footer";
+import Footer from "../../Footer";
 import ManageCategory from "./ManageCategory";
+import NavBarAdmin from "../../utils/navbarAdmin";
 
 export default function Admin() {
   const [products, setProducts] = useState([]);
@@ -48,8 +49,8 @@ export default function Admin() {
     <>
       <Header></Header>
       <div className="mr-24	ml-24	">
-        <h1 className="mt-16 text-3xl	text-gold mb-2">My dashboard</h1>
-        <div className="border	border-gray-400	w-2/4	"></div>
+        <NavBarAdmin></NavBarAdmin>
+        <div className="border	border-grey	w-2/4	"></div>
         <br></br>
         <div className="flex flex-col	">
           <Link to={`/createArticle`} className="w-max">
