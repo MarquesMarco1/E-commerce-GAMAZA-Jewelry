@@ -20,6 +20,7 @@ export default function EditProduct() {
   const [description, setDescription] = useState("");
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
+  const [imageAdd, setImageAdd] = useState("");
   let navigate = useNavigate();
   const { id } = useParams();
 
@@ -62,7 +63,7 @@ export default function EditProduct() {
         setCategory_id(data_product.products[0].category.id);
         setMaterial(data_product.products[0].material.id);
         setStone(data_product.products[0].stone.id);
-        setImage(data_product.products[0].image);
+        setImage(data_product.products[0].images);
         setColor(data_product.products[0].color);
         setSize(data_product.products[0].size);
         setWeight(data_product.products[0].weight);
@@ -80,7 +81,7 @@ export default function EditProduct() {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
       stone_id: parseInt(stone),
-      image: image,
+      image: imageAdd ? [imageAdd] : null,
       color: color,
       nom: nom,
       size: size,
@@ -99,6 +100,22 @@ export default function EditProduct() {
     if (response.status === 200) {
       const data = await response.json();
       navigate("/admin", { replace: true });
+    }
+  };
+
+  const deleteImage = async (elem) => {
+    console.log(elem);
+    const response = await fetch(`${localhost}/api/deleteImage/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ imageURL: elem }),
+    });
+    console.log(response);
+    if (response.status === 200) {
+      const data = await response.json();
+      setImage(data.image);
     }
   };
   return (
@@ -169,10 +186,27 @@ export default function EditProduct() {
           name="image"
           id="image"
           placeholder="Image"
-          required
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          value={imageAdd}
+          onChange={(e) => setImageAdd(e.target.value)}
         />
+        <ul className="flex">
+          {image &&
+            image.map((elem) => (
+              <li className="text-center">
+                <img
+                  className="max-w-full max-h-80 cursor-pointer"
+                  src={elem}
+                  alt={elem}
+                />
+                <span
+                  className="cursor-pointer	"
+                  onClick={() => deleteImage(elem)}
+                >
+                  X
+                </span>
+              </li>
+            ))}
+        </ul>
         <label for="color">color</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"

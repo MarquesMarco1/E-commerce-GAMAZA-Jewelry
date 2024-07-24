@@ -39,7 +39,6 @@ const SpecProduct = () => {
           const data = await response.json();
           if (data.products && data.products.length > 0) {
             setProduct(data.products[0]);
-            console.log(data.products)
             setSelectedImage(data.products[0].image);
           } else {
             setError(new Error("Product not found"));
