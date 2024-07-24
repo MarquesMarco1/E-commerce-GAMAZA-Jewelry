@@ -10,6 +10,7 @@ export default function CreadArticle() {
   const [allStone, setAllStone] = useState([]);
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
+  const [imageAll, setImageAll] = useState([]);
   const [color, setColor] = useState("");
   const [nom, setNom] = useState("");
   const [size, setSize] = useState("");
@@ -62,7 +63,7 @@ export default function CreadArticle() {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
       stone_id: parseInt(stone),
-      image: image,
+      image: imageAll.length > 0 ? imageAll : [image],
       color: color,
       nom: nom,
       size: size,
@@ -81,6 +82,11 @@ export default function CreadArticle() {
     if (response.status === 200) {
       navigate("/admin", { replace: true });
     }
+  };
+
+  const reset = () => {
+    setImageAll([...imageAll, image]);
+    setImage("");
   };
   return (
     <>
@@ -138,15 +144,24 @@ export default function CreadArticle() {
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
-        <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="image"
-          id="image"
-          placeholder="Image"
-          required
-          onChange={(e) => setImage(e.target.value)}
-        />
+        <div className="flex flex-col justify-start	 items-end mb-4">
+          <input
+            className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl "
+            type="text"
+            name="image"
+            id="image"
+            placeholder="Image"
+            // required
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+          <button
+            className="rounded-lg bg-light-purple p-2.5 mt-1"
+            onClick={() => reset()}
+          >
+            ADD image
+          </button>
+        </div>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"

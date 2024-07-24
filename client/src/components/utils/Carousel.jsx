@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import localhost from "../../config";
 
 export default function Carousel() {
@@ -18,14 +18,15 @@ export default function Carousel() {
         data.forEach((obj) => {
             obj.forEach((product) => {
                 let data = {
-                    image: product[0].image,
+                    image: JSON.parse(product[0].images),
                     id: product[0].id,
-                }
+                };
                 trending_data.push(data);
             });
         });
+
         setTrending(trending_data);
-    }
+    };
 
     const previousSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? trending.length - 1 : prevIndex - 1));
@@ -44,35 +45,35 @@ export default function Carousel() {
 
     const activeImages = getActiveImages(currentIndex);
 
-    function canRender () {
-        if(activeImages && activeImages[0] && activeImages[1] && activeImages[2])
+    function canRender() {
+        if (activeImages && activeImages[0] && activeImages[1] && activeImages[2])
             setDisplayCarousel(true);
-        else 
+        else
             return false;
     }
 
-    useEffect(()=>{
-        canRender();
-    }, [activeImages]);
+useEffect(() => {
+    canRender();
+}, [activeImages]);
 
-    return (
-        <div className="space-y-4 flex flex-col items-start justify-center m-24">
-            <h1 className="text-black text-5xl font-primary">
-                Trending now
-            </h1>
-            <div className="flex justify-center">
-                <button className="" onClick={previousSlide}>❮</button>
-                <div className="flex items-center w-10/12 transition-transform duration-500 ease-in-out">
-                    {displayCarousel &&
-                        <>
-                            <a href={`/product/${activeImages[0].id}`} className='z-0 left-28 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} /></a>
-                            <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.33)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
-                            <a href={`/product/${activeImages[2].id}`} className='z-0 right-16 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} /></a>
-                        </>
-                    }
-                </div>
-                <button className="" onClick={nextSlide}>❯</button>
+return (
+    <div className="space-y-4 flex flex-col items-start justify-center m-24">
+        <h1 className="text-black text-5xl font-primary">
+            Trending now
+        </h1>
+        <div className="flex justify-center">
+            <button className="" onClick={previousSlide}>❮</button>
+            <div className="flex items-center w-10/12 transition-transform duration-500 ease-in-out">
+                {displayCarousel &&
+                    <>
+                        <a href={`/product/${activeImages[0].id}`} className='z-0 left-28 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} /></a>
+                        <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.33)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
+                        <a href={`/product/${activeImages[2].id}`} className='z-0 right-16 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} /></a>
+                    </>
+                }
             </div>
+            <button className="" onClick={nextSlide}>❯</button>
         </div>
-    );
+    </div>
+);
 };
