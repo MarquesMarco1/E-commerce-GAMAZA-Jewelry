@@ -24,7 +24,7 @@ class UserController extends AbstractController
     public function user(Request $request, EntityManagerInterface $entityManager){
         $data = json_decode($request->getContent(), true);
         $email = $data["email"];
-        $products = $entityManager->getRepository(User::class)->findBy(['email' => $email]);
-        return $this->json(['user' => $products], 200);
+        $user = $entityManager->getRepository(User::class)->findBy(['email' => $email]);
+        return $this->json(['user' => $user], 200);
     }
 }

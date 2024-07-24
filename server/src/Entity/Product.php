@@ -20,8 +20,6 @@ class Product
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $image = null;
 
     #[ORM\Column(length: 255)]
     private ?string $color = null;
@@ -53,6 +51,9 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Stone $stone = null;
 
+    #[ORM\Column]
+    private array $images = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -82,17 +83,6 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getColor(): ?string
     {
@@ -201,4 +191,17 @@ class Product
 
         return $this;
     }
+
+    public function getImages(): array
+    {
+        return $this->images;
+    }
+
+    public function setImages(array $images): static
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
 }
