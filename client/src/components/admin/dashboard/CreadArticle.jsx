@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import localhost from "../../config";
-import Header from "../Header";
-import Footer from "../Footer";
+import localhost from "../../../config";
+import Header from "../../Header";
+import Footer from "../../Footer";
 
 export default function CreadArticle() {
   const [allCategorie, setAllCategorie] = useState([]);

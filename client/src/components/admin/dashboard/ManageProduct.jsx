@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import localhost from "../../config";
+import localhost from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ManageProducts(data) {

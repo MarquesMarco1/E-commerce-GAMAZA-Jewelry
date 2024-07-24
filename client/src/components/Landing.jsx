@@ -28,7 +28,7 @@ export default function Accueil() {
           {category &&
             category.map((elem) => (
               <Link to={`/category/${elem.id}`}>
-                <li className="flex justify-center font-primary text-gold text-5xl">{elem.name}</li>
+                <li className="flex justify-center font-primary text-gold text-6xl">{elem.name}</li>
               </Link>
             ))}
         </ul>

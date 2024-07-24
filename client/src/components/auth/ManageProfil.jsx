@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 export default function ManageProfil(data) {
   const [profil, setProfil] = useState([]);
   useEffect(() => {
-    console.log(data);
     setProfil(data.data);
   }, [data]);
   const editUser = () => {};

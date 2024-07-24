@@ -20,6 +20,7 @@ module.exports = {
         "dark-purple": "#7B16B9",
         black: "#0C0910",
         white: "#F5F5F5",
+        grey: "#DEDEE0"
       },
       backgroundImage: {
         login: "url('./assets/login.jpg')",
