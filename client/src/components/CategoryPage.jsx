@@ -55,6 +55,7 @@ export default function CategoryPage() {
                   alt={elem.name}
                 />
                 <p className="text-center font-primary">{elem.name}</p>
+                <p className="text-left font-primary">{elem.stockQty}</p>
               </Link>
             </li>
           ))
