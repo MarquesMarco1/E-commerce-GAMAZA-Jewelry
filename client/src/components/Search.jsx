@@ -50,15 +50,19 @@ export default function Search() {
     // Handle Logic //
     let list = [];
     
-    if (categoryName == 'All Categories' && productName == '') {
+    if (categoryName === 'All Categories' && productName === '') {
       product.map((elem) => {
         list.push(elem)
       })
     } else {
       product.map((elem) => {
-        let startWith = elem.name.toLocaleLowerCase().toString().includes(productName.toLocaleLowerCase().toString())
-        if(startWith && elem.category.name == categoryName){
-          list.push(elem)
+        const productNameLower = productName.toLocaleLowerCase();
+        const elemNameLower = elem.name.toLocaleLowerCase();
+        const elemCategoryName = elem.category.name;
+
+        const startWith = elemNameLower.includes(productNameLower) || elemNameLower.includes(productNameLower.toString());
+        if(startWith && (categoryName === 'All Categories') || elemCategoryName === categoryName) {
+          list.push(elem);
         }
       })
     }
@@ -78,31 +82,30 @@ export default function Search() {
   return (
     <>
       <Header />
-      <form onSubmit={handleSearch}
-        className="flex flex-col md:flex-row gap-3">
-        <div className="flex">
+      <div className="p-5 bg-gray-100 rounded-lg shadow-md">
+        <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5">
+          <div className="flex w-full md:w-auto">
 
-          <input
-            type="text"
-            placeholder="Search by terms or categories"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            className="w-full md:w-80 px-3 font-primary h-10 rounded-l border-2 border-gold focus:outline-none focus:border-gold"
-          />
+            <input
+              type="text"
+              placeholder="Search by terms or categories"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+              className="w-full md:w-80 p-2 border border-gold rounded-md"
+            />
 
-          <button type="submit"
-            className="rounded-r p-3 px-2 md:px-3 py-0 md:py-1 bg-light-purple text-xl font-bold text-black rounded-lg hover:bg-gold font-primary">
-            Search
-          </button>
-
+            <button type="submit"
+              className="p-2 md:px-4 bg-light-purple bg-opacity-20 text-black rounded-md hover:bg-gold">
+              Search
+            </button>
         </div>
 
         <select
           value={categoryName}
-          className="w-full h-10 border-2 border-gold focus:outline-none focus:border-gold text-gold rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
+          className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
           onChange={(e) => setCategoryName(e.target.value)}
         >
-          <option className="text-gold font-primary">All Categories</option>
+          <option value="All Categories" className="text-gold font-primary">All Categories</option>
 
           {categories.length > 0 && categories.map((elem) => (
             <option key={elem.id} value={elem.name}>{elem.name}</option>
@@ -111,17 +114,26 @@ export default function Search() {
         </select>
       </form>
 
-      <div>
-        {searchResults.length > 0 ? (
-          searchResults.map((result) => (
-            <div key={result.id}>
-              <h3 className="font-primary text-gold">{result.name}</h3>
-              <p>{result.description}</p>
-            </div>
-          ))
-        ) : (
-          <p>No results found.</p>
-        )}
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+       */}
+          <div className="flex flex-wrap gap-5">
+          {searchResults.length > 0 ? (
+            searchResults.map((result) => (
+              <div key={result.id} className="bg-white border border-gold rounded-lg p-5 w-full md:w-1/3 shadow-lg">
+
+              <img src={result.images} alt={result.name} className="w-full h-48 object-cover rounded-t-lg" />             
+              <h3 className="font-primary text-gold text-2xl mt-4">{result.name}</h3>
+                <p className="font-primary text-black text-lg">{result.description}</p>
+                <p className="font-bold font-primary text-black">${result.price}</p>
+                <button className="mt-4 w-full bg-gold text-white py-2 rounded-lg hover:bg-gold hover:bg-opacity-20">
+                  Add to cart
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No results found.</p>
+          )}
+        </div>
       </div>
     </>
   )
