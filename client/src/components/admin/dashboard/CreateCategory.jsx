@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Router, useNavigate } from "react-router-dom";
-import localhost from "../../config";
-import Header from "../Header";
-import Footer from "../Footer";
+import localhost from "../../../config";
+import Header from "../../Header";
+import Footer from "../../Footer";
 
 export default function CreateCategory() {
   const [categorie, setCategorie] = useState("");

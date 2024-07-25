@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import localhost from "../../config";
-import Header from "../Header";
-import Footer from "../Footer";
+import localhost from "../../../config";
+import Header from "../../Header";
+import Footer from "../../Footer";
 
-export default function EditProduct() {
+export default function CreadArticle() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
+  const [imageAll, setImageAll] = useState([]);
   const [color, setColor] = useState("");
   const [nom, setNom] = useState("");
   const [size, setSize] = useState("");
@@ -21,7 +21,6 @@ export default function EditProduct() {
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
   let navigate = useNavigate();
-  const { id } = useParams();
 
   useEffect(() => {
     const fetchIsAdmin = async () => {
@@ -55,23 +54,7 @@ export default function EditProduct() {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
       }
-      const response_product = await fetch(`${localhost}/api/products/${id}`);
-      if (response_product.status === 200) {
-        const data_product = await response_product.json();
-        setNom(data_product.products[0].name);
-        setCategory_id(data_product.products[0].category.id);
-        setMaterial(data_product.products[0].material.id);
-        setStone(data_product.products[0].stone.id);
-        setImage(data_product.products[0].image);
-        setColor(data_product.products[0].color);
-        setSize(data_product.products[0].size);
-        setWeight(data_product.products[0].weight);
-        setPrice(data_product.products[0].price);
-        setStockQty(data_product.products[0].stockQty);
-        setDescription(data_product.products[0].description);
-      }
     };
-    fetchData();
   }, []);
 
   const handelSubmit = async (e) => {
@@ -80,7 +63,7 @@ export default function EditProduct() {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
       stone_id: parseInt(stone),
-      image: image,
+      image: imageAll.length > 0 ? imageAll : [image],
       color: color,
       nom: nom,
       size: size,
@@ -89,7 +72,7 @@ export default function EditProduct() {
       stockQty: stockQty,
       description: description,
     };
-    const response = await fetch(`${localhost}/api/editProduct/${id}`, {
+    const response = await fetch(`${localhost}/api/admin/addArticle`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,83 +80,88 @@ export default function EditProduct() {
       body: JSON.stringify({ formData }),
     });
     if (response.status === 200) {
-      const data = await response.json();
       navigate("/admin", { replace: true });
     }
+  };
+
+  const reset = () => {
+    setImageAll([...imageAll, image]);
+    setImage("");
   };
   return (
     <>
       <Header></Header>
+      <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
+        Create a product
+      </h1>
       <form
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-        <label for="nom">Product name</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"
-          placeholder="Nom"
+          placeholder="Product name"
           required
-          value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
-        <label for="categorie">Choose a category:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="cat"
           id="categorie"
-          value={category_id}
           onChange={(e) => setCategory_id(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">--Please choose a category--</option>
           {allCategorie &&
             allCategorie.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
 
-        <label for="material">Choose a material:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="material"
           id="material"
-          value={material}
           onChange={(e) => setMaterial(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">--Please choose a material--</option>
           {allMaterial &&
             allMaterial.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
-        <label for="stone">Choose a stone:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="stone"
           id="stone"
-          value={stone}
           onChange={(e) => setStone(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">--Please choose a stone--</option>
           {allStone &&
             allStone.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
-        <label for="image">image link</label>
-        <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="image"
-          id="image"
-          placeholder="Image"
-          required
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <label for="color">color</label>
+        <div className="flex flex-col justify-start	 items-end mb-4">
+          <input
+            className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl "
+            type="text"
+            name="image"
+            id="image"
+            placeholder="Image"
+            // required
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+          <button
+            className="rounded-lg bg-light-purple p-2.5 mt-1"
+            onClick={() => reset()}
+          >
+            ADD image
+          </button>
+        </div>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -181,10 +169,8 @@ export default function EditProduct() {
           id="color"
           placeholder="Color"
           required
-          value={color}
           onChange={(e) => setColor(e.target.value)}
         />
-        <label for="size">size</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -192,10 +178,8 @@ export default function EditProduct() {
           id="size"
           placeholder="Size"
           required
-          value={size}
           onChange={(e) => setSize(e.target.value)}
         />
-        <label for="weight">weight</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -204,22 +188,18 @@ export default function EditProduct() {
           placeholder="Weight"
           step="0.01"
           required
-          value={weight}
           onChange={(e) => setWeight(e.target.value)}
         />
-        <label for="price">price</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
           name="price"
           id="price"
           placeholder="Price"
-          required
           step="0.01"
-          value={price}
+          required
           onChange={(e) => setPrice(e.target.value)}
         />
-        <label for="stockQty">stockQty</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -227,24 +207,20 @@ export default function EditProduct() {
           id="stockQty"
           placeholder="StockQty"
           required
-          value={stockQty}
           onChange={(e) => setStockQty(e.target.value)}
         />
-        <label for="content">description</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
           placeholder="Description"
           required
-          value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
         <button type="submit" id="submit">
-          Edit the product
+          Add a product
         </button>
       </form>
-
       <Footer></Footer>
     </>
   );

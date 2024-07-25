@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import localhost from "../../config";
+import localhost from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ManageProducts(data) {
-  const [refresh, setRefresh] = useState(false);
   const [products, setProducts] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
     setProducts(data.data);
-  }, [data, refresh]);
+  }, [data]);
 
   const deleteProduct = async (id) => {
     const response = await fetch(`${localhost}/api/delete/${id}`);

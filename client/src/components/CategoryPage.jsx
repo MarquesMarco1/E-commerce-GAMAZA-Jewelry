@@ -56,7 +56,9 @@ export default function CategoryPage() {
         <li>/</li>
         {name && <li>{name}</li>}
       </ul>
-      <h1 className="text-gold text-center text-5xl mb-9 font-primary">{name}</h1>
+      <h1 className="text-gold text-center text-5xl mb-9 font-primary">
+        {name}
+      </h1>
       <ul className="grid grid-cols-3 gap-6 mx-20 mb-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((elem) => {
@@ -66,7 +68,7 @@ export default function CategoryPage() {
               <Link to={`/product/${elem.id}`}>
                 <img
                   className="w-full h-48 object-cover mb-4"
-                  src={elem.image}
+                  src={elem.images}
                   alt={elem.name}
                 />
                 <p className="text-center font-primary">{elem.name}</p>
