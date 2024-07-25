@@ -11,14 +11,15 @@ export default function ManageUsers(data) {
   }, [data, refresh]);
 
   const deleteUser = async (id) => {
-    // const response = await fetch(`${localhost}/api/delete/${id}`);
-    // const data = await response.json();
-    // if (data.success) {
-    //   setRefresh(true);
-    // }
+    const response = await fetch(`${localhost}/api/deleteUser/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      // setRefresh(true);
+      window.location.reload();
+    }
   };
   const editUser = async (id) => {
-    // navigate(`/editProduct/${id}`, { replace: true });
+    navigate(`/editAdminUser/${id}`, { replace: true });
   };
 
   return (

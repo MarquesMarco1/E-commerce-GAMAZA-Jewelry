@@ -11,6 +11,9 @@ import Admin from "./components/admin/dashboard/Admin";
 import EditProduct from "./components/admin/dashboard/EditProduct";
 import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
+import EditProfil from "./components/auth/EditProfil";
+import CreateUser from "./components/admin/dashboard/CreateUser";
+import EditUser from "./components/admin/dashboard/EditUser";
 
 function App() {
   return (
@@ -24,11 +27,14 @@ function App() {
         <Route path="/admin" element={<Admin />}></Route>
         <Route path="/createArticle" element={<CreateArticle />}></Route>
         <Route path="/createCategory" element={<CreateCategory />}></Route>
+        <Route path="/createUser" element={<CreateUser />}></Route>
         <Route path="/editProduct/:id" element={<EditProduct />}></Route>
         <Route path="/editCategory/:id" element={<EditCategory />}></Route>
+        <Route path="/editAdminUser/:id" element={<EditUser />}></Route>
         <Route path="/admin/stats" element={<Stats />}></Route>
         {/* USERS */}
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/editProfil/:id" element={<EditProfil />}></Route>
         <Route path="/authentication" element={<Authentication />}></Route>
       </Routes>
     </BrowserRouter>

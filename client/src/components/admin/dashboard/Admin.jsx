@@ -59,6 +59,9 @@ export default function Admin() {
           <Link to={`/createCategory`} className="w-max">
             Add a category
           </Link>
+          <Link to={`/createUser`} className="w-max">
+            Add a user
+          </Link>
           <br></br>
         </div>
         <div className="flex justify-between	">
