@@ -23,6 +23,9 @@ class Category
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Category
     public function setLastUpdated(\DateTimeInterface $lastUpdated): static
     {
         $this->lastUpdated = $lastUpdated;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

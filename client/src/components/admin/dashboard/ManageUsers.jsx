@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import localhost from "../../config";
+import localhost from "../../../config";
 
 export default function ManageUsers(data) {
   const [users, setUsers] = useState([]);

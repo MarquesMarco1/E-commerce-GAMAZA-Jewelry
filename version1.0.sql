@@ -118,7 +118,7 @@ CREATE TABLE `doctrine_migration_versions` (
 
 LOCK TABLES `doctrine_migration_versions` WRITE;
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
-INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20240715190943','2024-07-15 19:09:56',699),('DoctrineMigrations\\Version20240715192305','2024-07-15 19:23:13',157),('DoctrineMigrations\\Version20240716080355','2024-07-16 08:04:07',612),('DoctrineMigrations\\Version20240716081652','2024-07-16 08:17:10',511);
+INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20240715190943','2024-07-15 19:09:56',699),('DoctrineMigrations\\Version20240715192305','2024-07-15 19:23:13',157),('DoctrineMigrations\\Version20240716080355','2024-07-16 08:04:07',612),('DoctrineMigrations\\Version20240716081652','2024-07-16 08:17:10',511),('DoctrineMigrations\\Version20240724130748','2024-07-24 13:07:55',398);
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,13 +192,13 @@ CREATE TABLE `product` (
   `stone_id` int NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `weight` double NOT NULL,
   `price` double NOT NULL,
   `stock_qty` int NOT NULL,
   `last_updated` datetime NOT NULL,
+  `images` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_D34A04AD12469DE2` (`category_id`),
   KEY `IDX_D34A04ADE308AC6F` (`material_id`),
@@ -206,7 +206,7 @@ CREATE TABLE `product` (
   CONSTRAINT `FK_D34A04AD12469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   CONSTRAINT `FK_D34A04AD1582D292` FOREIGN KEY (`stone_id`) REFERENCES `stone` (`id`),
   CONSTRAINT `FK_D34A04ADE308AC6F` FOREIGN KEY (`material_id`) REFERENCES `material` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +215,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,6,1,1,'Serti Griffes Oxydes De Zirconium Maille','Collier Plaque Or Jaune Chou Serti Griffes Oxydes De Zirconium Maille Forcat 40+4cm\n','https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwb3c06eb4/images/FQCFJZW552-master.jpg?sw=1024&sh=1024','Or ','12 L x 12 l',2.5,69,999,'2024-07-18 22:05:35'),(2,7,6,3,'Bague Margaux Or Jaune Emeraude Et Diamant','Bague Or Jaune 375/1000 Emeraudes Et Diamants\n','https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw5fbb25bc/images/B3DFJEV293-master.jpg?sw=1024&sh=1024','Vert','55',1.92,335,999,'2024-07-18 21:34:12'),(3,6,1,7,'Collier Or Jaune Bragi Perle De Culture Oxyde De Zirconium','Collier Or Jaune 375/1000 Forme Cœur Pavage Oxydes De Zirconium Et Perle De Culture 5-5.5mm Maille Jaseron 40+2cm\n','https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw89f39928/images/B3CFJU2331-master.jpg?sw=1024&sh=1024','Nacre','42Lx42l',1.95,143,999,'2024-07-18 21:35:57');
+INSERT INTO `product` VALUES (1,7,2,2,'Bague Dimitria Or Blanc Saphir Et Diamant','Bague Or Blanc 375/1000 Saphir Et Diamants Blancs Dimitria\n','Or ','54',1.44,420,999,'2024-07-24 14:50:53','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw761c495f/images/B3DFBSB365-view3.jpg?sw=1024&sh=1024\", [\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw59ccd182/images/B3DFBSB365-master.jpg?sw=1024&sh=1024\"]]'),(2,7,3,1,'Bague Clothilde Or Rose Rhodolite Et Oxyde','Bague Or Rose 375/1000 Rhodolite Forme Coeur Et Oxydes De Zirconium\n','Or ','48',1.11,169,999,'2024-07-24 13:12:51','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw335bc7fa/images/B3DFRAR012-view1.jpg?sw=1024&sh=1024\"]'),(3,7,3,4,'Bague Clothilde Or Rose Quartz Et Oxyde','Bague Or Rose 375/1000 Quartz Rose Forme Coeur Et Oxydes De Zirconium\n','Or ','48',1.03,169,999,'2024-07-24 13:15:36','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwb7d07b3e/images/B3DFRQS166-master.jpg?sw=1024&sh=1024\"]'),(4,11,1,7,'Boucles D\'oreilles Pendantes Carrine 2 Fils Or Jaune Perle De Culture','Boucles D\'oreilles Pendantes Or Jaune 375/1000 Perles De Culture 7/5.4mm','Or ','7/5.4mm',1.46,109,999,'2024-07-24 13:22:34','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw0789fecb/images/B3OFJU2354-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw866f8545/images/B3OFJU2354-view1.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw4b3b9a5c/images/B3OFJU2354-view2.jpg?sw=1024&sh=1024\"]'),(5,6,1,4,'Collier Ponama Or Jaune Oxyde De Zirconium','Collier Or Jaune 375/1000 Maille Forçat Oxyde De Zirconium 4mm Pm 42cm\n','Or ','42 L x 42 l',1.1,99,997,'2024-07-24 13:24:09','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw098ae5e8/images/B3CFJZW134-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw3d95b46c/images/B3CFJZW134-view1.jpg?sw=1024&sh=1024\"]'),(6,9,1,5,'Bracelet Adula Or Jaune Oxyde','Bracelet Or Jaune 375/1000 Oxyde De Zirconium ','Or ','4mm 18cm',0.54,89,999,'2024-07-24 13:25:52','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw549ae277/images/B3BFJZW208-master.jpg?sw=1024&sh=1024\"]');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,6 +248,61 @@ CREATE TABLE `review` (
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stats_cart`
+--
+
+DROP TABLE IF EXISTS `stats_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stats_cart` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cart_id` int NOT NULL,
+  `count` int NOT NULL,
+  `last_updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4ACFE0F71AD5CDBF` (`cart_id`),
+  CONSTRAINT `FK_4ACFE0F71AD5CDBF` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stats_cart`
+--
+
+LOCK TABLES `stats_cart` WRITE;
+/*!40000 ALTER TABLE `stats_cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stats_cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stats_product`
+--
+
+DROP TABLE IF EXISTS `stats_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stats_product` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `count` int NOT NULL,
+  `last_update` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4AF045F04584665A` (`product_id`),
+  CONSTRAINT `FK_4AF045F04584665A` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stats_product`
+--
+
+LOCK TABLES `stats_product` WRITE;
+/*!40000 ALTER TABLE `stats_product` DISABLE KEYS */;
+INSERT INTO `stats_product` VALUES (1,1,8,'2024-07-24 13:13:05'),(3,3,5,'2024-07-24 13:15:50'),(5,4,3,'2024-07-24 13:22:40'),(7,2,3,'2024-07-24 13:24:20'),(9,6,2,'2024-07-24 13:25:56'),(11,5,7,'2024-07-24 13:26:37');
+/*!40000 ALTER TABLE `stats_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -320,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-19  0:13:35
+-- Dump completed on 2024-07-24 16:56:38

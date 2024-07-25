@@ -28,7 +28,7 @@ class ProductController extends AbstractController
         $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
         if($formData){
             $product->setName($formData["nom"]);
-            $product->setImage($formData["image"]);
+            $product->setImages($formData["image"]);
             $product->setDescription($formData["description"]);
             $product->setColor($formData["color"]);
             $product->setSize($formData["size"]);
@@ -69,9 +69,15 @@ class ProductController extends AbstractController
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
         $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
+        if($formData["image"] !== null){
+            $images = $product->getImages();
+            array_push($images, $formData["image"]);  
+        }else{
+            $images = $product->getImages();
+        }
         if($formData){
             $product->setName($formData["nom"]);
-            $product->setImage($formData["image"]);
+            $product->setImages($images);
             $product->setDescription($formData["description"]);
             $product->setColor($formData["color"]);
             $product->setSize($formData["size"]);
@@ -90,11 +96,34 @@ class ProductController extends AbstractController
         }
     }
 
+    #[Route("/api/deleteImage/{id}")]
+    public function editProductImage(Request $request, EntityManagerInterface $entityManager,Product $product, int $id)
+    {
+        $data = json_decode($request->getContent(), true);
+        $formData = $data["imageURL"];
+        $images = $product->getImages();
+        if(array_search($formData, $images)!==false){
+            unset($images[array_search($formData, $images)]);
+            $product->setImages(array_values($images));
+            $entityManager->persist($product);
+            $entityManager->flush();
+            return $this->json(["image"=>$product->getImages()], 200);
+        }
+    }
+
     #[Route("/api/delete/{id}",name : "deleteProduct")]
     public function deleteProduct(Product $product, EntityManagerInterface $entityManager, int $id)
     {
         $entityManager->remove($product);
         $entityManager->flush();
         return $this->json(['success' => true], 200);
+    }
+
+    #[Route("/api/category/{id}",name : "categoryId")]
+    public function getCategoryId(EntityManagerInterface $entityManager, int $id)
+    {
+        $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
+        return $this->json(['products' => $products], 200);
+
     }
 }
