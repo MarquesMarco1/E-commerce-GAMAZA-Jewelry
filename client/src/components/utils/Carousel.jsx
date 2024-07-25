@@ -21,7 +21,7 @@ export default function Carousel() {
         data.forEach((obj) => {
             obj.forEach((product) => {
                 let data = {
-                    image: product[0].image,
+                    image: product[0].images,
                     id: product[0].id,
                 }
                 trending_data.push(data);
