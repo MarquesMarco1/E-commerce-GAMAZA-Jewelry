@@ -11,6 +11,7 @@ import Admin from "./components/admin/dashboard/Admin";
 import EditProduct from "./components/admin/dashboard/EditProduct";
 import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
+import Map from "./components/Map"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         {/* USERS */}
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/authentication" element={<Authentication />}></Route>
+        <Route path="/map"element={<Map />}></Route>
       </Routes>
     </BrowserRouter>
   );

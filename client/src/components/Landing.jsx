@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import localhost from "../config";
 import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
+import Footer from "./Footer";
 
 
 export default function Accueil() {
@@ -35,6 +36,7 @@ export default function Accueil() {
       </div>
       {/* CAROUSSELLE */}
       <Carousel />
+      <Footer />
     </div>
   );
 }
