@@ -66,9 +66,9 @@ return (
             <div className="flex items-center w-10/12 transition-transform duration-500 ease-in-out">
                 {displayCarousel &&
                     <>
-                        <a href={`/product/${activeImages[0].id}`} className='z-0 left-28 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} /></a>
-                        <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.33)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
-                        <a href={`/product/${activeImages[2].id}`} className='z-0 right-16 relative'><img className='border-grey border-4 rounded-2xl' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} /></a>
+                        <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 left-28 relative' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} />
+                        <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.25)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
+                        <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 right-16 relative' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} />
                     </>
                 }
             </div>
