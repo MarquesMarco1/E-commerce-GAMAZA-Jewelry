@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import localhost from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
+
+import localhost from "../../../config";
+
 import Header from "../../Header";
 import ManageUsers from "./ManageUsers";
 import Footer from "../../Footer";
