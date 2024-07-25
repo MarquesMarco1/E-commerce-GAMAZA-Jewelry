@@ -3,6 +3,9 @@ import localhost from "../config";
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import inStock from '../assets/inStock.svg';
+import lowStock from '../assets/lowInStock.svg';
+import soldOut from '../assets/soldOut.svg';
 
 const SpecProduct = () => {
   const { id } = useParams();
@@ -87,6 +90,18 @@ const SpecProduct = () => {
     return <div className="text-center py-4">No product found</div>;
   }
 
+  const manageStock = (stockQty) => {
+    if(stockQty >= 10){
+      return ['In stock', inStock];
+    }else if(stockQty > 0){
+      return ['Low in stock', lowStock];
+    }else{
+      return ['Sold out', soldOut];
+    }
+  };
+
+   const [stockText, stockColorCode] = manageStock(product.stockQty);
+
   return (
     <>
       <Header />
@@ -147,7 +162,10 @@ const SpecProduct = () => {
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stockQty}</p>
+          <div className="flex items-center">
+                  <img className="w-8 h-8" src={stockColorCode} alt={stockText}/>
+                  <p className="text-left font-primary">{stockText}</p>
+          </div>
         </div>
         <div className="mt-10">
           <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
