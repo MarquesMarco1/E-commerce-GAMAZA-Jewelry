@@ -1,17 +1,15 @@
 import Header from "./Header";
 import localhost from "../config";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 
 export default function Search() {
-  // const { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
   const [categories, setCategories] =  useState([]);
-  // const [searchTerm, setSearchTerm]= useState('');
-    // const [selectedCategory, setSelectedCategory] = useState('');
+  const [productName, setProductName] = useState('');
+  const [categoryName, setCategoryName] = useState('All Categories');
+  const [searchResults, setSearchResults]= useState([]);
+  const [displaySearchResults, setDisplaySearchResults] = useState(false);
     const [error, setError] = useState('');
-    // const [data, setData] = useState('');
-    let navigate = useNavigate();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -24,9 +22,10 @@ export default function Search() {
 
             if (response.ok) {
             const data = await response.json();
-
+            console.log(data);
             if (data.product && data.product.length > 0) {
-              setProduct(data.product[0]);
+              setProduct(data.product);
+              setCategories(data.category)
             } else {
               setError(new Error("Product not found"));
             }
@@ -43,9 +42,28 @@ export default function Search() {
       
     const handleSearch = async (e) => {
         e.preventDefault();
-
-        navigate(`search?=name=${product.name}&category=${product.category}`);
+        sortResults();
     };
+
+    const sortResults = () => {
+      console.log('produits:', product);
+      console.log('nom du produit:', productName);
+      console.log('category:', categories);
+      console.log('nom de la categorie:', categoryName);
+      
+      // Handle Logic //
+      switch(categoryName && product) {
+        default: 'No products found'
+        break;
+        case categoryName == 'All Categories' && productName == '':
+          let listNames = [];
+          product.map((elem) => {
+            console.log('elem:', elem);
+            return listNames;
+          })
+        }
+    }
+    // Gestion d'erreurs //
 
     if (error)
       return (
@@ -55,38 +73,56 @@ export default function Search() {
       );
     if (!product) return <div className="text-center py-4">No product found</div>;
 
+
     return (
       <>
       <Header />
         <form onSubmit={handleSearch}
-        className="flex flex-col md:flex-row gap-3">
-          <div className="flex">
+              className="flex flex-col md:flex-row gap-3">
+        <div className="flex">
+
           <input
             type="text"
             placeholder="Search by terms or categories"
-            value={product}
-            onChange={(e) => setProduct(e.target.value)}
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
             className="w-full md:w-80 px-3 font-primary h-10 rounded-l border-2 border-gold focus:outline-none focus:border-gold"
             />
+
           <button type="submit"
-              className="rounded-r px-2 md:px-3 py-0 md:py-1 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary">
+              className="rounded-r p-3 px-2 md:px-3 py-0 md:py-1 bg-light-purple text-xl font-bold text-black rounded-lg hover:bg-gold font-primary">
               Search
           </button>
+
         </div>
+
           <select
-            value={categories}
-            class="w-full h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
-            onChange={(e) => setCategories(e.target.value)}
+            value={categoryName}
+            className="w-full h-10 border-2 border-gold focus:outline-none focus:border-gold text-gold rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
+            onChange={(e) => setCategoryName(e.target.value)}
           >
-            <option value=""
-              className="text-gold font-primary">Toutes les catégories</option>
-            {product.map(() => (
-              <option key={product.id} value={product.category}>
-                {product.category.name}
-              </option>
+            <option className="text-gold font-primary">All Categories</option>
+
+            {categories.length > 0 && categories.map((elem) => (
+            <option key={elem.id} value={elem.name}>{elem.name}</option>
             ))}
+
           </select>
         </form>
+
+        <div>
+          {searchResults.length > 0 ? (
+              searchResults.map((result) => (
+                <div key={result.id}>
+                  <h3 className="font-primary text-gold">{result.name}</h3>
+                  <p>{result.description}</p>
+                </div>
+            ))
+          ) : (
+            <p>No results found.</p>
+          )}
+        </div>
         </>
-      );
+    )
   }
+
