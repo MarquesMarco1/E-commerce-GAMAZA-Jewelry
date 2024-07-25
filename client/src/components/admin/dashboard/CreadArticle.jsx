@@ -1,13 +1,34 @@
+////////////////////
+//  Dependencies  //
+////////////////////
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+////////////
+// Config //
+////////////
+
 import localhost from "../../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import Header from "../../Header";
 import Footer from "../../Footer";
 
 export default function CreadArticle() {
+  let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
+
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
   const [imageAll, setImageAll] = useState([]);
@@ -20,36 +41,56 @@ export default function CreadArticle() {
   const [description, setDescription] = useState("");
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
-  let navigate = useNavigate();
-
   useEffect(() => {
+
+    ////////////////////////////////
+    //  Check Middleware isAdmin  //
+    ////////////////////////////////
+    
+    fetchIsAdmin();
+    
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
+      
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
+
       if (response.status === 200) {
         const data = await response.json();
+
         if (data.isAdmin) {
           fetchData();
         } else {
           navigate("/", { replace: true });
-        }
+        };
+
       } else {
         navigate("/", { replace: true });
       }
     };
-    fetchIsAdmin();
+    
+    
+    /////////////////////////////////////////////////
+    //  Fetch All : Categories, Materials, Stones  //
+    /////////////////////////////////////////////////
+
     const fetchData = async () => {
+
       const response = await fetch(`${localhost}/api/categorie`);
+
       if (response.status === 200) {
         const data = await response.json();
         setAllCategorie(data.allCategory);
       }
+
       const response_material = await fetch(`${localhost}/api/material`);
+
       if (response_material.status === 200) {
         const data_material = await response_material.json();
         setAllMaterial(data_material.allMaterial);
       }
+
       const response_stone = await fetch(`${localhost}/api/stone`);
+
       if (response_stone.status === 200) {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
@@ -57,8 +98,13 @@ export default function CreadArticle() {
     };
   }, []);
 
+  ////////////////////
+  //  HandleSubmit  //
+  ////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
@@ -72,6 +118,7 @@ export default function CreadArticle() {
       stockQty: stockQty,
       description: description,
     };
+
     const response = await fetch(`${localhost}/api/admin/addArticle`, {
       method: "POST",
       headers: {
@@ -79,6 +126,7 @@ export default function CreadArticle() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.status === 200) {
       navigate("/admin", { replace: true });
     }
@@ -98,6 +146,9 @@ export default function CreadArticle() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
+
+        {/* Name */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -107,6 +158,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setNom(e.target.value)}
         />
+
+        {/* Categories */}
+
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="cat"
@@ -120,6 +174,8 @@ export default function CreadArticle() {
             ))}
         </select>
 
+        {/* Materials */}
+
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="material"
@@ -132,6 +188,9 @@ export default function CreadArticle() {
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
+
+        {/* Stones */}
+
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="stone"
@@ -144,6 +203,9 @@ export default function CreadArticle() {
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
+
+        {/* Images */}
+
         <div className="flex flex-col justify-start	 items-end mb-4">
           <input
             className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl "
@@ -151,10 +213,10 @@ export default function CreadArticle() {
             name="image"
             id="image"
             placeholder="Image"
-            // required
             value={image}
             onChange={(e) => setImage(e.target.value)}
           />
+
           <button
             className="rounded-lg bg-light-purple p-2.5 mt-1"
             onClick={() => reset()}
@@ -162,6 +224,9 @@ export default function CreadArticle() {
             ADD image
           </button>
         </div>
+
+        {/* Color */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -171,6 +236,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setColor(e.target.value)}
         />
+
+        {/* Size */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -180,6 +248,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setSize(e.target.value)}
         />
+
+        {/* Weight */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -190,6 +261,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setWeight(e.target.value)}
         />
+
+        {/* Price */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -200,6 +274,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setPrice(e.target.value)}
         />
+
+        {/* Stock Quantity */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -209,6 +286,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setStockQty(e.target.value)}
         />
+
+        {/* Description */}
+
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
@@ -217,6 +297,9 @@ export default function CreadArticle() {
           required
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
+        {/* Submit Button */}
+
         <button type="submit" id="submit">
           Add a product
         </button>
