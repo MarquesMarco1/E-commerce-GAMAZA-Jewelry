@@ -96,6 +96,8 @@ export default function EditCategory() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
+        {/* Category name */}
+
         <label for="nom">Category name FR</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -120,6 +122,8 @@ export default function EditCategory() {
           onChange={(e) => setNomEn(e.target.value)}
         />
 
+        {/* Image */}
+
         <label for="image">image link</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -131,6 +135,9 @@ export default function EditCategory() {
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
+
+        {/* Description */}
+
         <label for="content">description FR</label>
         <textarea
           className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"

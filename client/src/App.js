@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from "react-helmet-async";
 
 import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/dashboard/CreadArticle";
@@ -19,6 +19,7 @@ import CreateUser from "./components/admin/dashboard/CreateUser";
 import EditUser from "./components/admin/dashboard/EditUser";
 
 function App() {
+  localStorage.setItem("language", "EN");
   return (
     <>
       {/* // ROUTES */}
@@ -42,12 +43,14 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/editProfil/:id" element={<EditProfil />}></Route>
             <Route path="/authentication" element={<Authentication />}></Route>
-
           </Routes>
         </BrowserRouter>
         {/* GOOGLE ANALYTICS */}
         <Helmet>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DP4K2GG5P"></script>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-3DP4K2GG5P"
+          ></script>
           <script>
             {`
               window.dataLayer = window.dataLayer || [];
