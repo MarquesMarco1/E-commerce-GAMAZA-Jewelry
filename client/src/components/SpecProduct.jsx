@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import inStock from '../assets/inStock.svg';
 import lowStock from '../assets/lowInStock.svg';
 import soldOut from '../assets/soldOut.svg';
+import StockAlert from './stockAlert';
 
 const SpecProduct = () => {
   const { id } = useParams();
@@ -15,6 +16,9 @@ const SpecProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [productSelect, setproductSelect] = useState(null);
+
 
   const newEntry = async () => {
     try {
@@ -100,6 +104,16 @@ const SpecProduct = () => {
     }
   };
 
+  const handleStockAlert = (productName) => {
+    setproductSelect(productName);
+    setIsOpen(true);
+  };
+
+  const handleSubmit = (email) => {
+    alert(`You will be notified at ${email} when ${productSelect} is back in stock`);
+    setIsOpen(false);
+  };
+
    const [stockText, stockColorCode] = manageStock(product.stockQty);
 
   return (
@@ -166,6 +180,17 @@ const SpecProduct = () => {
                   <img className="w-8 h-8" src={stockColorCode} alt={stockText}/>
                   <p className="text-left font-primary">{stockText}</p>
           </div>
+          {stockText === "Sold out" && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleStockAlert(product.name);
+                    }}
+                    className="text-grey-500 underline"
+                    >
+                      Notify me when back in stock
+                    </button>
+                )}
         </div>
         <div className="mt-10">
           <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
@@ -188,6 +213,11 @@ const SpecProduct = () => {
         </div>
       </main>
       <Footer />
+      <StockAlert
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
