@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import localhost from "../../config";
 
 export default function ManageProfil(data) {
   const [profil, setProfil] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  let navigate = useNavigate();
   useEffect(() => {
     setProfil(data.data);
-  }, [data]);
-  const editUser = () => {};
-  const deleteUser = () => {};
+  }, [data, refresh]);
+  const editUser = (id) => {
+    navigate(`/editProfil/${id}`, { replace: true });
+  };
+  const deleteUser = async (id) => {
+    const response = await fetch(`${localhost}/api/deleteUser/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      localStorage.removeItem("user");
+      navigate("/", { replace: true });
+    }
+  };
   return (
     <div className="flex flex-col w-full	">
       {profil.length > 0 &&

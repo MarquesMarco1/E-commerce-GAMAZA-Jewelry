@@ -1,43 +1,70 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 import localhost from "../../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import Header from "../../Header";
 import Footer from "../../Footer";
 
 export default function EditCategory() {
+  let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  let navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
+
+    ////////////////////////////////
+    //  Check Middleware isAdmin  //
+    ////////////////////////////////
+    fetchIsAdmin();
+
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
+
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
+
       if (response.status === 200) {
         const data = await response.json();
+
         if (data.isAdmin) {
           fetchData();
         } else {
           navigate("/", { replace: true });
-        }
+        };
+
       } else {
         navigate("/", { replace: true });
       }
     };
-    fetchIsAdmin();
+
+    /////////////////////////////////////////////////
+    //  Fetch All : Categories, Materials, Stones  //
+    /////////////////////////////////////////////////
+
+    fetchData();
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/TrueCategory/${id}`);
+
       if (response.status === 200) {
         const data = await response.json();
+
         setName(data.category[0].name);
         setImage(data.category[0].image);
         setDescription(data.category[0].description);
       }
     };
-    fetchData();
   }, []);
 
   const handelSubmit = async (e) => {
