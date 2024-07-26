@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import localhost from "../../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import Header from "../../Header";
 import Footer from "../../Footer";
 
 export default function EditUser() {
   const { id } = useParams();
   let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -18,6 +29,10 @@ export default function EditUser() {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
+    //////////////////////
+    // Fetch User Data  //
+    //////////////////////
+
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/user/${id}`);
       if (response.ok) {
@@ -34,6 +49,11 @@ export default function EditUser() {
     };
     fetchData();
   }, [id]);
+
+  ///////////////////////////////
+  // handelSubmit Update Data  //
+  ///////////////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -58,6 +78,7 @@ export default function EditUser() {
       navigate("/admin", { replace: true });
     }
   };
+
   return (
     <>
       <Header></Header>
@@ -68,6 +89,8 @@ export default function EditUser() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
+        {/* Firstname */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -78,6 +101,9 @@ export default function EditUser() {
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
+
+        {/* Lastname */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -88,6 +114,9 @@ export default function EditUser() {
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
+
+        {/* Email */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="email"
@@ -98,6 +127,9 @@ export default function EditUser() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
+        {/* Password */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="password"
@@ -108,6 +140,9 @@ export default function EditUser() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        {/* Adress */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -118,6 +153,9 @@ export default function EditUser() {
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
         />
+
+        {/* ZipCode */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -128,6 +166,9 @@ export default function EditUser() {
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
         />
+
+        {/* City */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -138,6 +179,9 @@ export default function EditUser() {
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
+
+        {/* Country */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -148,6 +192,9 @@ export default function EditUser() {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
+
+        {/* Phone Number */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -158,6 +205,7 @@ export default function EditUser() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+
         <button type="submit" id="submit">
           Edit
         </button>

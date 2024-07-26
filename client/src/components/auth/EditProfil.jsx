@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import localhost from "../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import Header from "../Header";
 import Footer from "../Footer";
 
 export default function EditProfil() {
   const { id } = useParams();
   let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -18,6 +29,10 @@ export default function EditProfil() {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
+    //////////////////////
+    // Fetch User Data  //
+    //////////////////////
+
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/user/${id}`);
       if (response.ok) {
@@ -34,8 +49,14 @@ export default function EditProfil() {
     };
     fetchData();
   }, [id]);
+
+  ///////////////////////////////
+  // handelSubmit Update Data  //
+  ///////////////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       email: email,
       password: password ? password : null,
@@ -47,6 +68,7 @@ export default function EditProfil() {
       country: country,
       phone: phone,
     };
+
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {
@@ -54,10 +76,12 @@ export default function EditProfil() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.status === 200) {
       navigate("/profile", { replace: true });
     }
   };
+
   return (
     <>
       <Header></Header>
@@ -68,6 +92,8 @@ export default function EditProfil() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
+        {/* Firstname */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -78,6 +104,9 @@ export default function EditProfil() {
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
+
+        {/* Lastname */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -88,6 +117,9 @@ export default function EditProfil() {
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
+
+        {/* Email */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="email"
@@ -98,6 +130,9 @@ export default function EditProfil() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
+        {/* Password */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="password"
@@ -108,6 +143,9 @@ export default function EditProfil() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        {/* Adress */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -118,6 +156,9 @@ export default function EditProfil() {
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
         />
+
+        {/* ZipCode */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -128,6 +169,9 @@ export default function EditProfil() {
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
         />
+
+        {/* City */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -138,6 +182,9 @@ export default function EditProfil() {
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
+
+        {/* Country */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -148,6 +195,9 @@ export default function EditProfil() {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
+
+        {/* Phone Number */}
+
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
@@ -158,6 +208,7 @@ export default function EditProfil() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+
         <button type="submit" id="submit">
           Edit
         </button>

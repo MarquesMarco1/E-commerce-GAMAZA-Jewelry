@@ -6,6 +6,7 @@ import Footer from "./Footer";
 
 const SpecProduct = () => {
   const { id } = useParams();
+  const [language, setLanguage] = useState("");
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -14,6 +15,9 @@ const SpecProduct = () => {
   const [isZoomed, setIsZoomed] = useState(false);
 
   const newEntry = async () => {
+    const language = localStorage.getItem("language");
+    setLanguage(language);
+
     try {
       await fetch(`${localhost}/api/stats/products/${id}`, {
         method: "POST",
@@ -37,6 +41,7 @@ const SpecProduct = () => {
         const response = await fetch(`${localhost}/api/products/${id}`);
         if (response.ok) {
           const data = await response.json();
+          console.log("SPECT ", data);
           if (data.products && data.products.length > 0) {
             setProduct(data.products[0]);
             setSelectedImage(data.products[0].image);
@@ -100,18 +105,22 @@ const SpecProduct = () => {
             <>
               <li>
                 <Link to={`/category/${product.category.id}`}>
-                  {product.category.name}
+                  {language === "FR"
+                    ? product.category.name
+                    : product.category.nameEn}
                 </Link>
               </li>
               <li>/</li>
             </>
           )}
-          <li className="font-semibold font-primary">{product.name}</li>
+          <li className="font-semibold font-primary">
+            {language === "FR" ? product.name : product.nameEn}
+          </li>
         </ul>
       </nav>
       <main className="py-6 px-4 max-w-4xl mx-auto">
         <h1 className="text-gold text-5xl mb-9 text-center font-primary">
-          {product.name}
+          {language === "FR" ? product.name : product.nameEn}
         </h1>
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-center mb-4">
@@ -141,19 +150,26 @@ const SpecProduct = () => {
         </div>
         <div className="mt-10 space-y-2">
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Category: {product.category.name}
+            Category:{" "}
+            {language === "FR"
+              ? product.category.name
+              : product.category.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Material: {product.material.name}
+            Material:{" "}
+            {language === "FR"
+              ? product.material.name
+              : product.material.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Stone: {product.stone.name}
+            Stone:{" "}
+            {language === "FR" ? product.stone.name : product.stone.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Color: {product.color}
+            Color: {language === "FR" ? product.color : product.colorEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">

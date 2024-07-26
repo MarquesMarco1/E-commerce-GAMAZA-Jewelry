@@ -8,9 +8,7 @@ import localhost from "../../../config";
 //////////////////
 
 import Header from "../../Header";
-import ManageUsers from "./ManageUsers";
 import Footer from "../../Footer";
-import ManageCategory from "./ManageCategory";
 import NavBarAdmin from "../../utils/navbarAdmin";
 
 export default function Admin() {
@@ -24,6 +22,7 @@ export default function Admin() {
   const [category, setCategory] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [users, setUsers] = useState([]);
+  const [language, setLanguage] = useState("");
 
   /////////////////////////////////////////
   //  Fetch Categories, Products, Users  //
@@ -31,6 +30,9 @@ export default function Admin() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const language = localStorage.getItem("language");
+      setLanguage(language);
+
       const response = await fetch(`${localhost}/api/products`);
 
       if (response.status === 200) {
@@ -45,7 +47,9 @@ export default function Admin() {
         setUsers(data_users.allUsers);
       }
 
-      const response_category = await fetch(`${localhost}/api/categorie`);
+      const response_category = await fetch(
+        `${localhost}/api/categorie/${language}`
+      );
 
       if (response.status === 200) {
         const data_category = await response_category.json();
@@ -200,9 +204,13 @@ export default function Admin() {
               products.map((elem) => (
                 <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
                   <div>
-                    <li>Title : {elem.name}</li>
+                    <li>
+                      Title : {language === "FR" ? elem.name : elem.nameEn}
+                    </li>
                     <li>Size : {elem.size}</li>
-                    <li>Color : {elem.color}</li>
+                    <li>
+                      Color : {language === "FR" ? elem.color : elem.colorEn}
+                    </li>
                     <li>Price : ${elem.price}</li>
                   </div>
                   <div style={{ textAlign: "end" }}>
@@ -231,7 +239,7 @@ export default function Admin() {
           category.map((elem) => (
             <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
               <div>
-                <li>Title : {elem.name}</li>
+                <li>Title : {language === "FR" ? elem.name : elem.nameEn}</li>
               </div>
               <div style={{ textAlign: "end" }}>
                 <li>
@@ -247,7 +255,6 @@ export default function Admin() {
           ))}
       </div>
 
-      {/* <ManageCategory data={category} /> */}
       <Footer></Footer>
     </>
   );
