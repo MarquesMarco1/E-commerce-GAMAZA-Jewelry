@@ -110,7 +110,9 @@ const SpecProduct = () => {
         </ul>
       </nav>
       <main className="py-6 px-4 max-w-4xl mx-auto">
-        <h1 className="text-gold text-5xl mb-9 text-center font-primary">{product.name}</h1>
+        <h1 className="text-gold text-5xl mb-9 text-center font-primary">
+          {product.name}
+        </h1>
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-center mb-4">
             {selectedImage && (
@@ -123,42 +125,63 @@ const SpecProduct = () => {
             )}
           </div>
           <div className="flex space-x-2">
-            {product.images && product.images.map((image, index) => (
-              <img
-                key={index}
-                className={`w-20 h-20 cursor-pointer border-2 ${selectedImage === image ? 'border-gold' : 'border-gray-300'}`}
-                src={image}
-                alt={`Thumbnail ${index + 1}`}
-                onClick={() => setSelectedImage(image)}
-              />
-            ))}
+            {product.images &&
+              product.images.map((image, index) => (
+                <img
+                  key={index}
+                  className={`w-20 h-20 cursor-pointer border-2 ${
+                    selectedImage === image ? "border-gold" : "border-gray-300"
+                  }`}
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  onClick={() => setSelectedImage(image)}
+                />
+              ))}
           </div>
         </div>
         <div className="mt-10 space-y-2">
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Category: {product.category.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Category: {product.category.name}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Material: {product.material.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Material: {product.material.name}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stone: {product.stone.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Stone: {product.stone.name}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Color: {product.color}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Color: {product.color}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Size: {product.size}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Size: {product.sizes.name}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Weight: {product.weight}g
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stockQty}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            Stock Quantity: {product.stockQty}
+          </p>
         </div>
         <div className="mt-10">
-          <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
+          <label htmlFor="quantity" className="block text-lg font-primary">
+            Quantity:
+          </label>
           <select
             id="quantity"
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
             className="mt-2 p-2 border border-gray-300 rounded-lg"
           >
-            {[...Array(10).keys()].map(num => (
-              <option key={num + 1} value={num + 1}>{num + 1}</option>
+            {[...Array(10).keys()].map((num) => (
+              <option key={num + 1} value={num + 1}>
+                {num + 1}
+              </option>
             ))}
           </select>
           <button
@@ -182,7 +205,9 @@ const SpecProduct = () => {
             </button>
             <div className="flex justify-center">
               <img
-                className={`cursor-zoom-in ${isZoomed ? 'transform scale-150' : 'transform scale-100'}`}
+                className={`cursor-zoom-in ${
+                  isZoomed ? "transform scale-150" : "transform scale-100"
+                }`}
                 src={selectedImage}
                 alt={product.name}
                 onClick={toggleZoom}

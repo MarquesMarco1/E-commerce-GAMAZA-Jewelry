@@ -20,6 +20,9 @@ class Stone
     #[ORM\Column(type: Types::TEXT)]
     private ?string $image = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nameEn = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Stone
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getNameEn(): ?string
+    {
+        return $this->nameEn;
+    }
+
+    public function setNameEn(string $nameEn): static
+    {
+        $this->nameEn = $nameEn;
 
         return $this;
     }

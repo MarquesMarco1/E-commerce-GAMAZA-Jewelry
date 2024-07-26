@@ -31,9 +31,8 @@ export default function Admin() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       const response = await fetch(`${localhost}/api/products`);
-      
+
       if (response.status === 200) {
         const data = await response.json();
         setProducts(data.allArticle);
@@ -74,6 +73,54 @@ export default function Admin() {
   const editProduct = async (id) => {
     navigate(`/editProduct/${id}`, { replace: true });
   };
+
+  ////////////////////////////////
+  //  Delete & Update Users     //
+  ////////////////////////////////
+
+  const deleteUser = async (id) => {
+    const response = await fetch(`${localhost}/api/deleteUser/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      setRefresh(true);
+    }
+  };
+
+  const editUser = async (id) => {
+    navigate(`/editAdminUser/${id}`, { replace: true });
+  };
+
+  const setAdmin = async (id) => {
+    const response = await fetch(`${localhost}/api/setAdmin/${id}`);
+    if (response.ok) {
+      setRefresh(true);
+    }
+  };
+
+  const setUser = async (id) => {
+    const response = await fetch(`${localhost}/api/setUser/${id}`);
+    if (response.ok) {
+      // const data = await response.json();
+      // console.log(data);
+      setRefresh(true);
+    }
+  };
+
+  ////////////////////////////////
+  //  Delete & Update Category  //
+  ////////////////////////////////
+
+  const deleteCategory = async (id) => {
+    const response = await fetch(`${localhost}/api/delete/category/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      setRefresh(true);
+    }
+  };
+
+  const editCategory = async (id) => {
+    navigate(`/editCategory/${id}`, { replace: true });
+  };
   return (
     <>
       <Header></Header>
@@ -99,7 +146,49 @@ export default function Admin() {
           <br></br>
         </div>
         <div className="flex justify-between	">
-          <ManageUsers data={users} />
+          {/* ////////////////// */}
+          {/* // Manage users // */}
+          {/* ////////////////// */}
+
+          <div className="flex flex-col w-full	">
+            <h2 className="text-gold">Manage Users :</h2>
+            {users.length > 0 &&
+              users.map((elem) => (
+                <ul className="m-2.5	border-2 rounded-2xl p-2.5	bg-gray-200	">
+                  <div>
+                    <li>
+                      Full name : {elem.firstname ? elem.firstname : "No data"}
+                    </li>
+                    <li>Email : {elem.email}</li>
+                    <li>Password : *******</li>
+                    <li>Adress : {elem.adress ? elem.adress : "No data"}</li>
+                  </div>
+                  <div style={{ textAlign: "end" }}>
+                    <li>
+                      <button onClick={() => editUser(elem.id)}>Edit</button>
+                    </li>
+                    {!elem.roles.includes("ROLE_ADMIN") ? (
+                      <li>
+                        <button onClick={() => setAdmin(elem.id)}>
+                          Become Admin
+                        </button>
+                      </li>
+                    ) : (
+                      <li>
+                        <button onClick={() => setUser(elem.id)}>
+                          Become User
+                        </button>
+                      </li>
+                    )}
+                    <li>
+                      <button onClick={() => deleteUser(elem.id)}>
+                        Delete
+                      </button>
+                    </li>
+                  </div>
+                </ul>
+              ))}
+          </div>
 
           {/* ///////////////////////////// */}
           {/* // Manage Produts/Articles // */}
@@ -131,7 +220,34 @@ export default function Admin() {
           </div>
         </div>
       </div>
-      <ManageCategory data={category} />
+
+      {/* ///////////////////////////// */}
+      {/* // Manage Category         // */}
+      {/* ///////////////////////////// */}
+
+      <div className="flex flex-col w-full	">
+        <h2 className="text-gold">Manage Category :</h2>
+        {category.length > 0 &&
+          category.map((elem) => (
+            <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
+              <div>
+                <li>Title : {elem.name}</li>
+              </div>
+              <div style={{ textAlign: "end" }}>
+                <li>
+                  <button onClick={() => editCategory(elem.id)}>Edit</button>
+                </li>
+                <li>
+                  <button onClick={() => deleteCategory(elem.id)}>
+                    Delete
+                  </button>
+                </li>
+              </div>
+            </ul>
+          ))}
+      </div>
+
+      {/* <ManageCategory data={category} /> */}
       <Footer></Footer>
     </>
   );
