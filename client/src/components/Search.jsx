@@ -1,6 +1,7 @@
 import Header from "./Header";
 import localhost from "../config";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -10,6 +11,7 @@ export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
   const [displaySearchResults, setDisplaySearchResults] = useState(false);
   const [error, setError] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -76,7 +78,7 @@ export default function Search() {
         Error: {error.message}
       </div>
     );
-  if (!product) return <div className="text-center py-4">No product found</div>;
+  if (!product) return <div className="text-center py-4">{t('search.error')}</div>;
 
 
   return (
@@ -96,7 +98,7 @@ export default function Search() {
 
             <button type="submit"
               className="p-2 md:px-4 bg-light-purple bg-opacity-20 text-black rounded-md hover:bg-gold">
-              Search
+              {t('search.button')}
             </button>
         </div>
 
@@ -105,7 +107,7 @@ export default function Search() {
           className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
           onChange={(e) => setCategoryName(e.target.value)}
         >
-          <option value="All Categories" className="text-gold font-primary">All Categories</option>
+          <option value="All Categories" className="text-gold font-primary">{t('search.select')}</option>
 
           {categories.length > 0 && categories.map((elem) => (
             <option key={elem.id} value={elem.name}>{elem.name}</option>
@@ -114,8 +116,6 @@ export default function Search() {
         </select>
       </form>
 
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-       */}
           <div className="flex flex-wrap gap-5">
           {searchResults.length > 0 ? (
             searchResults.map((result) => (
@@ -126,12 +126,12 @@ export default function Search() {
                 <p className="font-primary text-black text-lg">{result.description}</p>
                 <p className="font-bold font-primary text-black">${result.price}</p>
                 <button className="mt-4 w-full bg-gold text-white py-2 rounded-lg hover:bg-gold hover:bg-opacity-20">
-                  Add to cart
+                  {t('search.cart')}
                 </button>
               </div>
             ))
           ) : (
-            <p>No results found.</p>
+            <p>{t('search.error')}</p>
           )}
         </div>
       </div>

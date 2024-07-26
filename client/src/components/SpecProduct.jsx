@@ -1,11 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import localhost from "../config";
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import Header from "./Header";
 import Footer from "./Footer";
 
 const SpecProduct = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
+
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -84,7 +88,7 @@ const SpecProduct = () => {
   }
 
   if (!product) {
-    return <div className="text-center py-4">No product found</div>;
+    return <div className="text-center py-4">{t('specProduct.error')}</div>;
   }
 
   return (
@@ -93,7 +97,7 @@ const SpecProduct = () => {
       <nav className="bg-gray-200 py-2 px-6">
         <ul className="flex space-x-4">
           <li>
-            <Link to={`/`}>Homepage</Link>
+            <Link to={`/`}>{t('specProduct.homepage')}</Link>
           </li>
           <li>/</li>
           {product.category && (
@@ -135,22 +139,22 @@ const SpecProduct = () => {
           </div>
         </div>
         <div className="mt-10 space-y-2">
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Category: {product.category.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.category')} {product.category.name}</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Material: {product.material.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.material')} {product.material.name}</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stone: {product.stone.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.stone')} {product.stone.name}</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Color: {product.color}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.color')} {product.color}</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Size: {product.size}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.size')} {product.size}</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.weight')} {product.weight}g</p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stock Quantity: {product.stockQty}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">{t('specProduct.stockQty')} {product.stockQty}</p>
         </div>
         <div className="mt-10">
-          <label htmlFor="quantity" className="block text-lg font-primary">Quantity:</label>
+          <label htmlFor="quantity" className="block text-lg font-primary">{t('specProduct.quantity')}</label>
           <select
             id="quantity"
             value={quantity}
@@ -165,7 +169,7 @@ const SpecProduct = () => {
             onClick={handleAddToCart}
             className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
           >
-            Add to Cart
+            {t('specProduct.cart')}
           </button>
         </div>
       </main>

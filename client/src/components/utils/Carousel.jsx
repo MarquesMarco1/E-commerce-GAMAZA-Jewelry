@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import localhost from "../../config";
+import { useTranslation } from "react-i18next";
 
 export default function Carousel() {
     const [trending, setTrending] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [displayCarousel, setDisplayCarousel] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         getTrendingProducts();
@@ -52,28 +55,28 @@ export default function Carousel() {
             return false;
     }
 
-useEffect(() => {
-    canRender();
-}, [activeImages]);
+    useEffect(() => {
+        canRender();
+    }, [activeImages]);
 
-return (
-    <div className="space-y-4 flex flex-col items-start justify-center m-24">
-        <h1 className="text-black text-5xl font-primary">
-            Trending now
-        </h1>
-        <div className="flex justify-center">
-            <button className="" onClick={previousSlide}>❮</button>
-            <div className="flex items-center w-10/12 transition-transform duration-500 ease-in-out">
-                {displayCarousel &&
-                    <>
-                        <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 left-28 relative' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} />
-                        <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.25)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
-                        <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 right-16 relative' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} />
-                    </>
-                }
+    return (
+        <div className="space-y-4 flex flex-col items-start justify-center m-24">
+            <h1 className="text-black text-5xl font-primary">
+                {t('common.translated-text')}
+            </h1>
+            <div className="flex justify-center">
+                <button className="" onClick={previousSlide}>❮</button>
+                <div className="flex items-center w-10/12 transition-transform duration-500 ease-in-out">
+                    {displayCarousel &&
+                        <>
+                            <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 left-28 relative' key={activeImages[0].id} src={activeImages[0].image} alt={`Image ${activeImages[0].id}`} />
+                            <a href={`/product/${activeImages[1].id}`} className='z-10' style={{ transform: 'scale(1.25)' }}><img className='border-grey border-4 rounded-2xl' key={activeImages[1].id} src={activeImages[1].image} alt={`Image ${activeImages[1].id}`} /></a>
+                            <img className='w-4/5 h-4/5 border-grey border-4 rounded-2xl z-0 right-16 relative' key={activeImages[2].id} src={activeImages[2].image} alt={`Image ${activeImages[2].id}`} />
+                        </>
+                    }
+                </div>
+                <button className="" onClick={nextSlide}>❯</button>
             </div>
-            <button className="" onClick={nextSlide}>❯</button>
         </div>
-    </div>
-);
+    );
 };

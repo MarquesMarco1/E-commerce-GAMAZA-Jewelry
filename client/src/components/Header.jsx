@@ -5,6 +5,7 @@ import lotus from "../assets/lotus.svg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import localhost from "../config";
+import Lang from "./utils/SwitchLangue";
 
 export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -28,6 +29,7 @@ export default function Header() {
           alt="logo of a lotus that redirect to the landing/home page"
         />
       </Link>
+      <Lang />
       <h1 className="text-gold font-primary font-normal text-6xl">
         G.A.M.A.Z.A .Co
       </h1>

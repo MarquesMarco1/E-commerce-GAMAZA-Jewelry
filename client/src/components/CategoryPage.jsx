@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
-import localhost from "../config";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+import localhost from "../config";
+
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -10,6 +13,7 @@ export default function CategoryPage() {
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { id } = useParams();
+  const { t } = useTranslation();
 
   const itemsPerPage = 6;
 
@@ -38,7 +42,7 @@ export default function CategoryPage() {
       <Header />
       <ul className="flex space-x-2 p-4">
         <li>
-          <Link to={`/`}>Homepage</Link>
+          <Link to={`/`}>{t('categoryPage.homepage')}</Link>
         </li>
         <li>/</li>
         {name && <li>{name}</li>}
@@ -61,7 +65,7 @@ export default function CategoryPage() {
             </li>
           ))
         ) : (
-          <p className="col-span-3 text-center">No products yet</p>
+          <p className="col-span-3 text-center">{t('categoryPage.error')}</p>
         )}
       </ul>
       <div className="flex justify-center space-x-2 mb-8">
