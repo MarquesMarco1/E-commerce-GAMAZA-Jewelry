@@ -21,6 +21,8 @@ export default function EditCategory() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
+  const [nomEn, setNomEn] = useState("");
+  const [descriptionEn, setDescriptionEn] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -55,10 +57,12 @@ export default function EditCategory() {
 
       if (response.status === 200) {
         const data = await response.json();
-
+        console.log(data);
         setName(data.category[0].name);
         setImage(data.category[0].image);
         setDescription(data.category[0].description);
+        setNomEn(data.category[0].nameEn);
+        setDescriptionEn(data.category[0].descriptionEn);
       }
     };
     fetchData();
@@ -70,6 +74,8 @@ export default function EditCategory() {
       name: name,
       image: image,
       description: description,
+      nomEn: nomEn,
+      descriptionEn: descriptionEn,
     };
     const response = await fetch(`${localhost}/api/editCategory/${id}`, {
       method: "POST",
@@ -90,17 +96,30 @@ export default function EditCategory() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-        <label for="nom">Category name</label>
+        <label for="nom">Category name FR</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"
-          placeholder="Nom"
+          placeholder="Categorie nom FR"
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+
+        <label for="nom">Category name EN</label>
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="nomEN"
+          id="categorie"
+          placeholder="Categorie nom EN"
+          required
+          value={nomEn}
+          onChange={(e) => setNomEn(e.target.value)}
+        />
+
         <label for="image">image link</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -112,7 +131,7 @@ export default function EditCategory() {
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-        <label for="content">description</label>
+        <label for="content">description FR</label>
         <textarea
           className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
@@ -122,6 +141,18 @@ export default function EditCategory() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
+        <label for="content">description EN</label>
+        <textarea
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
+          name="descriptionEn"
+          id="descriptionEn"
+          placeholder="Description EN"
+          required
+          value={descriptionEn}
+          onChange={(e) => setDescriptionEn(e.target.value)}
+        ></textarea>
+
         <button type="submit" id="submit">
           Edit the category
         </button>

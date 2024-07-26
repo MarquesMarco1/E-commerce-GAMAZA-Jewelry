@@ -9,18 +9,24 @@ export default function EditProduct() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
+  const [allSize, setAllSize] = useState([]);
+
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
   const [color, setColor] = useState("");
+  const [colorEN, setColorEN] = useState("");
   const [nom, setNom] = useState("");
+  const [nomEN, setNomEN] = useState("");
   const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
   const [description, setDescription] = useState("");
+  const [descriptionEN, setDescriptionEN] = useState("");
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
   const [imageAdd, setImageAdd] = useState("");
+
   let navigate = useNavigate();
   const { id } = useParams();
 
@@ -30,48 +36,64 @@ export default function EditProduct() {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
       if (response.status === 200) {
         const data = await response.json();
-        
+
         if (data.isAdmin) {
           fetchData();
         } else {
           navigate("/", { replace: true });
         }
-
       } else {
         navigate("/", { replace: true });
       }
     };
     fetchIsAdmin();
+
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/categorie`);
+
       if (response.status === 200) {
         const data = await response.json();
         setAllCategorie(data.allCategory);
       }
+
       const response_material = await fetch(`${localhost}/api/material`);
+
       if (response_material.status === 200) {
         const data_material = await response_material.json();
         setAllMaterial(data_material.allMaterial);
       }
+
       const response_stone = await fetch(`${localhost}/api/stone`);
+
       if (response_stone.status === 200) {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
       }
+
+      const response_size = await fetch(`${localhost}/api/size`);
+
+      if (response_size.status === 200) {
+        const data_size = await response_size.json();
+        setAllSize(data_size.allSize);
+      }
+
       const response_product = await fetch(`${localhost}/api/products/${id}`);
       if (response_product.status === 200) {
         const data_product = await response_product.json();
         setNom(data_product.products[0].name);
+        setNomEN(data_product.products[0].nameEn);
         setCategory_id(data_product.products[0].category.id);
         setMaterial(data_product.products[0].material.id);
         setStone(data_product.products[0].stone.id);
         setImage(data_product.products[0].images);
+        setColorEN(data_product.products[0].colorEn);
         setColor(data_product.products[0].color);
-        setSize(data_product.products[0].size);
+        setSize(data_product.products[0].sizes.id);
         setWeight(data_product.products[0].weight);
         setPrice(data_product.products[0].price);
         setStockQty(data_product.products[0].stockQty);
         setDescription(data_product.products[0].description);
+        setDescriptionEN(data_product.products[0].descriptionEn);
       }
     };
     fetchData();
@@ -85,12 +107,15 @@ export default function EditProduct() {
       stone_id: parseInt(stone),
       image: imageAdd ? [imageAdd] : null,
       color: color,
+      colorEn: colorEN,
       nom: nom,
+      nomEn: nomEN,
       size: size,
       weight: weight,
       price: price,
       stockQty: stockQty,
       description: description,
+      descriptionEn: descriptionEN,
     };
     const response = await fetch(`${localhost}/api/editProduct/${id}`, {
       method: "POST",
@@ -127,7 +152,9 @@ export default function EditProduct() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-        <label for="nom">Product name</label>
+        {/* Name FR*/}
+
+        <label for="nom">Product nom FR</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -138,6 +165,23 @@ export default function EditProduct() {
           value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
+
+        {/* Name EN*/}
+
+        <label for="nom">Product name EN</label>
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="nomEn"
+          id="nomEn"
+          placeholder="Name"
+          required
+          value={nomEN}
+          onChange={(e) => setNomEN(e.target.value)}
+        />
+
+        {/* Categories */}
+
         <label for="categorie">Choose a category:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -153,6 +197,8 @@ export default function EditProduct() {
             ))}
         </select>
 
+        {/* Materials */}
+
         <label for="material">Choose a material:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -167,6 +213,9 @@ export default function EditProduct() {
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
+
+        {/* Stones */}
+
         <label for="stone">Choose a stone:</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -181,6 +230,23 @@ export default function EditProduct() {
               <option value={elem.id}>{elem.name}</option>
             ))}
         </select>
+
+        {/* Sizes */}
+
+        <select
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          name="size"
+          id="size"
+          value={size}
+          onChange={(e) => setSize(e.target.value)}
+        >
+          <option value="">--Please choose a Size--</option>
+          {allSize &&
+            allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
+        </select>
+
+        {/* Images */}
+
         <label for="image">image link</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -209,7 +275,10 @@ export default function EditProduct() {
               </li>
             ))}
         </ul>
-        <label for="color">color</label>
+
+        {/* Color FR*/}
+
+        <label for="color">color FR</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
@@ -220,17 +289,23 @@ export default function EditProduct() {
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
-        <label for="size">size</label>
+
+        {/* Color EN*/}
+
+        <label for="color">color EN</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
-          name="size"
-          id="size"
-          placeholder="Size"
+          name="color"
+          id="color"
+          placeholder="Color"
           required
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
+          value={colorEN}
+          onChange={(e) => setColorEN(e.target.value)}
         />
+
+        {/* Weight */}
+
         <label for="weight">weight</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -243,6 +318,9 @@ export default function EditProduct() {
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
         />
+
+        {/* Price */}
+
         <label for="price">price</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -255,6 +333,9 @@ export default function EditProduct() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
+
+        {/* Stock Quantity */}
+
         <label for="stockQty">stockQty</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
@@ -266,7 +347,10 @@ export default function EditProduct() {
           value={stockQty}
           onChange={(e) => setStockQty(e.target.value)}
         />
-        <label for="content">description</label>
+
+        {/* Description */}
+
+        <label for="content">description FR</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
@@ -276,6 +360,19 @@ export default function EditProduct() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
+        <textarea
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          name="content"
+          id="content"
+          placeholder="Description EN"
+          required
+          value={descriptionEN}
+          onChange={(e) => setDescriptionEN(e.target.value)}
+        ></textarea>
+
+        {/* Submit Button */}
+
         <button type="submit" id="submit">
           Edit the product
         </button>

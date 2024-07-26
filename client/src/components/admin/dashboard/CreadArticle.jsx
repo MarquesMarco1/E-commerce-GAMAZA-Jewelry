@@ -28,17 +28,21 @@ export default function CreadArticle() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
+  const [allSize, setAllSize] = useState([]);
 
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
   const [imageAll, setImageAll] = useState([]);
   const [color, setColor] = useState("");
+  const [colorEN, setColorEN] = useState("");
   const [nom, setNom] = useState("");
+  const [nomEN, setNomEN] = useState("");
   const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
   const [description, setDescription] = useState("");
+  const [descriptionEN, setDescriptionEN] = useState("");
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
   useEffect(() => {
@@ -90,6 +94,13 @@ export default function CreadArticle() {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
       }
+
+      const response_size = await fetch(`${localhost}/api/size`);
+
+      if (response_size.status === 200) {
+        const data_size = await response_size.json();
+        setAllSize(data_size.allSize);
+      }
     };
   }, []);
 
@@ -106,12 +117,15 @@ export default function CreadArticle() {
       stone_id: parseInt(stone),
       image: imageAll.length > 0 ? imageAll : [image],
       color: color,
+      colorEn: colorEN,
       nom: nom,
+      nomEn: nomEN,
       size: size,
       weight: weight,
       price: price,
       stockQty: stockQty,
       description: description,
+      descriptionEn: descriptionEN,
     };
 
     const response = await fetch(`${localhost}/api/admin/addArticle`, {
@@ -148,9 +162,19 @@ export default function CreadArticle() {
           type="text"
           name="nom"
           id="nom"
-          placeholder="Product name"
+          placeholder="Product nom FR"
           required
           onChange={(e) => setNom(e.target.value)}
+        />
+
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="nom"
+          id="nom"
+          placeholder="Product name EN"
+          required
+          onChange={(e) => setNomEN(e.target.value)}
         />
 
         {/* Categories */}
@@ -198,6 +222,19 @@ export default function CreadArticle() {
             ))}
         </select>
 
+        {/* Sizes */}
+
+        <select
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          name="size"
+          id="size"
+          onChange={(e) => setSize(e.target.value)}
+        >
+          <option value="">--Please choose a Size--</option>
+          {allSize &&
+            allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
+        </select>
+
         {/* Images */}
 
         <div className="flex flex-col justify-start	 items-end mb-4">
@@ -226,21 +263,19 @@ export default function CreadArticle() {
           type="text"
           name="color"
           id="color"
-          placeholder="Color"
+          placeholder="Couleur FR"
           required
           onChange={(e) => setColor(e.target.value)}
         />
 
-        {/* Size */}
-
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
-          name="size"
-          id="size"
-          placeholder="Size"
+          name="color"
+          id="color"
+          placeholder="Color EN"
           required
-          onChange={(e) => setSize(e.target.value)}
+          onChange={(e) => setColorEN(e.target.value)}
         />
 
         {/* Weight */}
@@ -287,9 +322,18 @@ export default function CreadArticle() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description"
+          placeholder="Description FR"
           required
           onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+
+        <textarea
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          name="content"
+          id="content"
+          placeholder="Description EN"
+          required
+          onChange={(e) => setDescriptionEN(e.target.value)}
         ></textarea>
 
         {/* Submit Button */}

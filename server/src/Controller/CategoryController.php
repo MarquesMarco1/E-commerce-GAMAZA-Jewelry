@@ -26,12 +26,14 @@ class CategoryController extends AbstractController
             $category->setName($formData["nom"]);
             $category->setImage($formData["image"]);
             $category->setDescription($formData["description"]);
+            $category->setNameEn($formData["nomEn"]);
+            $category->setDescriptionEn($formData["descriptionEn"]);
             $now = new DateTime();
             $now->format("Y-m-d H:i:s");
             $category->setLastUpdated($now);
             $entityManager->persist($category);
             $entityManager->flush();
-            return $this->json(['success' => true], 200);
+            return $this->json(['success' => $formData], 200);
         }
     }
 
@@ -57,6 +59,8 @@ class CategoryController extends AbstractController
             $category->setName($formData["name"]);
             $category->setImage($formData["image"]);
             $category->setDescription($formData["description"]);
+            $category->setNameEn($formData["nomEn"]);
+            $category->setDescriptionEn($formData["descriptionEn"]);
             $now = new DateTime();
             $now->format("Y-m-d H:i:s");
             $category->setLastUpdated($now);

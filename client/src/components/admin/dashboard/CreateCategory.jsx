@@ -20,6 +20,8 @@ export default function CreateCategory() {
   const [categorie, setCategorie] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [nomEn, setNomEn] = useState("");
+  const [descriptionEn, setDescriptionEn] = useState("");
 
   useEffect(() => {
     ////////////////////////////////
@@ -55,6 +57,8 @@ export default function CreateCategory() {
       nom: categorie,
       description: description,
       image: image,
+      nomEn: nomEn,
+      descriptionEn: descriptionEn,
     };
 
     const response = await fetch(`${localhost}/api/admin/addCategorie`, {
@@ -85,11 +89,21 @@ export default function CreateCategory() {
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
-          name="nom"
+          name="nomFR"
           id="categorie"
-          placeholder="Categorie name"
+          placeholder="Categorie nom FR"
           required
           onChange={(e) => setCategorie(e.target.value)}
+        />
+
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="nomEN"
+          id="categorie"
+          placeholder="Categorie nom EN"
+          required
+          onChange={(e) => setNomEn(e.target.value)}
         />
 
         {/* Images */}
@@ -110,9 +124,18 @@ export default function CreateCategory() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
           name="description"
           id="description"
-          placeholder="Description"
+          placeholder="Description FR"
           required
           onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+
+        <textarea
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
+          name="descriptionEn"
+          id="descriptionEn"
+          placeholder="Description EN"
+          required
+          onChange={(e) => setDescriptionEn(e.target.value)}
         ></textarea>
 
         {/* Submit */}
