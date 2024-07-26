@@ -22,12 +22,9 @@ export default function CreateCategory() {
   const [image, setImage] = useState("");
 
   useEffect(() => {
-
     ////////////////////////////////
     //  Check Middleware isAdmin  //
     ////////////////////////////////
-
-    fetchIsAdmin();
 
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
@@ -39,12 +36,12 @@ export default function CreateCategory() {
 
         if (data.isAdmin === false) {
           navigate("/", { replace: true });
-        };
-
+        }
       } else {
         navigate("/", { replace: true });
       }
     };
+    fetchIsAdmin();
   }, []);
 
   ////////////////////
@@ -83,7 +80,6 @@ export default function CreateCategory() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-
         {/* Name */}
 
         <input

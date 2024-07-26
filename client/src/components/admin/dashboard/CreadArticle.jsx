@@ -42,16 +42,13 @@ export default function CreadArticle() {
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
   useEffect(() => {
-
     ////////////////////////////////
     //  Check Middleware isAdmin  //
     ////////////////////////////////
-    
-    fetchIsAdmin();
-    
+
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
-      
+
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
 
       if (response.status === 200) {
@@ -61,20 +58,18 @@ export default function CreadArticle() {
           fetchData();
         } else {
           navigate("/", { replace: true });
-        };
-
+        }
       } else {
         navigate("/", { replace: true });
       }
     };
-    
-    
+    fetchIsAdmin();
+
     /////////////////////////////////////////////////
     //  Fetch All : Categories, Materials, Stones  //
     /////////////////////////////////////////////////
 
     const fetchData = async () => {
-
       const response = await fetch(`${localhost}/api/categorie`);
 
       if (response.status === 200) {
@@ -146,7 +141,6 @@ export default function CreadArticle() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-
         {/* Name */}
 
         <input

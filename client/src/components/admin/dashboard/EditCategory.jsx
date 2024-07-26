@@ -24,11 +24,9 @@ export default function EditCategory() {
   const { id } = useParams();
 
   useEffect(() => {
-
     ////////////////////////////////
     //  Check Middleware isAdmin  //
     ////////////////////////////////
-    fetchIsAdmin();
 
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
@@ -42,18 +40,16 @@ export default function EditCategory() {
           fetchData();
         } else {
           navigate("/", { replace: true });
-        };
-
+        }
       } else {
         navigate("/", { replace: true });
       }
     };
-
+    fetchIsAdmin();
     /////////////////////////////////////////////////
     //  Fetch All : Categories, Materials, Stones  //
     /////////////////////////////////////////////////
 
-    fetchData();
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/TrueCategory/${id}`);
 
@@ -65,6 +61,7 @@ export default function EditCategory() {
         setDescription(data.category[0].description);
       }
     };
+    fetchData();
   }, []);
 
   const handelSubmit = async (e) => {
