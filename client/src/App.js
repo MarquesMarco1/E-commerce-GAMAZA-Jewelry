@@ -42,6 +42,7 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/editProfil/:id" element={<EditProfil />}></Route>
             <Route path="/authentication" element={<Authentication />}></Route>
+
           </Routes>
         </BrowserRouter>
         {/* GOOGLE ANALYTICS */}
