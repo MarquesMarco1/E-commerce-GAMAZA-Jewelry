@@ -30,11 +30,13 @@ export default function EditProduct() {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
       if (response.status === 200) {
         const data = await response.json();
+        
         if (data.isAdmin) {
           fetchData();
         } else {
           navigate("/", { replace: true });
         }
+
       } else {
         navigate("/", { replace: true });
       }

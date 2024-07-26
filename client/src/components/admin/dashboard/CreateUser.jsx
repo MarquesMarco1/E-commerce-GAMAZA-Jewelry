@@ -1,17 +1,33 @@
 import { useState } from "react";
-import Header from "../../Header";
-import Footer from "../../Footer";
-import localhost from "../../../config";
 import { useNavigate } from "react-router-dom";
 
+import localhost from "../../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
+import Header from "../../Header";
+import Footer from "../../Footer";
+
 export default function CreateUser() {
+  let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  let navigate = useNavigate();
+
+  ////////////////////
+  //  HandleSubmit  //
+  ////////////////////
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+
     const formData = {
       email: email,
       password: password,
@@ -31,6 +47,7 @@ export default function CreateUser() {
       setError("Email already exists.");
     }
   };
+
   return (
     <>
       <Header></Header>
@@ -45,6 +62,9 @@ export default function CreateUser() {
           >
             Email :
           </label>
+
+          {/* Email */}
+
           <input
             type="email"
             placeholder=" Your email"
@@ -59,6 +79,9 @@ export default function CreateUser() {
           >
             Password :
           </label>
+
+          {/* Password */}
+
           <input
             type="password"
             placeholder="Password"
@@ -68,7 +91,13 @@ export default function CreateUser() {
             autoComplete="new-password"
             required
           />
+
+          {/* Handle Error */}
+
           {error && <p>{error}</p>}
+
+          {/* Submit button */}
+
           <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary">
             Register
           </button>

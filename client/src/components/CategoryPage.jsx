@@ -7,12 +7,15 @@ import Footer from "./Footer";
 import inStock from '../assets/inStock.svg';
 import lowStock from '../assets/lowInStock.svg';
 import soldOut from '../assets/soldOut.svg';
+import StockAlert from './stockAlert';
 
 export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { id } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [productSelect, setproductSelect] = useState(null);
 
   const itemsPerPage = 6;
 
@@ -46,6 +49,16 @@ export default function CategoryPage() {
     }
   };
 
+  const handleStockAlert = (productName) => {
+    setproductSelect(productName);
+    setIsOpen(true);
+  };
+
+  const handleSubmit = (email) => {
+    alert(`You will be notified at ${email} when ${productSelect} is back in stock`);
+    setIsOpen(false);
+  };
+
   return (
     <>
       <Header />
@@ -76,6 +89,17 @@ export default function CategoryPage() {
                   <img className="w-6 h-6" src={stockColorCode} alt={stockText}/>
                   <p className="text-left font-primary">{stockText}</p>
                 </div>
+                {stockText === "Sold out" && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleStockAlert(elem.name);
+                    }}
+                    className="text-grey-500 underline"
+                    >
+                      Notify me when back in stock
+                    </button>
+                )}
               </Link>
             </li>
           );
@@ -98,6 +122,11 @@ export default function CategoryPage() {
         ))}
       </div>
       <Footer />
+      <StockAlert
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }
