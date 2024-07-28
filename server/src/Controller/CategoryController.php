@@ -26,20 +26,28 @@ class CategoryController extends AbstractController
             $category->setName($formData["nom"]);
             $category->setImage($formData["image"]);
             $category->setDescription($formData["description"]);
+            $category->setNameEn($formData["nomEn"]);
+            $category->setDescriptionEn($formData["descriptionEn"]);
             $now = new DateTime();
             $now->format("Y-m-d H:i:s");
             $category->setLastUpdated($now);
             $entityManager->persist($category);
             $entityManager->flush();
-            return $this->json(['success' => true], 200);
+            return $this->json(['success' => $formData], 200);
         }
     }
 
-    #[Route("/api/categorie", name:"category")]
-    public function getCategory(CategoryRepository $repository, UserRepository $userRepository){
-        $categories = $repository->findAll();
-        return $this->json(['allCategory' => $categories], 200);
+    #[Route("/api/categorie/{lang}", name:"category")]
+    public function getCategory(EntityManagerInterface $entityManager, CategoryRepository $repository, string $lang){
+        if($lang == "FR"){
+            $categories = $entityManager->getRepository(Category::class)->findAllInFR();
+        }else if ($lang == "EN"){
+            $categories = $entityManager->getRepository(Category::class)->findAllInEN();
+        }
+        // $categories = $repository->findAll();
+        return $this->json(['allCategory' => $categories, "param"=>$lang], 200);
     }
+
     #[Route("/api/TrueCategory/{id}",name : "TrueCategory")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
@@ -57,6 +65,8 @@ class CategoryController extends AbstractController
             $category->setName($formData["name"]);
             $category->setImage($formData["image"]);
             $category->setDescription($formData["description"]);
+            $category->setNameEn($formData["nomEn"]);
+            $category->setDescriptionEn($formData["descriptionEn"]);
             $now = new DateTime();
             $now->format("Y-m-d H:i:s");
             $category->setLastUpdated($now);

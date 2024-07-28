@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -15,13 +16,19 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SearchController extends AbstractController
 {
-    #[Route('/api/search', name: 'app_search')]
-    public function searchAllProducts(ProductRepository $productRepository, CategoryRepository $categoryRepository )
+    #[Route('/api/search/{id}', name: 'app_search')]
+    public function searchAllProducts(EntityManagerInterface $entityManager, ProductRepository $productRepository, CategoryRepository $categoryRepository, string $id )
     {
 
         $product = $productRepository->findAll();
-        $category = $categoryRepository->findAll();
-
+        // $category = $categoryRepository->findAll();
+        if($id == "FR"){
+            // $product =$entityManager->getRepository(Product::class)->findAllInFR();
+            $category = $entityManager->getRepository(Category::class)->findAllInFR();
+        }else if ($id == "EN"){
+            // $product =$entityManager->getRepository(Product::class)->findAll();
+            $category = $entityManager->getRepository(Category::class)->findAllInEN();
+        }
         if (!$product || !$category) {
             return $this->json(['error' => 'Product not found'], 404);
         }

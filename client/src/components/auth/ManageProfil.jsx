@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 
 export default function ManageProfil(data) {
+  let navigate = useNavigate();
+
   const [profil, setProfil] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  let navigate = useNavigate();
   useEffect(() => {
     setProfil(data.data);
   }, [data, refresh]);
