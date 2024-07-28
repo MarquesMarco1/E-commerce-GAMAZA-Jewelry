@@ -93,6 +93,111 @@ const SpecProduct = () => {
     setIsSizeGuideOpen(false);
   };
 
+  const getSizeGuide = () => {
+    switch (product.category.name.toLowerCase()) {
+      case 'colliers':
+        return (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Guide des tailles pour colliers (EU)</h2>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Taille (EU)</th>
+                  <th className="border px-4 py-2">Longueur (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border px-4 py-2">Small</td>
+                  <td className="border px-4 py-2">40 cm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">Medium</td>
+                  <td className="border px-4 py-2">45 cm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">Large</td>
+                  <td className="border px-4 py-2">50 cm</td>
+                </tr>
+                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
+                </tbody>
+            </table>
+          </div>
+        );
+      case 'bagues':
+      case 'alliances':
+        return (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Guide des tailles pour bagues/alliances (EU)</h2>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Taille (EU)</th>
+                  <th className="border px-4 py-2">Circonférence (mm)</th>
+                  <th className="border px-4 py-2">Diamètre (mm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border px-4 py-2">48</td>
+                  <td className="border px-4 py-2">48 mm</td>
+                  <td className="border px-4 py-2">15.3 mm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">50</td>
+                  <td className="border px-4 py-2">50 mm</td>
+                  <td className="border px-4 py-2">15.9 mm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">52</td>
+                  <td className="border px-4 py-2">52 mm</td>
+                  <td className="border px-4 py-2">16.5 mm</td>
+                </tr>
+                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'bracelets':
+        return (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Guide des tailles pour bracelets (EU)</h2>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Taille (EU)</th>
+                  <th className="border px-4 py-2">Longueur (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border px-4 py-2">Small</td>
+                  <td className="border px-4 py-2">17 cm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">Medium</td>
+                  <td className="border px-4 py-2">19 cm</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">Large</td>
+                  <td className="border px-4 py-2">21 cm</td>
+                </tr>
+                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
+                </tbody>
+            </table>
+          </div>
+        );
+      default:
+        return <p>Aucun guide des tailles disponible pour ce type de produit.</p>;
+    }
+  };
+
+  const renderOptions = (items) => (
+    Array.isArray(items) ? items.map(item => (
+      <option key={item} value={item}>{item}</option>
+    )) : null
+  );
+
   if (error) {
     return (
       <div className="text-center py-4 text-red-500">
@@ -104,12 +209,6 @@ const SpecProduct = () => {
   if (!product) {
     return <div className="text-center py-4">No product found</div>;
   }
-
-  const renderOptions = (items) => (
-    Array.isArray(items) ? items.map(item => (
-      <option key={item} value={item}>{item}</option>
-    )) : null
-  );
 
   return (
     <>
@@ -133,10 +232,23 @@ const SpecProduct = () => {
           <li className="font-semibold font-primary">{product.name}</li>
         </ul>
       </nav>
-      <main className="py-6 px-4 max-w-6xl mx-auto">
+      <main className="py-6 px-4 max-w-7xl mx-auto">
         <div className="flex space-x-8">
-          <div className="w-2/3">
-            <div className="flex items-center justify-center mb-4 w-full max-w-2xl h-96 bg-white">
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col space-y-4 overflow-auto" style={{ maxHeight: '600px' }}>
+              {product.images && product.images.map((image, index) => (
+                <img
+                  key={index}
+                  className={`w-40 h-40 cursor-pointer border-2 ${selectedImage === image ? 'border-gold' : 'border-gray-300'}`}
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  onClick={() => setSelectedImage(image)}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center justify-center mb-4 w-full max-w-4xl h-[600px] bg-gray-100">
               {selectedImage && (
                 <img
                   className="object-contain w-full h-full cursor-pointer"
@@ -145,17 +257,6 @@ const SpecProduct = () => {
                   onClick={openModal}
                 />
               )}
-            </div>
-            <div className="flex space-x-2 mt-4">
-              {product.images && product.images.map((image, index) => (
-                <img
-                  key={index}
-                  className={`w-20 h-20 cursor-pointer border-2 ${selectedImage === image ? 'border-gold' : 'border-gray-300'}`}
-                  src={image}
-                  alt={`Thumbnail ${index + 1}`}
-                  onClick={() => setSelectedImage(image)}
-                />
-              ))}
             </div>
           </div>
           <div className="w-1/3">
@@ -259,29 +360,7 @@ const SpecProduct = () => {
               &times;
             </button>
             <div className="text-center">
-              <h2 className="text-2xl font-semibold mb-4">Guide des tailles (EU)</h2>
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border px-4 py-2">Taille (EU)</th>
-                    <th className="border px-4 py-2">Circonférence (mm)</th>
-                    <th className="border px-4 py-2">Diamètre (mm)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border px-4 py-2">48</td>
-                    <td className="border px-4 py-2">48 mm</td>
-                    <td className="border px-4 py-2">15.3 mm</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2">50</td>
-                    <td className="border px-4 py-2">50 mm</td>
-                    <td className="border px-4 py-2">15.9 mm</td>
-                  </tr>
-                  {/* Ajouter + de choix de tailles au guide pour avoir un pannel regroupant tous les bijoux proposés */}
-                </tbody>
-              </table>
+              {getSizeGuide()}
             </div>
           </div>
         </div>
