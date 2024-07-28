@@ -21,7 +21,7 @@ export default function Header() {
   }, [isAdmin, email]);
 
   return (
-    <header className="w-full flex flex-col sm:m-4 md:flex-row items-center justify-between bg-light-purple bg-opacity-20 h-auto md:h-24 p-4 md:p-6 md:px-24 mb-4 md:mb-0">
+    <header className="w-full flex flex-col sm:m-2 md:flex-row items-center justify-between bg-light-purple bg-opacity-20 h-auto md:h-24 p-4 md:p-6 md:px-24 mb-4 md:mb-0">
       <Link to={`/`}>
         <img
           src={lotus}

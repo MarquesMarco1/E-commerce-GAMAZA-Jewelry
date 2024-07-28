@@ -1,11 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 import localhost from "../../../config";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import Header from "../../Header";
 import Footer from "../../Footer";
 
 export default function EditProduct() {
+  let navigate = useNavigate();
+  const { id } = useParams();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
@@ -27,13 +40,16 @@ export default function EditProduct() {
   const [stone, setStone] = useState("");
   const [imageAdd, setImageAdd] = useState("");
 
-  let navigate = useNavigate();
-  const { id } = useParams();
-
   useEffect(() => {
+    ////////////////////////////////
+    //  Check Middleware isAdmin  //
+    ////////////////////////////////
+
     const fetchIsAdmin = async () => {
       const email = localStorage.getItem("user");
+
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
+
       if (response.status === 200) {
         const data = await response.json();
 
@@ -47,6 +63,9 @@ export default function EditProduct() {
       }
     };
     fetchIsAdmin();
+    /////////////////////////////////////////////////////////////////
+    //  Fetch All : Categories, Materials, Stones, Sizes, Product  //
+    /////////////////////////////////////////////////////////////////
 
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/categorie`);
@@ -99,6 +118,10 @@ export default function EditProduct() {
     fetchData();
   }, []);
 
+  ///////////////////////////////////
+  //  handelSubmit : Edit Product  //
+  ///////////////////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -130,6 +153,10 @@ export default function EditProduct() {
     }
   };
 
+  //////////////////////////////////////
+  //  deleteImage : Delete One Image  //
+  //////////////////////////////////////
+
   const deleteImage = async (elem) => {
     console.log(elem);
     const response = await fetch(`${localhost}/api/deleteImage/${id}`, {
@@ -145,6 +172,7 @@ export default function EditProduct() {
       setImage(data.image);
     }
   };
+
   return (
     <>
       <Header></Header>

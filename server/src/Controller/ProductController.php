@@ -128,7 +128,7 @@ class ProductController extends AbstractController
         return $this->json(['success' => true], 200);
     }
 
-    #[Route("/api/category/{id}",name : "categoryId")]
+    #[Route("/api/categoryElem/{id}",name : "categoryId")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
         $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
