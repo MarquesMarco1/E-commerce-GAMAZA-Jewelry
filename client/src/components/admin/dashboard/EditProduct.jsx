@@ -10,10 +10,12 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function EditProduct() {
   let navigate = useNavigate();
   const { id } = useParams();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -182,26 +184,27 @@ export default function EditProduct() {
       >
         {/* Name FR*/}
 
-        <label for="nom">Product nom FR</label>
+        <label for="nom">{t("createProduct.productFR")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"
-          placeholder="Nom"
+          placeholder={t("createProduct.productFR")}
+          required
           value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
 
         {/* Name EN*/}
 
-        <label for="nom">Product name EN</label>
+        <label for="nom">{t("createProduct.productEN")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nomEn"
           id="nomEn"
-          placeholder="Name"
+          placeholder={t("createProduct.productEN")}
           required
           value={nomEN}
           onChange={(e) => setNomEN(e.target.value)}
@@ -209,7 +212,7 @@ export default function EditProduct() {
 
         {/* Categories */}
 
-        <label for="categorie">Choose a category:</label>
+        <label for="categorie">{t("editProduct.chooseCategory")}</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="cat"
@@ -217,7 +220,7 @@ export default function EditProduct() {
           value={category_id}
           onChange={(e) => setCategory_id(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">{t("createProduct.category")}</option>
           {allCategorie &&
             allCategorie.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -226,7 +229,7 @@ export default function EditProduct() {
 
         {/* Materials */}
 
-        <label for="material">Choose a material:</label>
+        <label for="material">{t("editProduct.chooseMaterial")}</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="material"
@@ -234,7 +237,7 @@ export default function EditProduct() {
           value={material}
           onChange={(e) => setMaterial(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">{t("editProduct.choose")}</option>
           {allMaterial &&
             allMaterial.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -243,7 +246,7 @@ export default function EditProduct() {
 
         {/* Stones */}
 
-        <label for="stone">Choose a stone:</label>
+        <label for="stone">{t("editProduct.chooseStone")}</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="stone"
@@ -251,7 +254,7 @@ export default function EditProduct() {
           value={stone}
           onChange={(e) => setStone(e.target.value)}
         >
-          <option value="">--Please choose an option--</option>
+          <option value="">{t("editProduct.choose")}</option>
           {allStone &&
             allStone.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -260,6 +263,7 @@ export default function EditProduct() {
 
         {/* Sizes */}
 
+        <label for="stone">{t("editProduct.chooseSize")}</label>
         <select
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="size"
@@ -267,20 +271,20 @@ export default function EditProduct() {
           value={size}
           onChange={(e) => setSize(e.target.value)}
         >
-          <option value="">--Please choose a Size--</option>
+          <option value="">{t("editProduct.choose")}</option>
           {allSize &&
             allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
         </select>
 
         {/* Images */}
 
-        <label for="image">image link</label>
+        <label for="image">{t("createProduct.image")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="image"
           id="image"
-          placeholder="Image"
+          placeholder={t("createProduct.image")}
           value={imageAdd}
           onChange={(e) => setImageAdd(e.target.value)}
         />
@@ -305,26 +309,27 @@ export default function EditProduct() {
 
         {/* Color FR*/}
 
-        <label for="color">color FR</label>
+        <label for="color">{t("createProduct.colorFR")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="color"
           id="color"
-          placeholder="Color"
+          placeholder={t("createProduct.colorFR")}
+          required
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
 
         {/* Color EN*/}
 
-        <label for="color">color EN</label>
+        <label for="color">{t("createProduct.colorEN")}</label>
         <input
           className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="color"
           id="color"
-          placeholder="Color"
+          placeholder={t("createProduct.colorEN")}
           required
           value={colorEN}
           onChange={(e) => setColorEN(e.target.value)}
@@ -343,13 +348,13 @@ export default function EditProduct() {
 
         {/* Weight */}
 
-        <label for="weight">weight</label>
+        <label for="weight">{t("createProduct.weight")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
           name="weight"
           id="weight"
-          placeholder="Weight"
+          placeholder={t("createProduct.weight")}
           step="0.01"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
@@ -357,13 +362,14 @@ export default function EditProduct() {
 
         {/* Price */}
 
-        <label for="price">price</label>
+        <label for="price">{t("createProduct.price")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
           name="price"
           id="price"
-          placeholder="Price"
+          placeholder={t("createProduct.price")}
+          required
           step="0.01"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
@@ -371,34 +377,37 @@ export default function EditProduct() {
 
         {/* Stock Quantity */}
 
-        <label for="stockQty">stockQty</label>
+        <label for="stockQty">{t("createProduct.stock")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="number"
           name="stockQty"
           id="stockQty"
-          placeholder="StockQty"
+          placeholder={t("createProduct.stock")}
+          required
           value={stockQty}
           onChange={(e) => setStockQty(e.target.value)}
         />
 
         {/* Description */}
 
-        <label for="content">description FR</label>
+        <label for="content">{t("createProduct.descriptionFR")}</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description"
+          placeholder={t("createProduct.descriptionFR")}
+          required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
 
+        <label for="content">{t("createProduct.descriptionEn")}</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description EN"
+          placeholder={t("createProduct.descriptionEn")}
           required
           value={descriptionEN}
           onChange={(e) => setDescriptionEN(e.target.value)}
@@ -407,7 +416,7 @@ export default function EditProduct() {
         {/* Submit Button */}
 
         <button type="submit" id="submit">
-          Edit the product
+          {t("editProduct.button")}
         </button>
       </form>
 

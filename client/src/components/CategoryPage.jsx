@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
-import localhost from "../config";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../LanguageContext";
+
+import localhost from "../config";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import inStock from '../assets/inStock.svg';
@@ -13,8 +17,10 @@ export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [language, setLanguage] = useState("");
   const { id } = useParams();
+  const { t } = useTranslation();
+  
+  const { language } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
 
@@ -23,7 +29,6 @@ export default function CategoryPage() {
   useEffect(() => {
     const fetchData = async () => {
       const language = localStorage.getItem("language");
-      setLanguage(language);
 
       const response = await fetch(`${localhost}/api/categoryElem/${id}`);
       if (response.status === 200) {
@@ -39,7 +44,7 @@ export default function CategoryPage() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, language]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -72,7 +77,7 @@ export default function CategoryPage() {
       <Header />
       <ul className="flex space-x-2 p-4">
         <li>
-          <Link to={`/`}>Homepage</Link>
+          <Link to={`/`}>{t('categoryPage.homepage')}</Link>
         </li>
         <li>/</li>
         {name && <li>{name}</li>}
@@ -116,7 +121,7 @@ export default function CategoryPage() {
           );
         })
         ) : (
-          <p className="col-span-3 text-center">No products yet</p>
+          <p className="col-span-3 text-center">{t('categoryPage.error')}</p>
         )}
       </ul>
       <div className="flex justify-center space-x-2 mb-8">

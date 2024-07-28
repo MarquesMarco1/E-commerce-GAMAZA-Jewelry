@@ -5,10 +5,14 @@ import lotus from "../assets/lotus.svg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import localhost from "../config";
+import Lang from "./utils/SwitchLangue";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
-  const email = localStorage.getItem('user');
+  const { t } = useTranslation();
+
+  const email = localStorage.getItem("user");
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
@@ -29,8 +33,9 @@ export default function Header() {
           alt="logo of a lotus that redirect to the landing/home page"
         />
       </Link>
+      <Lang />
       <h1 className="text-gold font-primary font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
-      G.A.M.A.Z.A .Co
+        G.A.M.A.Z.A .Co
       </h1>
       <div className="flex flex-col space-x-4 md:flex-row items-center md:mr-24 space-y-4 md:space-y-0 md:space-x-8">
         {isAdmin ? (
@@ -41,7 +46,9 @@ export default function Header() {
                 className="mr-2 md:mr-8"
                 alt="logo of a person that redirect to your profile and the edition or suppression of your profile"
               />
-              <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">Profile</span>
+              <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+                {t("header.profile")}
+              </span>
             </Link>
             <Link to={`/admin`} className="flex items-center">
               <img
@@ -49,17 +56,21 @@ export default function Header() {
                 className="mr-2 md:mr-8"
                 alt="logo of an admin that redirect to your dashboard and the edition or suppression of some products"
               />
-                <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">Admin</span>
+              <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+                {t("header.admin")}
+              </span>
             </Link>
           </>
         ) : (
           <Link to={`/profile`} className="flex items-center">
             <img
               src={profile}
-                className="mr-2 md:mr-8"
+              className="mr-2 md:mr-8"
               alt="logo of a person that redirect to your profile and the edition or suppression of your profile"
             />
-            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">Profile</span>
+            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+              {t("header.profile")}
+            </span>
           </Link>
         )}
 
@@ -69,7 +80,9 @@ export default function Header() {
             className="mr-2 md:mr-8"
             alt="logo of a cart that redirect to your cart and the finalization of your order"
           />
-      <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">Cart</span>
+          <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+            {t("header.cart")}
+          </span>
         </Link>
       </div>
     </header>

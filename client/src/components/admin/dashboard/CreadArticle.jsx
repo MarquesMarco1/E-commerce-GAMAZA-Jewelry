@@ -17,9 +17,11 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function CreadArticle() {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -149,7 +151,7 @@ export default function CreadArticle() {
     <>
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
-        Create a product
+        {t("createProduct.title")}
       </h1>
       <form
         className="flex flex-col justify-center	items-center"
@@ -162,7 +164,7 @@ export default function CreadArticle() {
           type="text"
           name="nom"
           id="nom"
-          placeholder="Product nom FR"
+          placeholder={t("createProduct.productFR")}
           required
           onChange={(e) => setNom(e.target.value)}
         />
@@ -172,7 +174,7 @@ export default function CreadArticle() {
           type="text"
           name="nom"
           id="nom"
-          placeholder="Product name EN"
+          placeholder={t("createProduct.productEN")}
           required
           onChange={(e) => setNomEN(e.target.value)}
         />
@@ -185,7 +187,7 @@ export default function CreadArticle() {
           id="categorie"
           onChange={(e) => setCategory_id(e.target.value)}
         >
-          <option value="">--Please choose a category--</option>
+          <option value="">{t("createProduct.category")}</option>
           {allCategorie &&
             allCategorie.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -200,7 +202,7 @@ export default function CreadArticle() {
           id="material"
           onChange={(e) => setMaterial(e.target.value)}
         >
-          <option value="">--Please choose a material--</option>
+          <option value="">{t("createProduct.material")}</option>
           {allMaterial &&
             allMaterial.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -215,7 +217,7 @@ export default function CreadArticle() {
           id="stone"
           onChange={(e) => setStone(e.target.value)}
         >
-          <option value="">--Please choose a stone--</option>
+          <option value="">{t("createProduct.stone")}</option>
           {allStone &&
             allStone.map((elem) => (
               <option value={elem.id}>{elem.name}</option>
@@ -230,7 +232,7 @@ export default function CreadArticle() {
           id="size"
           onChange={(e) => setSize(e.target.value)}
         >
-          <option value="">--Please choose a Size--</option>
+          <option value="">{t("createProduct.size")}</option>
           {allSize &&
             allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
         </select>
@@ -243,7 +245,7 @@ export default function CreadArticle() {
             type="text"
             name="image"
             id="image"
-            placeholder="Image"
+            placeholder={t("createProduct.image")}
             value={image}
             onChange={(e) => setImage(e.target.value)}
           />
@@ -252,7 +254,7 @@ export default function CreadArticle() {
             className="rounded-lg bg-light-purple p-2.5 mt-1"
             onClick={() => reset()}
           >
-            ADD image
+            {t("createProduct.buttonAdd")}
           </button>
         </div>
 
@@ -263,7 +265,7 @@ export default function CreadArticle() {
           type="text"
           name="color"
           id="color"
-          placeholder="Couleur FR"
+          placeholder={t("createProduct.colorFR")}
           required
           onChange={(e) => setColor(e.target.value)}
         />
@@ -273,7 +275,7 @@ export default function CreadArticle() {
           type="text"
           name="color"
           id="color"
-          placeholder="Color EN"
+          placeholder={t("createProduct.colorEN")}
           required
           onChange={(e) => setColorEN(e.target.value)}
         />
@@ -285,7 +287,7 @@ export default function CreadArticle() {
           type="number"
           name="weight"
           id="weight"
-          placeholder="Weight"
+          placeholder={t("createProduct.weight")}
           step="0.01"
           required
           onChange={(e) => setWeight(e.target.value)}
@@ -298,7 +300,7 @@ export default function CreadArticle() {
           type="number"
           name="price"
           id="price"
-          placeholder="Price"
+          placeholder={t("createProduct.price")}
           step="0.01"
           required
           onChange={(e) => setPrice(e.target.value)}
@@ -311,7 +313,7 @@ export default function CreadArticle() {
           type="number"
           name="stockQty"
           id="stockQty"
-          placeholder="StockQty"
+          placeholder={t("createProduct.stock")}
           required
           onChange={(e) => setStockQty(e.target.value)}
         />
@@ -322,7 +324,7 @@ export default function CreadArticle() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description FR"
+          placeholder={t("createProduct.descriptionFR")}
           required
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
@@ -331,7 +333,7 @@ export default function CreadArticle() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description EN"
+          placeholder={t("createProduct.descriptionEn")}
           required
           onChange={(e) => setDescriptionEN(e.target.value)}
         ></textarea>
@@ -339,7 +341,7 @@ export default function CreadArticle() {
         {/* Submit Button */}
 
         <button type="submit" id="submit">
-          Add a product
+          {t("createProduct.button")}
         </button>
       </form>
       <Footer></Footer>

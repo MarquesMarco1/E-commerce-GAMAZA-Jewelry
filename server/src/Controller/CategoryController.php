@@ -41,11 +41,12 @@ class CategoryController extends AbstractController
     public function getCategory(EntityManagerInterface $entityManager, CategoryRepository $repository, string $lang){
         if($lang == "FR"){
             $categories = $entityManager->getRepository(Category::class)->findAllInFR();
+            return $this->json(["allCategory"=>$categories], 200);
         }else if ($lang == "EN"){
             $categories = $entityManager->getRepository(Category::class)->findAllInEN();
+            return $this->json(["allCategory"=>$categories], 200);
         }
-        // $categories = $repository->findAll();
-        return $this->json(['allCategory' => $categories, "param"=>$lang], 200);
+
     }
 
     #[Route("/api/TrueCategory/{id}",name : "TrueCategory")]

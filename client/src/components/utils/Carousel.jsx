@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import localhost from "../../config";
+import { useTranslation } from "react-i18next";
 
 export default function Carousel() {
     const [trending, setTrending] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [displayCarousel, setDisplayCarousel] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         getTrendingProducts();
@@ -52,10 +55,9 @@ export default function Carousel() {
             return false;
     }
 
-useEffect(() => {
-    canRender();
-}, [activeImages]);
-
+    useEffect(() => {
+        canRender();
+    }, [activeImages]);
 return (
     <div className="space-y-4 flex flex-col items-start justify-center m-24">
     {/* <div className="relative w-full max-w-4xl mx-auto p-4"> */}
@@ -105,6 +107,5 @@ return (
                 ❯
             </button>
         </div>
-    </div>
-);
+    );
 };

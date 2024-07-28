@@ -1,6 +1,9 @@
 import { Link, useParams } from "react-router-dom";
 import localhost from "../config";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../LanguageContext";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import inStock from '../assets/inStock.svg';
@@ -10,6 +13,7 @@ import StockAlert from './stockAlert';
 
 const SpecProduct = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -21,6 +25,10 @@ const SpecProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+
+  const { language } = useContext(LanguageContext);
+
+  const newEntry = async () => {
 
 
   const newEntry = async () => {
@@ -39,7 +47,7 @@ const SpecProduct = () => {
 
   useEffect(() => {
     newEntry();
-  }, [id]);
+  }, [id, language]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -69,7 +77,7 @@ const SpecProduct = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, language]);
 
   const handleAddToCart = () => {
     if (product) {
@@ -214,7 +222,7 @@ const SpecProduct = () => {
   }
 
   if (!product) {
-    return <div className="text-center py-4">No product found</div>;
+    return <div className="text-center py-4">{t('specProduct.error')}</div>;
   }
 
   const manageStock = (stockQty) => {
@@ -245,7 +253,7 @@ const SpecProduct = () => {
       <nav className="bg-gray-200 py-2 px-6">
         <ul className="flex space-x-4">
           <li>
-            <Link to={`/`}>Homepage</Link>
+            <Link to={`/`}>{t('specProduct.homepage')}</Link>
           </li>
           <li>/</li>
           {product.category && (
@@ -268,7 +276,9 @@ const SpecProduct = () => {
               {product.images && product.images.map((image, index) => (
                 <img
                   key={index}
-                  className={`w-40 h-40 cursor-pointer border-2 ${selectedImage === image ? 'border-gold' : 'border-gray-300'}`}
+                  className={`w-20 h-20 cursor-pointer border-2 ${selectedImage === image ? "border-gold" : "border-gray-300"
+                    }`}
+
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setSelectedImage(image)}
@@ -341,33 +351,63 @@ const SpecProduct = () => {
           </div>
         </div>
         <div className="mt-10 space-y-2">
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Category: {product.category.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.category')}
+            {language === "FR"
+              ? product.category.name
+              : product.category.nameEn}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Material: {product.material.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.material')}
+            {language === "FR"
+              ? product.material.name
+              : product.material.nameEn}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Stone: {product.stone.name}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.stone')}
+            {language === "FR" ? product.stone.name : product.stone.nameEn}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Color: {product.color}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.color')}{language === "FR" ? product.color : product.colorEn}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Size: {product.size}</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.size')} {product.sizes.name}
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">Weight: {product.weight}g</p>
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.weight')} {product.weight}g
+          </p>
           <div className="border-b-2 border-gray-300"></div>
-          <div className="flex items-center">
-                  <img className="w-8 h-8" src={stockColorCode} alt={stockText}/>
-                  <p className="text-left font-primary">{stockText}</p>
-          </div>
-          {stockText === "Sold out" && (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleStockAlert(product.name);
-                    }}
-                    className="text-grey-500 underline"
-                    >
-                      Notify me when back in stock
-                    </button>
-                )}
+          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
+            {t('specProduct.stockQty')} {product.stockQty}
+          </p>
+        </div>
+        <div className="mt-10">
+          <label htmlFor="quantity" className="block text-lg font-primary">
+            {t('specProduct.quantity')}
+          </label>
+          <select
+            id="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="mt-2 p-2 border border-gray-300 rounded-lg"
+          >
+            {[...Array(10).keys()].map((num) => (
+              <option key={num + 1} value={num + 1}>
+                {num + 1}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
+          >
+            {t('specProduct.cart')}
+          </button>
         </div>
       </main>
       <Footer />
@@ -388,7 +428,9 @@ const SpecProduct = () => {
             </button>
             <div className="flex justify-center">
               <img
-                className={`cursor-zoom-in ${isZoomed ? 'transform scale-150' : 'transform scale-100'}`}
+                className={`cursor-zoom-in ${isZoomed ? "transform scale-150" : "transform scale-100"
+                  }`}
+
                 src={selectedImage}
                 alt={product.name}
                 onClick={toggleZoom}

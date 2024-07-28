@@ -9,9 +9,11 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function CreateCategory() {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -78,7 +80,7 @@ export default function CreateCategory() {
     <>
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
-        Create a category
+        {t("createCategory.title")}
       </h1>
       <form
         className="flex flex-col justify-center	items-center"
@@ -91,7 +93,7 @@ export default function CreateCategory() {
           type="text"
           name="nomFR"
           id="categorie"
-          placeholder="Categorie nom FR"
+          placeholder={t("createCategory.nameFR")}
           required
           onChange={(e) => setCategorie(e.target.value)}
         />
@@ -101,7 +103,7 @@ export default function CreateCategory() {
           type="text"
           name="nomEN"
           id="categorie"
-          placeholder="Categorie nom EN"
+          placeholder={t("createCategory.nameEN")}
           required
           onChange={(e) => setNomEn(e.target.value)}
         />
@@ -113,7 +115,7 @@ export default function CreateCategory() {
           type="text"
           name="image"
           id="image"
-          placeholder="Image"
+          placeholder={t("createProduct.image")}
           required
           onChange={(e) => setImage(e.target.value)}
         />
@@ -124,7 +126,7 @@ export default function CreateCategory() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
           name="description"
           id="description"
-          placeholder="Description FR"
+          placeholder={t("createProduct.descriptionFR")}
           required
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
@@ -133,14 +135,14 @@ export default function CreateCategory() {
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
           name="descriptionEn"
           id="descriptionEn"
-          placeholder="Description EN"
+          placeholder={t("createProduct.descriptionEn")}
           required
           onChange={(e) => setDescriptionEn(e.target.value)}
         ></textarea>
 
         {/* Submit */}
 
-        <input type="submit" value="Create a category" />
+        <input type="submit" value={t("createCategory.button")} />
       </form>
       <Footer></Footer>
     </>

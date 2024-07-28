@@ -4,9 +4,13 @@ import localhost from "../../config";
 import ManageProfil from "./ManageProfil";
 import Header from "../Header";
 import ManageCommand from "./ManageCommand";
+import { useTranslation } from "react-i18next";
+
 export default function Profile() {
   const [profil, setProfil] = useState([]);
+  const { t } = useTranslation();
   let navigate = useNavigate();
+
   const fetchData = async (email) => {
     const response = await fetch(`${localhost}/api/user`, {
       method: "POST",
@@ -15,6 +19,7 @@ export default function Profile() {
       },
       body: JSON.stringify({ email: email }),
     });
+
     if (response.status === 200) {
       const data = await response.json();
       setProfil(data.user);
@@ -42,7 +47,9 @@ export default function Profile() {
       <Header></Header>
       <div className="mr-24	ml-24	flex justify-between font-secondary">
         <div className="w-3/5	 mr-8">
-          <h1 className="mt-16 text-3xl	text-gold mb-2">My Profile</h1>
+          <h1 className="mt-16 text-3xl	text-gold mb-2">
+            {t("profilPage.profil")}
+          </h1>
           <div className="border border-gray-400	w-4/4	"></div>
           <br></br>
           <ManageProfil data={profil} />
@@ -51,12 +58,14 @@ export default function Profile() {
               className="rounded-lg bg-light-purple p-2.5 mt-2"
               onClick={() => logout()}
             >
-              Logout
+              {t("profilPage.logout")}
             </button>
           </div>
         </div>
         <div className="w-2/5">
-          <h1 className="mt-16 text-3xl	text-gold mb-2">Mes commandes</h1>
+          <h1 className="mt-16 text-3xl	text-gold mb-2">
+            {t("profilPage.command")}
+          </h1>
           <div className="border border-gray-400 w-4/4"></div>
           <br></br>
           <ManageCommand />

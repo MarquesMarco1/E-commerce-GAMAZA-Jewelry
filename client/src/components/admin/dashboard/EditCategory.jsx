@@ -10,9 +10,11 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function EditCategory() {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -98,25 +100,25 @@ export default function EditCategory() {
       >
         {/* Category name */}
 
-        <label for="nom">Category name FR</label>
+        <label for="nom">{t("createCategory.nameFR")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"
-          placeholder="Categorie nom FR"
+          placeholder={t("createCategory.nameFR")}
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label for="nom">Category name EN</label>
+        <label for="nom">{t("createCategory.nameEN")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="nomEN"
           id="categorie"
-          placeholder="Categorie nom EN"
+          placeholder={t("createCategory.nameEN")}
           required
           value={nomEn}
           onChange={(e) => setNomEn(e.target.value)}
@@ -124,13 +126,13 @@ export default function EditCategory() {
 
         {/* Image */}
 
-        <label for="image">image link</label>
+        <label for="image">{t("createProduct.image")}</label>
         <input
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="image"
           id="image"
-          placeholder="Image"
+          placeholder={t("createProduct.image")}
           required
           value={image}
           onChange={(e) => setImage(e.target.value)}
@@ -138,30 +140,30 @@ export default function EditCategory() {
 
         {/* Description */}
 
-        <label for="content">description FR</label>
+        <label for="content">{t("createProduct.descriptionFR")}</label>
         <textarea
           className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           name="content"
           id="content"
-          placeholder="Description"
+          placeholder={t("createProduct.descriptionFR")}
           required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
 
-        <label for="content">description EN</label>
+        <label for="content">{t("createProduct.descriptionEn")}</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
           name="descriptionEn"
           id="descriptionEn"
-          placeholder="Description EN"
+          placeholder={t("createProduct.descriptionEn")}
           required
           value={descriptionEn}
           onChange={(e) => setDescriptionEn(e.target.value)}
         ></textarea>
 
         <button type="submit" id="submit">
-          Edit the category
+          {t("editCategory.button")}
         </button>
       </form>
 
