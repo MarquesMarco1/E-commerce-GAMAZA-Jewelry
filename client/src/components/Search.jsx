@@ -1,4 +1,3 @@
-import Header from "./Header";
 import localhost from "../config";
 import { useEffect, useState } from "react";
 
@@ -42,19 +41,19 @@ export default function Search() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     setIsSearching(true);
     sortResults();
+
     setTimeout(() => {
       setIsSearching(false);
-    }, 1000);
+    }, 500);
   };
 
 
   const sortResults = () => {
     // Handle Logic //
+    // setIsSearching(false);
     let list = [];
-    
     if (categoryName === 'All Categories' && productName === '') {
       product.map((elem) => {
         list.push(elem)
@@ -148,7 +147,7 @@ export default function Search() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
       
           {/* <div className="flex lg:flex-wrap flex-row lg:grid-cols-3 gap-5">: */}
-          {searchResults.length > 0 ? (
+          {searchResults.length > 0 && (
             searchResults.map((result) => (
               <div key={result.id} className="flex flex-col justify-between h-full bg-white border border-gold rounded-lg p-5 shadow-lg">
 
@@ -161,8 +160,6 @@ export default function Search() {
                 </button>
               </div>
             ))
-          ) : (
-            <p>No results found.</p>
           )}
         </div>
       </div>
