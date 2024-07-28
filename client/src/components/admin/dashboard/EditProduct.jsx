@@ -335,17 +335,6 @@ export default function EditProduct() {
           onChange={(e) => setColorEN(e.target.value)}
         />
 
-        {* Size */}
-        <label for="size">Size</label>
-        <input
-          className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="size"
-          id="size"
-          placeholder="Size"
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
-
         {/* Weight */}
 
         <label for="weight">{t("createProduct.weight")}</label>

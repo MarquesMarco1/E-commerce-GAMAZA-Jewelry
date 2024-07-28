@@ -142,11 +142,8 @@ export default function Search() {
             <div className="text-center py-4 font-primary text-black">
               {t("search.error")}
             </div>
-          {searchResults.length > 0 && (
-          {console.log(searchResults)}
-          {searchResults.length > 0 ? (
           )}
-        </div>
+          </div>
         <select
           value={categoryName}
           className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
