@@ -153,43 +153,43 @@ const SpecProduct = () => {
         </div>
         <div className="mt-10 space-y-2">
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Category:{" "}
+          {t('specProduct.category')}
             {language === "FR"
               ? product.category.name
               : product.category.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Material:{" "}
+          {t('specProduct.material')}
             {language === "FR"
               ? product.material.name
               : product.material.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Stone:{" "}
+          {t('specProduct.stone')}
             {language === "FR" ? product.stone.name : product.stone.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Color: {language === "FR" ? product.color : product.colorEn}
+          {t('specProduct.color')}{language === "FR" ? product.color : product.colorEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Size: {product.sizes.name}
+          {t('specProduct.size')} {product.sizes.name}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Weight: {product.weight}g
+          {t('specProduct.weight')} {product.weight}g
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            Stock Quantity: {product.stockQty}
+          {t('specProduct.stockQty')} {product.stockQty}
           </p>
         </div>
         <div className="mt-10">
           <label htmlFor="quantity" className="block text-lg font-primary">
-            Quantity:
+          {t('specProduct.quantity')}
           </label>
           <select
             id="quantity"

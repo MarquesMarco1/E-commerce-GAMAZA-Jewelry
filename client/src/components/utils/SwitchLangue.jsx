@@ -11,11 +11,13 @@ const Lang = () => {
 
         switch (language) {
             case Language.EN:
+                localStorage.setItem("language", "EN")
                 setLang(Language.EN);
                 i18n.changeLanguage(Language.EN);
                 break;
             case Language.FR:
             default:
+                localStorage.setItem("language", "FR")
                 setLang(Language.FR);
                 i18n.changeLanguage(Language.FR);
                 break;
