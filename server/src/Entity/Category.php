@@ -26,6 +26,12 @@ class Category
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nameEn = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $descriptionEn = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +81,30 @@ class Category
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getNameEn(): ?string
+    {
+        return $this->nameEn;
+    }
+
+    public function setNameEn(string $nameEn): static
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+    public function getDescriptionEn(): ?string
+    {
+        return $this->descriptionEn;
+    }
+
+    public function setDescriptionEn(string $descriptionEn): static
+    {
+        $this->descriptionEn = $descriptionEn;
 
         return $this;
     }

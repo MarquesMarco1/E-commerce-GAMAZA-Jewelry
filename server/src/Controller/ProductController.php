@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Material;
 use App\Entity\Product;
+use App\Entity\Size;
 use App\Entity\Stone;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -26,12 +27,16 @@ class ProductController extends AbstractController
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
         $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
+        $size = $entityManager->getRepository(Size::class)->find($formData["size"]);
         if($formData){
             $product->setName($formData["nom"]);
+            $product->setNameEn($formData["nomEn"]);
             $product->setImages($formData["image"]);
             $product->setDescription($formData["description"]);
+            $product->setDescriptionEn($formData["descriptionEn"]);
             $product->setColor($formData["color"]);
-            $product->setSize($formData["size"]);
+            $product->setColorEn($formData["colorEn"]);
+            $product->setSizes($size);
             $product->setWeight(floatval($formData["weight"]));
             $product->setPrice(floatval($formData["price"]));
             $product->setCategory($category);
@@ -69,6 +74,7 @@ class ProductController extends AbstractController
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
         $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
+        $size = $entityManager->getRepository(Size::class)->find($formData["size"]);
         if($formData["image"] !== null){
             $images = $product->getImages();
             array_push($images, $formData["image"]);  
@@ -77,10 +83,13 @@ class ProductController extends AbstractController
         }
         if($formData){
             $product->setName($formData["nom"]);
+            $product->setNameEn($formData["nomEn"]);
             $product->setImages($images);
             $product->setDescription($formData["description"]);
+            $product->setDescriptionEn($formData["descriptionEn"]);
             $product->setColor($formData["color"]);
-            $product->setSize($formData["size"]);
+            $product->setColorEn($formData["colorEn"]);
+            $product->setSizes($size);
             $product->setWeight(floatval($formData["weight"]));
             $product->setPrice(floatval($formData["price"]));
             $product->setCategory($category);
@@ -119,7 +128,7 @@ class ProductController extends AbstractController
         return $this->json(['success' => true], 200);
     }
 
-    #[Route("/api/category/{id}",name : "categoryId")]
+    #[Route("/api/categoryElem/{id}",name : "categoryId")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
         $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);

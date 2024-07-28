@@ -12,6 +12,7 @@ export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [language, setLanguage] = useState("");
   const { id } = useParams();
   const { t } = useTranslation();
 
@@ -19,11 +20,18 @@ export default function CategoryPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/category/${id}`);
+      const language = localStorage.getItem("language");
+      setLanguage(language);
+
+      const response = await fetch(`${localhost}/api/categoryElem/${id}`);
       if (response.status === 200) {
         const data = await response.json();
         if (data.products.length > 0) {
-          setName(data.products[0].category.name);
+          setName(
+            language === "FR"
+              ? data.products[0].category.name
+              : data.products[0].category.nameEn
+          );
         }
         setProducts(data.products);
       }
@@ -58,9 +66,11 @@ export default function CategoryPage() {
                 <img
                   className="w-full h-48 object-cover mb-4"
                   src={elem.images}
-                  alt={elem.name}
+                  alt={language === "FR" ? elem.name : elem.nameEn}
                 />
-                <p className="text-center font-primary">{elem.name}</p>
+                <p className="text-center font-primary">
+                  {language === "FR" ? elem.name : elem.nameEn}
+                </p>
               </Link>
             </li>
           ))
