@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import localhost from "../config";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../LanguageContext";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -9,7 +10,6 @@ import Footer from "./Footer";
 const SpecProduct = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [language, setLanguage] = useState("");
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -17,9 +17,9 @@ const SpecProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
 
+  const { language } = useContext(LanguageContext);
+
   const newEntry = async () => {
-    const language = localStorage.getItem("language");
-    setLanguage(language);
 
     try {
       await fetch(`${localhost}/api/stats/products/${id}`, {
@@ -36,7 +36,7 @@ const SpecProduct = () => {
 
   useEffect(() => {
     newEntry();
-  }, [id]);
+  }, [id, language]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -60,7 +60,7 @@ const SpecProduct = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, language]);
 
   const handleAddToCart = () => {
     if (product) {
@@ -141,9 +141,8 @@ const SpecProduct = () => {
               product.images.map((image, index) => (
                 <img
                   key={index}
-                  className={`w-20 h-20 cursor-pointer border-2 ${
-                    selectedImage === image ? "border-gold" : "border-gray-300"
-                  }`}
+                  className={`w-20 h-20 cursor-pointer border-2 ${selectedImage === image ? "border-gold" : "border-gray-300"
+                    }`}
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setSelectedImage(image)}
@@ -153,43 +152,43 @@ const SpecProduct = () => {
         </div>
         <div className="mt-10 space-y-2">
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.category')}
+            {t('specProduct.category')}
             {language === "FR"
               ? product.category.name
               : product.category.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.material')}
+            {t('specProduct.material')}
             {language === "FR"
               ? product.material.name
               : product.material.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.stone')}
+            {t('specProduct.stone')}
             {language === "FR" ? product.stone.name : product.stone.nameEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.color')}{language === "FR" ? product.color : product.colorEn}
+            {t('specProduct.color')}{language === "FR" ? product.color : product.colorEn}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.size')} {product.sizes.name}
+            {t('specProduct.size')} {product.sizes.name}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.weight')} {product.weight}g
+            {t('specProduct.weight')} {product.weight}g
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-          {t('specProduct.stockQty')} {product.stockQty}
+            {t('specProduct.stockQty')} {product.stockQty}
           </p>
         </div>
         <div className="mt-10">
           <label htmlFor="quantity" className="block text-lg font-primary">
-          {t('specProduct.quantity')}
+            {t('specProduct.quantity')}
           </label>
           <select
             id="quantity"
@@ -224,9 +223,8 @@ const SpecProduct = () => {
             </button>
             <div className="flex justify-center">
               <img
-                className={`cursor-zoom-in ${
-                  isZoomed ? "transform scale-150" : "transform scale-100"
-                }`}
+                className={`cursor-zoom-in ${isZoomed ? "transform scale-150" : "transform scale-100"
+                  }`}
                 src={selectedImage}
                 alt={product.name}
                 onClick={toggleZoom}

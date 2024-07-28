@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../LanguageContext";
 
 import localhost from "../config";
 
@@ -12,16 +13,15 @@ export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [language, setLanguage] = useState("");
   const { id } = useParams();
   const { t } = useTranslation();
-
+  
+  const { language } = useContext(LanguageContext);
   const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchData = async () => {
       const language = localStorage.getItem("language");
-      setLanguage(language);
 
       const response = await fetch(`${localhost}/api/categoryElem/${id}`);
       if (response.status === 200) {
@@ -37,7 +37,7 @@ export default function CategoryPage() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, language]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

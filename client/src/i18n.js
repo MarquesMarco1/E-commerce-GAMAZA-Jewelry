@@ -5,7 +5,7 @@ import { Language } from './enum/Language'
 import translationEN from './i18n/en.json';
 import translationFR from './i18n/fr.json';
 
-let defaultLanguage = Language.EN;
+let defaultLanguage = Language.FR;
 
 // the translations
 const resources = {

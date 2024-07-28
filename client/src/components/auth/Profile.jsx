@@ -19,6 +19,7 @@ export default function Profile() {
       },
       body: JSON.stringify({ email: email }),
     });
+
     if (response.status === 200) {
       const data = await response.json();
       setProfil(data.user);

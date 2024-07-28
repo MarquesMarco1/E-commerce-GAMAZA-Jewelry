@@ -1,36 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../../LanguageContext";
 import { Language } from "../../enum/Language";
 
 const Lang = () => {
   const { i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language);
+  const { language, changeLanguage } = useContext(LanguageContext);
 
-  const changeLanguage = (event) => {
-    const language = event.target.value;
-
-    switch (language) {
-      case Language.EN:
-        localStorage.setItem("language", "EN");
-        setLang(Language.EN);
-        i18n.changeLanguage(Language.EN);
-        break;
-      case Language.FR:
-      default:
-        localStorage.setItem("language", "FR");
-        setLang(Language.FR);
-        i18n.changeLanguage(Language.FR);
-        break;
-    }
+  const handleChangeLanguage = (event) => {
+    const newLanguage = event.target.value;
+    changeLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage.toLowerCase());
   };
 
   return (
     <div>
       <div>
-        <select value={lang} name="language" onChange={changeLanguage}>
+{language == 'FR' && <select value={language} name="language" onChange={handleChangeLanguage}>
           <option value={Language.FR}>FR</option>
           <option value={Language.EN}>EN</option>
-        </select>
+        </select>}
+{language == 'EN' && <select value={language} name="language" onChange={handleChangeLanguage}>
+          <option value={Language.EN}>EN</option>
+          <option value={Language.FR}>FR</option>
+        </select>}
       </div>
     </div>
   );

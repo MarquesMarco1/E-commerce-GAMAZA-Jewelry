@@ -16,6 +16,7 @@
   "search": {
     "error": "No product found",
     "button": "Search",
+    "searchBar": "Search by terms or categories",
     "select": "All Categories",
     "cart": "Add to cart",
     "loading": "Searching ..."
