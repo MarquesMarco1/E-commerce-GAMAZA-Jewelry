@@ -11,7 +11,7 @@ export default function Search() {
   const [categoryName, setCategoryName] = useState("All Categories");
   const [searchResults, setSearchResults] = useState([]);
   const [displaySearchResults, setDisplaySearchResults] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
 
@@ -31,7 +31,7 @@ export default function Search() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+
           if (data.product && data.product.length > 0) {
             setProduct(data.product);
             setCategories(data.category);
@@ -94,7 +94,8 @@ export default function Search() {
         Error: {error.message}
       </div>
     );
-  if (!product) return <div className="text-center py-4">{t('search.error')}</div>;
+  if (!product)
+    return <div className="text-center py-4">{t("search.error")}</div>;
 
   return (
     <>
@@ -116,7 +117,7 @@ export default function Search() {
               type="submit"
               className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300"
             >
-              Search
+              {t("search.button")}
             </button>
             {isSearching && (
               <div className="text-center flex font-primary py-4">
@@ -140,7 +141,7 @@ export default function Search() {
                     d="M4 12a8 8 0 018-8v8H4z"
                   ></path>
                 </svg>
-                Searching ...
+                {t("search.loading")}
               </div>
             )}
             {error && (
@@ -148,7 +149,7 @@ export default function Search() {
             )}
             {!product && !isSearching && (
               <div className="text-center py-4 font-primary text-black">
-                No product found
+                {t("search.error")}
               </div>
             )}
           </div>
@@ -162,7 +163,7 @@ export default function Search() {
               value="All Categories"
               className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple"
             >
-              All Categories
+              {t("search.select")}
             </option>
 
             {categories.length > 0 &&
@@ -180,7 +181,6 @@ export default function Search() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
           {/* <div className="flex lg:flex-wrap flex-row lg:grid-cols-3 gap-5">: */}
-          {console.log(searchResults)}
           {searchResults.length > 0 ? (
             searchResults.map((result) => (
               <div
@@ -194,24 +194,22 @@ export default function Search() {
                 />
                 <h3 className="font-primary text-gold text-2xl mt-4">
                   {language === "FR" ? result.name : result.nameEn}
-                  {/* {result.name} */}
                 </h3>
                 <p className="font-primary text-black text-lg">
                   {language === "FR"
                     ? result.description
                     : result.descriptionEn}
-                  {/* {result.description} */}
                 </p>
                 <p className="font-bold font-primary text-black">
                   ${result.price}
                 </p>
                 <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300">
-                  Add to cart
+                  {t("search.cart")}
                 </button>
               </div>
             ))
           ) : (
-            <p>{t('search.error')}</p>
+            <p>{t("search.error")}</p>
           )}
         </div>
       </div>

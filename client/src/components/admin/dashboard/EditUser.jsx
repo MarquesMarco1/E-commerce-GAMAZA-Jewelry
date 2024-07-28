@@ -9,10 +9,12 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function EditUser() {
   const { id } = useParams();
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -83,7 +85,7 @@ export default function EditUser() {
     <>
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
-        Create a product
+        {t("editUser.title")}
       </h1>
       <form
         className="flex flex-col justify-center	items-center"
@@ -96,7 +98,7 @@ export default function EditUser() {
           type="text"
           name="firstname"
           id="firstname"
-          placeholder="Firstname"
+          placeholder={t("editProfil.firstname")}
           required
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
@@ -109,7 +111,7 @@ export default function EditUser() {
           type="text"
           name="lastname"
           id="lastname"
-          placeholder="Lastname"
+          placeholder={t("editProfil.lastname")}
           required
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
@@ -122,7 +124,7 @@ export default function EditUser() {
           type="email"
           name="email"
           id="email"
-          placeholder="Email"
+          placeholder={t("editProfil.email")}
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -136,7 +138,7 @@ export default function EditUser() {
           name="password"
           id="password"
           //   required
-          placeholder="Password"
+          placeholder={t("createUser.password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -149,7 +151,7 @@ export default function EditUser() {
           name="adress"
           id="adress"
           required
-          placeholder="Adress"
+          placeholder={t("editProfil.adress")}
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
         />
@@ -162,7 +164,7 @@ export default function EditUser() {
           name="zipCode"
           id="zipCode"
           required
-          placeholder="ZipCode"
+          placeholder={t("editProfil.zip")}
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
         />
@@ -174,7 +176,7 @@ export default function EditUser() {
           type="text"
           name="city"
           id="city"
-          placeholder="City"
+          placeholder={t("editProfil.city")}
           required
           value={city}
           onChange={(e) => setCity(e.target.value)}
@@ -188,7 +190,7 @@ export default function EditUser() {
           name="country"
           id="country"
           required
-          placeholder="Country"
+          placeholder={t("editProfil.country")}
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
@@ -201,13 +203,13 @@ export default function EditUser() {
           name="phone"
           id="phone"
           required
-          placeholder="Phone"
+          placeholder={t("editProfil.phone")}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
 
         <button type="submit" id="submit">
-          Edit
+          {t("editProfil.edit")}
         </button>
       </form>
       <Footer></Footer>

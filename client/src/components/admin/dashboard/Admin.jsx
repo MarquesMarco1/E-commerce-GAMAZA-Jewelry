@@ -10,9 +10,11 @@ import localhost from "../../../config";
 import Header from "../../Header";
 import Footer from "../../Footer";
 import NavBarAdmin from "../../utils/navbarAdmin";
+import { useTranslation } from "react-i18next";
 
 export default function Admin() {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -139,54 +141,63 @@ export default function Admin() {
 
         <div className="flex flex-col	">
           <Link to={`/createArticle`} className="w-max">
-            Add a product
+            {t("adminPage.product")}
           </Link>
           <Link to={`/createCategory`} className="w-max">
-            Add a category
+            {t("adminPage.category")}
           </Link>
           <Link to={`/createUser`} className="w-max">
-            Add a user
+            {t("adminPage.user")}
           </Link>
           <br></br>
         </div>
+
         <div className="flex justify-between	">
           {/* ////////////////// */}
           {/* // Manage users // */}
           {/* ////////////////// */}
 
           <div className="flex flex-col w-full	">
-            <h2 className="text-gold">Manage Users :</h2>
+            <h2 className="text-gold">{t("adminPage.manageUser")}</h2>
             {users.length > 0 &&
               users.map((elem) => (
                 <ul className="m-2.5	border-2 rounded-2xl p-2.5	bg-gray-200	">
                   <div>
                     <li>
-                      Full name : {elem.firstname ? elem.firstname : "No data"}
+                      {t("adminPage.FullName")}{" "}
+                      {elem.firstname ? elem.firstname : t("adminPage.error")}
                     </li>
-                    <li>Email : {elem.email}</li>
-                    <li>Password : *******</li>
-                    <li>Adress : {elem.adress ? elem.adress : "No data"}</li>
+                    <li>
+                      {t("editProfil.email")} : {elem.email}
+                    </li>
+                    <li>{t("editProfil.password")} : *******</li>
+                    <li>
+                      {t("editProfil.adress")}{" "}
+                      {elem.adress ? elem.adress : t("adminPage.error")}
+                    </li>
                   </div>
                   <div style={{ textAlign: "end" }}>
                     <li>
-                      <button onClick={() => editUser(elem.id)}>Edit</button>
+                      <button onClick={() => editUser(elem.id)}>
+                        {t("editProfil.edit")}
+                      </button>
                     </li>
                     {!elem.roles.includes("ROLE_ADMIN") ? (
                       <li>
                         <button onClick={() => setAdmin(elem.id)}>
-                          Become Admin
+                          {t("adminPage.Badmin")}
                         </button>
                       </li>
                     ) : (
                       <li>
                         <button onClick={() => setUser(elem.id)}>
-                          Become User
+                          {t("adminPage.Buser")}
                         </button>
                       </li>
                     )}
                     <li>
                       <button onClick={() => deleteUser(elem.id)}>
-                        Delete
+                        {t("editProfil.delete")}
                       </button>
                     </li>
                   </div>
@@ -199,27 +210,35 @@ export default function Admin() {
           {/* ///////////////////////////// */}
 
           <div className="flex flex-col w-full	">
-            <h2 className="text-gold">Manage Articles :</h2>
+            <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
             {products.length > 0 &&
               products.map((elem) => (
                 <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
                   <div>
                     <li>
-                      Title : {language === "FR" ? elem.name : elem.nameEn}
+                      {t("adminPage.title")}{" "}
+                      {language === "FR" ? elem.name : elem.nameEn}
                     </li>
-                    <li>Size : {elem.size}</li>
                     <li>
-                      Color : {language === "FR" ? elem.color : elem.colorEn}
+                      {t("adminPage.size")} {elem.sizes.name}
                     </li>
-                    <li>Price : ${elem.price}</li>
+                    <li>
+                      {t("adminPage.color")}{" "}
+                      {language === "FR" ? elem.color : elem.colorEn}
+                    </li>
+                    <li>
+                      {t("adminPage.price")} ${elem.price}
+                    </li>
                   </div>
                   <div style={{ textAlign: "end" }}>
                     <li>
-                      <button onClick={() => editProduct(elem.id)}>Edit</button>
+                      <button onClick={() => editProduct(elem.id)}>
+                        {t("editProfil.edit")}
+                      </button>
                     </li>
                     <li>
                       <button onClick={() => deleteProduct(elem.id)}>
-                        Delete
+                        {t("editProfil.delete")}
                       </button>
                     </li>
                   </div>
@@ -234,20 +253,25 @@ export default function Admin() {
       {/* ///////////////////////////// */}
 
       <div className="flex flex-col w-full	">
-        <h2 className="text-gold">Manage Category :</h2>
+        <h2 className="text-gold">{t("adminPage.manageCategory")}</h2>
         {category.length > 0 &&
           category.map((elem) => (
             <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
               <div>
-                <li>Title : {language === "FR" ? elem.name : elem.nameEn}</li>
+                <li>
+                  {t("adminPage.title")}{" "}
+                  {language === "FR" ? elem.name : elem.nameEn}
+                </li>
               </div>
               <div style={{ textAlign: "end" }}>
                 <li>
-                  <button onClick={() => editCategory(elem.id)}>Edit</button>
+                  <button onClick={() => editCategory(elem.id)}>
+                    {t("editProfil.edit")}
+                  </button>
                 </li>
                 <li>
                   <button onClick={() => deleteCategory(elem.id)}>
-                    Delete
+                    {t("editProfil.delete")}
                   </button>
                 </li>
               </div>

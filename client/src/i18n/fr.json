@@ -1,5 +1,135 @@
 {
-    "specProducts" : {
-
-    }
+  "common": { "translated-text": "Tendence du mois" },
+  "specProduct": {
+    "error": "Aucun produit trouvé",
+    "homepage": "Accueil",
+    "category": "Categorie:",
+    "material": "Matériel:",
+    "stone": "Pierre:",
+    "color": "Couleur:",
+    "size": "Taille:",
+    "weight": "Poids:",
+    "stockQty": "Stock:",
+    "quantity": "Quantité",
+    "cart": "Ajouter au panier"
+  },
+  "search": {
+    "error": "Aucun produit trouvé",
+    "button": "Rechercher",
+    "select": "Toutes les catégories",
+    "cart": "Ajouter au panier",
+    "loading": "Recherche en cours ..."
+  },
+  "header": {
+    "profile": "Profil",
+    "admin": "Administrateur",
+    "cart": "Panier"
+  },
+  "footer": {
+    "title": "Footer"
+  },
+  "categoryPage": {
+    "homepage": "Accueil",
+    "error": "Pas encore de produit"
+  },
+  "navBarAdmin": {
+    "dashboard": "Tableau de bord",
+    "stats": "Statistiques"
+  },
+  "auth": {
+    "social": "Utilisez vos comptes de réseaux sociaux",
+    "email": "Email :",
+    "password": "Mot de passe :",
+    "forgot": "Mot de passe oublié?",
+    "login": "Se connecter",
+    "no-account": "Vous n'avez pas de compte ?",
+    "register": "S'inscrire"
+  },
+  "profilPage": {
+    "profil": "Mes coordonnées",
+    "logout": "Deconnexion",
+    "command": "Mes commandes"
+  },
+  "commandManage": {
+    "order": "Numéro de commande",
+    "adress": "Articles",
+    "articles": "Adresse",
+    "total": "Total",
+    "button": "Confirmer",
+    "buttonShip": "Envoyer"
+  },
+  "editProfil": {
+    "title": "Créer un produit",
+    "firstname": "Prénom",
+    "lastname": "Nom",
+    "email": "Email ",
+    "password": "Mot de passe ",
+    "adress": "Adresse ",
+    "zip": "Code Postal ",
+    "city": "Ville ",
+    "country": "Pays ",
+    "phone": "Numéro de teléphone ",
+    "edit": "Modifier ",
+    "delete": "Supprimer"
+  },
+  "adminPage": {
+    "error": "Pas de données",
+    "product": "Ajouter un produit",
+    "category": "Ajouter une categorie",
+    "user": "Ajouter un utilisateur",
+    "manageUser": "Gestion des utilisateurs :",
+    "FullName": "Nom complet :",
+    "Badmin": "Transformer en administrateur",
+    "Buser": "Transformer en utilisateur",
+    "manageProduct": "Gestion des produits :",
+    "title": "Titre :",
+    "size": "Taille :",
+    "color": "Couleur :",
+    "price": "Prix :",
+    "manageCategory": "Gestion des categories :"
+  },
+  "createProduct": {
+    "title": "Créer un produit",
+    "productFR": "Nom du produit en FR",
+    "productEN": "Nom du produit en EN",
+    "category": "--Veuillez choisir une catégorie--",
+    "material": "--Veuillez choisir un matériel--",
+    "stone": "--Veuillez choisir une pierre--",
+    "size": "--Veuillez choisir une taille--",
+    "image": "Image",
+    "buttonAdd": "Ajouter une image",
+    "colorFR": "Couleur en FR",
+    "colorEN": "Couleur en EN",
+    "weight": "Poids",
+    "price": "Prix",
+    "stock": "Quantité en stock",
+    "descriptionFR": "Description du produit en  FR",
+    "descriptionEn": "Description du produit en EN",
+    "button": "Ajouter un produit"
+  },
+  "createCategory": {
+    "title": "Créer une categorie",
+    "nameFR": "Nom de la catégorie en FR",
+    "nameEN": "Nom de la catégorie en EN",
+    "button": "Créer la catégorie"
+  },
+  "createUser": {
+    "email": "Ton email",
+    "password": "Mod de passe",
+    "button": "S'inscrire"
+  },
+  "editCategory": {
+    "button": "Modifier la catégorie"
+  },
+  "editProduct": {
+    "chooseCategory": "Choisissez une catégorie:",
+    "chooseMaterial": "Choisissez un matériel:",
+    "chooseStone": "Choisissez une pierre:",
+    "chooseSize": "Choisissez une taille:",
+    "choose": "--Veuillez choisir une option--",
+    "button": "Modifier le produit"
+  },
+  "editUser": {
+    "title": "Modifier les information d'un utilisateur"
+  }
 }

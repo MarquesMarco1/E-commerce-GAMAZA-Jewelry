@@ -9,9 +9,11 @@ import localhost from "../../../config";
 
 import Header from "../../Header";
 import Footer from "../../Footer";
+import { useTranslation } from "react-i18next";
 
 export default function CreateUser() {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -60,14 +62,14 @@ export default function CreateUser() {
             htmlFor="mail"
             className="block text-md font-primary font-bold leading-6 text-black"
           >
-            Email :
+            {t("editProfil.email")}
           </label>
 
           {/* Email */}
 
           <input
             type="email"
-            placeholder=" Your email"
+            placeholder={t("createUser.email")}
             className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -77,14 +79,14 @@ export default function CreateUser() {
             htmlFor="password"
             className="block text-md font-primary font-bold leading-6 text-black"
           >
-            Password :
+            {t("editProfil.password")}
           </label>
 
           {/* Password */}
 
           <input
             type="password"
-            placeholder="Password"
+            placeholder={t("createUser.password")}
             className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -99,7 +101,7 @@ export default function CreateUser() {
           {/* Submit button */}
 
           <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary">
-            Register
+            {t("createUser.button")}
           </button>
         </form>
       </div>

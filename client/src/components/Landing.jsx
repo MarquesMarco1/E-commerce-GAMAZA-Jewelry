@@ -17,6 +17,7 @@ export default function Accueil() {
       const response = await fetch(`${localhost}/api/categorie/${language}`);
       if (response.status === 200) {
         const data = await response.json();
+        console.log(data);
         setCategory(data.allCategory);
       }
     };

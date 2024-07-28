@@ -1,54 +1,135 @@
 {
-    "specProduct" : {
-        "error": "No product found",
-        "homepage": "Homepage", 
-        "category": "Category:",
-        "material": "Material:",
-        "stone": "Stone:",
-        "color": "Color:",
-        "size": "Size:",
-        "weight": "Weight:",
-        "stockQty": "Stock:",
-        "quantity": "Quantity",
-        "cart": "Add to Cart"
-    }, 
-    "search" : {
-        "error": "No product found",
-        "button": "Search",
-        "select": "All Categories",
-        "cart": "Add to cart"
-    },
-    "footer": {
-        "title": "Footer"
-    },
-    "categoryPage": {
-        "homepage": "Homepage",
-        "error": "No product yet"
-    },
-    "navBarAdmin": {
-        "dashboard": "Dashboard",
-        "stats": "Stats"
-    },
-    "auth": {
-        "social": "Use your social networks accounts",
-        "email": "Email :",
-        "password": "Password :",
-        "forgot": "Forgot password?",
-        "login": "Login", 
-        "no-account": "You doesn't have an account?", 
-        "register": "Register"
-    },
-    "editProfil": {
-        "title": "Create a product", 
-        "firstname": "Firstname",
-        "lastname": "Lastname",
-        "email": "Email :",
-        "password": "Password :",
-        "adress": "Adress :",
-        "zip": "ZipCode",
-        "city": "City",
-        "country": "Country",
-        "phone": "Phone",
-        "edit": "Edit"
-    }
+  "common": { "translated-text": "Trending now" },
+  "specProduct": {
+    "error": "No product found",
+    "homepage": "Homepage",
+    "category": "Category:",
+    "material": "Material:",
+    "stone": "Stone:",
+    "color": "Color:",
+    "size": "Size:",
+    "weight": "Weight:",
+    "stockQty": "Stock:",
+    "quantity": "Quantity",
+    "cart": "Add to Cart"
+  },
+  "search": {
+    "error": "No product found",
+    "button": "Search",
+    "select": "All Categories",
+    "cart": "Add to cart",
+    "loading": "Searching ..."
+  },
+  "header": {
+    "profile": "Profile",
+    "admin": "Admin",
+    "cart": "Cart"
+  },
+  "footer": {
+    "title": "Footer"
+  },
+  "categoryPage": {
+    "homepage": "Homepage",
+    "error": "No product yet"
+  },
+  "navBarAdmin": {
+    "dashboard": "Dashboard",
+    "stats": "Stats"
+  },
+  "auth": {
+    "social": "Use your social networks accounts",
+    "email": "Email :",
+    "password": "Password :",
+    "forgot": "Forgot password?",
+    "login": "Login",
+    "no-account": "You doesn't have an account?",
+    "register": "Register"
+  },
+  "profilPage": {
+    "profil": "My Profile",
+    "logout": "Logout",
+    "command": "My orders"
+  },
+  "commandManage": {
+    "order": "Order number",
+    "adress": "Articles",
+    "articles": "Adress",
+    "total": "Total",
+    "button": "Confirmed",
+    "buttonShip": "Shipped"
+  },
+  "editProfil": {
+    "title": "Update your information",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "email": "Email ",
+    "password": "Password ",
+    "adress": "Adress ",
+    "zip": "ZipCode ",
+    "city": "City ",
+    "country": "Country ",
+    "phone": "Phone ",
+    "edit": "Edit ",
+    "delete": "Delete"
+  },
+  "adminPage": {
+    "error": "No data",
+    "product": "Add a product",
+    "category": "Add a category",
+    "user": "Add a user",
+    "manageUser": "Manage Users :",
+    "FullName": "Full name :",
+    "Badmin": "Become Admin",
+    "Buser": "Become User",
+    "manageProduct": "Manage Product :",
+    "title": "Title :",
+    "size": "Size :",
+    "color": "Color :",
+    "price": "Price :",
+    "manageCategory": "Manage Category :"
+  },
+  "createProduct": {
+    "title": "Create a product",
+    "productFR": "Product name FR",
+    "productEN": "Product name EN",
+    "category": "--Please choose a category--",
+    "material": "--Please choose a material--",
+    "stone": "--Please choose a stone--",
+    "size": "--Please choose a size--",
+    "image": "Image",
+    "buttonAdd": "ADD image",
+    "colorFR": "Color FR",
+    "colorEN": "Color EN",
+    "weight": "Weight",
+    "price": "Price",
+    "stock": "Stock Quantity",
+    "descriptionFR": "Description FR",
+    "descriptionEn": "Description EN",
+    "button": "Add a product"
+  },
+  "createCategory": {
+    "title": "Create a category",
+    "nameFR": "Category name FR",
+    "nameEN": "Category name EN",
+    "button": "Create a category"
+  },
+  "createUser": {
+    "email": "Your email",
+    "password": "Password",
+    "button": "Register"
+  },
+  "editCategory": {
+    "button": "Edit the category"
+  },
+  "editProduct": {
+    "chooseCategory": "Choose a category:",
+    "chooseMaterial": "Choose a material:",
+    "chooseStone": "Choose a stone:",
+    "chooseSize": "Choose a size:",
+    "choose": "--Please choose an option--",
+    "button": "Edit the product"
+  },
+  "editUser": {
+    "title": "Edit a user"
+  }
 }
