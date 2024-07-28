@@ -325,7 +325,7 @@ export default function EditProduct() {
 
         <label for="color">{t("createProduct.colorEN")}</label>
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           type="text"
           name="color"
           id="color"
@@ -334,6 +334,17 @@ export default function EditProduct() {
           value={colorEN}
           onChange={(e) => setColorEN(e.target.value)}
         />
+
+        {* Size */}
+        <label for="size">Size</label>
+        <input
+          className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="size"
+          id="size"
+          placeholder="Size"
+          value={size}
+          onChange={(e) => setSize(e.target.value)}
 
         {/* Weight */}
 
@@ -345,7 +356,6 @@ export default function EditProduct() {
           id="weight"
           placeholder={t("createProduct.weight")}
           step="0.01"
-          required
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
         />

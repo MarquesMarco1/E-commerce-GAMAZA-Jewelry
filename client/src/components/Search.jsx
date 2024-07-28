@@ -1,4 +1,3 @@
-import Header from "./Header";
 import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -45,15 +44,17 @@ export default function Search() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     setIsSearching(true);
     sortResults();
+
     setTimeout(() => {
       setIsSearching(false);
-    }, 1000);
+    }, 500);
   };
 
   const sortResults = () => {
+    // Handle Logic //
+    // setIsSearching(false);
     let list = [];
 
     if (categoryName === "All Categories" && productName === "") {
@@ -141,6 +142,9 @@ export default function Search() {
             <div className="text-center py-4 font-primary text-black">
               {t("search.error")}
             </div>
+          {searchResults.length > 0 && (
+          {console.log(searchResults)}
+          {searchResults.length > 0 ? (
           )}
         </div>
         <select

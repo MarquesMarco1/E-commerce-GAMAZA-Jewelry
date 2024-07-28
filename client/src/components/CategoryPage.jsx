@@ -8,6 +8,10 @@ import localhost from "../config";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import inStock from '../assets/inStock.svg';
+import lowStock from '../assets/lowInStock.svg';
+import soldOut from '../assets/soldOut.svg';
+import StockAlert from './stockAlert';
 
 export default function CategoryPage() {
   const [products, setProducts] = useState([]);
@@ -17,6 +21,9 @@ export default function CategoryPage() {
   const { t } = useTranslation();
   
   const { language } = useContext(LanguageContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [productSelect, setproductSelect] = useState(null);
+
   const itemsPerPage = 6;
 
   useEffect(() => {
@@ -45,6 +52,26 @@ export default function CategoryPage() {
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
+  const manageStock = (stockQty) => {
+    if(stockQty >= 10) {
+      return ['In stock', inStock];
+    }else if(stockQty > 0) {
+      return ['Low in stock', lowStock];
+    }else{
+      return ['Sold out', soldOut];
+    }
+  };
+
+  const handleStockAlert = (productName) => {
+    setproductSelect(productName);
+    setIsOpen(true);
+  };
+
+  const handleSubmit = (email) => {
+    alert(`You will be notified at ${email} when ${productSelect} is back in stock`);
+    setIsOpen(false);
+  };
+
   return (
     <>
       <Header />
@@ -60,7 +87,9 @@ export default function CategoryPage() {
       </h1>
       <ul className="grid grid-cols-3 gap-6 mx-20 mb-8">
         {currentProducts.length > 0 ? (
-          currentProducts.map((elem) => (
+          currentProducts.map((elem) => {
+            const [stockText, stockColorCode] = manageStock(elem.stockQty);
+            return (
             <li key={elem.id} className="border border-gray-300 p-4 rounded-lg">
               <Link to={`/product/${elem.id}`}>
                 <img
@@ -68,12 +97,29 @@ export default function CategoryPage() {
                   src={elem.images}
                   alt={language === "FR" ? elem.name : elem.nameEn}
                 />
+                
                 <p className="text-center font-primary">
-                  {language === "FR" ? elem.name : elem.nameEn}
+                   {language === "FR" ? elem.name : elem.nameEn}
                 </p>
+                <div className="flex items-center">
+                  <img className="w-6 h-6" src={stockColorCode} alt={stockText}/>
+                  <p className="text-left font-primary">{stockText}</p>
+                </div>
+                {stockText === "Sold out" && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleStockAlert(elem.name);
+                    }}
+                    className="text-grey-500 underline"
+                    >
+                      Notify me when back in stock
+                    </button>
+                )}
               </Link>
             </li>
-          ))
+          );
+        })
         ) : (
           <p className="col-span-3 text-center">{t('categoryPage.error')}</p>
         )}
@@ -92,6 +138,11 @@ export default function CategoryPage() {
         ))}
       </div>
       <Footer />
+      <StockAlert
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }
