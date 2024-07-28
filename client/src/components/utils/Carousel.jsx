@@ -62,7 +62,7 @@ export default function Carousel() {
         <div className="space-y-4 flex flex-col items-start justify-center m-24">
             {/* <div className="relative w-full max-w-4xl mx-auto p-4"> */}
             <h1 className="text-black text-3xl md:text-5xl font-primary m-8 text-center">
-                Trending now
+                {t('common.translated-text')}
             </h1>
             <div className="relative items-center w-full overflow-hidden">
                 <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition duration-300"
