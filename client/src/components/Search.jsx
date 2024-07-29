@@ -57,28 +57,48 @@ export default function Search() {
     // setIsSearching(false);
     let list = [];
 
-    if (categoryName === "All Categories" && productName === "") {
-      product.map((elem) => {
-        list.push(elem);
-      });
-    } else {
-      product.map((elem) => {
-        const productNameLower = productName.toLocaleLowerCase();
-        const elemNameLower = elem.name.toLocaleLowerCase();
-        const elemCategoryName = elem.category.name;
-
-        const startWith =
-          elemNameLower.includes(productNameLower) ||
-          elemNameLower.includes(productNameLower.toString());
-        if (
-          (startWith && categoryName === "All Categories") ||
-          elemCategoryName === categoryName
-        ) {
+    if(language == "FR") {
+      if (categoryName === "All Categories" && productName === "") {
+        product.map((elem) => {
           list.push(elem);
+        });
+      } else {
+        if (categoryName == "All Categories") {
+          let result = product.filter((elem) =>
+            elem.name.toLowerCase().includes(productName.toLowerCase())
+          )
+          list.push(result)
+        } else {
+          let result = product.filter((elem) =>
+            elem.category.name == categoryName &&
+            elem.name.toLowerCase().includes(productName.toLowerCase())
+          )
+          list.push(result)
         }
-      });
+      }
+      setSearchResults(list[0]);
+    } else {
+      if (categoryName === "All Categories" && productName === "") {
+        product.map((elem) => {
+          list.push(elem);
+        });
+      } else {
+        if (categoryName == "All Categories") {
+          let result = product.filter((elem) =>
+            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
+          )
+          list.push(result)
+        } else {
+          let result = product.filter((elem) =>
+            elem.category.nameEn == categoryName &&
+            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
+          )
+          list.push(result)
+        }
+      }
+      setSearchResults(list[0]);
+
     }
-    setSearchResults(list);
   };
 
   if (error)
@@ -143,7 +163,7 @@ export default function Search() {
               {t("search.error")}
             </div>
           )}
-          </div>
+        </div>
         <select
           value={categoryName}
           className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
@@ -195,7 +215,7 @@ export default function Search() {
               </button>
             </div>
           ))
-        ) }
+        )}
       </div>
     </div>
   );

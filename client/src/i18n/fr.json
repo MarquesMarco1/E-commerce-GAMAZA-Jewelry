@@ -17,7 +17,7 @@
     "error": "Aucun produit trouvé",
     "button": "Rechercher",
     "select": "Toutes les catégories",
-    "searchBar": "Recherche par nom ou categorie",
+    "searchBar": "Recherche par nom",
     "cart": "Ajouter au panier",
     "loading": "Recherche en cours ..."
   },
