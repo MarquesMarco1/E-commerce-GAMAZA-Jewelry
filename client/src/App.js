@@ -21,7 +21,7 @@ import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
 import Map from "./components/Map";
-import { CartProvider } from "./context/CartContext"; // Importez le CartProvider
+import { CartProvider } from "./components/CartContext";
 
 function App() {
   const { i18n } = useTranslation();
