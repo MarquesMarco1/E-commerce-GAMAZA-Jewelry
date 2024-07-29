@@ -20,9 +20,15 @@ export default function Accueil() {
         const data = await response.json();
         setCategory(data.allCategory);
       }
+
+      // const response_promo = await fetch(`${localhost}/api/getPromotion`);
+      // if (response_promo.ok) {
+      //   const data_promo = await response.json();
+      //   console.log(data_promo);
+      // }
     };
     fetchData();
-  }, [language]); 
+  }, [language]);
   return (
     <div>
       <Header />

@@ -127,6 +127,10 @@ export default function Admin() {
   const editCategory = async (id) => {
     navigate(`/editCategory/${id}`, { replace: true });
   };
+
+  const addPromo = () => {
+    navigate(`/addPromo`, { replace: true });
+  };
   return (
     <>
       <Header></Header>
@@ -149,6 +153,12 @@ export default function Admin() {
           <Link to={`/createUser`} className="w-max">
             {t("adminPage.user")}
           </Link>
+          <button
+            className="rounded-lg bg-light-purple p-2.5 mt-2"
+            onClick={() => addPromo()}
+          >
+            Promotion
+          </button>
           <br></br>
         </div>
 
