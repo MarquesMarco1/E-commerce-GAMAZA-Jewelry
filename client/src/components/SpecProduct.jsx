@@ -10,6 +10,8 @@ import inStock from '../assets/inStock.svg';
 import lowStock from '../assets/lowInStock.svg';
 import soldOut from '../assets/soldOut.svg';
 import StockAlert from './stockAlert';
+import { CartContext } from "./components/CartContext";
+
 
 const SpecProduct = () => {
   const { id } = useParams();
@@ -25,6 +27,7 @@ const SpecProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+  const { addToCart } = useContext(CartContext);
 
   const { language } = useContext(LanguageContext);
 
