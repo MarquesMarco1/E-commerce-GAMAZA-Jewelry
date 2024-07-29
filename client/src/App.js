@@ -20,7 +20,7 @@ import CreateUser from "./components/admin/dashboard/CreateUser";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
-import Map from "./components/Map"
+import Cart from "./components/Cart"
 
 function App() {
   const { i18n } = useTranslation();
@@ -51,7 +51,7 @@ function App() {
               <Route path="/admin/stats" element={<Stats />}></Route>
               {/* USERS */}
               <Route path="/profile" element={<Profile />}></Route>
-              <Route path="/map"element={<Map />}></Route>
+              <Route path="/cart"element={<Cart />}></Route>
               <Route path="/editProfil/:id" element={<EditProfil />}></Route>
               <Route path="/authentication" element={<Authentication />}></Route>
             </Routes>
