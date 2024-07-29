@@ -4,7 +4,7 @@ import { HelmetProvider, Helmet } from "react-helmet-async";
 import React, { useContext, useEffect } from "react";
 
 import Landing from "./components/Landing";
-import CreateArticle from "./components/admin/dashboard/CreadArticle";
+import CreateArticle from "./components/admin/dashboard/CreateArticle";
 import CreateCategory from "./components/admin/dashboard/CreateCategory";
 import Authentication from "./components/auth/Authentication";
 import Profile from "./components/auth/Profile";
@@ -20,7 +20,8 @@ import CreateUser from "./components/admin/dashboard/CreateUser";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
-import Map from "./components/Map"
+import Map from "./components/Map";
+import { CartProvider } from "./context/CartContext"; // Importez le CartProvider
 
 function App() {
   const { i18n } = useTranslation();
@@ -31,49 +32,49 @@ function App() {
   }, [language, i18n]);
 
   return (
-    <>
-      {/* // ROUTES */}
-      <HelmetProvider>
-          <BrowserRouter>
-            <Routes>
-              {/* ALL */}
-              <Route path="/" element={<Landing />}></Route>
-              <Route path="/category/:id" element={<CategoryPage />}></Route>
-              <Route path="/product/:id" element={<SpecProduct />}></Route>
-              {/* ADMINS */}
-              <Route path="/admin" element={<Admin />}></Route>
-              <Route path="/createArticle" element={<CreateArticle />}></Route>
-              <Route path="/createCategory" element={<CreateCategory />}></Route>
-              <Route path="/createUser" element={<CreateUser />}></Route>
-              <Route path="/editProduct/:id" element={<EditProduct />}></Route>
-              <Route path="/editCategory/:id" element={<EditCategory />}></Route>
-              <Route path="/editAdminUser/:id" element={<EditUser />}></Route>
-              <Route path="/admin/stats" element={<Stats />}></Route>
-              {/* USERS */}
-              <Route path="/profile" element={<Profile />}></Route>
-              <Route path="/map"element={<Map />}></Route>
-              <Route path="/editProfil/:id" element={<EditProfil />}></Route>
-              <Route path="/authentication" element={<Authentication />}></Route>
-            </Routes>
-          </BrowserRouter>
-          {/* GOOGLE ANALYTICS */}
-          <Helmet>
-            <script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=G-3DP4K2GG5P"
-            ></script>
-            <script>
-              {`
+    <HelmetProvider>
+      <CartProvider> {/* CartProvider ici */}
+        <BrowserRouter>
+          <Routes>
+            {/* ALL */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/category/:id" element={<CategoryPage />} />
+            <Route path="/product/:id" element={<SpecProduct />} />
+            {/* ADMINS */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/createArticle" element={<CreateArticle />} />
+            <Route path="/createCategory" element={<CreateCategory />} />
+            <Route path="/createUser" element={<CreateUser />} />
+            <Route path="/editProduct/:id" element={<EditProduct />} />
+            <Route path="/editCategory/:id" element={<EditCategory />} />
+            <Route path="/editAdminUser/:id" element={<EditUser />} />
+            <Route path="/admin/stats" element={<Stats />} />
+            {/* USERS */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/CartContext" element={<CartContext />} />
+            <Route path="/editProfil/:id" element={<EditProfil />} />
+            <Route path="/authentication" element={<Authentication />} />
+          </Routes>
+        </BrowserRouter>
+        {/* GOOGLE ANALYTICS */}
+        <Helmet>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-3DP4K2GG5P"
+          ></script>
+          <script>
+            {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
               gtag('config', 'G-3DP4K2GG5P');
             `}
-            </script>
-          </Helmet>
-      </HelmetProvider>
-    </>
+          </script>
+        </Helmet>
+      </CartProvider>
+    </HelmetProvider>
   );
 }
 
