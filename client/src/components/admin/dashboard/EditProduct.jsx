@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../../LanguageContext";
 
 import localhost from "../../../config";
 
@@ -16,6 +17,7 @@ export default function EditProduct() {
   let navigate = useNavigate();
   const { id } = useParams();
   const { t } = useTranslation();
+  const { language } = useContext(LanguageContext);
 
   ////////////////
   //  UseState  //
@@ -24,15 +26,11 @@ export default function EditProduct() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
-  const [allSize, setAllSize] = useState([]);
 
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
-  const [color, setColor] = useState("");
-  const [colorEN, setColorEN] = useState("");
   const [nom, setNom] = useState("");
   const [nomEN, setNomEN] = useState("");
-  const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
@@ -70,7 +68,7 @@ export default function EditProduct() {
     /////////////////////////////////////////////////////////////////
 
     const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/categorie`);
+      const response = await fetch(`${localhost}/api/categorie/${language}`);
 
       if (response.status === 200) {
         const data = await response.json();
@@ -91,25 +89,20 @@ export default function EditProduct() {
         setAllStone(data_stone.allStone);
       }
 
-      const response_size = await fetch(`${localhost}/api/size`);
-
-      if (response_size.status === 200) {
-        const data_size = await response_size.json();
-        setAllSize(data_size.allSize);
-      }
-
       const response_product = await fetch(`${localhost}/api/products/${id}`);
       if (response_product.status === 200) {
         const data_product = await response_product.json();
+        console.log(data_product);
         setNom(data_product.products[0].name);
         setNomEN(data_product.products[0].nameEn);
         setCategory_id(data_product.products[0].category.id);
         setMaterial(data_product.products[0].material.id);
-        setStone(data_product.products[0].stone.id);
+        setStone(
+          data_product.products[0].stone.id
+            ? data_product.products[0].stone.id
+            : ""
+        );
         setImage(data_product.products[0].images);
-        setColorEN(data_product.products[0].colorEn);
-        setColor(data_product.products[0].color);
-        setSize(data_product.products[0].sizes.id);
         setWeight(data_product.products[0].weight);
         setPrice(data_product.products[0].price);
         setStockQty(data_product.products[0].stockQty);
@@ -118,7 +111,7 @@ export default function EditProduct() {
       }
     };
     fetchData();
-  }, []);
+  }, [language]);
 
   ///////////////////////////////////
   //  handelSubmit : Edit Product  //
@@ -129,13 +122,10 @@ export default function EditProduct() {
     const formData = {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
-      stone_id: parseInt(stone),
+      stone_id: stone ? parseInt(stone) : null,
       image: imageAdd ? [imageAdd] : null,
-      color: color,
-      colorEn: colorEN,
       nom: nom,
       nomEn: nomEN,
-      size: size,
       weight: weight,
       price: price,
       stockQty: stockQty,
@@ -223,7 +213,10 @@ export default function EditProduct() {
           <option value="">{t("createProduct.category")}</option>
           {allCategorie &&
             allCategorie.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {" "}
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
         </select>
 
@@ -240,7 +233,10 @@ export default function EditProduct() {
           <option value="">{t("editProduct.choose")}</option>
           {allMaterial &&
             allMaterial.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {" "}
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
         </select>
 
@@ -257,23 +253,11 @@ export default function EditProduct() {
           <option value="">{t("editProduct.choose")}</option>
           {allStone &&
             allStone.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {" "}
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
-        </select>
-
-        {/* Sizes */}
-
-        <label for="stone">{t("editProduct.chooseSize")}</label>
-        <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          name="size"
-          id="size"
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
-        >
-          <option value="">{t("editProduct.choose")}</option>
-          {allSize &&
-            allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
         </select>
 
         {/* Images */}
@@ -306,34 +290,6 @@ export default function EditProduct() {
               </li>
             ))}
         </ul>
-
-        {/* Color FR*/}
-
-        <label for="color">{t("createProduct.colorFR")}</label>
-        <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="color"
-          id="color"
-          placeholder={t("createProduct.colorFR")}
-          required
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-
-        {/* Color EN*/}
-
-        <label for="color">{t("createProduct.colorEN")}</label>
-        <input
-          className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="color"
-          id="color"
-          placeholder={t("createProduct.colorEN")}
-          required
-          value={colorEN}
-          onChange={(e) => setColorEN(e.target.value)}
-        />
 
         {/* Weight */}
 

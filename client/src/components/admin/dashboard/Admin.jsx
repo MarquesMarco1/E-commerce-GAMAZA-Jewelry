@@ -230,13 +230,6 @@ export default function Admin() {
                       {language === "FR" ? elem.name : elem.nameEn}
                     </li>
                     <li>
-                      {t("adminPage.size")} {elem.sizes.name}
-                    </li>
-                    <li>
-                      {t("adminPage.color")}{" "}
-                      {language === "FR" ? elem.color : elem.colorEn}
-                    </li>
-                    <li>
                       {t("adminPage.price")} ${elem.price}
                     </li>
                   </div>

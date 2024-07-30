@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Tendence du mois" },
+  "promotion": { "translated-text": "Promotion du mois" },
   "specProduct": {
     "error": "Aucun produit trouvé",
     "homepage": "Accueil",
@@ -137,10 +138,6 @@
   "createPromotion": {
     "title": "Ajouter un produit en promotion",
     "pourcentage": "Remise à appliquer",
-    "choose": "--Choisir un pourcentage--",
-    "20": "20%",
-    "30": "30%",
-    "40": "40%",
     "product": "Choisir un produit",
     "button": "Ajouter"
   }

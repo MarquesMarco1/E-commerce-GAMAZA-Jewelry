@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Promotion;
+use App\Entity\SizeNecklaces;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Promotion>
+ * @extends ServiceEntityRepository<SizeNecklaces>
  */
-class PromotionRepository extends ServiceEntityRepository
+class SizeNecklacesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Promotion::class);
+        parent::__construct($registry, SizeNecklaces::class);
     }
 
 //    /**
-//     * @return Promotion[] Returns an array of Promotion objects
+//     * @return SizeNecklaces[] Returns an array of SizeNecklaces objects
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
+//            ->orderBy('s.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Promotion
+//    public function findOneBySomeField($value): ?SizeNecklaces
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

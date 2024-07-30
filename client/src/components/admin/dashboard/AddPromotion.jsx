@@ -1,49 +1,71 @@
 import { useEffect, useState, useContext } from "react";
-import Footer from "../../Footer";
-import Header from "../../Header";
 import localhost from "../../../config";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import { LanguageContext } from "../../../LanguageContext";
+import Footer from "../../Footer";
+import Header from "../../Header";
 
 export default function AddPromotion() {
+  let navigate = useNavigate();
+  const { t } = useTranslation();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [products, setProducts] = useState([]);
   const [productSelected, setProductSelected] = useState("");
-  const [pourcentage, setPourcentage] = useState("");
+  const [pourcentage, setPourcentage] = useState(1);
   const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-
+  const [allPromo, setAllPromo] = useState([]);
   const [productName, setProductName] = useState("");
   const [categoryName, setCategoryName] = useState("All Categories");
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  let navigate = useNavigate();
-  const { t } = useTranslation();
-
   const { language } = useContext(LanguageContext);
+
+  ///////////////////////////////////////////////
+  //  Fetch Categories, Products, Pourcentage  //
+  ///////////////////////////////////////////////
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/products`);
-      if (response.ok) {
-        const data = await response.json();
-        setProducts(data.allArticle);
-      }
       const response_search = await fetch(
         `${localhost}/api/search/${language}`
       );
-      if (response.ok) {
+
+      if (response_search.ok) {
         const data_search = await response_search.json();
         if (data_search.product && data_search.product.length > 0) {
           setProduct(data_search.product);
+          setProducts(data_search.product);
           setCategories(data_search.category);
         }
       }
+
+      const response_promo = await fetch(`${localhost}/api/promotion`);
+
+      if (response_promo.ok) {
+        const data_promo = await response_promo.json();
+        setAllPromo(data_promo.promotion);
+      }
     };
+
     fetchData();
   }, [language]);
+
+  ////////////////////////////////
+  //  Filter Search Product     //
+  ////////////////////////////////
 
   const handleSearch = (e) => {
     // Handle Logic //
@@ -97,9 +119,13 @@ export default function AddPromotion() {
     }
   };
 
+  ////////////////////////
+  //   Set Promotion    //
+  ////////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!pourcentage || !productSelected) {
+    if (pourcentage === 1 || !productSelected) {
       setError(language === "FR" ? "Champs invalide" : "Form invalid");
       return;
     }
@@ -107,7 +133,7 @@ export default function AddPromotion() {
       product: productSelected,
       pourcentage: pourcentage,
     };
-    const response = await fetch(`${localhost}/api/addPromotion`, {
+    const response = await fetch(`${localhost}/api/promotion`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,9 +144,13 @@ export default function AddPromotion() {
       navigate(`/admin`, { replace: true });
     }
   };
+
   return (
     <>
       <Header></Header>
+
+      {/* form for filter */}
+
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
@@ -163,6 +193,9 @@ export default function AddPromotion() {
             ))}
         </select>
       </form>
+
+      {/* form for setPromotion */}
+
       <form
         className="flex flex-col justify-center items-center"
         onSubmit={handelSubmit}
@@ -177,10 +210,9 @@ export default function AddPromotion() {
           className="border	border-solid border-slate-500 w-96 p-2.5	rounded-xl mb-4"
           onChange={(e) => setPourcentage(e.target.value)}
         >
-          <option value="">{t("createPromotion.choose")}</option>
-          <option value="20">{t("createPromotion.20")}</option>
-          <option value="30">{t("createPromotion.30")}</option>
-          <option value="40">{t("createPromotion.40")}</option>
+          {allPromo.map((elem) => (
+            <option value={elem.id}>{elem.pourcentage}</option>
+          ))}
         </select>
 
         <label htmlFor="">{t("createPromotion.product")}</label>

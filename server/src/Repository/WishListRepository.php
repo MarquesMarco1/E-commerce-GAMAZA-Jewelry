@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Promotion;
+use App\Entity\WishList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Promotion>
+ * @extends ServiceEntityRepository<WishList>
  */
-class PromotionRepository extends ServiceEntityRepository
+class WishListRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Promotion::class);
+        parent::__construct($registry, WishList::class);
     }
 
 //    /**
-//     * @return Promotion[] Returns an array of Promotion objects
+//     * @return WishList[] Returns an array of WishList objects
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('w')
+//            ->andWhere('w.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
+//            ->orderBy('w.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Promotion
+//    public function findOneBySomeField($value): ?WishList
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('w')
+//            ->andWhere('w.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

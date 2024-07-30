@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Trending now" },
+  "promotion": { "translated-text": "Promotion" },
   "specProduct": {
     "error": "No product found",
     "homepage": "Homepage",
@@ -137,10 +138,6 @@
   "createPromotion": {
     "title": " Add an promotion",
     "pourcentage": "Discount to apply",
-    "choose": "--Choose an pourcentage--",
-    "20": "20%",
-    "30": "30%",
-    "40": "40%",
     "product": "Select a product",
     "button": "Add"
   }

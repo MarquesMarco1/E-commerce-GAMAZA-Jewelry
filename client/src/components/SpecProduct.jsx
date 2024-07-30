@@ -26,11 +26,6 @@ const SpecProduct = () => {
   const [productSelect, setproductSelect] = useState(null);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
 
-  const [promo, setPromo] = useState(false);
-  const [pourcentage, setPourcentage] = useState("");
-
-  // const [productPromo, setProductPromo] = useState([]);
-
   const { language } = useContext(LanguageContext);
 
   const newEntry = async () => {
@@ -58,6 +53,7 @@ const SpecProduct = () => {
         if (response.ok) {
           const data = await response.json();
           if (data.products && data.products.length > 0) {
+            console.log(data.products[0]);
             const productData = data.products[0];
             setProduct(productData);
             setSelectedImage(
@@ -88,20 +84,6 @@ const SpecProduct = () => {
 
     fetchProduct();
   }, [id, language]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/getPromotion/${id}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.product.length > 0) {
-          setPromo(true);
-          setPourcentage(data.product[0].pourcentage);
-        }
-      }
-    };
-    fetchData();
-  }, []);
 
   const handleAddToCart = () => {
     if (product) {
@@ -351,15 +333,17 @@ const SpecProduct = () => {
             </h1>
 
             <p className="text-2xl mb-4">
-              {promo ? (
+              {product.promotion.id !== 1 ? (
                 <>
-                  <span className="line-through">{product.price}€ </span>
+                  <span className=" line-through">${product.price}</span>{" "}
                   <span>
-                    {product.price - (product.price * pourcentage) / 100}€
+                    $
+                    {product.price -
+                      (product.price * product.promotion.pourcentage) / 100}
                   </span>
                 </>
               ) : (
-                <span>{product.price}€</span>
+                <span>${product.price}</span>
               )}
             </p>
             <div className="mb-4">
@@ -437,15 +421,6 @@ const SpecProduct = () => {
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
             {t("specProduct.stone")}
             {language === "FR" ? product.stone.name : product.stone.nameEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.color")}
-            {language === "FR" ? product.color : product.colorEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.size")} {product.sizes.name}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">

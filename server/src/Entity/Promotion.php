@@ -14,10 +14,6 @@ class Promotion
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
-
     #[ORM\Column]
     private ?int $pourcentage = null;
 
@@ -27,18 +23,6 @@ class Promotion
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getProduct(): ?Product
-    {
-        return $this->product;
-    }
-
-    public function setProduct(Product $product): static
-    {
-        $this->product = $product;
-
-        return $this;
     }
 
     public function getPourcentage(): ?int
