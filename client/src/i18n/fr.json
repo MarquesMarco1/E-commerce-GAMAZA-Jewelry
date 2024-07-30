@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Tendence du mois" },
+  "promotion": { "translated-text": "Promotion du mois" },
   "specProduct": {
     "error": "Aucun produit trouvé",
     "homepage": "Accueil",
@@ -87,7 +88,8 @@
     "size": "Taille :",
     "color": "Couleur :",
     "price": "Prix :",
-    "manageCategory": "Gestion des categories :"
+    "manageCategory": "Gestion des categories :",
+    "promotion": "Promotion"
   },
   "createProduct": {
     "title": "Créer un produit",
@@ -132,5 +134,11 @@
   },
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
+  },
+  "createPromotion": {
+    "title": "Ajouter un produit en promotion",
+    "pourcentage": "Remise à appliquer",
+    "product": "Choisir un produit",
+    "button": "Ajouter"
   }
 }

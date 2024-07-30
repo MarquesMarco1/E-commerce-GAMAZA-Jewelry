@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Trending now" },
+  "promotion": { "translated-text": "Promotion" },
   "specProduct": {
     "error": "No product found",
     "homepage": "Homepage",
@@ -87,7 +88,8 @@
     "size": "Size :",
     "color": "Color :",
     "price": "Price :",
-    "manageCategory": "Manage Category :"
+    "manageCategory": "Manage Category :",
+    "promotion": "Promotion"
   },
   "createProduct": {
     "title": "Create a product",
@@ -132,5 +134,11 @@
   },
   "editUser": {
     "title": "Edit a user"
+  },
+  "createPromotion": {
+    "title": " Add an promotion",
+    "pourcentage": "Discount to apply",
+    "product": "Select a product",
+    "button": "Add"
   }
 }

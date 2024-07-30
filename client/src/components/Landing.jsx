@@ -3,7 +3,7 @@ import Header from "./Header";
 import localhost from "../config";
 import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
-
+import Promotion from "./Promotion";
 import Search from "./Search";
 import { LanguageContext } from "../LanguageContext";
 
@@ -21,8 +21,10 @@ export default function Accueil() {
         setCategory(data.allCategory);
       }
     };
+
     fetchData();
-  }, [language]); 
+  }, [language]);
+
   return (
     <div>
       <Header />
@@ -40,6 +42,7 @@ export default function Accueil() {
       </div>
       <Search />
       <Carousel />
+      <Promotion />
       <Footer />
     </div>
   );

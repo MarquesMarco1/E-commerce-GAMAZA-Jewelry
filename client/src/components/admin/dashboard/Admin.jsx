@@ -127,6 +127,10 @@ export default function Admin() {
   const editCategory = async (id) => {
     navigate(`/editCategory/${id}`, { replace: true });
   };
+
+  const addPromo = () => {
+    navigate(`/addPromo`, { replace: true });
+  };
   return (
     <>
       <Header></Header>
@@ -149,6 +153,12 @@ export default function Admin() {
           <Link to={`/createUser`} className="w-max">
             {t("adminPage.user")}
           </Link>
+          <button
+            className="rounded-lg bg-light-purple p-2.5 mt-2"
+            onClick={() => addPromo()}
+          >
+            {t("adminPage.promotion")}
+          </button>
           <br></br>
         </div>
 
@@ -218,13 +228,6 @@ export default function Admin() {
                     <li>
                       {t("adminPage.title")}{" "}
                       {language === "FR" ? elem.name : elem.nameEn}
-                    </li>
-                    <li>
-                      {t("adminPage.size")} {elem.sizes.name}
-                    </li>
-                    <li>
-                      {t("adminPage.color")}{" "}
-                      {language === "FR" ? elem.color : elem.colorEn}
                     </li>
                     <li>
                       {t("adminPage.price")} ${elem.price}

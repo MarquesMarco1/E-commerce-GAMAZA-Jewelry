@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\MaterialRepository;
+use App\Repository\SizeNecklacesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MaterialRepository::class)]
-class Material
+#[ORM\Entity(repositoryClass: SizeNecklacesRepository::class)]
+class SizeNecklaces
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,14 +17,11 @@ class Material
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $image = null;
+    #[ORM\Column(length: 255)]
+    private ?string $value = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nameEn = null;
 
     public function getId(): ?int
     {
@@ -43,14 +40,14 @@ class Material
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getValue(): ?string
     {
-        return $this->image;
+        return $this->value;
     }
 
-    public function setImage(string $image): static
+    public function setValue(string $value): static
     {
-        $this->image = $image;
+        $this->value = $value;
 
         return $this;
     }
@@ -63,18 +60,6 @@ class Material
     public function setLastUpdated(\DateTimeInterface $lastUpdated): static
     {
         $this->lastUpdated = $lastUpdated;
-
-        return $this;
-    }
-
-    public function getNameEn(): ?string
-    {
-        return $this->nameEn;
-    }
-
-    public function setNameEn(string $nameEn): static
-    {
-        $this->nameEn = $nameEn;
 
         return $this;
     }

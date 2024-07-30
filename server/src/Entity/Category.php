@@ -61,18 +61,6 @@ class Category
         return $this;
     }
 
-    public function getLastUpdated(): ?\DateTimeInterface
-    {
-        return $this->lastUpdated;
-    }
-
-    public function setLastUpdated(\DateTimeInterface $lastUpdated): static
-    {
-        $this->lastUpdated = $lastUpdated;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -81,6 +69,18 @@ class Category
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLastUpdated(): ?\DateTimeInterface
+    {
+        return $this->lastUpdated;
+    }
+
+    public function setLastUpdated(\DateTimeInterface $lastUpdated): static
+    {
+        $this->lastUpdated = $lastUpdated;
 
         return $this;
     }
