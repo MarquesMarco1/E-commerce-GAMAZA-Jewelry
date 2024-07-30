@@ -98,7 +98,7 @@ export default function EditProduct() {
         setCategory_id(data_product.products[0].category.id);
         setMaterial(data_product.products[0].material.id);
         setStone(
-          data_product.products[0].stone.id
+          data_product.products[0].stone
             ? data_product.products[0].stone.id
             : ""
         );
