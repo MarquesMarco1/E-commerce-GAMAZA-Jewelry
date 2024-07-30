@@ -2,6 +2,7 @@ import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
+import Autocomplete from "./Autocomplete";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -12,6 +13,8 @@ export default function Search() {
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   const { language } = useContext(LanguageContext);
 
@@ -31,6 +34,9 @@ export default function Search() {
         if (data.product && data.product.length > 0) {
           setProduct(data.product);
           setCategories(data.category);
+          // const combinedSuggestions = [...data.product, ...data.category];
+          // console.log(combinedSuggestions)
+          setSuggestions(product);
         } else {
           setError(new Error("Product not found"));
         }
@@ -81,6 +87,15 @@ export default function Search() {
     setSearchResults(list);
   };
 
+  const handleInput = (e) => {
+    const input = e.target.value;
+    setProductName(input);
+    const filtered = suggestions.filter(
+      (item) => item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+    );
+    setFilteredSuggestions(filtered);
+  };
+
   if (error)
     return (
       <div className="text-center py-4 text-red-500">
@@ -97,12 +112,15 @@ export default function Search() {
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
         <div className="flex p-3 w-full md:w-auto">
-          <input
+          {/* <input
             type="text"
-            placeholder={t("search.searchBar")}
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+            value={productName} */}
+            <Autocomplete
+              suggestions={filteredSuggestions}
+              placeholder={t("search.searchBar")}
+              userInput={productName}
+              onChange={handleInput}
+              className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
           />
           <button
             type="submit"
