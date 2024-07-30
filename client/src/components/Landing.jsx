@@ -3,7 +3,7 @@ import Header from "./Header";
 import localhost from "../config";
 import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
-
+import Promotion from "./Promotion";
 import Search from "./Search";
 import { LanguageContext } from "../LanguageContext";
 
@@ -20,15 +20,11 @@ export default function Accueil() {
         const data = await response.json();
         setCategory(data.allCategory);
       }
-
-      // const response_promo = await fetch(`${localhost}/api/getPromotion`);
-      // if (response_promo.ok) {
-      //   const data_promo = await response.json();
-      //   console.log(data_promo);
-      // }
     };
+
     fetchData();
   }, [language]);
+
   return (
     <div>
       <Header />
@@ -46,6 +42,7 @@ export default function Accueil() {
       </div>
       <Search />
       <Carousel />
+      <Promotion />
       <Footer />
     </div>
   );

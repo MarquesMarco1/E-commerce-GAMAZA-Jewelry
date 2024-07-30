@@ -157,7 +157,7 @@ export default function Admin() {
             className="rounded-lg bg-light-purple p-2.5 mt-2"
             onClick={() => addPromo()}
           >
-            Promotion
+            {t("adminPage.promotion")}
           </button>
           <br></br>
         </div>

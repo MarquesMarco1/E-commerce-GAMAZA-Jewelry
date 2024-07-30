@@ -19,13 +19,11 @@ class PromotionRepository extends ServiceEntityRepository
 //    /**
 //     * @return Promotion[] Returns an array of Promotion objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findby($value): array
 //    {
 //        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//            ->andWhere('p.product = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;

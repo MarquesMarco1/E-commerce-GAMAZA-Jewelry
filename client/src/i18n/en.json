@@ -87,7 +87,8 @@
     "size": "Size :",
     "color": "Color :",
     "price": "Price :",
-    "manageCategory": "Manage Category :"
+    "manageCategory": "Manage Category :",
+    "promotion": "Promotion"
   },
   "createProduct": {
     "title": "Create a product",
@@ -132,5 +133,15 @@
   },
   "editUser": {
     "title": "Edit a user"
+  },
+  "createPromotion": {
+    "title": " Add an promotion",
+    "pourcentage": "Discount to apply",
+    "choose": "--Choose an pourcentage--",
+    "20": "20%",
+    "30": "30%",
+    "40": "40%",
+    "product": "Select a product",
+    "button": "Add"
   }
 }

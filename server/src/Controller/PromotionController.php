@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Promotion;
 use App\Repository\PomotionRepository;
+use App\Repository\PromotionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 
 class PromotionController extends AbstractController
 {
@@ -33,9 +35,23 @@ class PromotionController extends AbstractController
     }
 
     #[Route('/api/getPromotion')]
-    function getPromotion(PomotionRepository $repository){
+    function promotion(PromotionRepository $repository){
         $products = $repository->findAll();
-        return $this->json(['allArticle' => $products], 200); 
+        return $this->json(['products'=>$products], 200);
     }
+
+    #[Route('/api/getPromotion/{id}')]
+    function promotionId(EntityManagerInterface $entityManager, int $id){
+        $product = $entityManager->getRepository(Promotion::class)->findBy(["product"=>$id]);
+        return $this->json(['product'=>$product], 200);
+    }
+
+    // #[Route("/api/products/{id}",name : "products")]
+    // public function getProducts(EntityManagerInterface $entityManager, int $id)
+    // {
+    //     $products = $entityManager->getRepository(Product::class)->findBy(['id' => $id]);
+    //     return $this->json(['products' => $products], 200);
+
+    // }
 
 }

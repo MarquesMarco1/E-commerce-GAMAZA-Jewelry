@@ -17,7 +17,7 @@ import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
 import EditProfil from "./components/auth/EditProfil";
 import CreateUser from "./components/admin/dashboard/CreateUser";
-import Promotion from "./components/admin/dashboard/Promotion";
+import AddPromotion from "./components/admin/dashboard/AddPromotion";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
@@ -50,7 +50,7 @@ function App() {
             <Route path="/editCategory/:id" element={<EditCategory />}></Route>
             <Route path="/editAdminUser/:id" element={<EditUser />}></Route>
             <Route path="/admin/stats" element={<Stats />}></Route>
-            <Route path="/addPromo" element={<Promotion />}></Route>
+            <Route path="/addPromo" element={<AddPromotion />}></Route>
             addPromo
             {/* USERS */}
             <Route path="/profile" element={<Profile />}></Route>
