@@ -53,7 +53,6 @@ const SpecProduct = () => {
         if (response.ok) {
           const data = await response.json();
           if (data.products && data.products.length > 0) {
-            console.log(data.products[0]);
             const productData = data.products[0];
             setProduct(productData);
             setSelectedImage(
@@ -420,7 +419,11 @@ const SpecProduct = () => {
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
             {t("specProduct.stone")}
-            {language === "FR" ? product.stone.name : product.stone.nameEn}
+            {product.stone
+              ? language === "FR"
+                ? product.stone.name
+                : product.stone.nameEn
+              : ""}
           </p>
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
