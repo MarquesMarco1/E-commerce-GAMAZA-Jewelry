@@ -132,5 +132,10 @@
   },
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
+  },
+  "cartPopup": {
+    "Shopping basket summary": "Résumé du Panier",
+    "Number of articles: 4": "Nombre d'articles : 4",
+    "Total price: €170": "Prix total :  170€"
   }
 }

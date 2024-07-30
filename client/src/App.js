@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import React, { useContext, useEffect } from "react";
-
 import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/dashboard/CreadArticle";
 import CreateCategory from "./components/admin/dashboard/CreateCategory";
@@ -21,6 +20,7 @@ import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
 import Map from "./components/Map"
+import CartPopup from "./components/utils/CartPopup";
 
 function App() {
   const { i18n } = useTranslation();
@@ -54,6 +54,7 @@ function App() {
               <Route path="/map"element={<Map />}></Route>
               <Route path="/editProfil/:id" element={<EditProfil />}></Route>
               <Route path="/authentication" element={<Authentication />}></Route>
+              <Route path="/cartPopup" element={<CartPopup />}></Route>
             </Routes>
           </BrowserRouter>
           {/* GOOGLE ANALYTICS */}
