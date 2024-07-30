@@ -80,6 +80,7 @@ const SpecProduct = () => {
     const handleAddToCart = () => {
       if (product) {
         // HANDLE BACK END CART LOGIC
+        console.log(product)
         console.log(`Added ${quantity} of ${product.name} to cart`);
       }
     };
