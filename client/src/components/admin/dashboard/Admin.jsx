@@ -144,17 +144,17 @@ export default function Admin() {
         {/* //////////////////////// */}
 
         <div className="flex flex-col	">
-          <Link to={`/createArticle`} className="w-max">
+          <Link to={`/createArticle`} className="w-max text-gold">
             {t("adminPage.product")}
           </Link>
-          <Link to={`/createCategory`} className="w-max">
+          <Link to={`/createCategory`} className="w-max text-gold">
             {t("adminPage.category")}
           </Link>
-          <Link to={`/createUser`} className="w-max">
+          <Link to={`/createUser`} className="w-max text-gold">
             {t("adminPage.user")}
           </Link>
           <button
-            className="rounded-lg bg-light-purple p-2.5 mt-2"
+            className="rounded-lg bg-light-purple opacity-20 p-2.5 mt-2"
             onClick={() => addPromo()}
           >
             {t("adminPage.promotion")}
@@ -171,7 +171,7 @@ export default function Admin() {
             <h2 className="text-gold">{t("adminPage.manageUser")}</h2>
             {users.length > 0 &&
               users.map((elem) => (
-                <ul className="m-2.5	border-2 rounded-2xl p-2.5	bg-gray-200	">
+                <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80">
                   <div>
                     <li>
                       {t("adminPage.FullName")}{" "}
@@ -223,7 +223,7 @@ export default function Admin() {
             <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
             {products.length > 0 &&
               products.map((elem) => (
-                <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
+                <ul className="m-2.5  rounded-2xl p-2.5	bg-grey opacity-80">
                   <div>
                     <li>
                       {t("adminPage.title")}{" "}
@@ -259,7 +259,7 @@ export default function Admin() {
         <h2 className="text-gold">{t("adminPage.manageCategory")}</h2>
         {category.length > 0 &&
           category.map((elem) => (
-            <ul className="m-2.5	border-2  rounded-2xl p-2.5	bg-gray-200	">
+            <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80	">
               <div>
                 <li>
                   {t("adminPage.title")}{" "}
