@@ -64,11 +64,20 @@ export default function Cart() {
 
     useEffect(() => {
         if (cartItems.length !== 0) {
-            setNbrArticle(cartItems.length);
+            let nbr = 0
+            cartItems.map((elem) => {
+                nbr += elem.itemQty
+            })
+            setNbrArticle(nbr);
         }
     }, [cartItems]);
 
     const handleQtyChange = (id, value) => {
+        if (itemQty[id] < value)
+            setNbrArticle(nbrArticle + 1)
+        else
+            setNbrArticle(nbrArticle - 1)
+
         setItemQty(prevQty => ({
             ...prevQty,
             [id]: Number(value)
@@ -82,50 +91,65 @@ export default function Cart() {
                 "Content-Type": "application/json",
             },
         });
+        
         setCartItems(cartItems.filter(item => item.id !== id));
         setNbrArticle(nbrArticle - 1);
     };
+    
+    const saveProduct = async (id) => {
+        if(profil[0]) {
+            const response = await fetch(`${localhost}/api/wishList/${profil[0].id}`, {
+                method: "POST",
+            }); 
+            const wishList_response = await response.json()
+            console.log(wishList_response)
+        }
+    setCartItems(cartItems.filter(item => item.id !== id));
+        setNbrArticle(nbrArticle - 1);
+    }
 
     const product_list = () => {
         return (
             <div className="flex">
-                {cartItems.map((elem, index) => (
-                    <div key={index} className="w-3/5">
-                        <div className="flex flex-col m-8">
-                            <div className="flex">
-                                <img className="w-1/3 h-1/3 border border-grey" src={`${elem.product.images[0]}`} alt={elem.product.name} />
-                                <div className="flex flex-col ml-4">
-                                    <h2 className="font-primary text-3xl text-gold">{elem.product.name}</h2>
-                                    <span className="font-primary flex text-2xl p-2">Size:&nbsp;<h2>{elem.size}</h2></span>
-                                    <span className="font-primary flex text-2xl p-2">Material:&nbsp;<h2>{elem.product.material.name}</h2></span>
-                                    <span className="font-primary flex text-2xl p-2">Stone:&nbsp;<h2>{elem.product.stone.name}</h2></span>
-                                    {elem.product.promotion.id != 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2 className="line-through">${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty))}&nbsp;</h2><h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
-                                    {elem.product.promotion.id == 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
-                                    <span className="flex text-2xl p-2 font-primary">Quantity:&nbsp;<input
-                                        className="border border-grey"
-                                        type="number"
-                                        min={0}
-                                        max={elem.product.stockQty}
-                                        defaultValue={elem.itemQty}
-                                        onChange={(e) => handleQtyChange(elem.id, e.target.value)}
-                                    /></span>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="flex justify-around text-2xl p-2 mt-6">
-                                    <div>
-                                        <button className="flex font-primary" onClick={() => deleteProduct(elem.id)}><img className="mr-4" src={Delete} alt="" />Delete</button>
+                <div>
+                    {cartItems.map((elem, index) => (
+                        <div key={index} className="ml-8">
+                            <div className="flex flex-col m-8">
+                                <div className="flex">
+                                    <img className="w-1/3 h-1/3 border border-grey" src={`${elem.product.images[0]}`} alt={elem.product.name} />
+                                    <div className="flex flex-col ml-4">
+                                        <h2 className="font-primary text-3xl text-gold">{elem.product.name}</h2>
+                                        <span className="font-primary flex text-2xl p-2">Size:&nbsp;<h2>{elem.size}</h2></span>
+                                        <span className="font-primary flex text-2xl p-2">Material:&nbsp;<h2>{elem.product.material.name}</h2></span>
+                                        <span className="font-primary flex text-2xl p-2">Stone:&nbsp;<h2>{elem.product.stone.name}</h2></span>
+                                        {elem.product.promotion.id != 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2 className="line-through">${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty))}&nbsp;</h2><h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
+                                        {elem.product.promotion.id == 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
+                                        <span className="flex text-2xl p-2 font-primary">Quantity:&nbsp;<input
+                                            className="border border-grey"
+                                            type="number"
+                                            min={0}
+                                            max={elem.product.stockQty}
+                                            defaultValue={elem.itemQty}
+                                            onChange={(e) => handleQtyChange(elem.id, e.target.value)}
+                                        /></span>
                                     </div>
-                                    <div>
-                                        <button className="flex font-primary"><img className="mr-4" src={Save4later} alt="" />Save for later</button>
+                                </div>
+                                <div>
+                                    <div className="flex justify-around text-2xl p-2 mt-6">
+                                        <div>
+                                            <button className="flex font-primary" onClick={() => deleteProduct(elem.id)}><img className="mr-4" src={Delete} alt="" />Delete</button>
+                                        </div>
+                                        <div>
+                                            <button className="flex font-primary" onClick={()=> saveProduct(elem.id)}><img className="mr-4" src={Save4later} alt="" />Save for later</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-                <div className="w-2/5 flex flex-col items-center">
-                    <div className="w-1/2 bg-grey m-4 rounded-2xl p-4">
+                    ))}
+                </div>
+                <div className="w-2/5  mr-8 flex flex-col justify-start">
+                    <div className="bg-grey m-4 rounded-2xl p-4">
                         <h1 className="font-primary text-3xl text-center m-2">Order</h1>
                         <div className="flex justify-between my-4">
                             <h3 className="font-primary text-xl text-center m-2">Promo Code&nbsp;</h3>
