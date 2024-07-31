@@ -133,7 +133,6 @@ const SpecProduct = () => {
                   <td className="border px-4 py-2">Large</td>
                   <td className="border px-4 py-2">50 cm</td>
                 </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
               </tbody>
             </table>
           </div>
@@ -167,7 +166,6 @@ const SpecProduct = () => {
                   <td className="border px-4 py-2">52 mm</td>
                   <td className="border px-4 py-2">16.5 mm</td>
                 </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
               </tbody>
             </table>
           </div>
@@ -196,7 +194,6 @@ const SpecProduct = () => {
                   <td className="border px-4 py-2">Large</td>
                   <td className="border px-4 py-2">21 cm</td>
                 </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
               </tbody>
             </table>
           </div>
