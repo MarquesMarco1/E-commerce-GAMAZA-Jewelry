@@ -35,4 +35,12 @@ class SearchController extends AbstractController
 
         return $this->json(['product' => $product, 'category' => $category], 200);
     }
+
+    #[Route('/api/filterModele/{firstWorld}/{lastWord}', methods:["GET"])]
+    public function filterModele(string $firstWorld, string $lastWord, EntityManagerInterface $entityManager){
+        $products = $entityManager->getRepository(Product::class)->findModele($firstWorld, $lastWord);
+        if($products){
+            return $this->json(["products"=>$products], 200);
+        }
+    }
 }

@@ -30,6 +30,18 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
+   public function findModele($start, $fin): array
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.nameEn LIKE :start')
+           ->setParameter('start', $start.'%')
+           ->andWhere('p.nameEn LIKE :fin')
+           ->setParameter('fin','%'.$fin)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 //    public function findOneBySomeField($value): ?Product
 //    {
 //        return $this->createQueryBuilder('p')

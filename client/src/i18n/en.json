@@ -28,7 +28,7 @@
     "cart": "Cart"
   },
   "footer": {
-    "title": "Footer"
+    "title": "Contact us"
   },
   "categoryPage": {
     "homepage": "Homepage",
@@ -135,10 +135,34 @@
   "editUser": {
     "title": "Edit a user"
   },
+  
+  "cartPopup": {
+    "Shopping basket summary": "Shopping basket summary",
+    "Number of articles: 4": "Number of articles: 4",
+    "Total price: €170": "Total price: €170"
+
   "createPromotion": {
     "title": " Add an promotion",
     "pourcentage": "Discount to apply",
     "product": "Select a product",
     "button": "Add"
+  },
+  "sizeGuidePage": {
+    "tailleChoose": "Select my size :",
+    "button": "Size guide",
+    "guideRings": "Ring/wedding ring size guide (EU)",
+    "taille": "Size (EU)",
+    "circonférence": "Circumference (mm)",
+    "diamètre": "Diameter (mm)",
+    "guideNecklaces": "Size guide for necklaces (EU)",
+    "longueur": "Length (cm)",
+    "guideBracelets": "Size guide for bracelets (EU)",
+    "error": "No size"
+  },
+  "stockAlert": {
+    "notify": "Notify me when back in stock",
+    "email": "Enter your email",
+    "cancel": "Cancel",
+    "submit": "Submit"
   }
 }

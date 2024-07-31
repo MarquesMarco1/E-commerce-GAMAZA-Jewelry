@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import React, { useContext, useEffect } from "react";
-
 import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/dashboard/CreadArticle";
 import CreateCategory from "./components/admin/dashboard/CreateCategory";
@@ -21,6 +20,8 @@ import AddPromotion from "./components/admin/dashboard/AddPromotion";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
+import Map from "./components/Map"
+import CartPopup from "./components/utils/CartPopup";
 import Cart from "./components/Cart"
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
     <>
       {/* // ROUTES */}
       <HelmetProvider>
+
         <BrowserRouter>
           <Routes>
             {/* ALL */}
@@ -56,6 +58,8 @@ function App() {
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/editProfil/:id" element={<EditProfil />}></Route>
             <Route path="/authentication" element={<Authentication />}></Route>
+            <Route path="/cartPopup" element={<CartPopup />}></Route>
+
           </Routes>
         </BrowserRouter>
         {/* GOOGLE ANALYTICS */}
@@ -66,6 +70,7 @@ function App() {
           ></script>
           <script>
             {`
+
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());

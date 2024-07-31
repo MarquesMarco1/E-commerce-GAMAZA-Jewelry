@@ -9,6 +9,9 @@ import Footer from "./Footer";
 import inStock from "../assets/inStock.svg";
 import lowStock from "../assets/lowInStock.svg";
 import soldOut from "../assets/soldOut.svg";
+import StockAlert from "./stockAlert";
+import ModeleProduct from "./ModeleProduct";
+import SizeGuide from "./SizeGuide";
 import StockAlert from './utils/stockAlert';
 
 const SpecProduct = () => {
@@ -18,13 +21,12 @@ const SpecProduct = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
-  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+  const [allModele, setAllModele] = useState([]);
 
   const { language } = useContext(LanguageContext);
 
@@ -46,6 +48,24 @@ const SpecProduct = () => {
     newEntry();
   }, [id, language]);
 
+  const searchModele = async (elem) => {
+    const words = elem.nameEn.split(" ");
+    const firstWorld = words[0];
+    let lastWord = "";
+    if (words[words.length - 1] === "") {
+      lastWord = words[words.length - 2];
+    } else {
+      lastWord = words[words.length - 1];
+    }
+    const response = await fetch(
+      `${localhost}/api/filterModele/${firstWorld}/${lastWord}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setAllModele(data.products);
+    }
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -55,15 +75,10 @@ const SpecProduct = () => {
           if (data.products && data.products.length > 0) {
             const productData = data.products[0];
             setProduct(productData);
+            searchModele(productData);
             setSelectedImage(
               productData.images ? productData.images[0] : productData.image
             );
-            if (
-              Array.isArray(productData.sizes) &&
-              productData.sizes.length > 0
-            ) {
-              setSelectedSize(productData.sizes[0]);
-            }
             if (
               Array.isArray(productData.colors) &&
               productData.colors.length > 0
@@ -104,130 +119,6 @@ const SpecProduct = () => {
   const toggleZoom = () => {
     setIsZoomed(!isZoomed);
   };
-
-  const openSizeGuide = () => {
-    setIsSizeGuideOpen(true);
-  };
-
-  const closeSizeGuide = () => {
-    setIsSizeGuideOpen(false);
-  };
-
-  const getSizeGuide = () => {
-    switch (product.category.name.toLowerCase()) {
-      case "colliers":
-        return (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              Guide des tailles pour colliers (EU)
-            </h2>
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th className="border px-4 py-2">Taille (EU)</th>
-                  <th className="border px-4 py-2">Longueur (cm)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">Small</td>
-                  <td className="border px-4 py-2">40 cm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Medium</td>
-                  <td className="border px-4 py-2">45 cm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Large</td>
-                  <td className="border px-4 py-2">50 cm</td>
-                </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
-              </tbody>
-            </table>
-          </div>
-        );
-      case "bagues":
-      case "alliances":
-        return (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              Guide des tailles pour bagues/alliances (EU)
-            </h2>
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th className="border px-4 py-2">Taille (EU)</th>
-                  <th className="border px-4 py-2">Circonférence (mm)</th>
-                  <th className="border px-4 py-2">Diamètre (mm)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">48</td>
-                  <td className="border px-4 py-2">48 mm</td>
-                  <td className="border px-4 py-2">15.3 mm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">50</td>
-                  <td className="border px-4 py-2">50 mm</td>
-                  <td className="border px-4 py-2">15.9 mm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">52</td>
-                  <td className="border px-4 py-2">52 mm</td>
-                  <td className="border px-4 py-2">16.5 mm</td>
-                </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
-              </tbody>
-            </table>
-          </div>
-        );
-      case "bracelets":
-        return (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              Guide des tailles pour bracelets (EU)
-            </h2>
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th className="border px-4 py-2">Taille (EU)</th>
-                  <th className="border px-4 py-2">Longueur (cm)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">Small</td>
-                  <td className="border px-4 py-2">17 cm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Medium</td>
-                  <td className="border px-4 py-2">19 cm</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">Large</td>
-                  <td className="border px-4 py-2">21 cm</td>
-                </tr>
-                {/* Il faudra rajouter des tailles plus tard en s'inspirant des vrais guides */}
-              </tbody>
-            </table>
-          </div>
-        );
-      default:
-        return (
-          <p>Aucun guide des tailles disponible pour ce type de produit.</p>
-        );
-    }
-  };
-
-  const renderOptions = (items) =>
-    Array.isArray(items)
-      ? items.map((item) => (
-          <option key={item} value={item}>
-            {item}
-          </option>
-        ))
-      : null;
 
   if (error) {
     return (
@@ -346,40 +237,17 @@ const SpecProduct = () => {
               )}
             </p>
             <div className="mb-4">
-              <label htmlFor="size" className="block text-lg font-primary">
-                Sélectionner ma taille :
-              </label>
-              <select
-                id="size"
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-              >
-                {renderOptions(product.sizes)}
-              </select>
-              <button
-                onClick={openSizeGuide}
-                className="mt-2 text-sm text-blue-500 underline"
-              >
-                Guide des tailles
-              </button>
+              <SizeGuide data={product} />
             </div>
             <div className="mb-4">
               <label htmlFor="color" className="block text-lg font-primary">
-                Couleur :
+                {t("specProduct.material")}
               </label>
-              <select
-                id="color"
-                value={selectedColor}
-                onChange={(e) => setSelectedColor(e.target.value)}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-              >
-                {renderOptions(product.colors)}
-              </select>
+              {allModele.length > 0 && <ModeleProduct data={allModele} />}
             </div>
             <div className="mb-4">
               <label htmlFor="quantity" className="block text-lg font-primary">
-                Quantity:
+                {t("specProduct.quantity")}:
               </label>
               <select
                 id="quantity"
@@ -398,7 +266,7 @@ const SpecProduct = () => {
               onClick={handleAddToCart}
               className="w-full bg-gold text-white px-4 py-2 rounded-lg"
             >
-              Ajouter au panier
+              {t("specProduct.cart")}
             </button>
           </div>
         </div>
@@ -434,29 +302,6 @@ const SpecProduct = () => {
             {t("specProduct.stockQty")} {product.stockQty}
           </p>
         </div>
-        <div className="mt-10">
-          <label htmlFor="quantity" className="block text-lg font-primary">
-            {t("specProduct.quantity")}
-          </label>
-          <select
-            id="quantity"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="mt-2 p-2 border border-gray-300 rounded-lg"
-          >
-            {[...Array(10).keys()].map((num) => (
-              <option key={num + 1} value={num + 1}>
-                {num + 1}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={handleAddToCart}
-            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
-          >
-            {t("specProduct.cart")}
-          </button>
-        </div>
       </main>
       <Footer />
       <StockAlert
@@ -484,20 +329,6 @@ const SpecProduct = () => {
                 onClick={toggleZoom}
               />
             </div>
-          </div>
-        </div>
-      )}
-
-      {isSizeGuideOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white p-4 max-w-lg max-h-full overflow-auto">
-            <button
-              onClick={closeSizeGuide}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-            >
-              &times;
-            </button>
-            <div className="text-center">{getSizeGuide()}</div>
           </div>
         </div>
       )}
