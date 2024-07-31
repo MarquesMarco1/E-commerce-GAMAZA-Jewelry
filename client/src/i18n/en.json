@@ -28,7 +28,7 @@
     "cart": "Cart"
   },
   "footer": {
-    "title": "Footer"
+    "title": "Contact us"
   },
   "categoryPage": {
     "homepage": "Homepage",
@@ -152,5 +152,11 @@
     "longueur": "Length (cm)",
     "guideBracelets": "Size guide for bracelets (EU)",
     "error": "No size"
+  },
+  "stockAlert": {
+    "notify": "Notify me when back in stock",
+    "email": "Enter your email",
+    "cancel": "Cancel",
+    "submit": "Submit"
   }
 }

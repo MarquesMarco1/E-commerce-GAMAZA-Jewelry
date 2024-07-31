@@ -47,6 +47,24 @@ const SpecProduct = () => {
     newEntry();
   }, [id, language]);
 
+  const searchModele = async (elem) => {
+    const words = elem.nameEn.split(" ");
+    const firstWorld = words[0];
+    let lastWord = "";
+    if (words[words.length - 1] === "") {
+      lastWord = words[words.length - 2];
+    } else {
+      lastWord = words[words.length - 1];
+    }
+    const response = await fetch(
+      `${localhost}/api/filterModele/${firstWorld}/${lastWord}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setAllModele(data.products);
+    }
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -56,6 +74,7 @@ const SpecProduct = () => {
           if (data.products && data.products.length > 0) {
             const productData = data.products[0];
             setProduct(productData);
+            searchModele(productData);
             setSelectedImage(
               productData.images ? productData.images[0] : productData.image
             );
@@ -100,15 +119,6 @@ const SpecProduct = () => {
     setIsZoomed(!isZoomed);
   };
 
-  const renderOptions = (items) =>
-    Array.isArray(items)
-      ? items.map((item) => (
-          <option key={item} value={item}>
-            {item}
-          </option>
-        ))
-      : null;
-
   if (error) {
     return (
       <div className="text-center py-4 text-red-500">
@@ -144,24 +154,6 @@ const SpecProduct = () => {
   };
 
   const [stockText, stockColorCode] = manageStock(product.stockQty);
-
-  const searchModele = async (elem) => {
-    const words = elem.nameEn.split(" ");
-    const firstWorld = words[0];
-    let lastWord = "";
-    if (words[words.length - 1] === "") {
-      lastWord = words[words.length - 2];
-    } else {
-      lastWord = words[words.length - 1];
-    }
-    const response = await fetch(
-      `${localhost}/api/filterModele/${firstWorld}/${lastWord}`
-    );
-    if (response.ok) {
-      const data = await response.json();
-      setAllModele(data.products);
-    }
-  };
 
   return (
     <>
@@ -246,23 +238,15 @@ const SpecProduct = () => {
             <div className="mb-4">
               <SizeGuide data={product} />
             </div>
-            <div className="mb-4" onClick={() => searchModele(product)}>
+            <div className="mb-4">
               <label htmlFor="color" className="block text-lg font-primary">
-                Couleur :
+                {t("specProduct.material")}
               </label>
-              <select
-                id="color"
-                value={selectedColor}
-                onChange={(e) => setSelectedColor(e.target.value)}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-              >
-                {renderOptions(product.colors)}
-              </select>
               {allModele.length > 0 && <ModeleProduct data={allModele} />}
             </div>
             <div className="mb-4">
               <label htmlFor="quantity" className="block text-lg font-primary">
-                Quantity:
+                {t("specProduct.quantity")}:
               </label>
               <select
                 id="quantity"
@@ -281,7 +265,7 @@ const SpecProduct = () => {
               onClick={handleAddToCart}
               className="w-full bg-gold text-white px-4 py-2 rounded-lg"
             >
-              Ajouter au panier
+              {t("specProduct.cart")}
             </button>
           </div>
         </div>
@@ -316,29 +300,6 @@ const SpecProduct = () => {
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
             {t("specProduct.stockQty")} {product.stockQty}
           </p>
-        </div>
-        <div className="mt-10">
-          <label htmlFor="quantity" className="block text-lg font-primary">
-            {t("specProduct.quantity")}
-          </label>
-          <select
-            id="quantity"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="mt-2 p-2 border border-gray-300 rounded-lg"
-          >
-            {[...Array(10).keys()].map((num) => (
-              <option key={num + 1} value={num + 1}>
-                {num + 1}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={handleAddToCart}
-            className="mt-4 bg-gold text-white px-4 py-2 rounded-lg"
-          >
-            {t("specProduct.cart")}
-          </button>
         </div>
       </main>
       <Footer />
