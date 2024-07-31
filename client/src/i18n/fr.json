@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Tendence du mois" },
+  "promotion": { "translated-text": "Promotion du mois" },
   "specProduct": {
     "error": "Aucun produit trouvé",
     "homepage": "Accueil",
@@ -27,7 +28,7 @@
     "cart": "Panier"
   },
   "footer": {
-    "title": "Footer"
+    "title": "Nous contacter"
   },
   "categoryPage": {
     "homepage": "Accueil",
@@ -87,7 +88,8 @@
     "size": "Taille :",
     "color": "Couleur :",
     "price": "Prix :",
-    "manageCategory": "Gestion des categories :"
+    "manageCategory": "Gestion des categories :",
+    "promotion": "Promotion"
   },
   "createProduct": {
     "title": "Créer un produit",
@@ -133,9 +135,33 @@
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
   },
+
   "cartPopup": {
     "Shopping basket summary": "Résumé du Panier",
     "Number of articles: 4": "Nombre d'articles : 4",
     "Total price: €170": "Prix total :  170€"
+
+  "createPromotion": {
+    "title": "Ajouter un produit en promotion",
+    "pourcentage": "Remise à appliquer",
+    "product": "Choisir un produit",
+    "button": "Ajouter"
+  },
+  "sizeGuidePage": {
+    "tailleChoose": "Sélectionner ma taille :",
+    "button": "Guide des tailles",
+    "guideRings": "Guide des tailles pour bagues/alliances (EU)",
+    "taille": "Taille (EU)",
+    "circonférence": "Circonférence (mm)",
+    "diamètre": "Diamètre (mm)",
+    "guideNecklaces": "Guide des tailles pour colliers (EU)",
+    "longueur": "Longueur (cm)",
+    "guideBracelets": "Guide des tailles pour bracelets (EU)",
+    "error": "Pas de taille"
+  },
+  "stockAlert": {
+    "notify": "M'avertir du retour en stock",
+    "email": "Entrez votre email",
+    "cancel": "Annuler",
   }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CartItemRepository;
+use App\Repository\WishlistItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CartItemRepository::class)]
-class CartItem
+#[ORM\Entity(repositoryClass: WishlistItemRepository::class)]
+class WishlistItem
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,10 +16,11 @@ class CartItem
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cart $cart = null;
+    private ?WishList $wishList = null;
 
-    #[ORM\Column]
-    private ?int $itemQty = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Product $product = null;
 
     #[ORM\Column(length: 255)]
     private ?string $size = null;
@@ -27,35 +28,34 @@ class CartItem
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
+    #[ORM\Column]
+    private ?int $itemQty = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCart(): ?Cart
+    public function getWishList(): ?WishList
     {
-        return $this->cart;
+        return $this->wishList;
     }
 
-    public function setCart(?Cart $cart): static
+    public function setWishList(?WishList $wishList): static
     {
-        $this->cart = $cart;
+        $this->wishList = $wishList;
 
         return $this;
     }
 
-    public function getItemQty(): ?int
+    public function getProduct(): ?Product
     {
-        return $this->itemQty;
+        return $this->product;
     }
 
-    public function setItemQty(int $itemQty): static
+    public function setProduct(?Product $product): static
     {
-        $this->itemQty = $itemQty;
+        $this->product = $product;
 
         return $this;
     }
@@ -84,14 +84,14 @@ class CartItem
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getItemQty(): ?int
     {
-        return $this->product;
+        return $this->itemQty;
     }
 
-    public function setProduct(?Product $product): static
+    public function setItemQty(int $itemQty): static
     {
-        $this->product = $product;
+        $this->itemQty = $itemQty;
 
         return $this;
     }

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\StatsCartRepository;
+use App\Repository\PromotionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StatsCartRepository::class)]
-class StatsCart
+#[ORM\Entity(repositoryClass: PromotionRepository::class)]
+class Promotion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,28 +15,24 @@ class StatsCart
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $count = null;
+    private ?int $pourcentage = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Cart $cart = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCount(): ?int
+    public function getPourcentage(): ?int
     {
-        return $this->count;
+        return $this->pourcentage;
     }
 
-    public function setCount(int $count): static
+    public function setPourcentage(int $pourcentage): static
     {
-        $this->count = $count;
+        $this->pourcentage = $pourcentage;
 
         return $this;
     }
@@ -49,18 +45,6 @@ class StatsCart
     public function setLastUpdated(\DateTimeInterface $lastUpdated): static
     {
         $this->lastUpdated = $lastUpdated;
-
-        return $this;
-    }
-
-    public function getCart(): ?Cart
-    {
-        return $this->cart;
-    }
-
-    public function setCart(Cart $cart): static
-    {
-        $this->cart = $cart;
 
         return $this;
     }

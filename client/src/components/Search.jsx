@@ -57,7 +57,7 @@ export default function Search() {
     // setIsSearching(false);
     let list = [];
 
-    if(language == "FR") {
+    if (language == "FR") {
       if (categoryName === "All Categories" && productName === "") {
         product.map((elem) => {
           list.push(elem);
@@ -66,14 +66,15 @@ export default function Search() {
         if (categoryName == "All Categories") {
           let result = product.filter((elem) =>
             elem.name.toLowerCase().includes(productName.toLowerCase())
-          )
-          list.push(result)
+          );
+          list.push(result);
         } else {
-          let result = product.filter((elem) =>
-            elem.category.name == categoryName &&
-            elem.name.toLowerCase().includes(productName.toLowerCase())
-          )
-          list.push(result)
+          let result = product.filter(
+            (elem) =>
+              elem.category.name == categoryName &&
+              elem.name.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
         }
       }
       setSearchResults(list[0]);
@@ -86,18 +87,18 @@ export default function Search() {
         if (categoryName == "All Categories") {
           let result = product.filter((elem) =>
             elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          )
-          list.push(result)
+          );
+          list.push(result);
         } else {
-          let result = product.filter((elem) =>
-            elem.category.nameEn == categoryName &&
-            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          )
-          list.push(result)
+          let result = product.filter(
+            (elem) =>
+              elem.category.nameEn == categoryName &&
+              elem.nameEn.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
         }
       }
       setSearchResults(list[0]);
-
     }
   };
 
@@ -188,7 +189,7 @@ export default function Search() {
         </select>
       </form>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
-        {searchResults.length > 0 && (
+        {searchResults.length > 0 &&
           searchResults.map((result) => (
             <div
               key={result.id}
@@ -203,9 +204,7 @@ export default function Search() {
                 {language === "FR" ? result.name : result.nameEn}
               </h3>
               <p className="font-primary text-black text-lg">
-                {language === "FR"
-                  ? result.description
-                  : result.descriptionEn}
+                {language === "FR" ? result.description : result.descriptionEn}
               </p>
               <p className="font-bold font-primary text-black">
                 ${result.price}
@@ -214,8 +213,7 @@ export default function Search() {
                 {t("search.cart")}
               </button>
             </div>
-          ))
-        )}
+          ))}
       </div>
     </div>
   );
