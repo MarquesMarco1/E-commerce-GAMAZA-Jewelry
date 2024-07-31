@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { LanguageContext } from "../LanguageContext";
 
 export default function ModeleProduct(data) {
   const [modele, setModele] = useState([]);
+  const { language } = useContext(LanguageContext);
+
   useEffect(() => {
     setModele(data.data);
-  }, [data]);
+  }, [data, language]);
+
   return (
-    <div>
-      <h1>Personnaliser son bijoux :</h1>
+    <div className="flex flex-wrap">
       {modele &&
         modele.map((elem) => (
-          <>
-            <p>Couleur : {elem.material.name}</p>
+          <div className="flex flex-col ml-1">
+            <p>
+              {language === "FR" ? elem.material.name : elem.material.nameEn}
+            </p>
+            {/* <p>{elem.stone && elem.stone.name}</p> */}
             <Link to={`/product/${elem.id}`}>
               <img
                 className={`w-20 h-20 cursor-pointer border-2`}
@@ -20,7 +26,7 @@ export default function ModeleProduct(data) {
                 alt={elem.images}
               />
             </Link>
-          </>
+          </div>
         ))}
     </div>
   );
