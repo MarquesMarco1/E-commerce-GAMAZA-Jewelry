@@ -1,6 +1,20 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import { SuggestionsContext } from '../contexts/SuggestionsContext';
 
 class Autocomplete extends Component {
+    static propTypes = {
+        // suggestions: PropTypes.instanceOf(Array),
+        onChange: PropTypes.func.isRequired
+      };
+      
+      
+      static defaultProps = {
+        suggestions: []
+      };
+      
+      static contextType = SuggestionsContext;
+      
   constructor(props) {
     super(props);
     this.state = {
@@ -12,19 +26,19 @@ class Autocomplete extends Component {
   }
 
   onChange = e => {
-    const { suggestions } = this.props;
+    const { suggestions } = this.context;
     const userInput = e.currentTarget.value;
 
     const filteredSuggestions = suggestions.filter(suggestion =>
       typeof suggestion === 'string' && 
-        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        suggestion.toLocaleLowerCase().indexOf(userInput.toLocaleLowerCase()) > -1
     );
 
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: true,
-      userInput: userInput
+      userInput: e.currentTarget.value
     });
 
     this.props.onChange(e);
@@ -63,8 +77,8 @@ class Autocomplete extends Component {
   };
 
   render() {
-        const {
-            onChange,
+    const {
+        onChange,
         onClick,
         onKeyDown,
         state: {
@@ -77,20 +91,26 @@ class Autocomplete extends Component {
 
     let suggestionsListComponent;
     
-        if (showSuggestions && userInput) {
+    console.log("showSuggestions:", showSuggestions);
+    console.log("userInput:", userInput);
+    console.log("filteredSuggestions:", filteredSuggestions);
+
+    
+        if (showSuggestions) {
             if (filteredSuggestions.length) {
-                suggestionsListComponent = (
-            <ul className="border border-gray-600 border-t-0 list-none mt-0 max-h-36 overflow-y-auto pl-0 w-[calc(300px+1rem)]">
+            suggestionsListComponent = (
+            <ul className="border border-gray-600 border-t-0 list-none mt-0 max-h-36 overflow-y-auto pl-0 w-72">
                 {filteredSuggestions.map((suggestion, index) => {
                     let className = "p-2";
     
                     if (index === activeSuggestion) {
                     className += "bg-green-700 text-yellow-400 cursor-pointer font-bold";
                     }
+                    
                     return (
                         <li 
                         className={`${className} hover:bg-green-700 hover:text-yellow-400 hover:cursor-pointer hover:font-bold border-b border-gray-600:last:border-0`}
-                            key={suggestion} 
+                        key={suggestion} 
                         onClick={onClick}>
                     {suggestion}
                         </li>
@@ -111,8 +131,8 @@ class Autocomplete extends Component {
         <Fragment>
           <input
             type="text"
-            // className="border border-gray-600 p-2 w-72"
-            className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+            className="border border-gray-600 p-2 w-72"
+            // className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}
@@ -123,4 +143,6 @@ class Autocomplete extends Component {
     }
 }
 
-  export default Autocomplete;
+Autocomplete.contextType = SuggestionsContext;
+
+export default Autocomplete;

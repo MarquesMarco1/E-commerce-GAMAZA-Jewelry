@@ -2,6 +2,7 @@ import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
+import { SuggestionsContext } from '../contexts/SuggestionsContext';
 import Autocomplete from "./Autocomplete";
 
 export default function Search() {
@@ -13,7 +14,8 @@ export default function Search() {
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useContext(SuggestionsContext);
+  // const { setSuggestions: : } = useContext(SuggestionsContext);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   const { language } = useContext(LanguageContext);
@@ -34,9 +36,12 @@ export default function Search() {
         if (data.product && data.product.length > 0) {
           setProduct(data.product);
           setCategories(data.category);
-          // const combinedSuggestions = [...data.product, ...data.category];
+          // setSuggestions(data.product);
+          // setContextSuggestions(data)
+          const combinedSuggestions = [...data.product];
+          setSuggestions(combinedSuggestions);
+          // console.log(suggestions);
           // console.log(combinedSuggestions)
-          setSuggestions(product);
         } else {
           setError(new Error("Product not found"));
         }
@@ -93,6 +98,7 @@ export default function Search() {
     const filtered = suggestions.filter(
       (item) => item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
     );
+    console.log(filtered)
     setFilteredSuggestions(filtered);
   };
 
@@ -117,8 +123,9 @@ export default function Search() {
             value={productName} */}
             <Autocomplete
               suggestions={filteredSuggestions}
+              // suggestions={product.name}
               placeholder={t("search.searchBar")}
-              userInput={productName}
+              userInput={""}  
               onChange={handleInput}
               className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
           />
