@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import inStock from "../assets/inStock.svg";
 import lowStock from "../assets/lowInStock.svg";
 import soldOut from "../assets/soldOut.svg";
-import StockAlert from "./stockAlert";
+import StockAlert from './utils/stockAlert';
 
 const SpecProduct = () => {
   const { id } = useParams();
