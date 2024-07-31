@@ -22,7 +22,6 @@ import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
 import Cart from "./components/Cart"
-import { CartContext } from "./CartContext";
 
 function App() {
   // SET LANGUAGE
@@ -33,9 +32,6 @@ function App() {
     i18n.changeLanguage(language.toLowerCase());
   }, [language, i18n]);
 
-  //SET CART
-  const { cart } = useContext(CartContext);
-  console.log(cart)
   return (
     <>
       {/* // ROUTES */}

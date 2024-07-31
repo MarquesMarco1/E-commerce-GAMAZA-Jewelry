@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Delete from '../assets/delete.svg'
 import Save4later from '../assets/save4later.svg'
+import { useCart } from '../CartContext';
 
 export default function Cart() {
     const [profil, setProfil] = useState([]);
@@ -14,6 +15,7 @@ export default function Cart() {
     let navigate = useNavigate();
     const [nbrArticle, setNbrArticle] = useState(0);
     const [itemQty, setItemQty] = useState({});
+    const {state: cart, dispatch} = useCart();
 
     const fetchData = async (email) => {
         const response = await fetch(`${localhost}/api/user`, {
@@ -50,7 +52,9 @@ export default function Cart() {
                 if (response.status === 200) {
                     const data = await response.json();
                     setCartItems(data);
-
+                    data.map(item => {
+                        dispatch({type: 'ADD_ITEM', payload: item})
+                    })
                     const initialItemQty = {};
                     data.forEach(item => {
                         initialItemQty[item.id] = item.itemQty;
@@ -95,18 +99,6 @@ export default function Cart() {
         setCartItems(cartItems.filter(item => item.id !== id));
         setNbrArticle(nbrArticle - 1);
     };
-    
-    const saveProduct = async (id) => {
-        if(profil[0]) {
-            const response = await fetch(`${localhost}/api/wishList/${profil[0].id}`, {
-                method: "POST",
-            }); 
-            const wishList_response = await response.json()
-            console.log(wishList_response)
-        }
-    setCartItems(cartItems.filter(item => item.id !== id));
-        setNbrArticle(nbrArticle - 1);
-    }
 
     const product_list = () => {
         return (
@@ -140,7 +132,7 @@ export default function Cart() {
                                             <button className="flex font-primary" onClick={() => deleteProduct(elem.id)}><img className="mr-4" src={Delete} alt="" />Delete</button>
                                         </div>
                                         <div>
-                                            <button className="flex font-primary" onClick={()=> saveProduct(elem.id)}><img className="mr-4" src={Save4later} alt="" />Save for later</button>
+                                            <button className="flex font-primary" ><img className="mr-4" src={Save4later} alt="" />Save for later</button>
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +169,8 @@ export default function Cart() {
             </div>
         );
     };
+
+    console.log(cart)
 
     return (
         <>
