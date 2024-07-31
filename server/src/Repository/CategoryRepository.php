@@ -17,27 +17,38 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Category[] Returns an array of Category objects 
+//     * @return Category[] Returns an array of Category objects
 //     */
-   public function findAllInFR(): array
-   {
-       return $this->createQueryBuilder('c')
+    public function findAllInFR(): array
+    {
+        return $this->createQueryBuilder('c')
             ->select('c.id, c.name, c.image, c.lastUpdated, c.description')
-           ->orderBy('c.id', 'ASC')
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-   public function findAllInEN(): array
-   {
-       return $this->createQueryBuilder('c')
+    public function findAllInEN(): array
+    {
+        return $this->createQueryBuilder('c')
             ->select('c.id, c.nameEn, c.image, c.lastUpdated, c.descriptionEn')
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult()
-       ;
-   }
+        ;
+    }
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('c.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
 //    public function findOneBySomeField($value): ?Category
 //    {

@@ -17,6 +17,7 @@ import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
 import EditProfil from "./components/auth/EditProfil";
 import CreateUser from "./components/admin/dashboard/CreateUser";
+import AddPromotion from "./components/admin/dashboard/AddPromotion";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
@@ -70,8 +71,8 @@ function App() {
 
               gtag('config', 'G-3DP4K2GG5P');
             `}
-            </script>
-          </Helmet>
+          </script>
+        </Helmet>
       </HelmetProvider>
     </>
   );

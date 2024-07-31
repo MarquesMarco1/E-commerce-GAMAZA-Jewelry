@@ -33,7 +33,7 @@ class StatsController extends AbstractController
             $statsProduct = new StatsProduct();
             $statsProduct->setProduct($product);
             $statsProduct->setCount(1);
-            $statsProduct->setLastUpdate(new DateTime());
+            $statsProduct->setLastUpdated(new DateTime());
         }
 
         $entityManager->persist($statsProduct);
