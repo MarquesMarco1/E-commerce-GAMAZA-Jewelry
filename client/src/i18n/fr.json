@@ -140,5 +140,17 @@
     "pourcentage": "Remise à appliquer",
     "product": "Choisir un produit",
     "button": "Ajouter"
+  },
+  "sizeGuidePage": {
+    "tailleChoose": "Sélectionner ma taille :",
+    "button": "Guide des tailles",
+    "guideRings": "Guide des tailles pour bagues/alliances (EU)",
+    "taille": "Taille (EU)",
+    "circonférence": "Circonférence (mm)",
+    "diamètre": "Diamètre (mm)",
+    "guideNecklaces": "Guide des tailles pour colliers (EU)",
+    "longueur": "Longueur (cm)",
+    "guideBracelets": "Guide des tailles pour bracelets (EU)",
+    "error": "Pas de taille"
   }
 }

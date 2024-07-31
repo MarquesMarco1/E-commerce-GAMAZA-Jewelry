@@ -140,5 +140,17 @@
     "pourcentage": "Discount to apply",
     "product": "Select a product",
     "button": "Add"
+  },
+  "sizeGuidePage": {
+    "tailleChoose": "Select my size :",
+    "button": "Size guide",
+    "guideRings": "Ring/wedding ring size guide (EU)",
+    "taille": "Size (EU)",
+    "circonférence": "Circumference (mm)",
+    "diamètre": "Diameter (mm)",
+    "guideNecklaces": "Size guide for necklaces (EU)",
+    "longueur": "Length (cm)",
+    "guideBracelets": "Size guide for bracelets (EU)",
+    "error": "No size"
   }
 }
