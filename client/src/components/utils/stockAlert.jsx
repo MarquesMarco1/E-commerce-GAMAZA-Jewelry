@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { LanguageContext } from "../LanguageContext";
+import { LanguageContext } from "../../LanguageContext";
 
 export default function StockAlert({ isOpen, onClose, onSubmit }) {
   const [email, setEmail] = useState("");

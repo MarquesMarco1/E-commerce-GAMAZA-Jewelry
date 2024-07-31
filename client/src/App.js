@@ -20,7 +20,6 @@ import AddPromotion from "./components/admin/dashboard/AddPromotion";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
-import Map from "./components/Map"
 import CartPopup from "./components/utils/CartPopup";
 import Cart from "./components/Cart"
 
