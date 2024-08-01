@@ -7,13 +7,14 @@ import Footer from './Footer';
 import Delete from '../assets/delete.svg'
 import Save4later from '../assets/save4later.svg'
 import { useCart } from '../CartContext';
+import CheckoutForm from "./utils/CheckoutForm";
 
 export default function Cart() {
     const { t } = useTranslation();
     let navigate = useNavigate();
     const [nbrArticle, setNbrArticle] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
-    const {state: cart, dispatch} = useCart([]);
+    const { state: cart, dispatch } = useCart([]);
 
     useEffect(() => {
         const fetchIsLog = async () => {
@@ -27,28 +28,32 @@ export default function Cart() {
 
     const SetNbrArticle = () => {
         let nbr = 0;
-        cart.map((item)=> nbr += item.itemQty)
+        cart.map((item) => nbr += item.itemQty)
         setNbrArticle(nbr)
     }
 
     const SetSubTotal = () => {
         let total = 0;
-        cart.map((item)=> total += (item.product.price * item.itemQty) - ((item.product.price * item.itemQty) * ((item.product.promotion.id != 1 ? item.product.promotion.pourcentage : 0) / 100)).toFixed())
+        cart.map((item) => total += (item.product.price * item.itemQty) - ((item.product.price * item.itemQty) * ((item.product.promotion.id != 1 ? item.product.promotion.pourcentage : 0) / 100)).toFixed())
         setSubTotal(total)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         SetNbrArticle();
         SetSubTotal();
     }, [cart])
 
     const handleQtyChange = (item) => {
-        dispatch({type: 'UPDATE_ITEM', payload: item})
+        dispatch({ type: 'UPDATE_ITEM', payload: item })
     };
-    
+
     const deleteProduct = async (item) => {
-        dispatch({type: 'REMOVE_ITEM', payload: item})
+        dispatch({ type: 'REMOVE_ITEM', payload: item })
     };
+
+    const checkout = () => {
+        navigate("/checkout", { replace: true });
+    }
 
     const product_list = () => {
         return (
@@ -72,7 +77,7 @@ export default function Cart() {
                                             min={0}
                                             max={elem.product.stockQty}
                                             defaultValue={elem.itemQty}
-                                            onChange={(e) => handleQtyChange({...elem, itemQty: Number(e.target.value)})}
+                                            onChange={(e) => handleQtyChange({ ...elem, itemQty: Number(e.target.value) })}
                                         /></span>
                                     </div>
                                 </div>
@@ -112,7 +117,7 @@ export default function Cart() {
                             <h3 className="font-primary text-2xl text-center m-2">1003 $</h3>
                         </div>
                         <div className="rounded-3xl bg-gold m-6 flex justify-center">
-                            <button className="font-primary text-3xl font-bold text-center m-2">ORDER NOW</button>
+                            <button className="font-primary text-3xl font-bold text-center m-2" onClick={() => checkout()}>ORDER NOW</button>
                         </div>
                     </div>
                 </div>

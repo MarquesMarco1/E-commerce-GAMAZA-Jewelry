@@ -2,6 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import React, { useContext, useEffect } from "react";
+import { loadStripe } from '@stripe/stripe-js';
+
 import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/dashboard/CreadArticle";
 import CreateCategory from "./components/admin/dashboard/CreateCategory";
@@ -21,6 +23,8 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
 import CartPopup from "./components/utils/CartPopup";
 import Cart from "./components/Cart"
+import CheckoutForm from "./components/utils/CheckoutForm";
+import Return from "./components/utils/Return";
 
 function App() {
   // SET LANGUAGE
@@ -30,6 +34,12 @@ function App() {
   useEffect(() => {
     i18n.changeLanguage(language.toLowerCase());
   }, [language, i18n]);
+
+  //SET STRIPE
+  // Make sure to call `loadStripe` outside of a component’s render to avoid
+  // recreating the `Stripe` object on every render.
+  // This is your test secret API key.
+  const stripePromise = loadStripe("pk_test_51NUbU2GrTRGUcbUF4wXDLp4gi42TrFA6gfrQ8iEoTn9YffGugIvuCshIfh4uRUX96QqvPxmMowbf10hP6WnGFNGs00UYuvcxMa");
 
   return (
     <>
@@ -57,6 +67,8 @@ function App() {
             <Route path="/editProfil/:id" element={<EditProfil />}></Route>
             <Route path="/authentication" element={<Authentication />}></Route>
             <Route path="/cartPopup" element={<CartPopup />}></Route>
+            <Route path="/checkout" element={<CheckoutForm stripe={stripePromise} />} />
+            <Route path="/return" element={<Return />} />
 
           </Routes>
         </BrowserRouter>
