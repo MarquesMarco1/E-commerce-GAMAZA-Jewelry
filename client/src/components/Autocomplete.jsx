@@ -1,93 +1,60 @@
-import React, { Component, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import PropTypes from "prop-types";
-import { SuggestionsContext } from '../contexts/SuggestionsContext';
+import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../LanguageContext";
 
-class Autocomplete extends Component {
-    static propTypes = {
-        // suggestions: PropTypes.instanceOf(Array),
-        onChange: PropTypes.func.isRequired
-      };
-      
-      
-      static defaultProps = {
-        suggestions: []
-      };
-      
-      static contextType = SuggestionsContext;
-      
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSuggestion: 0,
-      filteredSuggestions: [],
-      showSuggestions: false,
-      userInput: ""
-    };
-  }
+const Autocomplete = ({ suggestions = [] }) => {
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userInput, setUserInput] = useState("");
+  // const [error, setError] = useState("");
+  const { t } = useTranslation();
+  const { language } = useContext(LanguageContext);
 
-  onChange = e => {
-    const { suggestions } = this.context;
+      // static contextType = SuggestionsContext;
+
+  const onChange = e => {
     const userInput = e.currentTarget.value;
 
-    const filteredSuggestions = suggestions.filter(suggestion =>
-      typeof suggestion === 'string' && 
+    const filteredSuggestions = suggestions.filter(suggestion => 
         suggestion.toLocaleLowerCase().indexOf(userInput.toLocaleLowerCase()) > -1
     );
 
-    this.setState({
-      activeSuggestion: 0,
-      filteredSuggestions,
-      showSuggestions: true,
-      userInput: e.currentTarget.value
-    });
-
-    this.props.onChange(e);
+    setActiveSuggestion(0);
+    setFilteredSuggestions(filteredSuggestions);
+    setShowSuggestions(true);
+    setUserInput(userInput);
   };
 
-  onClick = e => {
-    this.setState({
-      activeSuggestion: 0,
-      filteredSuggestions: [],
-      showSuggestions: false,
-      userInput: e.currentTarget.innerText
-    });
+  const onClick = e => {
+    setActiveSuggestion(0);
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.currentTarget.innerText);
   };
 
-  onKeyDown = e => {
-    const { activeSuggestion, filteredSuggestions } = this.state;
+  const onKeyDown = e => {
 
     if (e.keyCode === 13) {
-      this.setState({
-        activeSuggestion: 0,
-        showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
-      });
+      setActiveSuggestion(0);
+      setFilteredSuggestions([]);
+      setShowSuggestions(false);
+      setUserInput(filteredSuggestions[activeSuggestion]);
+
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
       }
-      this.setState({ activeSuggestion: activeSuggestion - 1 });
+      setActiveSuggestion(activeSuggestion - 1);
     }
     else if (e.keyCode === 40) {
-      if (activeSuggestion - 1 === filteredSuggestions.length) {
+      if (activeSuggestion + 1 === filteredSuggestions.length) {
         return;
       }
-      this.setState({ activeSuggestion: activeSuggestion + 1 });
+      setActiveSuggestion(activeSuggestion + 1);
     }
   };
-
-  render() {
-    const {
-        onChange,
-        onClick,
-        onKeyDown,
-        state: {
-            activeSuggestion,
-            filteredSuggestions,
-            showSuggestions,
-            userInput
-        }
-    } = this;
 
     let suggestionsListComponent;
     
@@ -96,7 +63,7 @@ class Autocomplete extends Component {
     console.log("filteredSuggestions:", filteredSuggestions);
 
     
-        if (showSuggestions) {
+        if (showSuggestions && userInput) {
             if (filteredSuggestions.length) {
             suggestionsListComponent = (
             <ul className="border border-gray-600 border-t-0 list-none mt-0 max-h-36 overflow-y-auto pl-0 w-72">
@@ -131,8 +98,9 @@ class Autocomplete extends Component {
         <Fragment>
           <input
             type="text"
-            className="border border-gray-600 p-2 w-72"
-            // className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+            // className="border border-gray-600 p-2 w-72"
+            className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+            placeholder={t("search.searchBar")}
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}
@@ -141,8 +109,11 @@ class Autocomplete extends Component {
         </Fragment>
       );
     }
-}
 
-Autocomplete.contextType = SuggestionsContext;
+Autocomplete.propTypes = {
+  suggestions: PropTypes.arrayOf(PropTypes.string)
+};
+
+// Autocomplete.contextType = SuggestionsContext;
 
 export default Autocomplete;

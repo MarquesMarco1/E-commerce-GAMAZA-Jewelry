@@ -2,7 +2,6 @@ import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
-import { SuggestionsContext } from '../contexts/SuggestionsContext';
 import Autocomplete from "./Autocomplete";
 
 export default function Search() {
@@ -14,10 +13,7 @@ export default function Search() {
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useContext(SuggestionsContext);
-  // const { setSuggestions: : } = useContext(SuggestionsContext);
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-
+  const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
 
   useEffect(() => {
@@ -36,12 +32,9 @@ export default function Search() {
         if (data.product && data.product.length > 0) {
           setProduct(data.product);
           setCategories(data.category);
-          // setSuggestions(data.product);
-          // setContextSuggestions(data)
           const combinedSuggestions = [...data.product];
           setSuggestions(combinedSuggestions);
-          // console.log(suggestions);
-          // console.log(combinedSuggestions)
+          console.log(combinedSuggestions)
         } else {
           setError(new Error("Product not found"));
         }
@@ -92,15 +85,17 @@ export default function Search() {
     setSearchResults(list);
   };
 
-  const handleInput = (e) => {
-    const input = e.target.value;
-    setProductName(input);
-    const filtered = suggestions.filter(
-      (item) => item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
-    );
-    console.log(filtered)
-    setFilteredSuggestions(filtered);
-  };
+  const stringSuggestions = suggestions.map(suggestion => {
+    return typeof suggestion === 'object' ? (
+      <div className="suggestion-item" key={suggestion.name}>
+      <img src={suggestion.image} alt={suggestion.name} className="suggestion-image" />
+      <div className="suggestion-details">
+        <span className="suggestion-name">{suggestion.name}</span>
+        <span className="suggestion-price">{suggestion.price}</span>
+      </div>
+    </div>
+  ) : suggestion;
+});
 
   if (error)
     return (
@@ -118,16 +113,8 @@ export default function Search() {
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
         <div className="flex p-3 w-full md:w-auto">
-          {/* <input
-            type="text"
-            value={productName} */}
             <Autocomplete
-              suggestions={filteredSuggestions}
-              // suggestions={product.name}
-              placeholder={t("search.searchBar")}
-              userInput={""}  
-              onChange={handleInput}
-              className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+              suggestions={stringSuggestions}
           />
           <button
             type="submit"

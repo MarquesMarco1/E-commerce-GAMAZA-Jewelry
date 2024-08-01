@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
 import Footer from "./Footer";
 import { LanguageContext } from "../LanguageContext";
-import { SuggestionsProvider } from "../contexts/SuggestionsContext";
 import Search from "./Search";
-import Autocomplete from "./Autocomplete";
 
 export default function Accueil() {
   const { language } = useContext(LanguageContext);
@@ -38,11 +36,7 @@ export default function Accueil() {
             ))}
         </ul>
       </div>
-      <SuggestionsProvider>
         <Search />
-        {/* <Autocomplete /> */}
-      </SuggestionsProvider>
-
       <Carousel />
       <Footer />
     </div>
