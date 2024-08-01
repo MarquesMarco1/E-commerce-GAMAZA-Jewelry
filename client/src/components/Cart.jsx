@@ -9,102 +9,52 @@ import Save4later from '../assets/save4later.svg'
 import { useCart } from '../CartContext';
 
 export default function Cart() {
-    const [profil, setProfil] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
     const { t } = useTranslation();
     let navigate = useNavigate();
     const [nbrArticle, setNbrArticle] = useState(0);
-    const [itemQty, setItemQty] = useState({});
-    const {state: cart, dispatch} = useCart();
-
-    const fetchData = async (email) => {
-        const response = await fetch(`${localhost}/api/user`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: email }),
-        });
-
-        if (response.status === 200) {
-            const data = await response.json();
-            setProfil(data.user);
-        }
-    };
+    const [subTotal, setSubTotal] = useState(0);
+    const {state: cart, dispatch} = useCart([]);
 
     useEffect(() => {
         const fetchIsLog = async () => {
             const email = localStorage.getItem("user");
-            if (email) {
-                fetchData(email);
-            } else {
+            if (!email) {
                 navigate("/authentication", { replace: true });
             }
         };
         fetchIsLog();
     }, []);
 
-    useEffect(() => {
-        if (profil[0]) {
-            const getCartItems = async (id) => {
-                const response = await fetch(`${localhost}/api/cart/${id}`);
+    const SetNbrArticle = () => {
+        let nbr = 0;
+        cart.map((item)=> nbr += item.itemQty)
+        setNbrArticle(nbr)
+    }
 
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCartItems(data);
-                    data.map(item => {
-                        dispatch({type: 'ADD_ITEM', payload: item})
-                    })
-                    const initialItemQty = {};
-                    data.forEach(item => {
-                        initialItemQty[item.id] = item.itemQty;
-                    });
-                    setItemQty(initialItemQty);
-                }
-            };
-            getCartItems(profil[0].id);
-        }
-    }, [profil]);
+    const SetSubTotal = () => {
+        let total = 0;
+        cart.map((item)=> total += (item.product.price * item.itemQty) - ((item.product.price * item.itemQty) * ((item.product.promotion.id != 1 ? item.product.promotion.pourcentage : 0) / 100)).toFixed())
+        setSubTotal(total)
+    }
 
-    useEffect(() => {
-        if (cartItems.length !== 0) {
-            let nbr = 0
-            cartItems.map((elem) => {
-                nbr += elem.itemQty
-            })
-            setNbrArticle(nbr);
-        }
-    }, [cartItems]);
+    useEffect(()=>{
+        SetNbrArticle();
+        SetSubTotal();
+    }, [cart])
 
-    const handleQtyChange = (id, value) => {
-        if (itemQty[id] < value)
-            setNbrArticle(nbrArticle + 1)
-        else
-            setNbrArticle(nbrArticle - 1)
-
-        setItemQty(prevQty => ({
-            ...prevQty,
-            [id]: Number(value)
-        }));
+    const handleQtyChange = (item) => {
+        dispatch({type: 'UPDATE_ITEM', payload: item})
     };
-
-    const deleteProduct = async (id) => {
-        await fetch(`${localhost}/api/cart/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        
-        setCartItems(cartItems.filter(item => item.id !== id));
-        setNbrArticle(nbrArticle - 1);
+    
+    const deleteProduct = async (item) => {
+        dispatch({type: 'REMOVE_ITEM', payload: item})
     };
 
     const product_list = () => {
         return (
             <div className="flex">
                 <div>
-                    {cartItems.map((elem, index) => (
+                    {cart.map((elem, index) => (
                         <div key={index} className="ml-8">
                             <div className="flex flex-col m-8">
                                 <div className="flex">
@@ -114,22 +64,22 @@ export default function Cart() {
                                         <span className="font-primary flex text-2xl p-2">Size:&nbsp;<h2>{elem.size}</h2></span>
                                         <span className="font-primary flex text-2xl p-2">Material:&nbsp;<h2>{elem.product.material.name}</h2></span>
                                         <span className="font-primary flex text-2xl p-2">Stone:&nbsp;<h2>{elem.product.stone.name}</h2></span>
-                                        {elem.product.promotion.id != 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2 className="line-through">${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty))}&nbsp;</h2><h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
-                                        {elem.product.promotion.id == 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2>${(elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty)) - (elem.product.price * (itemQty[elem.id] !== undefined ? itemQty[elem.id] : elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
+                                        {elem.product.promotion.id != 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2 className="line-through">${(elem.product.price * elem.itemQty)}&nbsp;</h2><h2>${(elem.product.price * elem.itemQty) - ((elem.product.price * elem.itemQty) * ((elem.product.promotion.id != 1 ? elem.product.promotion.pourcentage : 0) / 100)).toFixed()}</h2></span>}
+                                        {elem.product.promotion.id == 1 && <span className="font-primary flex text-2xl p-2">Price:&nbsp;<h2>${(elem.product.price * elem.itemQty)}</h2></span>}
                                         <span className="flex text-2xl p-2 font-primary">Quantity:&nbsp;<input
                                             className="border border-grey"
                                             type="number"
                                             min={0}
                                             max={elem.product.stockQty}
                                             defaultValue={elem.itemQty}
-                                            onChange={(e) => handleQtyChange(elem.id, e.target.value)}
+                                            onChange={(e) => handleQtyChange({...elem, itemQty: Number(e.target.value)})}
                                         /></span>
                                     </div>
                                 </div>
                                 <div>
                                     <div className="flex justify-around text-2xl p-2 mt-6">
                                         <div>
-                                            <button className="flex font-primary" onClick={() => deleteProduct(elem.id)}><img className="mr-4" src={Delete} alt="" />Delete</button>
+                                            <button className="flex font-primary" onClick={() => deleteProduct(elem)}><img className="mr-4" src={Delete} alt="" />Delete</button>
                                         </div>
                                         <div>
                                             <button className="flex font-primary" ><img className="mr-4" src={Save4later} alt="" />Save for later</button>
@@ -150,7 +100,7 @@ export default function Cart() {
                         <div className="border border-black my-4" />
                         <div className="flex justify-between">
                             <h3 className="font-primary text-xl text-center m-2">Subtotal&nbsp;</h3>
-                            <h3 className="font-primary text-xl text-center m-2">1000 $</h3>
+                            <h3 className="font-primary text-xl text-center m-2">{subTotal}</h3>
                         </div>
                         <div className="flex justify-between">
                             <h3 className="font-primary text-xl text-center m-2">Shipping&nbsp;</h3>

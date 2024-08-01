@@ -5,15 +5,13 @@ const CartContext = createContext();
 const cartReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_ITEM':
-            console.log(state)
-            // const existingItem = state.find(item => item.id === action.payload.id);
-            // return [...state, action.payload];
-
-            // if(existingItem) {
-            //     return state.map(item => item.id === action.payload.id ? { ...item, quantity: item.quantity + action.payload.quantity } : item)
-            // } else {
-            // }
-            return;
+            const existingItem = state.find(item => item.id === action.payload.id);
+            
+            if(existingItem) {
+                return state.map(item => item.id === action.payload.id ? { ...item, quantity: item.quantity + action.payload.quantity } : item)
+            } else {
+                return [...state, action.payload];
+            }
         case 'REMOVE_ITEM':
 
             return state.filter(item => item.id !== action.payload.id);
@@ -39,12 +37,13 @@ export const CartProvider = ({ children }) => {
             localStorage.setItem('cart', JSON.stringify([]));
             return [];
         }
-        return localData;
+        return JSON.parse(localData);
     });
+    
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(state));
-    }, [state]);
+    }, [state]);    
 
     return (
         <CartContext.Provider value={{ state, dispatch }}>

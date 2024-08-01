@@ -11,7 +11,6 @@ import CategoryPage from "./components/CategoryPage";
 import SpecProduct from "./components/SpecProduct";
 import Admin from "./components/admin/dashboard/Admin";
 import EditProduct from "./components/admin/dashboard/EditProduct";
-import Search from "./components/Search";
 import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
 import EditProfil from "./components/auth/EditProfil";
