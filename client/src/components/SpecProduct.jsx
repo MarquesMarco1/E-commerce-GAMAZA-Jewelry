@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import inStock from "../assets/inStock.svg";
 import lowStock from "../assets/lowInStock.svg";
 import soldOut from "../assets/soldOut.svg";
-import StockAlert from "./stockAlert";
+import StockAlert from "./utils/stockAlert";
 import ModeleProduct from "./ModeleProduct";
 import SizeGuide from "./SizeGuide";
 import ReviewForm from "./review/ReviewForm";

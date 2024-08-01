@@ -92,7 +92,6 @@ export default function EditProduct() {
       const response_product = await fetch(`${localhost}/api/products/${id}`);
       if (response_product.status === 200) {
         const data_product = await response_product.json();
-        console.log(data_product);
         setNom(data_product.products[0].name);
         setNomEN(data_product.products[0].nameEn);
         setCategory_id(data_product.products[0].category.id);
@@ -150,7 +149,6 @@ export default function EditProduct() {
   //////////////////////////////////////
 
   const deleteImage = async (elem) => {
-    console.log(elem);
     const response = await fetch(`${localhost}/api/deleteImage/${id}`, {
       method: "POST",
       headers: {
@@ -158,7 +156,6 @@ export default function EditProduct() {
       },
       body: JSON.stringify({ imageURL: elem }),
     });
-    console.log(response);
     if (response.status === 200) {
       const data = await response.json();
       setImage(data.image);

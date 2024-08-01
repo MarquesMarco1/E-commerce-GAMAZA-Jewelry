@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 import { LanguageProvider } from "./LanguageContext";
+import { CartProvider } from './CartContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <LanguageProvider>
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </LanguageProvider>
   </React.StrictMode>
 );

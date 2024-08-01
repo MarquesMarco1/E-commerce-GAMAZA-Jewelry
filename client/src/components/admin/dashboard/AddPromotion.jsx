@@ -93,7 +93,6 @@ export default function AddPromotion() {
           list.push(result);
         }
       }
-      console.log(list[0]);
       setSearchResults(list[0]);
     } else {
       if (categoryName === "All Categories" && productName === "") {
