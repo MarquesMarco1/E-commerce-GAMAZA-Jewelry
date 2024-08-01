@@ -163,5 +163,14 @@
     "notify": "M'avertir du retour en stock",
     "email": "Entrez votre email",
     "cancel": "Annuler"
+  },
+  "reviewPage": {
+    "title": "Évaluez ce produit",
+    "button": "Envoyer",
+    "filter": "Filtrer les avis",
+    "stars": "étoiles",
+    "date": "Filter par date",
+    "desc": "Filter par les avis les plus récents",
+    "asc": "Filter par les avis les plus ancien"
   }
 }

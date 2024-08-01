@@ -12,6 +12,7 @@ import soldOut from "../assets/soldOut.svg";
 import StockAlert from "./utils/stockAlert";
 import ModeleProduct from "./ModeleProduct";
 import SizeGuide from "./SizeGuide";
+import ReviewForm from "./review/ReviewForm";
 
 const SpecProduct = () => {
   const { id } = useParams();
@@ -302,6 +303,8 @@ const SpecProduct = () => {
           </p>
         </div>
       </main>
+      <ReviewForm id={id} />
+
       <Footer />
       <StockAlert
         isOpen={isOpen}

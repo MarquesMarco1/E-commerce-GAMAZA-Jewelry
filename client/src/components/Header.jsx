@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import localhost from "../config";
 import Lang from "./utils/SwitchLangue";
 import { useTranslation } from "react-i18next";
-import CartPopup from './utils/CartPopup';
+import CartPopup from "./utils/CartPopup";
 
 export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -16,8 +16,8 @@ export default function Header() {
 
   const email = localStorage.getItem("user");
   const cartItems = [
-    { id: 1, name: 'Article 1', quantity: 2, price: 10 },
-    { id: 2, name: 'Article 2', quantity: 1, price: 20 },
+    { id: 1, name: "Article 1", quantity: 2, price: 10 },
+    { id: 2, name: "Article 2", quantity: 1, price: 20 },
   ];
 
   useEffect(() => {
@@ -43,7 +43,6 @@ export default function Header() {
       <Lang />
       <h1 className="text-gold font-primary font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
         G.A.M.A.Z.A .Co
-
       </h1>
       <div className="flex flex-col space-x-4 md:flex-row items-center md:mr-24 space-y-4 md:space-y-0 md:space-x-8">
         {isAdmin ? (
@@ -82,7 +81,7 @@ export default function Header() {
           </Link>
         )}
 
-        <div 
+        <div
           className="relative"
           onMouseEnter={() => setShowCartPopup(true)}
           onMouseLeave={() => setShowCartPopup(false)}
