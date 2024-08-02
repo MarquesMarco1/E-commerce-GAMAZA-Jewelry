@@ -55,6 +55,9 @@ class Product
     #[ORM\ManyToOne]
     private ?Material $material = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $keyStripe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -212,6 +215,18 @@ class Product
     public function setMaterial(?Material $material): static
     {
         $this->material = $material;
+
+        return $this;
+    }
+
+    public function getKeyStripe(): ?string
+    {
+        return $this->keyStripe;
+    }
+
+    public function setKeyStripe(string $keyStripe): static
+    {
+        $this->keyStripe = $keyStripe;
 
         return $this;
     }

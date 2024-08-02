@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
+import { useCart } from "../CartContext";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
   const [sizeGuide, setSizeGuide] = useState([]);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedSize, setSelectedSize] = useState("no size");
   const { t } = useTranslation();
+  const [quantity, setQuantity] = useState(1);
+  const [id, setId] = useState("");
+  const { state: cart, dispatch } = useCart([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      // console.log(data.data);
+      setId(data.data.id);
       setCategory(data.data.category.name);
       switch (data.data.category.name) {
         case "Colliers":
@@ -53,10 +59,31 @@ export default function SizeGuide(data) {
   const closeSizeGuide = () => {
     setIsSizeGuideOpen(false);
   };
+
+  const handleAddToCart = async () => {
+    const formData = {
+      product: parseInt(id),
+      quantity: parseInt(quantity),
+      size: selectedSize,
+      user: localStorage.getItem("user"),
+    };
+    const response = await fetch(`${localhost}/api/cartItem`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({ type: "ADD_ITEM", payload: data.success });
+    }
+  };
+
   return (
     <>
       {sizeGuide.length > 0 ? (
-        <>
+        <div className="mb-4">
           <label htmlFor="size" className="block text-lg font-primary">
             {t("sizeGuidePage.tailleChoose")}
           </label>
@@ -76,10 +103,33 @@ export default function SizeGuide(data) {
           >
             {t("sizeGuidePage.button")}
           </button>
-        </>
+        </div>
       ) : (
         t("sizeGuidePage.error")
       )}
+      <div className="mb-4">
+        <label htmlFor="quantity" className="block text-lg font-primary">
+          {t("specProduct.quantity")}:
+        </label>
+        <select
+          id="quantity"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
+        >
+          {[...Array(10).keys()].map((num) => (
+            <option key={num + 1} value={num + 1}>
+              {num + 1}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        onClick={handleAddToCart}
+        className="w-full bg-gold text-white px-4 py-2 rounded-lg"
+      >
+        {t("specProduct.cart")}
+      </button>
 
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
