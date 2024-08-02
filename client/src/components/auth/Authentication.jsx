@@ -41,7 +41,6 @@ const Authentication = () => {
       body: JSON.stringify({ formData }),
     });
 
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("user", email);
       navigate("/", { replace: true });
@@ -68,7 +67,6 @@ const Authentication = () => {
       },
       body: JSON.stringify({ formData }),
     });
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("user", email);
       navigate("/", { replace: true });

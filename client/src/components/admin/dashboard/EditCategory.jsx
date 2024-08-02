@@ -59,7 +59,6 @@ export default function EditCategory() {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         setName(data.category[0].name);
         setImage(data.category[0].image);
         setDescription(data.category[0].description);

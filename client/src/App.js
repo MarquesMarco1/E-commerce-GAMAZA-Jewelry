@@ -2,6 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import React, { useContext, useEffect } from "react";
+import { loadStripe } from '@stripe/stripe-js';
+
 import Landing from "./components/Landing";
 import CreateArticle from "./components/admin/dashboard/CreadArticle";
 import CreateCategory from "./components/admin/dashboard/CreateCategory";
@@ -11,7 +13,6 @@ import CategoryPage from "./components/CategoryPage";
 import SpecProduct from "./components/SpecProduct";
 import Admin from "./components/admin/dashboard/Admin";
 import EditProduct from "./components/admin/dashboard/EditProduct";
-import Search from "./components/Search";
 import EditCategory from "./components/admin/dashboard/EditCategory";
 import Stats from "./components/admin/stats/Stats";
 import EditProfil from "./components/auth/EditProfil";
@@ -20,16 +21,25 @@ import AddPromotion from "./components/admin/dashboard/AddPromotion";
 import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
-import Map from "./components/Map"
 import CartPopup from "./components/utils/CartPopup";
+import Cart from "./components/Cart"
+import CheckoutForm from "./components/utils/CheckoutForm";
+import Return from "./components/utils/Return";
 
 function App() {
+  // SET LANGUAGE
   const { i18n } = useTranslation();
   const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     i18n.changeLanguage(language.toLowerCase());
   }, [language, i18n]);
+
+  //SET STRIPE
+  // Make sure to call `loadStripe` outside of a component’s render to avoid
+  // recreating the `Stripe` object on every render.
+  // This is your test secret API key.
+  const stripePromise = loadStripe("pk_test_51NUbU2GrTRGUcbUF4wXDLp4gi42TrFA6gfrQ8iEoTn9YffGugIvuCshIfh4uRUX96QqvPxmMowbf10hP6WnGFNGs00UYuvcxMa");
 
   return (
     <>
@@ -51,14 +61,14 @@ function App() {
             <Route path="/editCategory/:id" element={<EditCategory />}></Route>
             <Route path="/editAdminUser/:id" element={<EditUser />}></Route>
             <Route path="/admin/stats" element={<Stats />}></Route>
-            <Route path="/addPromo" element={<AddPromotion />}></Route>
-            addPromo
             {/* USERS */}
             <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/map" element={<Map />}></Route>
+            <Route path="/cart" element={<Cart />}></Route>
             <Route path="/editProfil/:id" element={<EditProfil />}></Route>
             <Route path="/authentication" element={<Authentication />}></Route>
             <Route path="/cartPopup" element={<CartPopup />}></Route>
+            <Route path="/checkout" element={<CheckoutForm stripe={stripePromise} />} />
+            <Route path="/return" element={<Return />} />
 
           </Routes>
         </BrowserRouter>
