@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240801122915 extends AbstractMigration
+final class Version20240802130659 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,6 @@ final class Version20240801122915 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product CHANGE last_updated last_updated DATETIME NOT NULL');
         $this->addSql('ALTER TABLE review ADD product_id INT NOT NULL');
         $this->addSql('ALTER TABLE review ADD CONSTRAINT FK_794381C64584665A FOREIGN KEY (product_id) REFERENCES product (id)');
         $this->addSql('CREATE INDEX IDX_794381C64584665A ON review (product_id)');
@@ -29,7 +28,6 @@ final class Version20240801122915 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product CHANGE last_updated last_updated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL');
         $this->addSql('ALTER TABLE review DROP FOREIGN KEY FK_794381C64584665A');
         $this->addSql('DROP INDEX IDX_794381C64584665A ON review');
         $this->addSql('ALTER TABLE review DROP product_id');

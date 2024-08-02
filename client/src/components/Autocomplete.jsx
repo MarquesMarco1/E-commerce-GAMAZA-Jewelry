@@ -19,7 +19,8 @@ const Autocomplete = ({ suggestions }) => {
 
     const filteredSuggestions = suggestions.filter(suggestion => 
         // suggestion.toLocaleLowerCase().indexOf(userInput.toLocaleLowerCase()) > -1
-        suggestion.name && suggestion.name.toLocaleLowerCase().includes(userInput)
+        (suggestion.name && suggestion.name.toLocaleLowerCase().indexOf(userInput) > -1) || 
+        (suggestion.nameEn && suggestion.nameEn.toLocaleLowerCase().indexOf(userInput) > - 1)
     );
 
     setActiveSuggestion(0);
@@ -79,14 +80,14 @@ const Autocomplete = ({ suggestions }) => {
                     return (
                       <li 
                         className={`${className} border-b border-gray-600:last:border-0`}
-                        key={suggestion.name} 
+                        key={language === 'FR' ? suggestion.name : suggestion.nameEn} 
                         onClick={onClick}
                       >
-                          <img src={suggestion.images} alt={suggestion.name}
+                          <img src={suggestion.images} alt={language === 'FR' ? suggestion.name : suggestion.nameEn}
                         className="w-10 h-10 mr-2 object-cover"
                         />
                       <div>
-                          <div className="font-bold text-gold font-primary text-lg">{suggestion.name}</div>
+                          <div className="font-bold text-gold font-primary text-lg">{language === 'FR' ? suggestion.name : suggestion.nameEn}</div>
                           <div className="text-gray-600 font-bold font-primary">${suggestion.price}</div>
                       </div>
                       </li>

@@ -61,49 +61,47 @@ export default function Search() {
     // setIsSearching(false);
     let list = [];
 
-    if (language == "FR") {
-      if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
+    if (language === "FR") {
+      if (categoryName === "Toutes les catégories" && productName === "") {
+        product.forEach((elem) => {
           list.push(elem);
         });
       } else {
-        if (categoryName == "All Categories") {
+        if (categoryName == "Toutes les catégories") {
           let result = product.filter((elem) =>
             elem.name.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         } else {
           let result = product.filter(
             (elem) =>
               elem.category.name == categoryName &&
               elem.name.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         }
       }
-      setSearchResults(list[0]);
+      setSearchResults(list);
     } else {
       if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
+        product.forEach((elem) => {
           list.push(elem);
         });
-      } else {
-        if (categoryName == "All Categories") {
+      } else if (categoryName == "All Categories") {
           let result = product.filter((elem) =>
             elem.nameEn.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         } else {
           let result = product.filter(
             (elem) =>
               elem.category.nameEn == categoryName &&
               elem.nameEn.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         }
       }
-      setSearchResults(list[0]);
-    }
+      setSearchResults(list);
   };
 
   const stringSuggestions = suggestions.map(suggestion => 
@@ -175,11 +173,12 @@ export default function Search() {
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
-            value="All Categories"
+            value={language === 'FR' ? 'Toutes les catégories': 'All categories'}
             className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple"
           >
             {t("search.select")}
           </option>
+
           {categories.length > 0 &&
             categories.map((elem) => (
               <option
