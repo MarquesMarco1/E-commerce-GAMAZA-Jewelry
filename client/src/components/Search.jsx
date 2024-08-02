@@ -34,7 +34,7 @@ export default function Search() {
           setCategories(data.category);
           const combinedSuggestions = [...data.product];
           setSuggestions(combinedSuggestions);
-          console.log(combinedSuggestions)
+          // console.log(combinedSuggestions)
         } else {
           setError(new Error("Product not found"));
         }
@@ -85,17 +85,9 @@ export default function Search() {
     setSearchResults(list);
   };
 
-  const stringSuggestions = suggestions.map(suggestion => {
-    return typeof suggestion === 'object' ? (
-      <div className="suggestion-item" key={suggestion.name}>
-      <img src={suggestion.image} alt={suggestion.name} className="suggestion-image" />
-      <div className="suggestion-details">
-        <span className="suggestion-name">{suggestion.name}</span>
-        <span className="suggestion-price">{suggestion.price}</span>
-      </div>
-    </div>
-  ) : suggestion;
-});
+  const stringSuggestions = suggestions.map(suggestion => 
+    typeof suggestion === 'object' ?  suggestion : {name: suggestion, image: '', prix: ''}
+  );
 
   if (error)
     return (
