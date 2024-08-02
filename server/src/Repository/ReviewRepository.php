@@ -19,6 +19,35 @@ class ReviewRepository extends ServiceEntityRepository
 //    /**
 //     * @return Review[] Returns an array of Review objects
 //     */
+    public function orderByAsc ($id){
+       return $this->createQueryBuilder('r')
+            ->andWhere('r.product = :val')
+            ->setParameter('val', $id)
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+       ;
+    }
+
+    public function orderByDesc ($id){
+       return $this->createQueryBuilder('r')
+            ->andWhere('r.product = :val')
+            ->setParameter('val', $id) 
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+       ;
+    }
+
+    public function searchBy ($stars){
+       return $this->createQueryBuilder('r')
+           ->andWhere('r.stars = :val')
+           ->setParameter('val', $stars)
+           ->orderBy('r.id', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('r')

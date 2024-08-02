@@ -22,7 +22,7 @@ class StatsProduct
     private ?int $count = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $lastUpdate = null;
+    private ?\DateTimeInterface $lastUpdated = null;
 
     public function getId(): ?int
     {
@@ -53,14 +53,14 @@ class StatsProduct
         return $this;
     }
 
-    public function getLastUpdate(): ?\DateTimeInterface
+    public function getLastUpdated(): ?\DateTimeInterface
     {
-        return $this->lastUpdate;
+        return $this->lastUpdated;
     }
 
-    public function setLastUpdate(\DateTimeInterface $lastUpdate): static
+    public function setLastUpdated(\DateTimeInterface $lastUpdated): static
     {
-        $this->lastUpdate = $lastUpdate;
+        $this->lastUpdated = $lastUpdated;
 
         return $this;
     }

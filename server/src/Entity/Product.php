@@ -17,15 +17,27 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nameEn = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $descriptionEn = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $color = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Promotion $promotion = null;
+
+    #[ORM\Column]
+    private array $images = [];
 
     #[ORM\Column]
     private ?float $weight = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
 
     #[ORM\Column]
     private ?int $stockQty = null;
@@ -38,31 +50,10 @@ class Product
     private ?Category $category = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Material $material = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Stone $stone = null;
 
-    #[ORM\Column]
-    private array $images = [];
-
-    #[ORM\Column(length: 255)]
-    private ?string $nameEn = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $descriptionEn = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $colorEn = null;
-
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Size $sizes = null;
-
-    #[ORM\Column]
-    private ?float $price = null;
+    private ?Material $material = null;
 
     public function getId(): ?int
     {
@@ -81,6 +72,18 @@ class Product
         return $this;
     }
 
+    public function getNameEn(): ?string
+    {
+        return $this->nameEn;
+    }
+
+    public function setNameEn(string $nameEn): static
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -93,15 +96,38 @@ class Product
         return $this;
     }
 
-
-    public function getColor(): ?string
+    public function getDescriptionEn(): ?string
     {
-        return $this->color;
+        return $this->descriptionEn;
     }
 
-    public function setColor(string $color): static
+    public function setDescriptionEn(string $descriptionEn): static
     {
-        $this->color = $color;
+        $this->descriptionEn = $descriptionEn;
+
+        return $this;
+    }
+
+    public function getPromotion(): ?Promotion
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?Promotion $promotion): static
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    public function getImages(): array
+    {
+        return $this->images;
+    }
+
+    public function setImages(array $images): static
+    {
+        $this->images = $images;
 
         return $this;
     }
@@ -114,6 +140,18 @@ class Product
     public function setWeight(float $weight): static
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }
@@ -154,18 +192,6 @@ class Product
         return $this;
     }
 
-    public function getMaterial(): ?Material
-    {
-        return $this->material;
-    }
-
-    public function setMaterial(?Material $material): static
-    {
-        $this->material = $material;
-
-        return $this;
-    }
-
     public function getStone(): ?Stone
     {
         return $this->stone;
@@ -178,76 +204,15 @@ class Product
         return $this;
     }
 
-    public function getImages(): array
+    public function getMaterial(): ?Material
     {
-        return $this->images;
+        return $this->material;
     }
 
-    public function setImages(array $images): static
+    public function setMaterial(?Material $material): static
     {
-        $this->images = $images;
+        $this->material = $material;
 
         return $this;
     }
-
-    public function getNameEn(): ?string
-    {
-        return $this->nameEn;
-    }
-
-    public function setNameEn(string $nameEn): static
-    {
-        $this->nameEn = $nameEn;
-
-        return $this;
-    }
-
-    public function getDescriptionEn(): ?string
-    {
-        return $this->descriptionEn;
-    }
-
-    public function setDescriptionEn(string $descriptionEn): static
-    {
-        $this->descriptionEn = $descriptionEn;
-
-        return $this;
-    }
-
-    public function getColorEn(): ?string
-    {
-        return $this->colorEn;
-    }
-
-    public function setColorEn(string $colorEn): static
-    {
-        $this->colorEn = $colorEn;
-
-        return $this;
-    }
-
-    public function getSizes(): ?Size
-    {
-        return $this->sizes;
-    }
-
-    public function setSizes(?Size $sizes): static
-    {
-        $this->sizes = $sizes;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
 }

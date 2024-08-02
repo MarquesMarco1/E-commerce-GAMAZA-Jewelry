@@ -1,5 +1,6 @@
 {
   "common": { "translated-text": "Trending now" },
+  "promotion": { "translated-text": "Promotion" },
   "specProduct": {
     "error": "No product found",
     "homepage": "Homepage",
@@ -16,7 +17,7 @@
   "search": {
     "error": "No product found",
     "button": "Search",
-    "searchBar": "Search by terms or categories",
+    "searchBar": "Search by name",
     "select": "All Categories",
     "cart": "Add to cart",
     "loading": "Searching ..."
@@ -27,7 +28,7 @@
     "cart": "Cart"
   },
   "footer": {
-    "title": "Footer"
+    "title": "Contact us"
   },
   "categoryPage": {
     "homepage": "Homepage",
@@ -87,7 +88,8 @@
     "size": "Size :",
     "color": "Color :",
     "price": "Price :",
-    "manageCategory": "Manage Category :"
+    "manageCategory": "Manage Category :",
+    "promotion": "Promotion"
   },
   "createProduct": {
     "title": "Create a product",
@@ -132,5 +134,44 @@
   },
   "editUser": {
     "title": "Edit a user"
+  },
+
+  "cartPopup": {
+    "Shopping basket summary": "Shopping basket summary",
+    "Number of articles: 4": "Number of articles: 4",
+    "Total price: €170": "Total price: €170"
+  },
+  "createPromotion": {
+    "title": " Add an promotion",
+    "pourcentage": "Discount to apply",
+    "product": "Select a product",
+    "button": "Add"
+  },
+  "sizeGuidePage": {
+    "tailleChoose": "Select my size :",
+    "button": "Size guide",
+    "guideRings": "Ring/wedding ring size guide (EU)",
+    "taille": "Size (EU)",
+    "circonférence": "Circumference (mm)",
+    "diamètre": "Diameter (mm)",
+    "guideNecklaces": "Size guide for necklaces (EU)",
+    "longueur": "Length (cm)",
+    "guideBracelets": "Size guide for bracelets (EU)",
+    "error": "No size"
+  },
+  "stockAlert": {
+    "notify": "Notify me when back in stock",
+    "email": "Enter your email",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
+  "reviewPage": {
+    "title": "Rate this product",
+    "button": "Send",
+    "filter": "Filter reviews",
+    "stars": "stars",
+    "date": "Filter by date",
+    "desc": "Filter by most recent reviews",
+    "asc": "Filter by oldest reviews"
   }
 }

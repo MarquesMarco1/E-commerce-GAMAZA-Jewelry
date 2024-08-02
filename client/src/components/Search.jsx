@@ -61,28 +61,49 @@ export default function Search() {
     // setIsSearching(false);
     let list = [];
 
-    if (categoryName === "All Categories" && productName === "") {
-      product.map((elem) => {
-        list.push(elem);
-      });
-    } else {
-      product.map((elem) => {
-        const productNameLower = productName.toLocaleLowerCase();
-        const elemNameLower = elem.name.toLocaleLowerCase();
-        const elemCategoryName = elem.category.name;
-
-        const startWith =
-          elemNameLower.includes(productNameLower) ||
-          elemNameLower.includes(productNameLower.toString());
-        if (
-          (startWith && categoryName === "All Categories") ||
-          elemCategoryName === categoryName
-        ) {
+    if (language == "FR") {
+      if (categoryName === "All Categories" && productName === "") {
+        product.map((elem) => {
           list.push(elem);
+        });
+      } else {
+        if (categoryName == "All Categories") {
+          let result = product.filter((elem) =>
+            elem.name.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
+        } else {
+          let result = product.filter(
+            (elem) =>
+              elem.category.name == categoryName &&
+              elem.name.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
         }
-      });
+      }
+      setSearchResults(list[0]);
+    } else {
+      if (categoryName === "All Categories" && productName === "") {
+        product.map((elem) => {
+          list.push(elem);
+        });
+      } else {
+        if (categoryName == "All Categories") {
+          let result = product.filter((elem) =>
+            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
+        } else {
+          let result = product.filter(
+            (elem) =>
+              elem.category.nameEn == categoryName &&
+              elem.nameEn.toLowerCase().includes(productName.toLowerCase())
+          );
+          list.push(result);
+        }
+      }
+      setSearchResults(list[0]);
     }
-    setSearchResults(list);
   };
 
   const stringSuggestions = suggestions.map(suggestion => 
@@ -147,7 +168,7 @@ export default function Search() {
               {t("search.error")}
             </div>
           )}
-          </div>
+        </div>
         <select
           value={categoryName}
           className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
@@ -172,7 +193,7 @@ export default function Search() {
         </select>
       </form>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
-        {searchResults.length > 0 && (
+        {searchResults.length > 0 &&
           searchResults.map((result) => (
             <div
               key={result.id}
@@ -187,9 +208,7 @@ export default function Search() {
                 {language === "FR" ? result.name : result.nameEn}
               </h3>
               <p className="font-primary text-black text-lg">
-                {language === "FR"
-                  ? result.description
-                  : result.descriptionEn}
+                {language === "FR" ? result.description : result.descriptionEn}
               </p>
               <p className="font-bold font-primary text-black">
                 ${result.price}
@@ -198,8 +217,7 @@ export default function Search() {
                 {t("search.cart")}
               </button>
             </div>
-          ))
-        ) }
+          ))}
       </div>
     </div>
   );

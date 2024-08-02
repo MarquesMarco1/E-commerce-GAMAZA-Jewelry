@@ -14,31 +14,19 @@ class StatsCart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Cart $cart = null;
-
     #[ORM\Column]
     private ?int $count = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cart $cart = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCart(): ?Cart
-    {
-        return $this->cart;
-    }
-
-    public function setCart(Cart $cart): static
-    {
-        $this->cart = $cart;
-
-        return $this;
     }
 
     public function getCount(): ?int
@@ -61,6 +49,18 @@ class StatsCart
     public function setLastUpdated(\DateTimeInterface $lastUpdated): static
     {
         $this->lastUpdated = $lastUpdated;
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(Cart $cart): static
+    {
+        $this->cart = $cart;
 
         return $this;
     }
