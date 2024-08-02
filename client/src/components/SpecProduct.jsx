@@ -100,10 +100,11 @@ const SpecProduct = () => {
   }, [id, language]);
 
   const handleAddToCart = () => {
-    if (product) {
-      // HANDLE BACK END CART LOGIC
-      console.log(`Added ${quantity} of ${product.name} to cart`);
-    }
+    console.log(quantity, id);
+    // if (product) {
+    //   // HANDLE BACK END CART LOGIC
+    //   console.log(`Added ${quantity} of ${product.name} to cart`);
+    // }
   };
 
   const openModal = () => {
@@ -237,15 +238,15 @@ const SpecProduct = () => {
               )}
             </p>
             <div className="mb-4">
-              <SizeGuide data={product} />
-            </div>
-            <div className="mb-4">
               <label htmlFor="color" className="block text-lg font-primary">
                 {t("specProduct.material")}
               </label>
               {allModele.length > 0 && <ModeleProduct data={allModele} />}
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4"> */}
+            <SizeGuide data={product} />
+            {/* </div> */}
+            {/* <div className="mb-4">
               <label htmlFor="quantity" className="block text-lg font-primary">
                 {t("specProduct.quantity")}:
               </label>
@@ -267,7 +268,7 @@ const SpecProduct = () => {
               className="w-full bg-gold text-white px-4 py-2 rounded-lg"
             >
               {t("specProduct.cart")}
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="mt-10 space-y-2">
