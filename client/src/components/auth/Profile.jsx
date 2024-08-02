@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import localhost from "../../config";
 import ManageProfil from "./ManageProfil";
 import Header from "../Header";
 import ManageCommand from "./ManageCommand";
 import { useTranslation } from "react-i18next";
+import Delete from "../../assets/delete.svg";
+import Cart from "../../assets/cart.svg";
 
 export default function Profile() {
   const [profil, setProfil] = useState([]);
+  const [wishlists, setWishlists] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
   const { t } = useTranslation();
   let navigate = useNavigate();
+
+  const fetchWishlist = async (id) => {
+    const response = await fetch(`${localhost}/api/UserWishlist/${id}`);
+    if (response.ok) {
+      const data = await response.json();
+      setWishlists(data.wishlist);
+    }
+  };
 
   const fetchData = async (email) => {
     const response = await fetch(`${localhost}/api/user`, {
@@ -23,6 +36,7 @@ export default function Profile() {
     if (response.status === 200) {
       const data = await response.json();
       setProfil(data.user);
+      fetchWishlist(data.user[0].id);
     }
   };
 
@@ -31,17 +45,32 @@ export default function Profile() {
       const email = localStorage.getItem("user");
       if (email) {
         fetchData(email);
+        setRefresh(false);
       } else {
         navigate("/authentication", { replace: true });
       }
     };
     fetchIsLog();
-  }, []);
+  }, [refresh]);
 
   const logout = () => {
     localStorage.removeItem("user");
     navigate("/", { replace: true });
   };
+
+  const deleteProduct = async (elem) => {
+    const response = await fetch(`${localhost}/api/wishlist/${elem.id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        setRefresh(true);
+      }
+    }
+  };
+
   return (
     <>
       <Header></Header>
@@ -61,6 +90,86 @@ export default function Profile() {
               {t("profilPage.logout")}
             </button>
           </div>
+          <br />
+          {wishlists.length > 0 &&
+            wishlists.map((elem, index) => (
+              <div key={index} className="ml-8">
+                <div className="flex flex-col m-8">
+                  <div className="flex">
+                    <img
+                      className="w-1/3 h-1/3 border border-grey"
+                      src={`${elem.product.images[0]}`}
+                      alt={elem.product.name}
+                    />
+                    <div className="flex flex-col ml-4">
+                      <h2 className="font-primary text-3xl text-gold">
+                        {elem.product.name}
+                      </h2>
+                      <span className="font-primary flex text-2xl p-2">
+                        Size:&nbsp;<h2>{elem.size}</h2>
+                      </span>
+                      <span className="font-primary flex text-2xl p-2">
+                        Material:&nbsp;<h2>{elem.product.material.name}</h2>
+                      </span>
+                      {elem.product.stone && (
+                        <span className="font-primary flex text-2xl p-2">
+                          Stone:&nbsp;
+                          <h2>{elem.product.stone.name}</h2>
+                        </span>
+                      )}
+                      {elem.product.promotion.id != 1 && (
+                        <span className="font-primary flex text-2xl p-2">
+                          Price:&nbsp;
+                          <h2 className="line-through">
+                            ${elem.product.price * elem.itemQty}&nbsp;
+                          </h2>
+                          <h2>
+                            $
+                            {elem.product.price * elem.itemQty -
+                              (
+                                elem.product.price *
+                                elem.itemQty *
+                                ((elem.product.promotion.id != 1
+                                  ? elem.product.promotion.pourcentage
+                                  : 0) /
+                                  100)
+                              ).toFixed()}
+                          </h2>
+                        </span>
+                      )}
+                      {elem.product.promotion.id == 1 && (
+                        <span className="font-primary flex text-2xl p-2">
+                          Price:&nbsp;
+                          <h2>{elem.product.price * elem.itemQty}€</h2>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-around text-2xl p-2 mt-6">
+                      <div>
+                        <button
+                          className="flex font-primary"
+                          onClick={() => deleteProduct(elem)}
+                        >
+                          <img className="mr-4" src={Delete} alt="" />
+                          Delete
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className="flex font-primary"
+                          // onClick={() => (elem)}
+                        >
+                          <img className="mr-4" src={Cart} alt="" />
+                          {t("specProduct.cart")}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
         <div className="w-2/5">
           <h1 className="mt-16 text-3xl	text-gold mb-2">
