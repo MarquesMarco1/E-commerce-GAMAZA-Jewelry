@@ -67,14 +67,12 @@ export default function Cart() {
   };
 
   const saveForLater = async (elem) => {
-    console.log(elem);
     const formData = {
       user: parseInt(elem.cart.user.id),
       product: parseInt(elem.product.id),
       quantity: parseInt(elem.itemQty),
       size: elem.size,
     };
-    console.log("eff", formData);
     const response = await fetch(`${localhost}/api/wishlist`, {
       method: "POST",
       headers: {
@@ -223,7 +221,7 @@ export default function Cart() {
     );
   };
 
-  console.log(cart);
+  // console.log(cart);
 
   return (
     <>

@@ -87,6 +87,15 @@ class WishlistController extends AbstractController
     {
         $entityManager->remove($wishlistItem);
         $entityManager->flush();
-        return $this->json(['success' => $wishlistItem], 200);
+        return $this->json(['success' => true], 200);
     }
+
+    #[Route('/api/UserWishlist/{id}', name: 'app_user_wishlist', methods: ['GET'])]
+    public function UserWishlist(EntityManagerInterface $entityManager, int $id)
+    {
+        $user = $entityManager->getRepository(User::class)->findOneBy(["id"=>$id]);
+        $wishlistId = $entityManager->getRepository(WishList::class)->findOneBy(["user"=>$user]);
+        $items = $entityManager->getRepository(WishlistItem::class)->findBy(["wishList"=>$wishlistId]);
+        return $this->json(["wishlist"=>$items], 200);
+    }    
 }
