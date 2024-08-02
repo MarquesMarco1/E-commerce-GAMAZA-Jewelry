@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import localhost from '../../config';
 import { useCart } from "../../CartContext";
 import {
@@ -9,27 +9,36 @@ import {
 export default function CheckoutForm(props) {
     const { state: cart, dispatch } = useCart([]);
     const [stripeData, setStripeData] = useState([])
-    const fetchClientSecret = useCallback(async () => {
-        // Create a Checkout Session
-        cart.map((item)=>{
-            // const formData = {
-            //     price: item.produ
-            // }
-            console.log(item)
-        })
-        const res = await fetch(`${localhost}/api/checkout`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            // body: JSON.stringify({ formData }),
+    const [clientSecret, setClientSecret] = useState('')
+
+    useEffect(() => {
+        const newStripeData = cart.map((item) => {
+            return {
+                price: item.product.keyStripe,
+                quantity: item.itemQty
+            };
         });
-        const data = await res.json();
-        return data.clientSecret;
-    }, []);
-
-    const options = { fetchClientSecret };
-
+        setStripeData(newStripeData);
+    }, [cart]);
+    
+    const fetchClientSecret = useCallback(async () => {
+            const res = await fetch(`${localhost}/api/checkout`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(stripeData),
+            });
+            const data = await res.json();
+            setClientSecret(data.clientSecret);
+    }, [stripeData]);
+    
+    useEffect(()=>{
+        fetchClientSecret();
+    }, [stripeData])
+    const options = { clientSecret };
+    
+    console.log(options)
     return (
         <div id="checkout">
             <EmbeddedCheckoutProvider
