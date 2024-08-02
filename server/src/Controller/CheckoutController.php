@@ -2,15 +2,26 @@
 
 namespace App\Controller;
 
+// use Stripe\Forwarding\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use \Stripe\StripeClient;
+use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends AbstractController
 {
     #[Route('/api/checkout', name: 'app_checkout', methods: ['POST'])]
-    public function index()
+    public function index(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $items = [];
+        foreach ($data as $item) {
+            $tmp = [
+                'price' => $item['price'],
+                'quantity' => $item['quantity']
+            ];
+            array_push($items, $tmp);
+        }
 
         $stripe = new StripeClient('sk_test_51NUbU2GrTRGUcbUFRaBZDqHBkr2o7xGKO1TMq1Nsphba1NviiZZqhbHjDt9tRrzU0u7eFc5kJAHDuNY06jvkfGDr00QfCClWJt');
 
@@ -18,13 +29,8 @@ class CheckoutController extends AbstractController
 
         $checkout_session = $stripe->checkout->sessions->create([
             'ui_mode' => 'embedded',
+            'line_items' => $items,
             'mode' => 'payment',
-            'line_items' => [
-                [
-                    'price' => 'price_1PizHGGrTRGUcbUF9R3WtnQ6',
-                    'quantity' => 2,
-                ]
-            ],
             'allow_promotion_codes' => true,
             'shipping_address_collection' => [
                 'allowed_countries' => ['FR'],
