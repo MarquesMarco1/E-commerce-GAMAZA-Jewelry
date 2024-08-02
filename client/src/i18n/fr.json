@@ -1,5 +1,5 @@
 {
-  "common": { "translated-text": "Tendence du mois" },
+  "common": { "translated-text": "Tendance du mois" },
   "promotion": { "translated-text": "Promotion du mois" },
   "specProduct": {
     "error": "Aucun produit trouvé",
@@ -135,6 +135,12 @@
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
   },
+  
+  "popup": {
+    "basket": "Résumé du Panier",
+    "articles": "Nombre d'articles : 4",
+    "totalPrice": "Prix total :  170€"
+  },
   "createPromotion": {
     "title": "Ajouter un produit en promotion",
     "pourcentage": "Remise à appliquer",
@@ -156,7 +162,15 @@
   "stockAlert": {
     "notify": "M'avertir du retour en stock",
     "email": "Entrez votre email",
-    "cancel": "Annuler",
-    "submit": "Envoyer"
+    "cancel": "Annuler"
+  },
+  "reviewPage": {
+    "title": "Évaluez ce produit",
+    "button": "Envoyer",
+    "filter": "Filtrer les avis",
+    "stars": "étoiles",
+    "date": "Filter par date",
+    "desc": "Filter par les avis les plus récents",
+    "asc": "Filter par les avis les plus ancien"
   }
 }

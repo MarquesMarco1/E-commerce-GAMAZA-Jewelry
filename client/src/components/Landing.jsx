@@ -4,10 +4,9 @@ import localhost from "../config";
 import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
 import Promotion from "./Promotion";
-import Search from "./Search";
 import { LanguageContext } from "../LanguageContext";
-
 import Footer from "./Footer";
+import Search from "./Search";
 
 export default function Accueil() {
   const { language } = useContext(LanguageContext);
@@ -40,7 +39,7 @@ export default function Accueil() {
             ))}
         </ul>
       </div>
-      <Search />
+        <Search />
       <Carousel />
       <Promotion />
       <Footer />

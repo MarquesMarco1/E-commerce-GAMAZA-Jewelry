@@ -106,8 +106,6 @@ export default function Admin() {
   const setUser = async (id) => {
     const response = await fetch(`${localhost}/api/setUser/${id}`);
     if (response.ok) {
-      // const data = await response.json();
-      // console.log(data);
       setRefresh(true);
     }
   };

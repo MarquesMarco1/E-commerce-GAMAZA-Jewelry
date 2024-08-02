@@ -80,7 +80,6 @@ export default function CreadArticle() {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         setAllCategorie(data.allCategory);
       }
 
@@ -131,8 +130,6 @@ export default function CreadArticle() {
 
     if (response.status === 200) {
       navigate("/admin", { replace: true });
-    } else {
-      console.log(response);
     }
   };
 
