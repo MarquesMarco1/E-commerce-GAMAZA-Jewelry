@@ -27,6 +27,8 @@ const SpecProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+  const [review, setReview] = useState("");
+  const [reviews, setReviews] = useState([]);
 
   const { language } = useContext(LanguageContext);
 
@@ -63,6 +65,9 @@ const SpecProduct = () => {
             }
             if (Array.isArray(productData.colors) && productData.colors.length > 0) {
               setSelectedColor(productData.colors[0]);
+            }
+            if (data.reviews) {
+              setReviews(data.reviews);
             }
           } else {
             setError(new Error("Product not found"));
@@ -241,6 +246,28 @@ const SpecProduct = () => {
     setIsOpen(false);
   };
 
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${localhost}/api/products/${id}/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ review }),
+      });
+      if (response.ok) {
+        const newReview = await response.json();
+        setReviews([...reviews, newReview]);
+        setReview("");
+      } else {
+        console.error("Failed to submit review");
+      }
+    } catch (err) {
+      console.error("Failed to submit review:", err);
+    }
+  };
+
   const [stockText, stockColorCode] = manageStock(product.stockQty);
 
   return (
@@ -403,6 +430,31 @@ const SpecProduct = () => {
           >
             {t('specProduct.cart')}
           </button>
+        </div>
+        <div className="mt-10">
+          <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
+          <form onSubmit={handleReviewSubmit}>
+            <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              rows="4"
+              placeholder="Write your review here"
+            />
+            <button
+              type="submit"
+              className="mt-2 bg-gold text-white px-4 py-2 rounded-lg"
+            >
+              Submit Review
+            </button>
+          </form>
+          <div className="mt-6 space-y-4">
+            {reviews.map((rev, index) => (
+              <div key={index} className="p-4 border border-gray-300 rounded-lg">
+                {rev.review}
+              </div>
+            ))}
+          </div>
         </div>
       </main>
       <Footer />
