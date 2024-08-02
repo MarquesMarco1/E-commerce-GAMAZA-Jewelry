@@ -16,22 +16,21 @@ class CheckoutController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $items = [];
         foreach ($data as $item) {
-            $tmp = [];
-            
+            $tmp = [
+                'price' => $item['price'],
+                'quantity' => $item['quantity']
+            ];
+            array_push($items, $tmp);
         }
+
         $stripe = new StripeClient('sk_test_51NUbU2GrTRGUcbUFRaBZDqHBkr2o7xGKO1TMq1Nsphba1NviiZZqhbHjDt9tRrzU0u7eFc5kJAHDuNY06jvkfGDr00QfCClWJt');
 
         $YOUR_DOMAIN = 'http://localhost:3000';
 
         $checkout_session = $stripe->checkout->sessions->create([
             'ui_mode' => 'embedded',
+            'line_items' => $items,
             'mode' => 'payment',
-            'line_items' => [
-                [
-                    'price' => 'price_1PjMbxGrTRGUcbUFMKaWTFhz',
-                    'quantity' => 2,
-                ]
-            ],
             'allow_promotion_codes' => true,
             'shipping_address_collection' => [
                 'allowed_countries' => ['FR'],
@@ -74,6 +73,6 @@ class CheckoutController extends AbstractController
             'return_url' => $YOUR_DOMAIN . '/return?session_id={CHECKOUT_SESSION_ID}',
         ]);
 
-        return $this->json(['clientSecret' => $checkout_session->client_secret, 'data' => $data], 200);
+        return $this->json(['clientSecret' => $checkout_session->client_secret], 200);
     }
 }

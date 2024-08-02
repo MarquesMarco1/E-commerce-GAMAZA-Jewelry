@@ -121,7 +121,7 @@ export default function Cart() {
                                         {elem.product.promotion.id == 1 && (
                                             <span className="font-primary flex text-2xl p-2">
                                                 Price:&nbsp;
-                                                <h2>${elem.product.price * elem.itemQty}</h2>
+                                                <h2>{elem.product.price * elem.itemQty}€</h2>
                                             </span>
                                         )}
                                         <span className="flex text-2xl p-2 font-primary">
@@ -185,21 +185,8 @@ export default function Cart() {
                                 Subtotal&nbsp;
                             </h3>
                             <h3 className="font-primary text-xl text-center m-2">
-                                {subTotal}
+                                {subTotal}€ 
                             </h3>
-                        </div>
-                        <div className="flex justify-between">
-                            <h3 className="font-primary text-xl text-center m-2">
-                                Shipping&nbsp;
-                            </h3>
-                            <h3 className="font-primary text-xl text-center m-2">3 $</h3>
-                        </div>
-                        <div className="border border-black my-4" />
-                        <div className="flex justify-between">
-                            <h3 className="font-primary text-2xl text-center m-2">
-                                Total&nbsp;
-                            </h3>
-                            <h3 className="font-primary text-2xl text-center m-2">1003 $</h3>
                         </div>
                         <div className="rounded-3xl bg-gold m-6 flex justify-center">
                             <button
