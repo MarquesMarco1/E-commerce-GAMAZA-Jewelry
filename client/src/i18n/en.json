@@ -135,11 +135,12 @@
   "editUser": {
     "title": "Edit a user"
   },
+  
+  "popup": {
+    "basket": "Shopping basket",
+    "articles": "Number of articles: 4",
+    "totalPrice": "Total price: €170"
 
-  "cartPopup": {
-    "Shopping basket summary": "Shopping basket summary",
-    "Number of articles: 4": "Number of articles: 4",
-    "Total price: €170": "Total price: €170"
   },
   "createPromotion": {
     "title": " Add an promotion",

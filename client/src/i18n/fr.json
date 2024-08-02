@@ -135,11 +135,11 @@
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
   },
-
-  "cartPopup": {
-    "Shopping basket summary": "Résumé du Panier",
-    "Number of articles: 4": "Nombre d'articles : 4",
-    "Total price: €170": "Prix total :  170€"
+  
+  "popup": {
+    "basket": "Résumé du Panier",
+    "articles": "Nombre d'articles : 4",
+    "totalPrice": "Prix total :  170€"
   },
   "createPromotion": {
     "title": "Ajouter un produit en promotion",
