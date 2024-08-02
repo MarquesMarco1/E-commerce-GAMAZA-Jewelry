@@ -28,7 +28,7 @@ export default function Accueil() {
   return (
     <div>
       <Header />
-      <div className="mt-20 flex flex-col items-center justify-center">
+      <div className="mt-20 flex flex-col items-center justify-center dark:bg-dark-purple bg-white">
         <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
           {category &&
             category.map((elem) => (
