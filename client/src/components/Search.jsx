@@ -2,6 +2,11 @@ import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
+<<<<<<< Updated upstream
+=======
+import Autocomplete from "./Autocomplete";
+import { useNavigate } from 'react-router-dom';
+>>>>>>> Stashed changes
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -14,6 +19,7 @@ export default function Search() {
   const [isSearching, setIsSearching] = useState(false);
 
   const { language } = useContext(LanguageContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -49,6 +55,9 @@ export default function Search() {
 
     setTimeout(() => {
       setIsSearching(false);
+      if(searchResults.length === 1) {
+        navigate(`/product/${searchResults[0].id}`)
+      }
     }, 500);
   };
 

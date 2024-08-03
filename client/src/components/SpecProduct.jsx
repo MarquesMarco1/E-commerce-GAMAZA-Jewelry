@@ -128,7 +128,7 @@ const SpecProduct = () => {
   }
 
   if (!product) {
-    return <div className="text-center py-4">{t("specProduct.error")}</div>;
+    return <div className="text-center text-red-500 py-4">{t("specProduct.error")}</div>;
   }
 
   const manageStock = (stockQty) => {

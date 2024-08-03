@@ -17,7 +17,7 @@ export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { id } = useParams();
+  const { id } = useParams(); 
   const { t } = useTranslation();
   
   const { language } = useContext(LanguageContext);
@@ -75,17 +75,17 @@ export default function CategoryPage() {
   return (
     <>
       <Header />
-      <ul className="flex space-x-2 p-4">
+      <ul className="flex flex-wrap space-x-2 p-4">
         <li>
           <Link to={`/`}>{t('categoryPage.homepage')}</Link>
         </li>
         <li>/</li>
         {name && <li>{name}</li>}
       </ul>
-      <h1 className="text-gold text-center text-5xl mb-9 font-primary">
+      <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-primary">
         {name}
       </h1>
-      <ul className="grid grid-cols-3 gap-6 mx-20 mb-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4 md:mx-20 mb-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((elem) => {
             const [stockText, stockColorCode] = manageStock(elem.stockQty);
@@ -121,7 +121,7 @@ export default function CategoryPage() {
           );
         })
         ) : (
-          <p className="col-span-3 text-center">{t('categoryPage.error')}</p>
+          <p className="col-span-1 sm:col-span-2 md:col-span-3 text-center">{t('categoryPage.error')}</p>
         )}
       </ul>
       <div className="flex justify-center space-x-2 mb-8">
