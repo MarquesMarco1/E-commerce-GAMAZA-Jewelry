@@ -13,7 +13,7 @@ const cartReducer = (state, action) => {
       if (existingItem) {
         return state.map((item) =>
           item.id === action.payload.id
-            ? { ...item, itemQty: item.itemQty + action.payload.itemQty }
+            ? { ...item, itemQty: action.payload.itemQty }
             : item
         );
       } else {

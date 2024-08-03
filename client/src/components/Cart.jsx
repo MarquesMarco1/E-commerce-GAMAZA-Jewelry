@@ -64,11 +64,8 @@ export default function Cart() {
     });
 
     if (response.ok) {
-      const data = await response.json();
-
-      if (data.sucess) {
-        dispatch({ type: "REMOVE_ITEM", payload: item });
-      }
+      // const data = await response.json();
+      dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
 
