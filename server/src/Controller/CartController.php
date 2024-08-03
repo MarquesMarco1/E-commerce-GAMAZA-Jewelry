@@ -39,18 +39,25 @@ class CartController extends AbstractController
         $cartId = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user->getId()]);
         $productId = $entityManager->getRepository(Product::class)->findOneBy(["id"=>$formData["product"]]);
         if($cartId !== null){
-            $cartItem = new CartItem;
-            $cartItem->setCart($cartId);
-            $cartItem->setProduct($productId);
-            $cartItem->setItemQty($formData["quantity"]);
-            $cartItem->setSize($formData["size"]);
-            $now = new DateTime();
-            $now->format("Y-m-d H:i:s");
-            $cartItem->setLastUpdated($now);
-            $entityManager->persist($cartItem);
-            $entityManager->flush();
-            
-            return $this->json(["success"=>$cartItem], 200);
+            $cart_item = $entityManager->getRepository(CartItem::class)->findOneBy(["product"=>$formData["product"], "cart"=>$cartId->getId(), "size"=>$formData["size"]]);
+            if($cart_item){
+                $cart_item->setItemQty($cart_item->getItemQty()+ intval($formData["quantity"]));
+                $entityManager->persist($cart_item);
+                $entityManager->flush();
+                return $this->json(["success"=>$cart_item], 200);
+            }else{
+                $cartItem = new CartItem;
+                $cartItem->setCart($cartId);
+                $cartItem->setProduct($productId);
+                $cartItem->setItemQty($formData["quantity"]);
+                $cartItem->setSize($formData["size"]);
+                $now = new DateTime();
+                $now->format("Y-m-d H:i:s");
+                $cartItem->setLastUpdated($now);
+                $entityManager->persist($cartItem);
+                $entityManager->flush();
+                return $this->json(["success"=>$cartItem], 200);
+            }            
         }else{
             $cart = new Cart;
             $cart->setUser($user);
