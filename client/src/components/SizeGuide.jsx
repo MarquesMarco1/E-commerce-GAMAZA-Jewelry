@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import { useCart } from "../CartContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
@@ -12,12 +13,14 @@ export default function SizeGuide(data) {
   const [quantity, setQuantity] = useState(1);
   const [id, setId] = useState("");
   const { state: cart, dispatch } = useCart([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      // console.log(data.data);
       setId(data.data.id);
+
       setCategory(data.data.category.name);
+
       switch (data.data.category.name) {
         case "Colliers":
           const response_sizeNecklaces = await fetch(
@@ -28,6 +31,7 @@ export default function SizeGuide(data) {
             setSizeGuide(data.sizeNecklaces);
           }
           break;
+
         case "Alliances":
         case "Bagues":
           const response_rings = await fetch(`${localhost}/api/sizeRings`);
@@ -36,6 +40,7 @@ export default function SizeGuide(data) {
             setSizeGuide(data.sizeRings);
           }
           break;
+
         case "Bracelets":
           const response_bracelets = await fetch(
             `${localhost}/api/sizeBracelets`
@@ -45,6 +50,7 @@ export default function SizeGuide(data) {
             setSizeGuide(data.sizeBracelets);
           }
           break;
+
         default:
           setSizeGuide([]);
       }
@@ -67,6 +73,7 @@ export default function SizeGuide(data) {
       size: selectedSize,
       user: localStorage.getItem("user"),
     };
+
     const response = await fetch(`${localhost}/api/cartItem`, {
       method: "POST",
       headers: {
@@ -74,9 +81,11 @@ export default function SizeGuide(data) {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.ok) {
       const data = await response.json();
       dispatch({ type: "ADD_ITEM", payload: data.success });
+      navigate("/", { replace: true });
     }
   };
 

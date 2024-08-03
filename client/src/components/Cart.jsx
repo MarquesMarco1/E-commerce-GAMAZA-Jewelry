@@ -59,7 +59,14 @@ export default function Cart() {
   };
 
   const deleteProduct = async (item) => {
-    dispatch({ type: "REMOVE_ITEM", payload: item });
+    const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      // const data = await response.json();
+      dispatch({ type: "REMOVE_ITEM", payload: item });
+    }
   };
 
   const checkout = () => {
@@ -73,6 +80,7 @@ export default function Cart() {
       quantity: parseInt(elem.itemQty),
       size: elem.size,
     };
+
     const response = await fetch(`${localhost}/api/wishlist`, {
       method: "POST",
       headers: {
@@ -80,8 +88,10 @@ export default function Cart() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.ok) {
       const data = await response.json();
+
       if (data.sucess) {
         dispatch({ type: "REMOVE_ITEM", payload: elem });
       }
