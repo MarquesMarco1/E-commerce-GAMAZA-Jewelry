@@ -19,6 +19,17 @@ class CartItemRepository extends ServiceEntityRepository
 //    /**
 //     * @return CartItem[] Returns an array of CartItem objects
 //     */
+    public function findOneByCartAndProduct($cartId, $productId){
+        return $this->createQueryBuilder('c')
+                    ->andWhere('c.cart = :cartId')
+                    ->setParameter('cartId', $cartId)
+                    ->andWhere('c.product = :productId')
+                    ->setParameter('productId', $productId)
+                    ->getQuery()
+                    ->getResult()
+                ;
+        // return ["cart"=>$cartId, "product"=>$productId];
+    }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('c')

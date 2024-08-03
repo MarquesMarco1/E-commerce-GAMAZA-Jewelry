@@ -50,7 +50,7 @@ export default function Promotion() {
                         : elem.descriptionEn}
                     </p>
                     <p className="font-bold font-primary text-black">
-                      <span className=" line-through">${elem.price}</span>{" "}
+                      <span className="line-through">${elem.price}</span>{" "}
                       <span>
                         $
                         {elem.price -

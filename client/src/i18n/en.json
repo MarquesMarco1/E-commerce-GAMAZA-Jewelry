@@ -135,6 +135,13 @@
   "editUser": {
     "title": "Edit a user"
   },
+  
+  "popup": {
+    "basket": "Shopping basket",
+    "articles": "Number of articles: 4",
+    "totalPrice": "Total price: €170"
+
+  },
   "createPromotion": {
     "title": " Add an promotion",
     "pourcentage": "Discount to apply",
@@ -158,5 +165,14 @@
     "email": "Enter your email",
     "cancel": "Cancel",
     "submit": "Submit"
+  },
+  "reviewPage": {
+    "title": "Rate this product",
+    "button": "Send",
+    "filter": "Filter reviews",
+    "stars": "stars",
+    "date": "Filter by date",
+    "desc": "Filter by most recent reviews",
+    "asc": "Filter by oldest reviews"
   }
 }

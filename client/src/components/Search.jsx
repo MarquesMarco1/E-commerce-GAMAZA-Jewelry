@@ -2,11 +2,9 @@ import localhost from "../config";
 import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
-<<<<<<< Updated upstream
-=======
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from 'react-router-dom';
->>>>>>> Stashed changes
+import Autocomplete from "./Autocomplete";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -17,7 +15,7 @@ export default function Search() {
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
-
+  const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
 
@@ -37,6 +35,9 @@ export default function Search() {
         if (data.product && data.product.length > 0) {
           setProduct(data.product);
           setCategories(data.category);
+          const combinedSuggestions = [...data.product];
+          setSuggestions(combinedSuggestions);
+          // console.log(combinedSuggestions)
         } else {
           setError(new Error("Product not found"));
         }
@@ -66,50 +67,52 @@ export default function Search() {
     // setIsSearching(false);
     let list = [];
 
-    if (language == "FR") {
-      if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
+    if (language === "FR") {
+      if (categoryName === "Toutes les catégories" && productName === "") {
+        product.forEach((elem) => {
           list.push(elem);
         });
       } else {
-        if (categoryName == "All Categories") {
+        if (categoryName == "Toutes les catégories") {
           let result = product.filter((elem) =>
             elem.name.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         } else {
           let result = product.filter(
             (elem) =>
               elem.category.name == categoryName &&
               elem.name.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         }
       }
-      setSearchResults(list[0]);
+      setSearchResults(list);
     } else {
       if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
+        product.forEach((elem) => {
           list.push(elem);
         });
-      } else {
-        if (categoryName == "All Categories") {
+      } else if (categoryName == "All Categories") {
           let result = product.filter((elem) =>
             elem.nameEn.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         } else {
           let result = product.filter(
             (elem) =>
               elem.category.nameEn == categoryName &&
               elem.nameEn.toLowerCase().includes(productName.toLowerCase())
           );
-          list.push(result);
+          list.push(...result);
         }
       }
-      setSearchResults(list[0]);
-    }
+      setSearchResults(list);
   };
+
+  const stringSuggestions = suggestions.map(suggestion => 
+    typeof suggestion === 'object' ?  suggestion : {name: suggestion, image: '', prix: ''}
+  );
 
   if (error)
     return (
@@ -127,12 +130,8 @@ export default function Search() {
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
         <div className="flex p-3 w-full md:w-auto">
-          <input
-            type="text"
-            placeholder={t("search.searchBar")}
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            className="w-full md:w-80 p-2 border border-gold rounded-md font-primary mr-4"
+            <Autocomplete
+              suggestions={stringSuggestions}
           />
           <button
             type="submit"
@@ -180,11 +179,12 @@ export default function Search() {
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
-            value="All Categories"
+            value={language === 'FR' ? 'Toutes les catégories': 'All categories'}
             className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple"
           >
             {t("search.select")}
           </option>
+
           {categories.length > 0 &&
             categories.map((elem) => (
               <option
