@@ -23,9 +23,16 @@ class WishlistController extends AbstractController
     {        
         $data = json_decode($request->getContent(), true);
         $formData = $data["formData"];
-        $user = $entityManager->getRepository(User::class)->findOneBy(["id"=>$formData["user"]]);
+
+        if(is_string($formData["user"])) {
+            $user = $entityManager->getRepository(User::class)->findOneBy(["email"=>$formData["user"]]);
+        } else {
+            $user = $entityManager->getRepository(User::class)->findOneBy(["id"=>$formData["user"]]);
+        }
+
         $wishlistId = $entityManager->getRepository(WishList::class)->findOneBy(["user"=>$user]);
         $productId = $entityManager->getRepository(Product::class)->findOneBy(["id"=>$formData["product"]]);
+
         if($wishlistId !== null){
             $wishlistItem = new WishlistItem;
             $wishlistItem->setWishList($wishlistId);
@@ -39,6 +46,7 @@ class WishlistController extends AbstractController
             $entityManager->flush();
 
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user]);
+
             if($cart !== null){
                 $cart_item = $entityManager->getRepository(CartItem::class)->findOneByCartAndProduct($cart->getId(), $formData["product"]) ;
                 $entityManager->remove($cart_item[0]);
@@ -66,6 +74,7 @@ class WishlistController extends AbstractController
             $entityManager->flush();
 
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user]);
+            
             if($cart !== null){
                 $cart_item = $entityManager->getRepository(CartItem::class)->findOneByCartAndProduct($cart->getId(), $formData["product"]) ;
                 $entityManager->remove($cart_item[0]);

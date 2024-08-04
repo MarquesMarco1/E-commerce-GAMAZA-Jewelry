@@ -7,11 +7,13 @@ import ManageCommand from "./ManageCommand";
 import { useTranslation } from "react-i18next";
 import Delete from "../../assets/delete.svg";
 import Cart from "../../assets/cart.svg";
+import { useCart } from "../../CartContext";
 
 export default function Profile() {
   const [profil, setProfil] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const { state: cart, dispatch } = useCart([]);
 
   const { t } = useTranslation();
   let navigate = useNavigate();
@@ -71,6 +73,32 @@ export default function Profile() {
     }
   };
 
+  const handleAddToCart = async (elem) => {
+    console.log('elem',elem)
+    const formData = {
+      product: parseInt(elem.product.id),
+      quantity: parseInt(elem.itemQty),
+      size: elem.size,
+      user: localStorage.getItem("user"),
+    };
+    console.log('formData',formData)
+    const response = await fetch(`${localhost}/api/cartItem`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({ type: "ADD_ITEM", payload: data.success });
+      navigate("/", { replace: true });
+    }
+
+    deleteProduct(elem);
+  };
+
   return (
     <>
     <div className="dark:bg-dark-mode-purple">
@@ -91,7 +119,11 @@ export default function Profile() {
               {t("profilPage.logout")}
             </button>
           </div>
-          <br />
+          <h1 className="mt-16 text-3xl	text-gold mb-2">
+            My wishlist
+          </h1>
+          <div className="border border-gray-400	w-4/4	"></div>
+          <br></br>
           {wishlists.length > 0 &&
             wishlists.map((elem, index) => (
               <div key={index} className="ml-8">
@@ -160,7 +192,7 @@ export default function Profile() {
                       <div>
                         <button
                           className="flex font-primary"
-                          // onClick={() => (elem)}
+                          onClick={()=>handleAddToCart(elem)}
                         >
                           <img className="mr-4" src={Cart} alt="" />
                           {t("specProduct.cart")}
