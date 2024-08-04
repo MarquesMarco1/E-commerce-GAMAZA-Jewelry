@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from 'react-router-dom';
-import Autocomplete from "./Autocomplete";
+
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -17,7 +17,7 @@ export default function Search() {
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,6 +37,7 @@ export default function Search() {
           setCategories(data.category);
           const combinedSuggestions = [...data.product];
           setSuggestions(combinedSuggestions);
+          // setProductName(data.product.name);
           // console.log(combinedSuggestions)
         } else {
           setError(new Error("Product not found"));
@@ -56,75 +57,121 @@ export default function Search() {
 
     setTimeout(() => {
       setIsSearching(false);
-      if(searchResults.length === 1) {
-        navigate(`/product/${searchResults[0].id}`)
-      }
+      // if(searchResults.length === 1) {
+        // navigate(`/product/${searchResults[0].id}`)
+      // }
     }, 500);
   };
 
-  const sortResults = () => {
-    // Handle Logic //
-    // setIsSearching(false);
-    let list = [];
 
-    if (language === "FR") {
-      if (categoryName === "Toutes les catégories" && productName === "") {
-        product.forEach((elem) => {
-          list.push(elem);
-        });
+//   const sortResults = () => {
+//     // Handle Logic //
+//     let list = [];
+
+//     if (language === "FR") {
+//       // Recherche par toutes les catégories //
+//         if (productName === '' && categoryName === 'Toutes les catégories') {
+//             list = [...product];
+//         // Recherche par nom de produits //
+//           } else if (productName !== '' && categoryName === 'Toutes les catégories') {
+//             list = product.filter((elem) => 
+//               elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+//           );
+//           // Recherche par nom et par catégorie //
+//         } else if (productName !== '' && categoryName !== 'Toutes les catégories') {
+//           list = product.filter((elem) => 
+//             elem.category.name == categoryName &&
+//           elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())  
+//         );
+//         // Recherche par catégorie //  
+//       } else {
+//         list = product.filter((elem) => 
+//           elem.category.name == categoryName
+//       );
+//     }   
+//     // ENGLISH //
+//   } else {
+//     if (productName === '' && categoryName === 'All Categories') {
+//       list = [...product];
+//       // Recherche par nom de produits //
+//     } else if (productName !== '' && categoryName === 'All Categories') {
+//       console.log('product name:', productName);
+//       list = product.filter((elem) => 
+//         elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+//     );
+//     // Recherche par nom et par catégorie //
+//   } else if (productName !== '' && categoryName !== 'All Categories') {
+//     list = product.filter((elem) => 
+//             elem.category.nameEn == categoryName &&
+//     elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())  
+//   );
+//   // Recherche par catégorie //  
+// } else {
+//   list = product.filter((elem) => 
+//               elem.category.nameEn == categoryName
+// );
+// }
+// }
+// setSearchResults(list);
+// } 
+
+const sortResults = () => {
+  let list = [];
+
+  if (language === "FR") {
+    if (categoryName === "Toutes les catégories") {
+      if (productName === "") {
+        list = [...product];
       } else {
-        if (categoryName == "Toutes les catégories") {
-          let result = product.filter((elem) =>
-            elem.name.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(...result);
-        } else {
-          let result = product.filter(
-            (elem) =>
-              elem.category.name == categoryName &&
-              elem.name.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(...result);
-        }
+        list = product.filter((elem) =>
+          elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+        );
       }
-      setSearchResults(list);
     } else {
-      if (categoryName === "All Categories" && productName === "") {
-        product.forEach((elem) => {
-          list.push(elem);
-        });
-      } else if (categoryName == "All Categories") {
-          let result = product.filter((elem) =>
-            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(...result);
-        } else {
-          let result = product.filter(
-            (elem) =>
-              elem.category.nameEn == categoryName &&
-              elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(...result);
-        }
+      list = product.filter(
+        (elem) =>
+          elem.category.name === categoryName &&
+          elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+      );
+    }
+  } else {
+    if (categoryName === "All Categories") {
+      if (productName === "") {
+        list = [...product];
+      } else {
+        list = product.filter((elem) =>
+          elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+        );
       }
-      setSearchResults(list);
-  };
+    } else {
+      list = product.filter(
+        (elem) =>
+          elem.category.nameEn === categoryName &&
+          elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+      );
+    }
+  }
 
-  const stringSuggestions = suggestions.map(suggestion => 
-    typeof suggestion === 'object' ?  suggestion : {name: suggestion, image: '', prix: ''}
-  );
-
+  setSearchResults(list);
+  console.log('product name:', productName);
+  console.log("Filtered List:", list);
+};
+    
+const stringSuggestions = suggestions.map(suggestion => 
+    typeof suggestion === 'object' ?  suggestion : {name: suggestion.name, image: '', prix: ''}
+);
+  // co:nsole.log(`String Suggestions:`, stringSuggestions)
+  // console.log(`Suggestions:`, suggestions)
+  
   if (error)
     return (
-      <div className="text-center py-4 text-red-500">
+  <div className="text-center py-4 text-red-500">
         Error: {error.message}
       </div>
     );
-  if (!product)
-    return <div className="text-center py-4">{t("search.error")}</div>;
-
-  return (
-    <div className="p-5 bg-gray-100 rounded-lg shadow-md">
+    
+    return (
+      <div className="p-5 bg-gray-100 rounded-lg shadow-md">
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
@@ -132,7 +179,7 @@ export default function Search() {
         <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
             <Autocomplete
               suggestions={stringSuggestions}
-          />
+              />
           <button
             type="submit"
             className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300 dark:bg-gold"
@@ -197,6 +244,8 @@ export default function Search() {
             ))}
         </select>
       </form>
+
+      {/* Results  */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
         {searchResults.length > 0 &&
           searchResults.map((result) => (
