@@ -58,19 +58,19 @@ export default function Footer() {
             href="https://facebook.com"
             className="text-white hover:text-gray-400"
           >
-            <FaFacebook size={24} />
+            <FaFacebook size={24} color="#BF9553" />
           </a>
           <a
             href="https://twitter.com"
             className="text-white hover:text-gray-400"
           >
-            <FaTwitter size={24} />
+            <FaTwitter size={24} color="#BF9553"/>
           </a>
           <a
             href="https://instagram.com"
             className="text-white hover:text-gray-400"
           >
-            <FaInstagram size={24} />
+            <FaInstagram size={24} color="#BF9553" />
           </a>
         </div>
       </div>

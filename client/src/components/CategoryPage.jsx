@@ -74,8 +74,9 @@ export default function CategoryPage() {
 
   return (
     <>
+      <div className="bg-white dark:bg-dark-mode-purple">
       <Header />
-      <ul className="flex space-x-2 p-4">
+      <ul className="flex space-x-2 p-4 dark:text-gold">
         <li>
           <Link to={`/`}>{t('categoryPage.homepage')}</Link>
         </li>
@@ -90,7 +91,7 @@ export default function CategoryPage() {
           currentProducts.map((elem) => {
             const [stockText, stockColorCode] = manageStock(elem.stockQty);
             return (
-            <li key={elem.id} className="border border-gray-300 p-4 rounded-lg">
+            <li key={elem.id} className="border border-gray-300 p-4 rounded-lg dark:border-gold">
               <Link to={`/product/${elem.id}`}>
                 <img
                   className="w-full h-48 object-cover mb-4"
@@ -98,12 +99,12 @@ export default function CategoryPage() {
                   alt={language === "FR" ? elem.name : elem.nameEn}
                 />
                 
-                <p className="text-center font-primary">
+                <p className="text-center font-primary dark:text-gold">
                    {language === "FR" ? elem.name : elem.nameEn}
                 </p>
                 <div className="flex items-center">
                   <img className="w-6 h-6" src={stockColorCode} alt={stockText}/>
-                  <p className="text-left font-primary">{stockText}</p>
+                  <p className="text-left font-primary dark:text-gold">{stockText}</p>
                 </div>
                 {stockText === "Sold out" && (
                   <button
@@ -111,7 +112,7 @@ export default function CategoryPage() {
                       e.preventDefault();
                       handleStockAlert(elem.name);
                     }}
-                    className="text-grey-500 underline"
+                    className="text-grey-500 underline dark:text-white"
                     >
                       Notify me when back in stock
                     </button>
@@ -143,6 +144,7 @@ export default function CategoryPage() {
         onClose={() => setIsOpen(false)}
         onSubmit={handleSubmit}
       />
+      </div>
     </>
   );
 }

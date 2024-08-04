@@ -43,7 +43,7 @@ export default function Header() {
       </Link>
       <Switch/>
       <Lang />
-      <h1 className="text-gold font-primary font-bold font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
+      <h1 className="text-gold font-primary font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
         G.A.M.A.Z.A .Co
       </h1>
       <div className="flex flex-col space-x-4 md:flex-row items-center md:mr-24 space-y-4 md:space-y-0 md:space-x-8">
