@@ -17,7 +17,7 @@ export default function CategoryPage() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { id } = useParams();
+  const { id } = useParams(); 
   const { t } = useTranslation();
   
   const { language } = useContext(LanguageContext);
@@ -74,23 +74,24 @@ export default function CategoryPage() {
 
   return (
     <>
+      <div className="bg-white dark:bg-dark-mode-purple">
       <Header />
-      <ul className="flex space-x-2 p-4">
+      <ul className="flex flex-wrap space-x-2 p-4 dark:text-gold">
         <li>
           <Link to={`/`}>{t('categoryPage.homepage')}</Link>
         </li>
         <li>/</li>
         {name && <li>{name}</li>}
       </ul>
-      <h1 className="text-gold text-center text-5xl mb-9 font-primary">
+      <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-primary">
         {name}
       </h1>
-      <ul className="grid grid-cols-3 gap-6 mx-20 mb-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4 md:mx-20 mb-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((elem) => {
             const [stockText, stockColorCode] = manageStock(elem.stockQty);
             return (
-            <li key={elem.id} className="border border-gray-300 p-4 rounded-lg">
+            <li key={elem.id} className="border border-gray-300 p-4 rounded-lg dark:border-gold">
               <Link to={`/product/${elem.id}`}>
                 <img
                   className="w-full h-48 object-cover mb-4"
@@ -98,12 +99,12 @@ export default function CategoryPage() {
                   alt={language === "FR" ? elem.name : elem.nameEn}
                 />
                 
-                <p className="text-center font-primary">
+                <p className="text-center font-primary dark:text-gold">
                    {language === "FR" ? elem.name : elem.nameEn}
                 </p>
                 <div className="flex items-center">
                   <img className="w-6 h-6" src={stockColorCode} alt={stockText}/>
-                  <p className="text-left font-primary">{stockText}</p>
+                  <p className="text-left font-primary dark:text-gold">{stockText}</p>
                 </div>
                 {stockText === "Sold out" && (
                   <button
@@ -111,7 +112,7 @@ export default function CategoryPage() {
                       e.preventDefault();
                       handleStockAlert(elem.name);
                     }}
-                    className="text-grey-500 underline"
+                    className="text-grey-500 underline dark:text-white"
                     >
                       Notify me when back in stock
                     </button>
@@ -121,7 +122,7 @@ export default function CategoryPage() {
           );
         })
         ) : (
-          <p className="col-span-3 text-center">{t('categoryPage.error')}</p>
+          <p className="col-span-1 sm:col-span-2 md:col-span-3 text-center">{t('categoryPage.error')}</p>
         )}
       </ul>
       <div className="flex justify-center space-x-2 mb-8">
@@ -143,6 +144,7 @@ export default function CategoryPage() {
         onClose={() => setIsOpen(false)}
         onSubmit={handleSubmit}
       />
+      </div>
     </>
   );
 }

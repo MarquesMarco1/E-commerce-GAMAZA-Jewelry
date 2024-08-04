@@ -101,6 +101,7 @@ export default function Profile() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <div className="mr-24	ml-24	flex justify-between font-secondary">
         <div className="w-3/5	 mr-8">
@@ -112,7 +113,7 @@ export default function Profile() {
           <ManageProfil data={profil} />
           <div className="text-center">
             <button
-              className="rounded-lg bg-light-purple p-2.5 mt-2"
+              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
               onClick={() => logout()}
             >
               {t("profilPage.logout")}
@@ -207,10 +208,11 @@ export default function Profile() {
           <h1 className="mt-16 text-3xl	text-gold mb-2">
             {t("profilPage.command")}
           </h1>
-          <div className="border border-gray-400 w-4/4"></div>
+          <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
           <br></br>
           <ManageCommand />
         </div>
+      </div>
       </div>
     </>
   );

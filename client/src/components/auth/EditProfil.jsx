@@ -87,6 +87,7 @@ export default function EditProfil() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t('editProfil.title')}
@@ -216,6 +217,7 @@ export default function EditProfil() {
         </button>
       </form>
       <Footer></Footer>
+      </div>
     </>
   );
 }

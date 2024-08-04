@@ -3,6 +3,8 @@ import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
+import { useNavigate } from 'react-router-dom';
+import Autocomplete from "./Autocomplete";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -15,6 +17,7 @@ export default function Search() {
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -53,6 +56,9 @@ export default function Search() {
 
     setTimeout(() => {
       setIsSearching(false);
+      if(searchResults.length === 1) {
+        navigate(`/product/${searchResults[0].id}`)
+      }
     }, 500);
   };
 
@@ -123,13 +129,13 @@ export default function Search() {
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
-        <div className="flex p-3 w-full md:w-auto">
+        <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
             <Autocomplete
               suggestions={stringSuggestions}
           />
           <button
             type="submit"
-            className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300"
+            className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300 dark:bg-gold"
           >
             {t("search.button")}
           </button>
@@ -169,12 +175,12 @@ export default function Search() {
         </div>
         <select
           value={categoryName}
-          className="w-full md:w-auto p-2 font-primary border border-gold rounded-md"
+          className="w-full md:w-auto p-2 font-primary border border-gold rounded-md  dark:bg-dark-mode-light-purple dark:text-gold"
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
             value={language === 'FR' ? 'Toutes les catégories': 'All categories'}
-            className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple"
+            className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple dark:bg-gold dark:text-white dark:hover-bg-dark-mode-light-purple"
           >
             {t("search.select")}
           </option>

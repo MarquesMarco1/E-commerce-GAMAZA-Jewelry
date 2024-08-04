@@ -108,7 +108,7 @@ const Autocomplete = ({ suggestions }) => {
           <input
             type="text"
             // className="border border-gray-600 p-2 w-72"
-            className="w-full md:w-72 p-2 border border-gold rounded-md font-primary"
+            className="w-full md:w-72 p-2 border border-gold rounded-md font-primary bg-white dark:bg-dark-mode-light-purple dark:placeholder-gold"
             placeholder={t("search.searchBar")}
             onChange={onChange}
             onKeyDown={onKeyDown}

@@ -101,7 +101,7 @@ export default function EditCategory() {
 
         <label for="nom">{t("createCategory.nameFR")}</label>
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nom"
           id="nom"
@@ -161,7 +161,7 @@ export default function EditCategory() {
           onChange={(e) => setDescriptionEn(e.target.value)}
         ></textarea>
 
-        <button type="submit" id="submit">
+        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
           {t("editCategory.button")}
         </button>
       </form>
