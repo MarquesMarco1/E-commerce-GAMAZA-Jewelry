@@ -131,6 +131,7 @@ export default function Admin() {
   };
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <div className="mr-24	ml-24	">
         <NavBarAdmin></NavBarAdmin>
@@ -152,7 +153,7 @@ export default function Admin() {
             {t("adminPage.user")}
           </Link>
           <button
-            className="rounded-lg bg-light-purple opacity-20 p-2.5 mt-2"
+            className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
             onClick={() => addPromo()}
           >
             {t("adminPage.promotion")}
@@ -281,6 +282,7 @@ export default function Admin() {
       </div>
 
       <Footer></Footer>
+      </div>
     </>
   );
 }

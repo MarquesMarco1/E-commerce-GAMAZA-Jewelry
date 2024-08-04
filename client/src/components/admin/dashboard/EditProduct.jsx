@@ -321,7 +321,7 @@ export default function EditProduct() {
 
         <label for="stockQty">{t("createProduct.stock")}</label>
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="number"
           name="stockQty"
           id="stockQty"
@@ -357,7 +357,7 @@ export default function EditProduct() {
 
         {/* Submit Button */}
 
-        <button type="submit" id="submit">
+        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
           {t("editProduct.button")}
         </button>
       </form>

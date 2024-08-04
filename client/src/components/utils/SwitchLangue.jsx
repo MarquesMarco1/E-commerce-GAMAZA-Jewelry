@@ -15,7 +15,7 @@ const Lang = () => {
 
   return (
     <div>
-      <div>
+      <div className="dark:bg-dark-mode-purple dark:text-gold">
 {language == 'FR' && <select value={language} name="language" onChange={handleChangeLanguage}>
           <option value={Language.FR}>FR</option>
           <option value={Language.EN}>EN</option>

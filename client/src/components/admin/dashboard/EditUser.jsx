@@ -159,7 +159,7 @@ export default function EditUser() {
         {/* ZipCode */}
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="number"
           name="zipCode"
           id="zipCode"
@@ -208,7 +208,7 @@ export default function EditUser() {
           onChange={(e) => setPhone(e.target.value)}
         />
 
-        <button type="submit" id="submit">
+        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
           {t("editProfil.edit")}
         </button>
       </form>

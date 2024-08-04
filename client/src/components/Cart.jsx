@@ -58,7 +58,7 @@ export default function Cart() {
     const product_list = () => {
         return (
             <div className="flex">
-                <div>
+                <div className="dark:bg-dark-mode-purple">
                     {cart.map((elem, index) => (
                         <div key={index} className="ml-8">
                             <div className="flex flex-col m-8">
