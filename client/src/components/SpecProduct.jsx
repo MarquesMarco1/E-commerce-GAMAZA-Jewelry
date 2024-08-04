@@ -223,7 +223,6 @@ const SpecProduct = () => {
               )}
             </p>
             <div className="mb-4  dark:text-gold">
-              <SizeGuide data={product} />
             </div>
             <div className="mb-4  dark:text-gold">
               <label htmlFor="color" className="block text-lg font-primary">
