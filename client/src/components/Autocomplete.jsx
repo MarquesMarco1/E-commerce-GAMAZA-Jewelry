@@ -61,9 +61,9 @@ const Autocomplete = ({ suggestions }) => {
     let suggestionsListComponent;
     
     // console.log("showSuggestions:", showSuggestions);
-    // console.log("userInput:", userInput);
+    console.log("userInput:", userInput);
     // console.log("suggestions:", suggestions);
-    // console.log("filteredSuggestions:", filteredSuggestions);
+    console.log("filteredSuggestions:", filteredSuggestions);
 
     
     if (showSuggestions && userInput) {
