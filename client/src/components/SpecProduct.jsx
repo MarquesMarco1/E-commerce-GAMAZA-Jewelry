@@ -254,7 +254,7 @@ const SpecProduct = () => {
                 id="quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
+                className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple dark:text-gold"
               >
                 {[...Array(10).keys()].map((num) => (
                   <option key={num + 1} value={num + 1}>
