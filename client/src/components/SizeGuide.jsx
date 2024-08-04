@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import { useCart } from "../CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Save4later from "../assets/save4later.svg";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
@@ -11,13 +12,11 @@ export default function SizeGuide(data) {
   const [selectedSize, setSelectedSize] = useState("no size");
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState(1);
-  const [id, setId] = useState("");
   const { state: cart, dispatch } = useCart([]);
   let navigate = useNavigate();
-
+  const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
-      setId(data.data.id);
 
       setCategory(data.data.category.name);
 
@@ -73,7 +72,6 @@ export default function SizeGuide(data) {
       size: selectedSize,
       user: localStorage.getItem("user"),
     };
-
     const response = await fetch(`${localhost}/api/cartItem`, {
       method: "POST",
       headers: {
@@ -88,7 +86,23 @@ export default function SizeGuide(data) {
       navigate("/", { replace: true });
     }
   };
-
+  
+  const saveForLater = async () => {
+    const formData = {
+      product: parseInt(id),
+      quantity: parseInt(quantity),
+      size: selectedSize,
+      user: localStorage.getItem("user"),
+    };
+    await fetch(`${localhost}/api/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
+  };
+  
   return (
     <>
       {sizeGuide.length > 0 ? (
@@ -139,7 +153,15 @@ export default function SizeGuide(data) {
       >
         {t("specProduct.cart")}
       </button>
-
+      <div>
+        <button
+          className="flex font-primary"
+          onClick={saveForLater}
+        >
+          <img className="mr-4" src={Save4later} alt="" />
+          Save for later
+        </button>
+      </div>
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white p-4 max-w-lg max-h-full overflow-auto">

@@ -20,8 +20,6 @@ const SpecProduct = () => {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -79,12 +77,6 @@ const SpecProduct = () => {
             setSelectedImage(
               productData.images ? productData.images[0] : productData.image
             );
-            if (
-              Array.isArray(productData.colors) &&
-              productData.colors.length > 0
-            ) {
-              setSelectedColor(productData.colors[0]);
-            }
           } else {
             setError(new Error("Product not found"));
           }
@@ -98,14 +90,6 @@ const SpecProduct = () => {
 
     fetchProduct();
   }, [id, language]);
-
-  const handleAddToCart = () => {
-    console.log(quantity, id);
-    // if (product) {
-    //   // HANDLE BACK END CART LOGIC
-    //   console.log(`Added ${quantity} of ${product.name} to cart`);
-    // }
-  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -243,32 +227,7 @@ const SpecProduct = () => {
               </label>
               {allModele.length > 0 && <ModeleProduct data={allModele} />}
             </div>
-            {/* <div className="mb-4"> */}
             <SizeGuide data={product} />
-            {/* </div> */}
-            {/* <div className="mb-4">
-              <label htmlFor="quantity" className="block text-lg font-primary">
-                {t("specProduct.quantity")}:
-              </label>
-              <select
-                id="quantity"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-              >
-                {[...Array(10).keys()].map((num) => (
-                  <option key={num + 1} value={num + 1}>
-                    {num + 1}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-gold text-white px-4 py-2 rounded-lg"
-            >
-              {t("specProduct.cart")}
-            </button> */}
           </div>
         </div>
         <div className="mt-10 space-y-2">
