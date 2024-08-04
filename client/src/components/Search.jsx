@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from 'react-router-dom';
-import Autocomplete from "./Autocomplete";
+
 
 export default function Search() {
   const [product, setProduct] = useState([]);
