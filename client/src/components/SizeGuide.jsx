@@ -153,9 +153,9 @@ export default function SizeGuide(data) {
       >
         {t("specProduct.cart")}
       </button>
-      <div>
+      <div className="mt-6 flex justify-center items-center">
         <button
-          className="flex font-primary"
+          className="flex font-primary text-2xl"
           onClick={saveForLater}
         >
           <img className="mr-4" src={Save4later} alt="" />

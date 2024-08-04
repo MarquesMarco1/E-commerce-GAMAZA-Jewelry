@@ -54,10 +54,10 @@ export default function ReviewForm(data) {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <h1 className="dark:text-gold">{t("reviewPage.title")}</h1>
-        <div className="flex dark:text-gold">
+    <div className="flex flex-col justify-center items-center">
+      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
+        <h1 className="font-bold text-3xl m-6 font-primary ">{t("reviewPage.title")}</h1>
+        <div className="flex dark:text-gold m-4">
           {stars.map((elem) =>
             elem <= (hoveredStar || selectedStar) ? (
               <svg
@@ -104,6 +104,6 @@ export default function ReviewForm(data) {
       </form>
       <div className="border border-gray-300"></div>
       <Review data={{ reviews: reviews, id: id }} />
-    </>
+    </div>
   );
 }
