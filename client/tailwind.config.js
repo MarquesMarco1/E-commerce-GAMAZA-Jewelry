@@ -30,7 +30,6 @@ module.exports = {
       transitionProperty: {
         "width-height": "width, height",
       },
-
       transform: {
         "translate-20p": "translateX(20%)",
         "translate-100n": "translateX(-100%)",
@@ -42,6 +41,22 @@ module.exports = {
       zIndex: {
         10: "10",
         20: "20",
+      },
+      animation: {
+        sparkle: 'sparkle 0.3s ease-in-out',
+        'sparkle-reverse': 'sparkle-reverse 0.3s ease-in-out',
+      },
+      keyframes: {
+        sparkle: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.3)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        'sparkle-reverse': {
+          '0%': { transform: 'scale(1.3)' },
+          '50%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.3)' },
+        },
       },
     },
   },
