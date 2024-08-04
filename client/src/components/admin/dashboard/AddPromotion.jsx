@@ -146,6 +146,7 @@ export default function AddPromotion() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
 
       {/* form for filter */}
@@ -164,7 +165,7 @@ export default function AddPromotion() {
           />
           <button
             type="submit"
-            className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300"
+            className="p-3 md:px-4 bg-light-purple dark:bg-dark-mode-light-purple border border-black dark:border-gold text-black dark:text-gold rounded-md hover:bg-gold dark:hover:bg-white transition duration-300"
           >
             {t("search.button")}
           </button>
@@ -176,7 +177,7 @@ export default function AddPromotion() {
         >
           <option
             value="All Categories"
-            className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple"
+            className="text-gold font-primary bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple hover:bg-light-purple dark:hover:bg-white"
           >
             {t("search.select")}
           </option>
@@ -221,7 +222,7 @@ export default function AddPromotion() {
               searchResults.map((result) => (
                 <div
                   key={result.id}
-                  className="flex flex-col justify-between h-full bg-white border border-gold rounded-lg p-5 shadow-lg"
+                  className="flex flex-col justify-between h-full bg-white dark:bg-dark-mode-purple text-gold border border-gold rounded-lg p-5 shadow-lg"
                 >
                   <img
                     src={result.images}
@@ -231,7 +232,7 @@ export default function AddPromotion() {
                   <h3 className="font-primary text-gold text-2xl mt-4">
                     {language === "FR" ? result.name : result.nameEn}
                   </h3>
-                  <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300">
+                  <button className="mt-4 w-full bg-light-purple dark:bg-dark-mode-light-purple text-black border dark:text-gold border-black dark:border-gold py-2 rounded-lg hover:bg-gold dark:hover:bg-white transition duration-300">
                     {t("createPromotion.button")}
                   </button>
                 </div>
@@ -240,7 +241,7 @@ export default function AddPromotion() {
               products.map((elem) => (
                 <div
                   key={elem.id}
-                  className="flex flex-col justify-between h-full bg-white border border-gold rounded-lg p-5 shadow-lg"
+                  className="flex flex-col justify-between h-full bg-white dark:bg-dark-mode-light-purple text-gold border border-gold rounded-lg p-5 shadow-lg"
                 >
                   <img
                     src={elem.images}
@@ -251,7 +252,7 @@ export default function AddPromotion() {
                     {language === "FR" ? elem.name : elem.nameEn}
                   </h3>
                   <button
-                    className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300"
+                    className="mt-4 w-full bg-light-purple dark:bg-dark-mode-light-purple text-black dark:text-gold border border-black dark:border-gold py-2 rounded-lg hover:bg-gold transition dark:hover:bg-white duration-300"
                     onClick={() => setProductSelected(elem.id)}
                   >
                     {t("createPromotion.button")}
@@ -262,6 +263,7 @@ export default function AddPromotion() {
       </form>
       {error && <p>{error}</p>}
       <Footer></Footer>
+      </div>
     </>
   );
 }

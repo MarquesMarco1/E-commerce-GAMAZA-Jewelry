@@ -139,6 +139,7 @@ export default function CreadArticle() {
   };
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t("createProduct.title")}
@@ -150,7 +151,7 @@ export default function CreadArticle() {
         {/* Name */}
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nom"
           id="nom"
@@ -160,7 +161,7 @@ export default function CreadArticle() {
         />
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nom"
           id="nom"
@@ -172,7 +173,7 @@ export default function CreadArticle() {
         {/* Categories */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="cat"
           id="categorie"
           onChange={(e) => setCategory_id(e.target.value)}
@@ -189,7 +190,7 @@ export default function CreadArticle() {
         {/* Materials */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="material"
           id="material"
           onChange={(e) => setMaterial(e.target.value)}
@@ -206,7 +207,7 @@ export default function CreadArticle() {
         {/* Stones */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="stone"
           id="stone"
           onChange={(e) => setStone(e.target.value)}
@@ -222,7 +223,7 @@ export default function CreadArticle() {
 
         {/* Images */}
 
-        <div className="flex flex-col justify-start	 items-end mb-4">
+        <div className="flex flex-col justify-start	 items-end mb-4  dark:bg-dark-mode-light-purple dark:text-gold">
           <input
             className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl "
             type="text"
@@ -234,7 +235,7 @@ export default function CreadArticle() {
           />
 
           <button
-            className="rounded-lg bg-light-purple p-2.5 mt-1"
+            className="rounded-lg bg-light-purple dark:bg-gold text-gold dark:text-white p-2.5 mt-1"
             onClick={() => reset()}
           >
             {t("createProduct.buttonAdd")}
@@ -306,6 +307,7 @@ export default function CreadArticle() {
         </button>
       </form>
       <Footer></Footer>
+      </div>
     </>
   );
 }

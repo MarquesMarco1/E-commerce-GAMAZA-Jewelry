@@ -24,7 +24,7 @@ export default function ManageProfil(data) {
     }
   };
   return (
-    <div className="flex flex-col w-full	">
+    <div className="flex flex-col w-full dark:bg-dark-mode-light-purple text-gold	">
       {profil.length > 0 &&
         profil.map((elem) => (
           <ul className="m-2.5	border-2 rounded-2xl p-2.5	bg-gray-200	">

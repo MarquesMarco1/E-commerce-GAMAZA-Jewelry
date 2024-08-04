@@ -56,8 +56,8 @@ export default function ReviewForm(data) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <h1>{t("reviewPage.title")}</h1>
-        <div className="flex">
+        <h1 className="dark:text-gold">{t("reviewPage.title")}</h1>
+        <div className="flex dark:text-gold">
           {stars.map((elem) =>
             elem <= (hoveredStar || selectedStar) ? (
               <svg
@@ -97,10 +97,10 @@ export default function ReviewForm(data) {
           )}
         </div>
         <textarea
-          className="border border-solid border-slate-500 w-96 p-2.5 rounded-xl mb-4"
+          className="border border-solid border-slate-500 w-96 p-4 rounded-xl mb-4 dark:bg-dark-mode-light-purple dark:text-gold dark:border-gold"
           onChange={(e) => setReview(e.target.value)}
         ></textarea>
-        <button>{t("reviewPage.button")}</button>
+        <button className="dark:text-gold">{t("reviewPage.button")}</button>
       </form>
       <div className="border border-gray-300"></div>
       <Review data={{ reviews: reviews, id: id }} />

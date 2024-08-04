@@ -91,7 +91,7 @@ export default function SizeGuide(data) {
             id="size"
             value={selectedSize}
             onChange={(e) => setSelectedSize(e.target.value)}
-            className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
+            className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple dark:text-gold"
           >
             {sizeGuide.map((elem) => (
               <option value={elem.name}>{elem.name}</option>
@@ -133,7 +133,7 @@ export default function SizeGuide(data) {
 
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white p-4 max-w-lg max-h-full overflow-auto">
+          <div className="relative bg-white dark:bg-dark-mode-light-purple p-4 max-w-lg max-h-full overflow-auto">
             <button
               onClick={closeSizeGuide}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"

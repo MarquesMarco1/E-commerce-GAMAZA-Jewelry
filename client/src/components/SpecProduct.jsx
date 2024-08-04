@@ -159,9 +159,10 @@ const SpecProduct = () => {
 
   return (
     <>
+    <div className="bg-white dark:bg-dark-mode-purple">
       <Header />
       <nav className="bg-gray-200 py-2 px-6">
-        <ul className="flex space-x-4">
+        <ul className="flex space-x-4  dark:text-gold">
           <li>
             <Link to={`/`}>{t("specProduct.homepage")}</Link>
           </li>
@@ -178,7 +179,7 @@ const SpecProduct = () => {
               <li>/</li>
             </>
           )}
-          <li className="font-semibold font-primary">
+          <li className="font-semibold font-primary dark:text-gold">
             {language === "FR" ? product.name : product.nameEn}
           </li>
         </ul>
@@ -219,15 +220,15 @@ const SpecProduct = () => {
             </div>
           </div>
           <div className="w-1/3">
-            <h1 className="text-gold text-5xl mb-6 font-primary">
+            <h1 className="dark:text-gold text-5xl mb-6 font-primary">
               {language === "FR" ? product.name : product.nameEn}
             </h1>
 
             <p className="text-2xl mb-4">
               {product.promotion.id !== 1 ? (
                 <>
-                  <span className=" line-through">${product.price}</span>{" "}
-                  <span>
+                  <span className=" dark:text-gold line-through">${product.price}</span>{" "}
+                  <span className=" dark:text-gold">
                     $
                     {product.price -
                       (product.price * product.promotion.pourcentage) / 100}
@@ -237,16 +238,16 @@ const SpecProduct = () => {
                 <span>${product.price}</span>
               )}
             </p>
-            <div className="mb-4">
+            <div className="mb-4  dark:text-gold">
+              <SizeGuide data={product} />
+            </div>
+            <div className="mb-4  dark:text-gold">
               <label htmlFor="color" className="block text-lg font-primary">
                 {t("specProduct.material")}
               </label>
               {allModele.length > 0 && <ModeleProduct data={allModele} />}
             </div>
-            {/* <div className="mb-4"> */}
-            <SizeGuide data={product} />
-            {/* </div> */}
-            {/* <div className="mb-4">
+            <div className="mb-4  dark:text-gold">
               <label htmlFor="quantity" className="block text-lg font-primary">
                 {t("specProduct.quantity")}:
               </label>
@@ -254,7 +255,7 @@ const SpecProduct = () => {
                 id="quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
-                className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
+                className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple dark:text-gold"
               >
                 {[...Array(10).keys()].map((num) => (
                   <option key={num + 1} value={num + 1}>
@@ -268,10 +269,10 @@ const SpecProduct = () => {
               className="w-full bg-gold text-white px-4 py-2 rounded-lg"
             >
               {t("specProduct.cart")}
-            </button> */}
+            </button> 
           </div>
         </div>
-        <div className="mt-10 space-y-2">
+        {/* <div className="mt-10 space-y-2">
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
             {t("specProduct.category")}
             {language === "FR"
@@ -301,8 +302,8 @@ const SpecProduct = () => {
           <div className="border-b-2 border-gray-300"></div>
           <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
             {t("specProduct.stockQty")} {product.stockQty}
-          </p>
-        </div>
+          </p> */}
+        {/* </div> */}
       </main>
       <ReviewForm id={id} />
 
@@ -335,6 +336,7 @@ const SpecProduct = () => {
           </div>
         </div>
       )}
+      </div>
     </>
   );
 };

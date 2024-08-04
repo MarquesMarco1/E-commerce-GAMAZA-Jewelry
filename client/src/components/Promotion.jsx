@@ -23,7 +23,7 @@ export default function Promotion() {
 
   return (
     <>
-      <h1 className="text-black text-3xl md:text-5xl font-primary m-8 text-center">
+      <h1 className="text-black dark:text-gold text-3xl md:text-5xl font-primary m-8 text-center">
         {t("promotion.translated-text")}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
@@ -57,7 +57,7 @@ export default function Promotion() {
                           (elem.price * elem.promotion.pourcentage) / 100}
                       </span>
                     </p>
-                    <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300">
+                    <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300 dark:bg-dark-mode-light-purple dark:text-gold ">
                       {t("search.cart")}
                     </button>
                   </div>

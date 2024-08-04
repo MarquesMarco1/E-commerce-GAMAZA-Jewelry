@@ -48,7 +48,7 @@ export default function Review(data) {
     <>
       <div className="mb-4">
         <h2>{t("reviewPage.filter")}</h2>
-        <select
+        <select className="dark:bg-dark-mode-light-purple dark:text-gold"
           onChange={(e) => setNote(e.target.value)}
           onClick={handleSortNote}
         >
@@ -59,7 +59,7 @@ export default function Review(data) {
             </option>
           ))}
         </select>
-        <select onClick={(e) => handleSort(e.target.value)}>
+        <select className="dark:bg-dark-mode-light-purple dark:text-gold"onClick={(e) => handleSort(e.target.value)}>
           <option value=""> {t("reviewPage.date")}</option>
           <option value="desc">{t("reviewPage.desc")}</option>
           <option value="acs">{t("reviewPage.asc")}</option>
@@ -67,7 +67,7 @@ export default function Review(data) {
       </div>
       {reviews.length > 0 &&
         reviews.map((elem) => (
-          <ul className="mb-4">
+          <ul className="mb-4 dark:text-gold">
             <li>
               {elem.stars} {t("reviewPage.stars")}
             </li>
