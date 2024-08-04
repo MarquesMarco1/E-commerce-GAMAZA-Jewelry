@@ -138,8 +138,8 @@
   
   "popup": {
     "basket": "Résumé du Panier",
-    "articles": "Nombre d'articles : 4",
-    "totalPrice": "Prix total :  170€"
+    "articles": "Nombre d'articles :",
+    "subPrice": "Prix total :"
   },
   "createPromotion": {
     "title": "Ajouter un produit en promotion",

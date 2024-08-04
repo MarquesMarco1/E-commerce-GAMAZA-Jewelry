@@ -138,8 +138,8 @@
   
   "popup": {
     "basket": "Shopping basket",
-    "articles": "Number of articles: 4",
-    "totalPrice": "Total price: €170"
+    "articles": "Number of articles :",
+    "subPrice": "Total price :"
 
   },
   "createPromotion": {
