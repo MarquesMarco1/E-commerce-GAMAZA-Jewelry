@@ -57,9 +57,6 @@ export default function Promotion() {
                           (elem.price * elem.promotion.pourcentage) / 100}
                       </span>
                     </p>
-                    <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300 dark:bg-dark-mode-light-purple dark:text-gold ">
-                      {t("search.cart")}
-                    </button>
                   </div>
                 </Link>
               )

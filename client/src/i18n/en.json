@@ -135,12 +135,11 @@
   "editUser": {
     "title": "Edit a user"
   },
-  
+
   "popup": {
     "basket": "Shopping basket",
     "articles": "Number of articles :",
     "subPrice": "Total price :"
-
   },
   "createPromotion": {
     "title": " Add an promotion",
@@ -149,7 +148,7 @@
     "button": "Add"
   },
   "sizeGuidePage": {
-    "tailleChoose": "Select my size :",
+    "tailleChoose": "Size:",
     "button": "Size guide",
     "guideRings": "Ring/wedding ring size guide (EU)",
     "taille": "Size (EU)",
