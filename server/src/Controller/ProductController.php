@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Middleware\User;
+use App\Repository\UserRepository;
 use DateTime;
 
 class ProductController extends AbstractController
@@ -125,7 +127,7 @@ class ProductController extends AbstractController
         }
     }
 
-    #[Route("/api/delete/{id}",name : "deleteProduct")]
+    #[Route("/api/delete/{id}", name : "deleteProduct")]
     public function deleteProduct(Product $product, EntityManagerInterface $entityManager, int $id)
     {
         $entityManager->remove($product);
@@ -133,11 +135,17 @@ class ProductController extends AbstractController
         return $this->json(['success' => true], 200);
     }
 
-    #[Route("/api/categoryElem/{id}",name : "categoryId")]
+    #[Route("/api/categoryElem/{id}", name : "categoryId")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
         $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
         return $this->json(['products' => $products], 200);
+    }
 
+    #[Route("/api/validateAdress/{email}", name:"api_validate_adress", methods:["GET"])]
+    public function validateAdress(UserRepository $userRepository, $email) {
+        $user = new User($email);
+        $result = $user->isAdressValide($userRepository);
+        return $this->json(['isAdressValide' => $result], 200);
     }
 }
