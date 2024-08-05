@@ -38,7 +38,6 @@ const SetSubTotal = () => {
   setSubTotal(total);
 };
 
-
   if (!show) {
     return null;
   }
