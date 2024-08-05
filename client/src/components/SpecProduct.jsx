@@ -169,11 +169,10 @@ const SpecProduct = () => {
         </ul>
       </nav>
       <main className="py-6 px-4 max-w-7xl mx-auto">
-        <div className="flex space-x-8">
-          <div className="flex flex-col items-center">
+      <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
+      <div className="flex flex-col items-center lg:w-1/3">
             <div
-              className="flex flex-col space-y-4 overflow-auto"
-              style={{ maxHeight: "600px" }}
+              className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
             >
               {product.images &&
                 product.images.map((image, index) => (
@@ -203,7 +202,7 @@ const SpecProduct = () => {
               )}
             </div>
           </div>
-          <div className="w-1/3">
+          <div className="lg:w-1/3">
             <h1 className="dark:text-gold text-5xl mb-6 font-primary">
               {language === "FR" ? product.name : product.nameEn}
             </h1>
@@ -222,9 +221,7 @@ const SpecProduct = () => {
                 <span>${product.price}</span>
               )}
             </p>
-            <div className="mb-4  dark:text-gold">
-            </div>
-            <div className="mb-4  dark:text-gold">
+            <div className="mb-4 dark:text-gold">
               <label htmlFor="color" className="block text-lg font-primary">
                 {t("specProduct.material")}
               </label>
