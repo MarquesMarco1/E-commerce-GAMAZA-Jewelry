@@ -1,24 +1,43 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../../LanguageContext";
+import localhost from "../../config";
 
-export default function StockAlert({ isOpen, onClose, onSubmit }) {
+export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const { language } = useContext(LanguageContext);
+  const [productSelect, setproductSelect] = useState(null);
+
+  useEffect(() => {
+    setproductSelect(data);
+  }, [data]);
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateEmail(email)) {
-      onSubmit(email);
-      setEmail("");
-      setError("");
-      onClose();
+      const formData = {
+        email: email,
+        productName: productSelect,
+      };
+      const response = await fetch(`${localhost}/api/notityStock`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
+      if (response.ok) {
+        onSubmit(email);
+        setEmail("");
+        setError("");
+        onClose();
+      }
     } else {
       setError("Please enter a valid email address.");
     }
