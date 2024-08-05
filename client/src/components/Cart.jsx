@@ -14,16 +14,22 @@ export default function Cart() {
   const [nbrArticle, setNbrArticle] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const { state: cart, dispatch } = useCart([]);
+  const [displayWishlist, setDisplayWishlist] = useState(false);
 
-  useEffect(() => {
-    const fetchIsLog = async () => {
-      const email = localStorage.getItem("user");
-      if (!email) {
-        navigate("/authentication", { replace: true });
-      }
-    };
-    fetchIsLog();
-  }, []);
+  const fetchIsLog = () => {
+    const email = localStorage.getItem("user");
+    console.log(email)
+    if (email === null) {
+      return false;
+    }
+    return true;
+  };
+  
+  useEffect(()=>{
+    if(fetchIsLog()){
+      setDisplayWishlist(true);
+    }
+  }, [])
 
   const SetNbrArticle = () => {
     let nbr = 0;
@@ -59,17 +65,28 @@ export default function Cart() {
   };
 
   const deleteProduct = async (item) => {
-    const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
-      method: "DELETE",
-    });
+    if (fetchIsLog()) {
+      const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
+        method: "DELETE",
+      });
 
-    if (response.ok) {
-      // const data = await response.json();
+      if (response.ok) {
+        dispatch({ type: "REMOVE_ITEM", payload: item });
+      }
+    }
+    else {
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
 
   const checkout = () => {
+    const fetchIsLog = async () => {
+      const email = localStorage.getItem("user");
+      if (!email) {
+        navigate("/authentication", { replace: true });
+      }
+    };
+    fetchIsLog();
     navigate("/checkout", { replace: true });
   };
 
@@ -182,7 +199,7 @@ export default function Cart() {
                         Delete
                       </button>
                     </div>
-                    <div>
+                    {displayWishlist && <div>
                       <button
                         className="flex font-primary"
                         onClick={() => saveForLater(elem)}
@@ -190,7 +207,7 @@ export default function Cart() {
                         <img className="mr-4" src={Save4later} alt="" />
                         Save for later
                       </button>
-                    </div>
+                    </div>}
                   </div>
                 </div>
               </div>
@@ -230,8 +247,6 @@ export default function Cart() {
       </div>
     );
   };
-
-  // console.log(cart);
 
   return (
     <>

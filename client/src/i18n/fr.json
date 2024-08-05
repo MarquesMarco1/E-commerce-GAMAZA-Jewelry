@@ -135,7 +135,7 @@
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
   },
-  
+
   "popup": {
     "basket": "Résumé du Panier",
     "articles": "Nombre d'articles :",
@@ -148,7 +148,7 @@
     "button": "Ajouter"
   },
   "sizeGuidePage": {
-    "tailleChoose": "Sélectionner ma taille :",
+    "tailleChoose": "Taille:",
     "button": "Guide des tailles",
     "guideRings": "Guide des tailles pour bagues/alliances (EU)",
     "taille": "Taille (EU)",
