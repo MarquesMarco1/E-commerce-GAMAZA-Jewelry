@@ -18,12 +18,18 @@ export default function Cart() {
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    console.log(email)
+    validateAdress(email)
     if (email === null) {
       return false;
     }
     return true;
   };
+
+  const validateAdress = async (email) => {
+    const response = await fetch(`${localhost}/api/validateAdress/${email}`);
+    const data = await response.json();
+    console.log(data)
+  }
   
   useEffect(()=>{
     if(fetchIsLog()){

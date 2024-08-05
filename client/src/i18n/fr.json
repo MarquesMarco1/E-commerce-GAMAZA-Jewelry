@@ -61,7 +61,7 @@
     "buttonShip": "Envoyer"
   },
   "editProfil": {
-    "title": "Créer un produit",
+    "title": "Modifier son profile",
     "firstname": "Prénom",
     "lastname": "Nom",
     "email": "Email ",
@@ -79,6 +79,7 @@
     "product": "Ajouter un produit",
     "category": "Ajouter une categorie",
     "user": "Ajouter un utilisateur",
+    "code": "Créer un coupon de reduction",
     "manageUser": "Gestion des utilisateurs :",
     "FullName": "Nom complet :",
     "Badmin": "Transformer en administrateur",

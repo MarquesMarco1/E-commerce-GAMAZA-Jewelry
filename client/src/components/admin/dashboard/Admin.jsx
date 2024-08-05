@@ -131,157 +131,160 @@ export default function Admin() {
   };
   return (
     <>
-    <div className="dark:bg-dark-mode-purple">
-      <Header></Header>
-      <div className="mr-24	ml-24	">
-        <NavBarAdmin></NavBarAdmin>
-        <div className="border	border-grey	w-2/4	"></div>
-        <br></br>
-
-        {/* //////////////////////// */}
-        {/* // Navigate to a CRUD // */}
-        {/* //////////////////////// */}
-
-        <div className="flex flex-col	">
-          <Link to={`/createArticle`} className="w-max text-gold">
-            {t("adminPage.product")}
-          </Link>
-          <Link to={`/createCategory`} className="w-max text-gold">
-            {t("adminPage.category")}
-          </Link>
-          <Link to={`/createUser`} className="w-max text-gold">
-            {t("adminPage.user")}
-          </Link>
-          <button
-            className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
-            onClick={() => addPromo()}
-          >
-            {t("adminPage.promotion")}
-          </button>
+      <div className="dark:bg-dark-mode-purple">
+        <Header></Header>
+        <div className="mr-24	ml-24	">
+          <NavBarAdmin></NavBarAdmin>
+          <div className="border	border-grey	w-2/4	"></div>
           <br></br>
-        </div>
 
-        <div className="flex justify-between	">
-          {/* ////////////////// */}
-          {/* // Manage users // */}
-          {/* ////////////////// */}
+          {/* //////////////////////// */}
+          {/* // Navigate to a CRUD // */}
+          {/* //////////////////////// */}
 
-          <div className="flex flex-col w-full	">
-            <h2 className="text-gold">{t("adminPage.manageUser")}</h2>
-            {users.length > 0 &&
-              users.map((elem) => (
-                <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80">
-                  <div>
-                    <li>
-                      {t("adminPage.FullName")}{" "}
-                      {elem.firstname ? elem.firstname : t("adminPage.error")}
-                    </li>
-                    <li>
-                      {t("editProfil.email")} : {elem.email}
-                    </li>
-                    <li>{t("editProfil.password")} : *******</li>
-                    <li>
-                      {t("editProfil.adress")}{" "}
-                      {elem.adress ? elem.adress : t("adminPage.error")}
-                    </li>
-                  </div>
-                  <div style={{ textAlign: "end" }}>
-                    <li>
-                      <button onClick={() => editUser(elem.id)}>
-                        {t("editProfil.edit")}
-                      </button>
-                    </li>
-                    {!elem.roles.includes("ROLE_ADMIN") ? (
-                      <li>
-                        <button onClick={() => setAdmin(elem.id)}>
-                          {t("adminPage.Badmin")}
-                        </button>
-                      </li>
-                    ) : (
-                      <li>
-                        <button onClick={() => setUser(elem.id)}>
-                          {t("adminPage.Buser")}
-                        </button>
-                      </li>
-                    )}
-                    <li>
-                      <button onClick={() => deleteUser(elem.id)}>
-                        {t("editProfil.delete")}
-                      </button>
-                    </li>
-                  </div>
-                </ul>
-              ))}
+          <div className="flex flex-col	">
+            <Link to={`/createArticle`} className="w-max text-gold">
+              {t("adminPage.product")}
+            </Link>
+            <Link to={`/createCategory`} className="w-max text-gold">
+              {t("adminPage.category")}
+            </Link>
+            <Link to={`/createUser`} className="w-max text-gold">
+              {t("adminPage.user")}
+            </Link>
+            <Link to={`/admin/code`} className="w-max text-gold">
+              {t("adminPage.code")}
+            </Link>
+            <button
+              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              onClick={() => addPromo()}
+            >
+              {t("adminPage.promotion")}
+            </button>
+            <br></br>
           </div>
 
-          {/* ///////////////////////////// */}
-          {/* // Manage Produts/Articles // */}
-          {/* ///////////////////////////// */}
+          <div className="flex justify-between	">
+            {/* ////////////////// */}
+            {/* // Manage users // */}
+            {/* ////////////////// */}
 
-          <div className="flex flex-col w-full	">
-            <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
-            {products.length > 0 &&
-              products.map((elem) => (
-                <ul className="m-2.5  rounded-2xl p-2.5	bg-grey opacity-80">
-                  <div>
-                    <li>
-                      {t("adminPage.title")}{" "}
-                      {language === "FR" ? elem.name : elem.nameEn}
-                    </li>
-                    <li>
-                      {t("adminPage.price")} ${elem.price}
-                    </li>
-                  </div>
-                  <div style={{ textAlign: "end" }}>
-                    <li>
-                      <button onClick={() => editProduct(elem.id)}>
-                        {t("editProfil.edit")}
-                      </button>
-                    </li>
-                    <li>
-                      <button onClick={() => deleteProduct(elem.id)}>
-                        {t("editProfil.delete")}
-                      </button>
-                    </li>
-                  </div>
-                </ul>
-              ))}
+            <div className="flex flex-col w-full	">
+              <h2 className="text-gold">{t("adminPage.manageUser")}</h2>
+              {users.length > 0 &&
+                users.map((elem) => (
+                  <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80">
+                    <div>
+                      <li>
+                        {t("adminPage.FullName")}{" "}
+                        {elem.firstname ? elem.firstname : t("adminPage.error")}
+                      </li>
+                      <li>
+                        {t("editProfil.email")} : {elem.email}
+                      </li>
+                      <li>{t("editProfil.password")} : *******</li>
+                      <li>
+                        {t("editProfil.adress")}{" "}
+                        {elem.adress ? elem.adress : t("adminPage.error")}
+                      </li>
+                    </div>
+                    <div style={{ textAlign: "end" }}>
+                      <li>
+                        <button onClick={() => editUser(elem.id)}>
+                          {t("editProfil.edit")}
+                        </button>
+                      </li>
+                      {!elem.roles.includes("ROLE_ADMIN") ? (
+                        <li>
+                          <button onClick={() => setAdmin(elem.id)}>
+                            {t("adminPage.Badmin")}
+                          </button>
+                        </li>
+                      ) : (
+                        <li>
+                          <button onClick={() => setUser(elem.id)}>
+                            {t("adminPage.Buser")}
+                          </button>
+                        </li>
+                      )}
+                      <li>
+                        <button onClick={() => deleteUser(elem.id)}>
+                          {t("editProfil.delete")}
+                        </button>
+                      </li>
+                    </div>
+                  </ul>
+                ))}
+            </div>
+
+            {/* ///////////////////////////// */}
+            {/* // Manage Produts/Articles // */}
+            {/* ///////////////////////////// */}
+
+            <div className="flex flex-col w-full	">
+              <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
+              {products.length > 0 &&
+                products.map((elem) => (
+                  <ul className="m-2.5  rounded-2xl p-2.5	bg-grey opacity-80">
+                    <div>
+                      <li>
+                        {t("adminPage.title")}{" "}
+                        {language === "FR" ? elem.name : elem.nameEn}
+                      </li>
+                      <li>
+                        {t("adminPage.price")} ${elem.price}
+                      </li>
+                    </div>
+                    <div style={{ textAlign: "end" }}>
+                      <li>
+                        <button onClick={() => editProduct(elem.id)}>
+                          {t("editProfil.edit")}
+                        </button>
+                      </li>
+                      <li>
+                        <button onClick={() => deleteProduct(elem.id)}>
+                          {t("editProfil.delete")}
+                        </button>
+                      </li>
+                    </div>
+                  </ul>
+                ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ///////////////////////////// */}
-      {/* // Manage Category         // */}
-      {/* ///////////////////////////// */}
+        {/* ///////////////////////////// */}
+        {/* // Manage Category         // */}
+        {/* ///////////////////////////// */}
 
-      <div className="flex flex-col w-full	">
-        <h2 className="text-gold">{t("adminPage.manageCategory")}</h2>
-        {category.length > 0 &&
-          category.map((elem) => (
-            <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80	">
-              <div>
-                <li>
-                  {t("adminPage.title")}{" "}
-                  {language === "FR" ? elem.name : elem.nameEn}
-                </li>
-              </div>
-              <div style={{ textAlign: "end" }}>
-                <li>
-                  <button onClick={() => editCategory(elem.id)}>
-                    {t("editProfil.edit")}
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => deleteCategory(elem.id)}>
-                    {t("editProfil.delete")}
-                  </button>
-                </li>
-              </div>
-            </ul>
-          ))}
-      </div>
+        <div className="flex flex-col w-full	">
+          <h2 className="text-gold">{t("adminPage.manageCategory")}</h2>
+          {category.length > 0 &&
+            category.map((elem) => (
+              <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80	">
+                <div>
+                  <li>
+                    {t("adminPage.title")}{" "}
+                    {language === "FR" ? elem.name : elem.nameEn}
+                  </li>
+                </div>
+                <div style={{ textAlign: "end" }}>
+                  <li>
+                    <button onClick={() => editCategory(elem.id)}>
+                      {t("editProfil.edit")}
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => deleteCategory(elem.id)}>
+                      {t("editProfil.delete")}
+                    </button>
+                  </li>
+                </div>
+              </ul>
+            ))}
+        </div>
 
-      <Footer></Footer>
+        <Footer></Footer>
       </div>
     </>
   );

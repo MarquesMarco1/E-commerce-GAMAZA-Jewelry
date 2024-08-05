@@ -61,7 +61,7 @@
     "buttonShip": "Shipped"
   },
   "editProfil": {
-    "title": "Update your information",
+    "title": "Update your profile",
     "firstname": "Firstname",
     "lastname": "Lastname",
     "email": "Email ",
@@ -79,6 +79,7 @@
     "product": "Add a product",
     "category": "Add a category",
     "user": "Add a user",
+    "code": "Create a discount coupon",
     "manageUser": "Manage Users :",
     "FullName": "Full name :",
     "Badmin": "Become Admin",

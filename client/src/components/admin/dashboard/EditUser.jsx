@@ -83,7 +83,7 @@ export default function EditUser() {
 
   return (
     <>
-      <Header></Header>
+      <Header></Header> 
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t("editUser.title")}
       </h1>
@@ -99,7 +99,6 @@ export default function EditUser() {
           name="firstname"
           id="firstname"
           placeholder={t("editProfil.firstname")}
-          required
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
@@ -112,7 +111,6 @@ export default function EditUser() {
           name="lastname"
           id="lastname"
           placeholder={t("editProfil.lastname")}
-          required
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
@@ -125,7 +123,6 @@ export default function EditUser() {
           name="email"
           id="email"
           placeholder={t("editProfil.email")}
-          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -137,7 +134,6 @@ export default function EditUser() {
           type="password"
           name="password"
           id="password"
-          //   required
           placeholder={t("createUser.password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -150,7 +146,6 @@ export default function EditUser() {
           type="text"
           name="adress"
           id="adress"
-          required
           placeholder={t("editProfil.adress")}
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
@@ -163,7 +158,6 @@ export default function EditUser() {
           type="number"
           name="zipCode"
           id="zipCode"
-          required
           placeholder={t("editProfil.zip")}
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
@@ -177,7 +171,6 @@ export default function EditUser() {
           name="city"
           id="city"
           placeholder={t("editProfil.city")}
-          required
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -189,7 +182,6 @@ export default function EditUser() {
           type="text"
           name="country"
           id="country"
-          required
           placeholder={t("editProfil.country")}
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -202,7 +194,6 @@ export default function EditUser() {
           type="number"
           name="phone"
           id="phone"
-          required
           placeholder={t("editProfil.phone")}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
