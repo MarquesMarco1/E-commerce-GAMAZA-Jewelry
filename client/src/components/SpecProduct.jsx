@@ -193,14 +193,14 @@ const SpecProduct = () => {
           </div>
           <div className="flex-1">
             <div className="flex items-center justify-center mb-4 w-full max-w-4xl h-[600px] bg-gray-100">
-              {selectedImage && (
+              {selectedImage &&
                 <img
                   className="object-contain w-full h-full cursor-pointer"
                   src={selectedImage}
                   alt={product.name}
                   onClick={openModal}
                 />
-              )}
+              }
             </div>
           </div>
           <div className="w-1/3">
