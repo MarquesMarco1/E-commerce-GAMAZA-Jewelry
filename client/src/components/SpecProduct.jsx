@@ -233,38 +233,6 @@ const SpecProduct = () => {
             <SizeGuide data={product} />
           </div>
         </div>
-        {/* <div className="mt-10 space-y-2">
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.category")}
-            {language === "FR"
-              ? product.category.name
-              : product.category.nameEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.material")}
-            {language === "FR"
-              ? product.material.name
-              : product.material.nameEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.stone")}
-            {product.stone
-              ? language === "FR"
-                ? product.stone.name
-                : product.stone.nameEn
-              : ""}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.weight")} {product.weight}g
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.stockQty")} {product.stockQty}
-          </p> */}
-        {/* </div> */}
       </main>
       <ReviewForm id={id} />
 
