@@ -67,6 +67,7 @@
     "email": "Email ",
     "password": "Password ",
     "adress": "Adress ",
+    "region": "Region",
     "zip": "ZipCode ",
     "city": "City ",
     "country": "Country ",

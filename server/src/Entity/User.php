@@ -61,6 +61,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastUpdated = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $adressId = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $region = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -239,6 +245,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastUpdated(?\DateTimeInterface $lastUpdated): static
     {
         $this->lastUpdated = $lastUpdated;
+
+        return $this;
+    }
+
+    public function getAdressId(): ?int
+    {
+        return $this->adressId;
+    }
+
+    public function setAdressId(?int $adressId): static
+    {
+        $this->adressId = $adressId;
+
+        return $this;
+    }
+
+    public function getRegion(): ?string
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?string $region): static
+    {
+        $this->region = $region;
 
         return $this;
     }
