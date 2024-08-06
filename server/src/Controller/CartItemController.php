@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
+use App\Entity\User;
 use App\Entity\CartItem;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,5 +18,13 @@ class CartItemController extends AbstractController
         $entityManager->remove($cartItem);
         $entityManager->flush();
         return $this->json(['success' => true], 200);
+    }
+
+    #[Route('/api/cartItem/{email}', methods:["GET"] )]
+    public function cartItem(EntityManagerInterface $entityManager, string $email){
+        $user = $entityManager->getRepository(User::class)->findOneBy(["email"=>$email]);
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user]);
+        $cartItem = $entityManager->getRepository(CartItem::class)->findBy(["cart"=>$cart]);
+        return $this->json(["cartItem"=>$cartItem], 200);
     }
 }

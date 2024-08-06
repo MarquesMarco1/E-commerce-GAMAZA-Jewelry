@@ -57,6 +57,7 @@ export default function Profile() {
 
   const logout = () => {
     localStorage.removeItem("user");
+    dispatch({ type: "RESET_CART", payload: [] });
     navigate("/", { replace: true });
   };
 
