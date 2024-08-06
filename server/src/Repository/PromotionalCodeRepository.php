@@ -19,6 +19,15 @@ class PromotionalCodeRepository extends ServiceEntityRepository
 //    /**
 //     * @return PromotionalCode[] Returns an array of PromotionalCode objects
 //     */
+        public function findByTrimmedCode($code)
+        {
+            $query = $this->createQueryBuilder('p')
+                ->where('TRIM(p.code) = :code')
+                ->setParameter('code', trim($code))
+                ->getQuery();
+            
+            return $query->getResult();
+        }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('p')

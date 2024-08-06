@@ -15,10 +15,13 @@ export default function Cart() {
   const [subTotal, setSubTotal] = useState(0);
   const { state: cart, dispatch } = useCart([]);
   const [displayWishlist, setDisplayWishlist] = useState(false);
+  const [inputPromo, setInputPromo] = useState(false);
+  const [tryCode, setTryCode] = useState(null);
+  const [reduction, setReduction] = useState(null);
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    validateAdress(email)
+    validateAdress(email);
     if (email === null) {
       return false;
     }
@@ -28,14 +31,14 @@ export default function Cart() {
   const validateAdress = async (email) => {
     const response = await fetch(`${localhost}/api/validateAdress/${email}`);
     const data = await response.json();
-    console.log(data)
-  }
-  
-  useEffect(()=>{
-    if(fetchIsLog()){
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (fetchIsLog()) {
       setDisplayWishlist(true);
     }
-  }, [])
+  }, []);
 
   const SetNbrArticle = () => {
     let nbr = 0;
@@ -47,16 +50,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-      (total +=
-        item.product.price * item.itemQty -
-        (
-          item.product.price *
-          item.itemQty *
-          ((item.product.promotion.id != 1
-            ? item.product.promotion.pourcentage
-            : 0) /
-            100)
-        ).toFixed())
+        (total +=
+          item.product.price * item.itemQty -
+          (
+            item.product.price *
+            item.itemQty *
+            ((item.product.promotion.id != 1
+              ? item.product.promotion.pourcentage
+              : 0) /
+              100)
+          ).toFixed())
     );
     setSubTotal(total);
   };
@@ -79,8 +82,7 @@ export default function Cart() {
       if (response.ok) {
         dispatch({ type: "REMOVE_ITEM", payload: item });
       }
-    }
-    else {
+    } else {
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
@@ -117,6 +119,18 @@ export default function Cart() {
 
       if (data.sucess) {
         dispatch({ type: "REMOVE_ITEM", payload: elem });
+      }
+    }
+  };
+
+  const handleSearch = async (event) => {
+    if (event.key === "Enter") {
+      const response = await fetch(`${localhost}/api/coupon/${tryCode}`);
+      if (response.ok) {
+        const data = await response.json();
+        setReduction(data.promo[0].rate);
+      } else {
+        setReduction(null);
       }
     }
   };
@@ -205,15 +219,17 @@ export default function Cart() {
                         Delete
                       </button>
                     </div>
-                    {displayWishlist && <div>
-                      <button
-                        className="flex font-primary"
-                        onClick={() => saveForLater(elem)}
-                      >
-                        <img className="mr-4" src={Save4later} alt="" />
-                        Save for later
-                      </button>
-                    </div>}
+                    {displayWishlist && (
+                      <div>
+                        <button
+                          className="flex font-primary"
+                          onClick={() => saveForLater(elem)}
+                        >
+                          <img className="mr-4" src={Save4later} alt="" />
+                          Save for later
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -227,17 +243,35 @@ export default function Cart() {
               <h3 className="font-primary text-xl text-center m-2">
                 Promo Code&nbsp;
               </h3>
-              <button className="font-primary text-xl text-center m-2 underline">
+              <button
+                className="font-primary text-xl text-center m-2 underline"
+                onClick={() => setInputPromo(true)}
+              >
                 Ajouter
               </button>
             </div>
+            {inputPromo && (
+              <input
+                type="text"
+                onChange={(e) => setTryCode(e.target.value)}
+                onKeyDown={handleSearch}
+              />
+            )}
+            {reduction && <p>Reduction : {reduction}%</p>}
             <div className="border border-black my-4" />
             <div className="flex justify-between">
               <h3 className="font-primary text-xl text-center m-2">
                 Subtotal&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {subTotal}€
+                {reduction ? (
+                  <>
+                    <span className="line-through">{subTotal}€</span>{" "}
+                    <span>{subTotal - (subTotal * reduction) / 100}</span>
+                  </>
+                ) : (
+                  <span>{subTotal}€</span>
+                )}
               </h3>
             </div>
             <div className="rounded-3xl bg-gold m-6 flex justify-center">

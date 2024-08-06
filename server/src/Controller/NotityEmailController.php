@@ -39,4 +39,5 @@ class NotityEmailController extends AbstractController
         $mailer->send($email);
         return $this->json(["sucess"=>true], 200);
     }
+
 }

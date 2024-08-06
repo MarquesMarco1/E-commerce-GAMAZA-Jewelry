@@ -174,5 +174,10 @@
     "date": "Filter par date",
     "desc": "Filter par les avis les plus récents",
     "asc": "Filter par les avis les plus ancien"
+  },
+  "promotionCode": {
+    "title": "Generation un code promotionnel",
+    "button": "Générer",
+    "submit": "Generer le code promotionnel"
   }
 }
