@@ -5,11 +5,9 @@ import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Search() {
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [productName, setProductName] = useState("");
   const [categoryName, setCategoryName] = useState("All Categories");
   const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState("");
@@ -17,7 +15,10 @@ export default function Search() {
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
-  // const navigate = useNavigate();
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [autocompleteData, setAutocompleteData] = useState([]);
+  const [userInput, setUserInput] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,8 +38,6 @@ export default function Search() {
           setCategories(data.category);
           const combinedSuggestions = [...data.product];
           setSuggestions(combinedSuggestions);
-          // setProductName(data.product.name);
-          // console.log(combinedSuggestions)
         } else {
           setError(new Error("Product not found"));
         }
@@ -57,129 +56,105 @@ export default function Search() {
 
     setTimeout(() => {
       setIsSearching(false);
-      // if(searchResults.length === 1) {
-        // navigate(`/product/${searchResults[0].id}`)
-      // }
     }, 500);
   };
 
+  const onChange = e => {
+    const userInput = e.currentTarget.value.toLowerCase();
 
-//   const sortResults = () => {
-//     // Handle Logic //
-//     let list = [];
+    const filteredSuggestions = suggestions.filter(suggestion =>
+      (suggestion.name && suggestion.name.toLocaleLowerCase().indexOf(userInput) > -1) ||
+      (suggestion.nameEn && suggestion.nameEn.toLocaleLowerCase().indexOf(userInput) > - 1)
+    );
 
-//     if (language === "FR") {
-//       // Recherche par toutes les catégories //
-//         if (productName === '' && categoryName === 'Toutes les catégories') {
-//             list = [...product];
-//         // Recherche par nom de produits //
-//           } else if (productName !== '' && categoryName === 'Toutes les catégories') {
-//             list = product.filter((elem) => 
-//               elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
-//           );
-//           // Recherche par nom et par catégorie //
-//         } else if (productName !== '' && categoryName !== 'Toutes les catégories') {
-//           list = product.filter((elem) => 
-//             elem.category.name == categoryName &&
-//           elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())  
-//         );
-//         // Recherche par catégorie //  
-//       } else {
-//         list = product.filter((elem) => 
-//           elem.category.name == categoryName
-//       );
-//     }   
-//     // ENGLISH //
-//   } else {
-//     if (productName === '' && categoryName === 'All Categories') {
-//       list = [...product];
-//       // Recherche par nom de produits //
-//     } else if (productName !== '' && categoryName === 'All Categories') {
-//       console.log('product name:', productName);
-//       list = product.filter((elem) => 
-//         elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
-//     );
-//     // Recherche par nom et par catégorie //
-//   } else if (productName !== '' && categoryName !== 'All Categories') {
-//     list = product.filter((elem) => 
-//             elem.category.nameEn == categoryName &&
-//     elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())  
-//   );
-//   // Recherche par catégorie //  
-// } else {
-//   list = product.filter((elem) => 
-//               elem.category.nameEn == categoryName
-// );
-// }
-// }
-// setSearchResults(list);
-// } 
+    setActiveSuggestion(0);
+    setFilteredSuggestions(filteredSuggestions);
+    setUserInput(userInput);
+    setAutocompleteData(filteredSuggestions.map(suggestion =>
+      typeof suggestion === 'object' ? suggestion : { name: suggestion.name, image: '', prix: '' }
+    ));
+  };
 
-const sortResults = () => {
-  let list = [];
-
-  if (language === "FR") {
-    if (categoryName === "Toutes les catégories") {
-      if (productName === "") {
-        list = [...product];
-      } else {
-        list = product.filter((elem) =>
-          elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
-        );
+  const onKeyDown = e => {
+    if (e.keyCode === 13) {
+      setActiveSuggestion(0);
+      setFilteredSuggestions([]);
+      setUserInput(filteredSuggestions[activeSuggestion]);
+      setAutocompleteData(filteredSuggestions.map(suggestion =>
+        typeof suggestion === 'object' ? suggestion : { name: suggestion.name, image: '', prix: '' }
+      ));
+    } else if (e.keyCode === 38) {
+      if (activeSuggestion === 0) {
+        return;
       }
-    } else {
+      setActiveSuggestion(activeSuggestion - 1);
+    } else if (e.keyCode === 40) {
+      if (activeSuggestion + 1 === filteredSuggestions.length) {
+        return;
+      }
+      setActiveSuggestion(activeSuggestion + 1);
+    }
+  };
+
+  const onClick = e => {
+    setActiveSuggestion(0);
+    setUserInput(e.currentTarget.innerText);
+  };
+
+  const sortResults = () => {
+    let list = [];
+
+    if (categoryName !== "Toutes les catégories" && categoryName !== "All Categories") {
+      console.log('if /', categoryName)
       list = product.filter(
         (elem) =>
           elem.category.name === categoryName &&
-          elem.name.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
-      );
-    }
-  } else {
-    if (categoryName === "All Categories") {
-      if (productName === "") {
-        list = [...product];
+          elem.name.toLocaleLowerCase().includes(userInput.toLocaleLowerCase()) ||
+          elem.category.nameEn === categoryName &&
+          elem.nameEn.toLocaleLowerCase().includes(userInput.toLocaleLowerCase())
+        );
       } else {
-        list = product.filter((elem) =>
-          elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
+        if (userInput === "") {
+          console.log('else / if')
+          list = [...product];
+        } else {
+          console.log('else / else', userInput)
+          list = product.filter((elem) =>
+            elem.name.toLocaleLowerCase().includes(userInput.toLocaleLowerCase()) ||
+            elem.nameEn.toLocaleLowerCase().includes(userInput.toLocaleLowerCase())
         );
       }
-    } else {
-      list = product.filter(
-        (elem) =>
-          elem.category.nameEn === categoryName &&
-          elem.nameEn.toLocaleLowerCase().includes(productName.toLocaleLowerCase())
-      );
     }
-  }
+    console.log(list)
+    setSearchResults(list);
+  };
 
-  setSearchResults(list);
-  console.log('product name:', productName);
-  console.log("Filtered List:", list);
-};
-    
-const stringSuggestions = suggestions.map(suggestion => 
-    typeof suggestion === 'object' ?  suggestion : {name: suggestion.name, image: '', prix: ''}
-);
-  // co:nsole.log(`String Suggestions:`, stringSuggestions)
-  // console.log(`Suggestions:`, suggestions)
-  
   if (error)
     return (
-  <div className="text-center py-4 text-red-500">
+      <div className="text-center py-4 text-red-500">
         Error: {error.message}
       </div>
     );
-    
-    return (
-      <div className="p-5 bg-gray-100 rounded-lg shadow-md">
+  return (
+    <div className="p-5 bg-gray-100 rounded-lg shadow-md">
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
         <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
-            <Autocomplete
-              suggestions={stringSuggestions}
-              />
+          <input
+            type="text"
+            className="w-full md:w-72 p-2 border border-gold rounded-md font-primary bg-white dark:bg-dark-mode-light-purple dark:placeholder-gold"
+            placeholder={t("search.searchBar")}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+          />
+          <Autocomplete
+            autocompleteData={autocompleteData}
+            activeSuggestion={activeSuggestion}
+            onClick={onClick}
+          />
           <button
             type="submit"
             className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300 dark:bg-gold"
@@ -226,7 +201,7 @@ const stringSuggestions = suggestions.map(suggestion =>
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
-            value={language === 'FR' ? 'Toutes les catégories': 'All categories'}
+            value={language === 'FR' ? 'Toutes les catégories' : 'All categories'}
             className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple dark:bg-gold dark:text-white dark:hover-bg-dark-mode-light-purple"
           >
             {t("search.select")}
