@@ -7,12 +7,20 @@ import { useState, useEffect } from "react";
 import localhost from "../config";
 import Lang from "./utils/SwitchLangue";
 import { useTranslation } from "react-i18next";
+import Switch from "./utils/Switch";
+import CartPopup from "./utils/CartPopup";
 
-export default function Header() {
+export default function Header({ nbrArticle }) {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showCartPopup, setShowCartPopup] = useState(false);
   const { t } = useTranslation();
 
   const email = localStorage.getItem("user");
+  const cartItems = [
+    { id: 1, name: "Article 1", quantity: 2, price: 10 },
+    { id: 2, name: "Article 2", quantity: 1, price: 20 },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
@@ -33,6 +41,7 @@ export default function Header() {
           alt="logo of a lotus that redirect to the landing/home page"
         />
       </Link>
+      <Switch/>
       <Lang />
       <h1 className="text-gold font-primary font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
         G.A.M.A.Z.A .Co
@@ -74,16 +83,28 @@ export default function Header() {
           </Link>
         )}
 
-        <Link to={`/cart`} className="flex items-center">
-          <img
-            src={cart}
-            className="mr-2 md:mr-8"
-            alt="logo of a cart that redirect to your cart and the finalization of your order"
-          />
-          <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
-            {t("header.cart")}
-          </span>
-        </Link>
+        <div
+          className="relative"
+          onMouseEnter={() => setShowCartPopup(true)}
+          onMouseLeave={() => setShowCartPopup(false)}
+        >
+          <Link to={`/cart`} className="flex items-center">
+            <img
+              src={cart}
+              className="mr-2 md:mr-8"
+              alt="logo of a cart that redirect to your cart and the finalization of your order"
+            />
+            {nbrArticle > 0 && (
+              <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                {nbrArticle}
+              </div>
+            )}
+            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+              {t("header.cart")}
+            </span>
+          </Link>
+          <CartPopup show={showCartPopup} cartItems={cartItems} />
+        </div>
       </div>
     </header>
   );

@@ -16,29 +16,32 @@ class CartItem
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?cart $cart = null;
+    private ?Cart $cart = null;
 
     #[ORM\Column]
     private ?int $itemQty = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $size = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdated = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?product $product = null;
+    private ?Product $product = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCart(): ?cart
+    public function getCart(): ?Cart
     {
         return $this->cart;
     }
 
-    public function setCart(?cart $cart): static
+    public function setCart(?Cart $cart): static
     {
         $this->cart = $cart;
 
@@ -57,6 +60,18 @@ class CartItem
         return $this;
     }
 
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): static
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
     public function getLastUpdated(): ?\DateTimeInterface
     {
         return $this->lastUpdated;
@@ -69,12 +84,12 @@ class CartItem
         return $this;
     }
 
-    public function getProduct(): ?product
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setProduct(?product $product): static
+    public function setProduct(?Product $product): static
     {
         $this->product = $product;
 

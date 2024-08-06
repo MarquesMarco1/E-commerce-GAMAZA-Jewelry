@@ -47,7 +47,7 @@ export default function EditProfil() {
         setZipcode(data.user.zIPCode);
         setCity(data.user.city);
         setCountry(data.user.country);
-        setPhone("0" + data.user.phoneNumber);
+        setPhone(data.user.phoneNumber);
       }
     };
     fetchData();
@@ -71,7 +71,7 @@ export default function EditProfil() {
       country: country,
       phone: phone,
     };
-
+    console.log(formData)
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {
@@ -87,6 +87,7 @@ export default function EditProfil() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t('editProfil.title')}
@@ -103,7 +104,6 @@ export default function EditProfil() {
           name="firstname"
           id="firstname"
           placeholder={t('editProfil.firstname')}
-          required
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
@@ -116,7 +116,6 @@ export default function EditProfil() {
           name="lastname"
           id="lastname"
           placeholder={t('editProfil.lastname')}
-          required
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
@@ -129,7 +128,6 @@ export default function EditProfil() {
           name="email"
           id="email"
           placeholder={t('editProfil.email')}
-          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -153,7 +151,6 @@ export default function EditProfil() {
           type="text"
           name="adress"
           id="adress"
-          required
           placeholder={t('editProfil.adress')}
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
@@ -166,7 +163,6 @@ export default function EditProfil() {
           type="number"
           name="zipCode"
           id="zipCode"
-          required
           placeholder={t('editProfil.zip')}
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
@@ -180,7 +176,6 @@ export default function EditProfil() {
           name="city"
           id="city"
           placeholder={t('editProfil.city')}
-          required
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -192,7 +187,6 @@ export default function EditProfil() {
           type="text"
           name="country"
           id="country"
-          required
           placeholder={t('editProfil.country')}
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -205,7 +199,6 @@ export default function EditProfil() {
           type="number"
           name="phone"
           id="phone"
-          required
           placeholder={t('editProfil.phone')}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -216,6 +209,7 @@ export default function EditProfil() {
         </button>
       </form>
       <Footer></Footer>
+      </div>
     </>
   );
 }

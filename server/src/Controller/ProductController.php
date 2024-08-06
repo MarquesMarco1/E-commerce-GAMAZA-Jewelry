@@ -4,8 +4,8 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Material;
 use App\Entity\Product;
-use App\Entity\Size;
 use App\Entity\Stone;
+use App\Entity\Promotion;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Middleware\User;
+use App\Repository\UserRepository;
 use DateTime;
 
 class ProductController extends AbstractController
@@ -26,25 +28,27 @@ class ProductController extends AbstractController
         $product = new Product;
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
-        $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
-        $size = $entityManager->getRepository(Size::class)->find($formData["size"]);
+        if($formData["stone_id"] !== null){
+            $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
+        }
+        $promotion = $entityManager->getRepository(Promotion::class)->find(1);
         if($formData){
             $product->setName($formData["nom"]);
             $product->setNameEn($formData["nomEn"]);
             $product->setImages($formData["image"]);
             $product->setDescription($formData["description"]);
             $product->setDescriptionEn($formData["descriptionEn"]);
-            $product->setColor($formData["color"]);
-            $product->setColorEn($formData["colorEn"]);
-            $product->setSizes($size);
             $product->setWeight(floatval($formData["weight"]));
             $product->setPrice(floatval($formData["price"]));
+            $product->setPromotion($promotion);
             $product->setCategory($category);
             $product->setMaterial($material);
-            $product->setStone($stone);
+            if($formData["stone_id"]){
+                $product->setStone($stone);
+            }
             $product->setStockQty(intval($formData["stockQty"]));
             $now = new DateTime();
-            $now->format("Y-m-d H   :i:s");
+            $now->format("Y-m-d H:i:s");
             $product->setLastUpdated($now);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -59,6 +63,7 @@ class ProductController extends AbstractController
         return $this->json(['allArticle' => $products], 200); 
 
     }
+
     #[Route("/api/products/{id}",name : "products")]
     public function getProducts(EntityManagerInterface $entityManager, int $id)
     {
@@ -66,6 +71,7 @@ class ProductController extends AbstractController
         return $this->json(['products' => $products], 200);
 
     }
+
     #[Route("/api/editProduct/{id}",name : "editProduct")]
     public function editProduct(Request $request, EntityManagerInterface $entityManager, Product $product, int $id)
     {
@@ -73,8 +79,9 @@ class ProductController extends AbstractController
         $formData = $data["formData"];
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
-        $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
-        $size = $entityManager->getRepository(Size::class)->find($formData["size"]);
+        if($formData["stone_id"] !== null){
+            $stone = $entityManager->getRepository(Stone::class)->find($formData["stone_id"]);
+        }
         if($formData["image"] !== null){
             $images = $product->getImages();
             array_push($images, $formData["image"]);  
@@ -87,17 +94,17 @@ class ProductController extends AbstractController
             $product->setImages($images);
             $product->setDescription($formData["description"]);
             $product->setDescriptionEn($formData["descriptionEn"]);
-            $product->setColor($formData["color"]);
-            $product->setColorEn($formData["colorEn"]);
-            $product->setSizes($size);
             $product->setWeight(floatval($formData["weight"]));
             $product->setPrice(floatval($formData["price"]));
+            $product->setPromotion($product->getPromotion());
             $product->setCategory($category);
             $product->setMaterial($material);
-            $product->setStone($stone);
+            if($formData["stone_id"]){
+                $product->setStone($stone);
+            }
             $product->setStockQty(intval($formData["stockQty"]));
             $now = new DateTime();
-            $now->format("Y-m-d H   :i:s");
+            $now->format("Y-m-d H:i:s");
             $product->setLastUpdated($now);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -120,7 +127,7 @@ class ProductController extends AbstractController
         }
     }
 
-    #[Route("/api/delete/{id}",name : "deleteProduct")]
+    #[Route("/api/delete/{id}", name : "deleteProduct")]
     public function deleteProduct(Product $product, EntityManagerInterface $entityManager, int $id)
     {
         $entityManager->remove($product);
@@ -128,11 +135,17 @@ class ProductController extends AbstractController
         return $this->json(['success' => true], 200);
     }
 
-    #[Route("/api/categoryElem/{id}",name : "categoryId")]
+    #[Route("/api/categoryElem/{id}", name : "categoryId")]
     public function getCategoryId(EntityManagerInterface $entityManager, int $id)
     {
         $products = $entityManager->getRepository(Product::class)->findBy(['category' => $id]);
         return $this->json(['products' => $products], 200);
+    }
 
+    #[Route("/api/validateAdress/{email}", name:"api_validate_adress", methods:["GET"])]
+    public function validateAdress(UserRepository $userRepository, $email) {
+        $user = new User($email);
+        $result = $user->isAdressValide($userRepository);
+        return $this->json(['isAdressValide' => $result], 200);
     }
 }

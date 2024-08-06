@@ -52,6 +52,7 @@ export default function CreateUser() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <div className="flex flex-col items-center justify-center">
         <form
@@ -60,7 +61,7 @@ export default function CreateUser() {
         >
           <label
             htmlFor="mail"
-            className="block text-md font-primary font-bold leading-6 text-black"
+            className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
           >
             {t("editProfil.email")}
           </label>
@@ -70,14 +71,14 @@ export default function CreateUser() {
           <input
             type="email"
             placeholder={t("createUser.email")}
-            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <label
             htmlFor="password"
-            className="block text-md font-primary font-bold leading-6 text-black"
+            className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
           >
             {t("editProfil.password")}
           </label>
@@ -87,7 +88,7 @@ export default function CreateUser() {
           <input
             type="password"
             placeholder={t("createUser.password")}
-            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
@@ -100,12 +101,13 @@ export default function CreateUser() {
 
           {/* Submit button */}
 
-          <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary">
+          <button className="w-3/4 p-3 bg-light-purple dark:bg-gold text-3xl font-bold text-black dark:text-white rounded-lg hover:bg-gold dark:hover:bg-white font-primary">
             {t("createUser.button")}
           </button>
         </form>
       </div>
       <Footer></Footer>
+      </div>
     </>
   );
 }

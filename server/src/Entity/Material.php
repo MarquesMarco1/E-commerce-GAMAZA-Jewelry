@@ -20,6 +20,9 @@ class Material
     #[ORM\Column(type: Types::TEXT)]
     private ?string $image = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $lastUpdated = null;
+
     #[ORM\Column(length: 255)]
     private ?string $nameEn = null;
 
@@ -48,6 +51,18 @@ class Material
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getLastUpdated(): ?\DateTimeInterface
+    {
+        return $this->lastUpdated;
+    }
+
+    public function setLastUpdated(\DateTimeInterface $lastUpdated): static
+    {
+        $this->lastUpdated = $lastUpdated;
 
         return $this;
     }

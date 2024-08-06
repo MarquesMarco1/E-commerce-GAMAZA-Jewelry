@@ -78,6 +78,7 @@ export default function CreateCategory() {
 
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t("createCategory.title")}
@@ -89,7 +90,7 @@ export default function CreateCategory() {
         {/* Name */}
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4 dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nomFR"
           id="categorie"
@@ -99,7 +100,7 @@ export default function CreateCategory() {
         />
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nomEN"
           id="categorie"
@@ -111,7 +112,7 @@ export default function CreateCategory() {
         {/* Images */}
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="image"
           id="image"
@@ -123,7 +124,7 @@ export default function CreateCategory() {
         {/* Description */}
 
         <textarea
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="description"
           id="description"
           placeholder={t("createProduct.descriptionFR")}
@@ -132,7 +133,7 @@ export default function CreateCategory() {
         ></textarea>
 
         <textarea
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="descriptionEn"
           id="descriptionEn"
           placeholder={t("createProduct.descriptionEn")}
@@ -142,9 +143,10 @@ export default function CreateCategory() {
 
         {/* Submit */}
 
-        <input type="submit" value={t("createCategory.button")} />
+        <input type="submit" value={t("createCategory.button")} className="dark:bg-gold dark:text-white" />
       </form>
       <Footer></Footer>
+      </div>
     </>
   );
 }

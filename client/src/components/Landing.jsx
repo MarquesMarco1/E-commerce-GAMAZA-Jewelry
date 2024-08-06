@@ -3,11 +3,10 @@ import Header from "./Header";
 import localhost from "../config";
 import { Link } from "react-router-dom";
 import Carousel from "./utils/Carousel";
-
-import Search from "./Search";
+import Promotion from "./Promotion";
 import { LanguageContext } from "../LanguageContext";
-
 import Footer from "./Footer";
+import Search from "./Search";
 
 export default function Accueil() {
   const { language } = useContext(LanguageContext);
@@ -21,10 +20,12 @@ export default function Accueil() {
         setCategory(data.allCategory);
       }
     };
+
     fetchData();
-  }, [language]); 
+  }, [language]);
+
   return (
-    <div>
+    <div className="bg-white dark:bg-dark-mode-purple">
       <Header />
       <div className="mt-20 flex flex-col items-center justify-center">
         <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
@@ -38,8 +39,9 @@ export default function Accueil() {
             ))}
         </ul>
       </div>
-      <Search />
+        <Search />
       <Carousel />
+      <Promotion />
       <Footer />
     </div>
   );

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode:"class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
@@ -18,6 +19,8 @@ module.exports = {
         gold: "#BF9553",
         "light-purple": "#CD92F2",
         "dark-purple": "#7B16B9",
+        "dark-mode-purple": "#150536",
+        "dark-mode-light-purple": "#6D4FAE",
         black: "#0C0910",
         white: "#F5F5F5",
         grey: "#DEDEE0"

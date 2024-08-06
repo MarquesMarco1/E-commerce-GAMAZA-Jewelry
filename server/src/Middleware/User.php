@@ -24,4 +24,16 @@ class User
             }
         }
     }
+
+    public function isAdressValide(UserRepository $userRepository)
+    {
+        if ($this->email !== null) {
+            $adress = $userRepository->getFullAdress($this->email);
+            if ($adress !== null & $adress[0]["country"] !== "") {
+                return $adress[0]["country"];
+            } else {
+                return false;
+            }
+        }
+    }
 }

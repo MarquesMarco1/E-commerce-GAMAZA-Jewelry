@@ -2,8 +2,9 @@
 //  Dependencies  //
 ////////////////////
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../../LanguageContext";
 
 ////////////
 // Config //
@@ -30,16 +31,12 @@ export default function CreadArticle() {
   const [allCategorie, setAllCategorie] = useState([]);
   const [allMaterial, setAllMaterial] = useState([]);
   const [allStone, setAllStone] = useState([]);
-  const [allSize, setAllSize] = useState([]);
 
   const [category_id, setCategory_id] = useState("");
   const [image, setImage] = useState("");
   const [imageAll, setImageAll] = useState([]);
-  const [color, setColor] = useState("");
-  const [colorEN, setColorEN] = useState("");
   const [nom, setNom] = useState("");
   const [nomEN, setNomEN] = useState("");
-  const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
@@ -47,6 +44,9 @@ export default function CreadArticle() {
   const [descriptionEN, setDescriptionEN] = useState("");
   const [material, setMaterial] = useState("");
   const [stone, setStone] = useState("");
+
+  const { language } = useContext(LanguageContext);
+
   useEffect(() => {
     ////////////////////////////////
     //  Check Middleware isAdmin  //
@@ -76,7 +76,7 @@ export default function CreadArticle() {
     /////////////////////////////////////////////////
 
     const fetchData = async () => {
-      const response = await fetch(`${localhost}/api/categorie`);
+      const response = await fetch(`${localhost}/api/categorie/${language}`);
 
       if (response.status === 200) {
         const data = await response.json();
@@ -96,15 +96,8 @@ export default function CreadArticle() {
         const data_stone = await response_stone.json();
         setAllStone(data_stone.allStone);
       }
-
-      const response_size = await fetch(`${localhost}/api/size`);
-
-      if (response_size.status === 200) {
-        const data_size = await response_size.json();
-        setAllSize(data_size.allSize);
-      }
     };
-  }, []);
+  }, [language]);
 
   ////////////////////
   //  HandleSubmit  //
@@ -116,13 +109,10 @@ export default function CreadArticle() {
     const formData = {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
-      stone_id: parseInt(stone),
+      stone_id: stone ? parseInt(stone) : null,
       image: imageAll.length > 0 ? imageAll : [image],
-      color: color,
-      colorEn: colorEN,
       nom: nom,
       nomEn: nomEN,
-      size: size,
       weight: weight,
       price: price,
       stockQty: stockQty,
@@ -149,6 +139,7 @@ export default function CreadArticle() {
   };
   return (
     <>
+    <div className="dark:bg-dark-mode-purple">
       <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t("createProduct.title")}
@@ -160,7 +151,7 @@ export default function CreadArticle() {
         {/* Name */}
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nom"
           id="nom"
@@ -170,7 +161,7 @@ export default function CreadArticle() {
         />
 
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           type="text"
           name="nom"
           id="nom"
@@ -182,7 +173,7 @@ export default function CreadArticle() {
         {/* Categories */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="cat"
           id="categorie"
           onChange={(e) => setCategory_id(e.target.value)}
@@ -190,14 +181,16 @@ export default function CreadArticle() {
           <option value="">{t("createProduct.category")}</option>
           {allCategorie &&
             allCategorie.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
         </select>
 
         {/* Materials */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="material"
           id="material"
           onChange={(e) => setMaterial(e.target.value)}
@@ -205,14 +198,16 @@ export default function CreadArticle() {
           <option value="">{t("createProduct.material")}</option>
           {allMaterial &&
             allMaterial.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
         </select>
 
         {/* Stones */}
 
         <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4  dark:bg-dark-mode-light-purple dark:text-gold"
           name="stone"
           id="stone"
           onChange={(e) => setStone(e.target.value)}
@@ -220,26 +215,15 @@ export default function CreadArticle() {
           <option value="">{t("createProduct.stone")}</option>
           {allStone &&
             allStone.map((elem) => (
-              <option value={elem.id}>{elem.name}</option>
+              <option value={elem.id}>
+                {language === "FR" ? elem.name : elem.nameEn}
+              </option>
             ))}
-        </select>
-
-        {/* Sizes */}
-
-        <select
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          name="size"
-          id="size"
-          onChange={(e) => setSize(e.target.value)}
-        >
-          <option value="">{t("createProduct.size")}</option>
-          {allSize &&
-            allSize.map((elem) => <option value={elem.id}>{elem.name}</option>)}
         </select>
 
         {/* Images */}
 
-        <div className="flex flex-col justify-start	 items-end mb-4">
+        <div className="flex flex-col justify-start	 items-end mb-4  dark:bg-dark-mode-light-purple dark:text-gold">
           <input
             className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl "
             type="text"
@@ -251,34 +235,12 @@ export default function CreadArticle() {
           />
 
           <button
-            className="rounded-lg bg-light-purple p-2.5 mt-1"
+            className="rounded-lg bg-light-purple dark:bg-gold text-gold dark:text-white p-2.5 mt-1"
             onClick={() => reset()}
           >
             {t("createProduct.buttonAdd")}
           </button>
         </div>
-
-        {/* Color */}
-
-        <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="color"
-          id="color"
-          placeholder={t("createProduct.colorFR")}
-          required
-          onChange={(e) => setColor(e.target.value)}
-        />
-
-        <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
-          type="text"
-          name="color"
-          id="color"
-          placeholder={t("createProduct.colorEN")}
-          required
-          onChange={(e) => setColorEN(e.target.value)}
-        />
 
         {/* Weight */}
 
@@ -345,6 +307,7 @@ export default function CreadArticle() {
         </button>
       </form>
       <Footer></Footer>
+      </div>
     </>
   );
 }

@@ -41,7 +41,6 @@ const Authentication = () => {
       body: JSON.stringify({ formData }),
     });
 
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("user", email);
       navigate("/", { replace: true });
@@ -68,7 +67,6 @@ const Authentication = () => {
       },
       body: JSON.stringify({ formData }),
     });
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("user", email);
       navigate("/", { replace: true });
@@ -79,6 +77,7 @@ const Authentication = () => {
 
   return (
     <>
+    <div className="bg-white dark:bg-dark-mode-purple">
       <Header />
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="relative w-4/5 bg-white shadow-lg rounded-lg">
@@ -96,27 +95,27 @@ const Authentication = () => {
                   {t('auth.login')}
                 </h1>
                 <div className="my-6 flex flex-wrap justify-center align-items space-between">
-                  <span className="block text-md font-primary font-bold leading-6 text-black">
+                  <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
                     {t('auth.social')}
                   </span>
                   <Link to={`https://www.facebook.com/?locale=fr_FR`}>
                     <img
                       src={facebook}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
                       alt="logo of Facebook that redirects to the Facebook's homepage"
                     />
                   </Link>
                   <Link to={`https://x.com/?lang=fr`}>
                     <img
                       src={twitter}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
                       alt="logo of Twitter that redirects to the Twitter's homepage"
                     />
                   </Link>
                   <Link to={`https://www.instagram.com/`}>
                     <img
                       src={instagram}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
                       alt="logo of Instagram that redirects to the Instagram's homepage"
                     />
                   </Link>
@@ -124,7 +123,7 @@ const Authentication = () => {
 
                 <label
                   htmlFor="mail"
-                  className="block text-md font-primary font-bold leading-6 text-black"
+                  className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
                 >
                   {t('auth.email')}
                 </label>
@@ -132,21 +131,21 @@ const Authentication = () => {
                   type="email"
                   name="email"
                   placeholder={t('auth.email')}
-                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold "
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <label
                   htmlFor="password"
-                  className="block text-md font-primary font-bold leading-6 text-black"
+                  className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
                 >
                   {t('auth.password')}
                 </label>
                 <input
                   type="password"
                   placeholder={t('auth.password')}
-                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -154,15 +153,15 @@ const Authentication = () => {
                 />
                 <a
                   href="#"
-                  className="font-bold font-primary text-dark-purple hover:text-light-purple"
+                  className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
                 >
                   {t('auth.forgot')}
                 </a>
-                <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary ">
+                <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
                   {t('auth.login')}
                 </button>
                 <p
-                  className="mt-4 cursor-pointer text-blue-500"
+                  className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
                   onClick={() => setIsSignUp(true)}
                 >
                   {t('auth.no-account')}
@@ -185,27 +184,27 @@ const Authentication = () => {
                   {t('auth.register')}
                 </h1>
                 <div className="my-6 flex flex-wrap justify-center align-items space-between">
-                  <span className="block text-md font-primary font-bold leading-6 text-black">
+                  <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
                     {t('auth.social')}
                   </span>
                   <Link to={`https://www.facebook.com/?locale=fr_FR`}>
                     <img
                       src={facebook}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
                       alt="logo of Facebook that redirects to the Facebook's homepage"
                     />
                   </Link>
                   <Link to={`https://x.com/?lang=fr`}>
                     <img
                       src={twitter}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full  dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
                       alt="logo of Twitter that redirects to the Twitter's homepage"
                     />
                   </Link>
                   <Link to={`https://www.instagram.com/`}>
                     <img
                       src={instagram}
-                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                      className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full  dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
                       alt="logo of Instagram that redirects to the Instagram's homepage"
                     />
                   </Link>
@@ -213,28 +212,28 @@ const Authentication = () => {
 
                 <label
                   htmlFor="mail"
-                  className="block text-md font-primary font-bold leading-6 text-black"
+                  className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
                 >
                   {t('auth.email')}
                 </label>
                 <input
                   type="email"
                   placeholder={t('auth.email')}
-                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <label
                   htmlFor="password"
-                  className="block text-md font-primary font-bold leading-6 text-black"
+                  className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
                 >
                   {t('auth.password')}
                 </label>
                 <input
                   type="password"
                   placeholder={t('auth.password')}
-                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white "
+                  className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
@@ -242,15 +241,15 @@ const Authentication = () => {
                 />
                 <a
                   href="#"
-                  className="font-bold font-primary text-dark-purple hover:text-light-purple"
+                  className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
                 >
                   {t('auth.no-account')}
                 </a>
-                <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary">
+                <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
                   {t('auth.register')}
                 </button>
                 <p
-                  className="mt-4 cursor-pointer text-blue-500"
+                  className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
                   onClick={() => setIsSignUp(false)}
                 >
                   {t('auth.no-account')}
@@ -265,6 +264,7 @@ const Authentication = () => {
             {error && <p>{error}</p>}
           </div>
         </div>
+      </div>
       </div>
     </>
   );
