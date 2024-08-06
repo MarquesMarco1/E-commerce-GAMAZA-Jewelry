@@ -163,7 +163,8 @@
   "stockAlert": {
     "notify": "M'avertir du retour en stock",
     "email": "Entrez votre email",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "submit": "Envoyer"
   },
   "reviewPage": {
     "title": "Évaluez ce produit",

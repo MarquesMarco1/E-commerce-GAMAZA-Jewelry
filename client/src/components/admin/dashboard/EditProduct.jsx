@@ -140,7 +140,8 @@ export default function EditProduct() {
     });
     if (response.status === 200) {
       const data = await response.json();
-      navigate("/admin", { replace: true });
+      console.log(data);
+      // navigate("/admin", { replace: true });
     }
   };
 
@@ -357,7 +358,11 @@ export default function EditProduct() {
 
         {/* Submit Button */}
 
-        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
+        <button
+          type="submit"
+          id="submit"
+          className="dark:bg-gold dark:text-white"
+        >
           {t("editProduct.button")}
         </button>
       </form>
