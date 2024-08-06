@@ -105,7 +105,7 @@ export default function Search() {
     let list = [];
 
     if (categoryName !== "Toutes les catégories" && categoryName !== "All Categories") {
-      console.log('if /', categoryName)
+      // console.log('if /', categoryName)
       list = product.filter(
         (elem) =>
           elem.category.name === categoryName &&
@@ -115,17 +115,17 @@ export default function Search() {
         );
       } else {
         if (userInput === "") {
-          console.log('else / if')
+          // console.log('else / if')
           list = [...product];
         } else {
-          console.log('else / else', userInput)
+          // console.log('else / else', userInput)
           list = product.filter((elem) =>
             elem.name.toLocaleLowerCase().includes(userInput.toLocaleLowerCase()) ||
             elem.nameEn.toLocaleLowerCase().includes(userInput.toLocaleLowerCase())
         );
       }
     }
-    console.log(list)
+    // console.log(list)
     setSearchResults(list);
   };
 

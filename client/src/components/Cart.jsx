@@ -28,7 +28,7 @@ export default function Cart() {
   const validateAdress = async (email) => {
     const response = await fetch(`${localhost}/api/validateAdress/${email}`);
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
   }
   
   useEffect(()=>{

@@ -13,7 +13,7 @@ const Autocomplete = ({ autocompleteData, activeSuggestion, onClick }) => {
   }, [autocompleteData, activeSuggestion]);
 
   let suggestionsListComponent;
-  console.log('filteredSuggestions', filteredSuggestions)
+  // console.log('filteredSuggestions', filteredSuggestions)
   if (filteredSuggestions && filteredSuggestions.length > 0) {
     suggestionsListComponent = (
       <ul className="absolute border border-gray-600 border-t-0 list-none mt-12 max-h-36 overflow-y-auto pl-0 w-full bg-grey shadow-lg md:w-72">
@@ -23,11 +23,11 @@ const Autocomplete = ({ autocompleteData, activeSuggestion, onClick }) => {
             className += "bg-light-purple hover:text-black hover:cursor-pointer hover:font-bold";
           }
           
-          console.log('testetete', suggestion)
+          // console.log('testetete', filteredSuggestions)
           return (
             <li
               className={`${className} border-b border-gray-600:last:border-0`}
-              key={language === 'FR' ? suggestion.name : suggestion.nameEn}
+              key={index}
               onClick={onClick}
             >
               <img

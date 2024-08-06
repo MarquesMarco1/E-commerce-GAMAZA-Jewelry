@@ -71,7 +71,7 @@ export default function EditProfil() {
       country: country,
       phone: phone,
     };
-    console.log(formData)
+    // console.log(formData)
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {
