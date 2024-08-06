@@ -168,17 +168,17 @@ const SpecProduct = () => {
           </li>
         </ul>
       </nav>
-      <main className="py-6 px-4 max-w-7xl mx-auto">
-      <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
-      <div className="flex flex-col items-center lg:w-1/3">
-            <div
-              className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
-            >
-              {product.images &&
-                product.images.map((image, index) => (
-                  <img
-                    key={index}
-                    className={`w-20 h-20 cursor-pointer border-2 ${
+      {/* <main className="py-6 px-4 max-w-7xl mx-auto"> */}
+        <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
+          <div className="flex flex-col items-center md:w-1/3">
+              <div
+                className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
+              >
+                {product.images &&
+                  product.images.map((image, index) => (
+                    <img
+                      key={index}
+                      className={`w-20 h-20 cursor-pointer border-2 ${
                       selectedImage === image
                         ? "border-gold"
                         : "border-gray-300"
@@ -191,7 +191,7 @@ const SpecProduct = () => {
             </div>
           </div>
           <div className="flex-1">
-            <div className="flex items-center justify-center mb-4 w-full max-w-4xl h-[600px] bg-gray-100">
+            <div className="flex items-center justify-center mb-4 w-full max-w-full h-[600px] bg-gray-100">
               {selectedImage && (
                 <img
                   className="object-contain w-full h-full cursor-pointer"
@@ -230,39 +230,6 @@ const SpecProduct = () => {
             <SizeGuide data={product} />
           </div>
         </div>
-        {/* <div className="mt-10 space-y-2">
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.category")}
-            {language === "FR"
-              ? product.category.name
-              : product.category.nameEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.material")}
-            {language === "FR"
-              ? product.material.name
-              : product.material.nameEn}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.stone")}
-            {product.stone
-              ? language === "FR"
-                ? product.stone.name
-                : product.stone.nameEn
-              : ""}
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.weight")} {product.weight}g
-          </p>
-          <div className="border-b-2 border-gray-300"></div>
-          <p className="text-lg font-primary bg-purple-100 bg-opacity-30 p-2">
-            {t("specProduct.stockQty")} {product.stockQty}
-          </p> */}
-        {/* </div> */}
-      </main>
       <ReviewForm id={id} />
 
       <Footer />

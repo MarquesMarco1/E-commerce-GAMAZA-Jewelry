@@ -2,6 +2,7 @@ import cart from "../assets/cart.svg";
 import profile from "../assets/profile.svg";
 import admin from "../assets/admin.svg";
 import lotus from "../assets/lotus.svg";
+import hamburger from '../assets/hamburger.svg'
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import localhost from "../config";
@@ -34,67 +35,49 @@ export default function Header() {
   }, [isAdmin, email]);
 
   return (
-    <header className="bg-light-purple bg-opacity-20 h-auto md:h-24 p-4 md:p-6 md:px-24 mb-4 md:mb-0">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
+    <header className="bg-light-purple bg-opacity-20 h-auto p-4 mb-4">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link to={`/`} className="flex items-center">
           <img
             src={lotus}
-            className="w-16 h-16 md:w-24 md:h-24"
+            className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24"
             alt="logo of a lotus that redirect to the landing/home page"
       />
-      <h1 className="text-gold font-primary font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ml-4">
+      <h1 className="text-gold font-primary font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ml-2 sm:ml-4">
         G.A.M.A.Z.A .Co
       </h1>
       </Link>
+
       {/* <div className="flex flex-col space-x-4 md:flex-row items-center md:mr-24 space-y-4 md:space-y-0 md:space-x-8"> */}
       <div className="flex items-center space-x-4">
       <Switch/>
       <Lang />
+      </div>
+
       <button
-          className="block md:hidden"
+          className="block md:hidden relative"
           onClick={() => setMenuOpen(!menuOpen)}
       >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
+        <img 
+          src={hamburger}
+          className="w-8 h-8"
+          alt="logo of the hamburger that open our navbar"
+      />
           </button>
-        </div>
         <nav
           className={`${
             menuOpen ? "block" : "hidden"
           } md:flex md:items-center md:space-x-8`}
         >
-          <Link to={`/`} className="block md:inline-block mt-4 md:mt-0">
-            {t("header.home")}
-          </Link>
-          <Link to={`/about`} className="block md:inline-block mt-4 md:mt-0">
-            {t("header.about")}
-          </Link>
-          <Link to={`/services`} className="block md:inline-block mt-4 md:mt-0">
-            {t("header.services")}
-          </Link>
-          <Link to={`/contact`} className="block md:inline-block mt-4 md:mt-0">
-            {t("header.contact")}
-          </Link>
+
           <div className="relative group">
             <Link to={`/profile`} className="flex items-center mt-4 md:mt-0">
               <img
                 src={profile}
-                className="w-8 h-8 md:w-12 md:h-12"
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12"
                 alt="logo of a person that redirect to your profile and the edition or suppression of your profile"
               />
-              <span className="hidden md:block text-2xl text-gold font-primary font-extrabold ml-2">
+              <span className="hidden md:block text-xl sm:text-2xl text-gold font-primary font-extrabold ml-2">
                 {t("header.profile")}
               </span>
             </Link>
@@ -110,23 +93,27 @@ export default function Header() {
               </span>
             </Link> */}
             {isAdmin && (
+              <div className="flex items-center mt-4 md:mt-0">
             <Link to={`/admin`} className="flex items-center mt-4 md:mt-0">
               <img
                 src={admin}
-                className="w-8 h-8 md:w-12 md:h-12"
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12"
                 alt="logo of an admin that redirect to your dashboard and the edition or suppression of some products"
               />
-                <span className="hidden md:block text-2xl text-gold font-primary font-extrabold ml-2">
-                {t("header.admin")}
+              <span className="hidden md:block text-xl sm:text-2xl text-gold font-primary font-extrabold ml-2">
+              {t("header.admin")}
               </span>
             </Link>
+            </div>
           )}
           </div>
+
         <div
           className="relative group mt-4 md:mt-0"
           onMouseEnter={() => setShowCartPopup(true)}
           onMouseLeave={() => setShowCartPopup(false)}
         >
+
           <Link to={`/cart`} className="flex items-center">
             <img
               src={cart}

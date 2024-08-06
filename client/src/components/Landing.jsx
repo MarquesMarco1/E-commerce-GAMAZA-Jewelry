@@ -25,7 +25,7 @@ export default function Accueil() {
   }, [language]);
 
   return (
-    <div className="bg-white dark:bg-dark-mode-purple">
+    <div className="bg-white dark:bg-dark-mode-purple shadow-md">
       <Header />
       <div className="mt-20 flex flex-col items-center justify-center">
         <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">

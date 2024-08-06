@@ -166,7 +166,7 @@ export default function EditProduct() {
     <>
       <Header></Header>
       <form
-        className="flex flex-col justify-center	items-center"
+        className="flex flex-col justify-center	items-center p-4 md:p-8 lg:p-12"
         onSubmit={handelSubmit}
       >
         {/* Name FR*/}
