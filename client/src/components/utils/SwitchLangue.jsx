@@ -14,16 +14,28 @@ const Lang = () => {
   };
 
   return (
-    <div>
-      <div className="dark:bg-dark-mode-purple dark:text-gold">
-{language == 'FR' && <select value={language} name="language" onChange={handleChangeLanguage}>
-          <option value={Language.FR}>FR</option>
-          <option value={Language.EN}>EN</option>
-        </select>}
-{language == 'EN' && <select value={language} name="language" onChange={handleChangeLanguage}>
-          <option value={Language.EN}>EN</option>
-          <option value={Language.FR}>FR</option>
-        </select>}
+    <div className="p-4 flex justiify-center items-center">
+      <div className="text-gold dark:bg-dark-mode-purple dark:text-gold">
+        {language == 'FR' && (
+          <select value={language} 
+            name="language" 
+            className="bg-white text-gold  dark:bg-dark-mode-purple dark:text-gold p-2 rounded-md" 
+            onChange={handleChangeLanguage}
+            >
+            <option value={Language.FR}>FR</option>
+            <option value={Language.EN}>EN</option>
+          </select>
+        )}
+        {language == 'EN' && (
+          <select value={language} 
+            name="language"
+            className="bg-white text-gold dark:bg-dark-mode-purple dark:text-gold p-2 rounded-md"  
+            onChange={handleChangeLanguage}
+            >
+            <option value={Language.EN}>EN</option>
+            <option value={Language.FR}>FR</option>
+          </select>
+        )}
       </div>
     </div>
   );

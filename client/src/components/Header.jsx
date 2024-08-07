@@ -49,27 +49,22 @@ export default function Header() {
       </Link>
 
       {/* <div className="flex flex-col space-x-4 md:flex-row items-center md:mr-24 space-y-4 md:space-y-0 md:space-x-8"> */}
-      <div className="flex items-center space-x-4">
-      <Switch/>
-      <Lang />
-      </div>
-
       <button
           className="block md:hidden relative"
           onClick={() => setMenuOpen(!menuOpen)}
       >
         <img 
           src={hamburger}
-          className="w-8 h-8"
+          className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24"
           alt="logo of the hamburger that open our navbar"
       />
-          </button>
+           </button>
         <nav
-          className={`${
+          className={`h-auto ${
             menuOpen ? "block" : "hidden"
-          } md:flex md:items-center md:space-x-8`}
+          } transition duration-300 ease-in-out md:flex md:items-center md:space-x-8`}
         >
-
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-8 mt-4 md:mt-0 md:ml-auto">
           <div className="relative group">
             <Link to={`/profile`} className="flex items-center mt-4 md:mt-0">
               <img
@@ -113,11 +108,15 @@ export default function Header() {
           onMouseEnter={() => setShowCartPopup(true)}
           onMouseLeave={() => setShowCartPopup(false)}
         >
+        <div className="flex items-center mt-4 md:mt-0">
+            <Switch/>
+            <Lang />
+        </div>
 
-          <Link to={`/cart`} className="flex items-center">
+          <Link to={`/cart`} className="flex items-center mt4 md:mt-0">
             <img
               src={cart}
-              className="w-8 h-8 md:w-12 md:h-12"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12"
               alt="logo of a cart that redirect to your cart and the finalization of your order"
             />
               <span className="hidden md:block text-2xl text-gold font-primary font-extrabold ml-2">
@@ -125,9 +124,11 @@ export default function Header() {
             </span>
           </Link>
             <CartPopup show={showCartPopup} cartItems={cartItems} />
+
           </div>
-        </nav>
       </div>
-    </header>
+      </nav>
+    </div>
+  </header>
   );
 }

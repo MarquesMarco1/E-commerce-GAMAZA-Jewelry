@@ -173,7 +173,7 @@ export default function EditProduct() {
 
         <label for="nom">{t("createProduct.productFR")}</label>
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid border-slate-500 w-96 sm:w-64 p-2.5 rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"
