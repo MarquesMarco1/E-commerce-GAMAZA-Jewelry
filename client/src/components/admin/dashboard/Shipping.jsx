@@ -24,18 +24,21 @@ export default function ManageShipping() {
   const { language } = useContext(LanguageContext);
 
     ///////////////////////////////////////////////
-  //  Fetch Whitelist, Blacklist, and shipping  //
+  //  Fetch Whitelist, Blacklist, language, shipping  //
   ///////////////////////////////////////////////
+
 
   return (
     <>
         <div className="dark:bg-dark-mode-purple">
             <Header></Header>
             <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
-                {t("manageShipping.title")}
+                {t("manageShipping.shippingTitle")}
             </h1>
-            {error && <p>{error}</p>}
-            
+            <h1 className="text-center text-2xl mb-4 mt-4 text-gold">
+              {t("manageShipping.thresholdsTitle")}
+            </h1>
+            <Footer></Footer>
         </div>
     </>
   )

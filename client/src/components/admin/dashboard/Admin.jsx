@@ -129,6 +129,11 @@ export default function Admin() {
   const addPromo = () => {
     navigate(`/addPromo`, { replace: true });
   };
+
+  const manageShipping = () => {
+    navigate("/manageShipping", { replace: true });
+  }
+
   return (
     <>
       <div className="dark:bg-dark-mode-purple">
@@ -160,6 +165,13 @@ export default function Admin() {
               onClick={() => addPromo()}
             >
               {t("adminPage.promotion")}
+            </button>
+
+            <button
+              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              onClick={() => manageShipping()}
+            >
+              {t("adminPage.shipping")}
             </button>
             <br></br>
           </div>

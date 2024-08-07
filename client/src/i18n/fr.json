@@ -90,7 +90,8 @@
     "color": "Couleur :",
     "price": "Prix :",
     "manageCategory": "Gestion des categories :",
-    "promotion": "Promotion"
+    "promotion": "Promotion",
+    "shipping": "Expéditions"
   },
   "createProduct": {
     "title": "Créer un produit",
@@ -147,6 +148,12 @@
     "pourcentage": "Remise à appliquer",
     "product": "Choisir un produit",
     "button": "Ajouter"
+  },
+  "manageShipping": {
+    "shippingTitle": "Gérer l'expédition",
+    "whitelist": "Pays whitelistés",
+    "blacklist": "Pays blacklistés",
+    "thresholdsTitle": "Palliers de livraison gratuite"
   },
   "sizeGuidePage": {
     "tailleChoose": "Taille:",
