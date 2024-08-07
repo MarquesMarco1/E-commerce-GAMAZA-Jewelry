@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: ecommerce
 -- ------------------------------------------------------
--- Server version	8.0.39-0ubuntu0.22.04.1
+-- Server version	8.0.39-0ubuntu0.20.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,34 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `alert_stock`
+--
+
+DROP TABLE IF EXISTS `alert_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_stock` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastupdate` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A16CA18B4584665A` (`product_id`),
+  CONSTRAINT `FK_A16CA18B4584665A` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alert_stock`
+--
+
+LOCK TABLES `alert_stock` WRITE;
+/*!40000 ALTER TABLE `alert_stock` DISABLE KEYS */;
+INSERT INTO `alert_stock` VALUES (1,6,'alice@gmail.com','2024-08-06 11:47:12');
+/*!40000 ALTER TABLE `alert_stock` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `cart`
@@ -28,7 +56,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `IDX_BA388B7A76ED395` (`user_id`),
   CONSTRAINT `FK_BA388B7A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +65,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (3,1),(4,2);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +88,7 @@ CREATE TABLE `cart_item` (
   KEY `IDX_F0FE25274584665A` (`product_id`),
   CONSTRAINT `FK_F0FE25271AD5CDBF` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`),
   CONSTRAINT `FK_F0FE25274584665A` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +97,7 @@ CREATE TABLE `cart_item` (
 
 LOCK TABLES `cart_item` WRITE;
 /*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
+INSERT INTO `cart_item` VALUES (15,4,10,1,'59','2024-08-06 20:54:47'),(16,4,18,1,'no size','2024-08-06 21:29:42'),(18,3,9,1,'no size','2024-08-06 21:47:36');
 /*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,6 +151,7 @@ CREATE TABLE `doctrine_migration_versions` (
 
 LOCK TABLES `doctrine_migration_versions` WRITE;
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
+INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20240805184327','2024-08-05 18:43:33',143),('DoctrineMigrations\\Version20240806104609','2024-08-06 10:46:15',146),('DoctrineMigrations\\Version20240806113218','2024-08-06 11:32:23',67),('DoctrineMigrations\\Version20240806224039','2024-08-06 22:40:50',296);
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +235,7 @@ CREATE TABLE `product` (
   `price` double NOT NULL,
   `stock_qty` int NOT NULL,
   `last_updated` datetime NOT NULL,
-  `key_stripe` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key_stripe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_D34A04AD139DF194` (`promotion_id`),
   KEY `IDX_D34A04AD12469DE2` (`category_id`),
@@ -223,7 +254,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,3,3,11,1,'Bague Manon Or Jaune Oxyde De Zirconium','Manon Yellow Gold Zirconium Oxide Ring','Bague Or Jaune 375/1000 Oxyde De Zirconium Central Accompagne D\'oxydes De Zirconium','375/1000 Yellow Gold Ring with Central Zirconium Oxide Accompanied by Zirconium Oxides','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwed995558/images/B3DFJZW160-master.jpg?sw=1024&sh=1024\"]',1.24,179,300,'2024-07-30 19:49:12','price_1PjMbxGrTRGUcbUFMKaWTFhz'),(2,1,3,5,2,'Bague Manon Or Blanc Amethyste','Manon White Gold Amethyst Ring','375/1000 White Gold Ring Central Amethyst Accompanied By Amethysts','Bague Or Blanc 375/1000 Amethyste Centrale Accompagnee D\'amethystes','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw595f7c46/images/B3DFBYI016-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwd4cd99eb/images/B3DFBYI016-view1.jpg?sw=1024&sh=1024\"]',1.1,169,300,'2024-07-30 19:56:38','price_1PjMceGrTRGUcbUFMrD9zUBO'),(3,1,3,2,2,'Bague Manon Or Blanc Saphir Et Diamant','Manon White Gold Sapphire and Diamond Ring','Bague Or Blanc 375/1000 Saphir Central Accompagne De Diamants','375/1000 White Gold Ring with Central Sapphire and Diamonds','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw504a4e4e/images/B3DFBSB787-master.jpg?sw=1024&sh=1024\"]',1.18,570,340,'2024-07-30 19:58:27','price_1PjMeTGrTRGUcbUF6YRy1q3G'),(4,2,3,11,3,'Bague Solitaire Manon Or Rose Oxyde De Zirconium','Manon Solitaire Ring Rose Gold Zirconium Oxide','Solitaire Or Rose 375/1000 Oxyde De Zirconium Rond 4 Griffes Accompagne Oxydes De Zirconium','Solitaire Rose Gold 375/1000 Zirconium Oxide Round 4 Claws Accompanies Zirconium Oxides','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw5ba245e5/images/B3DFRZW01U-master.jpg?sw=1024&sh=1024\", [\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw3f33d6db/images/B3DFRZW01U-view1.jpg?sw=1024&sh=1024\"]]',1.24,179,436,'2024-07-30 20:13:41','price_1PjMhpGrTRGUcbUFTPYxuXpT'),(6,1,2,11,1,'Collier Ponama Or Jaune Oxyde De Zirconium','Ponama Yellow Gold Zirconium Oxide Necklace','Collier Or Jaune 375/1000 Maille Forçat Oxyde De Zirconium 4mm Pm 42cm','375/1000 Yellow Gold Necklace Forçat Mesh Zirconium Oxide 4mm Pm 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw098ae5e8/images/B3CFJZW134-master.jpg?sw=1024&sh=1024\"]',1.08,99,0,'2024-07-31 18:56:56','price_1PjMibGrTRGUcbUFeznPWjY8'),(7,1,2,11,2,'Collier Ponama Or Blanc Oxyde De Zirconium','Ponama White Gold Zirconium Oxide Necklace','Collier Or Blanc 375/1000 Maille Forçat Oxyde De Zirconium 4mm 42cm\n','375/1000 White Gold Necklace Zirconium Oxide Forçat Mesh 4mm 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw73af259b/images/B3CFBZW015-master.jpg?sw=1024&sh=1024\"]',1.09,99,5,'2024-07-31 18:57:05','price_1PjMjbGrTRGUcbUFrjVkeDud'),(8,1,2,11,3,'Collier Colby Or Rose Oxyde De Zirconium','Ponama Rose Gold Zirconium Oxide Necklace','Collier Or Rose 375/1000 Solitaire Oxyde De Zirconium 4griffes 0.451cts Maille Forcat 42cm\n','375/1000 Rose Gold Necklace Solitaire Zirconium Oxide 4 claws 0.451cts Forcat Mesh 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw0b368dc1/images/B3CFRZW059-master.jpg?sw=1024&sh=1024\"]',0.77,99,355,'2024-07-30 21:09:18','price_1PjMkHGrTRGUcbUFjlEP99MU'),(9,1,4,NULL,2,'Alliance Caroline Sablee Ruban Plat Or Blanc','Caroline Sablee Flat Ribbon White Gold Wedding Ring','Alliance Or Blanc Rhodie 375/1000 Collection Caroline Fantaisie Intérieur Sable 3mm\n','White Gold Rhodium Wedding Band 375/1000 Caroline Fantaisie Collection Sand Interior 3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwf4e51d16/images/B3AFBW0403-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw1b0efc54/images/B3AFBW0403-view1.jpg?sw=1024&sh=1024\"]',1.4,239,564,'2024-07-30 22:00:27','price_1PjMlEGrTRGUcbUFYYmkpsbI'),(10,1,4,NULL,1,'Alliance Caroline Sablee Ruban Plat Or Bicolore','Caroline Sablee Band Flat Ribbon Two-Tone Gold Wedding Ring','Alliance Or Bicolore Jaune Et Blanc Rhodie 375/1000 Fantaisie Sable 3mm\n','Two-Tone Yellow and White Rhodium Gold Wedding Band 375/1000 Fancy Sand 3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwc5636811/images/B3AF2W0405-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwe00d67c3/images/B3AF2W0405-view1.jpg?sw=1024&sh=1024\"]',1.14,229,432,'2024-07-30 22:10:04','price_1PjMlpGrTRGUcbUFWn0qkSxz'),(11,1,5,NULL,1,'Bracelet Aliz Or Jaune','Aliz Yellow Gold Bracelet','Bracelet Or Jaune 375/1000 Vague Argente Glitter Maille Jaseron 16+2cm\n','375/1000 Yellow Gold Bracelet Silver Wave Glitter Jaseron Mesh 16+2cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw774c3c79/images/B3BFJW00CP-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw2b23accd/images/B3BFJW00CP-view1.jpg?sw=1024&sh=1024\"]',0.65,99,345,'2024-07-30 22:11:47','price_1PjMmOGrTRGUcbUFLpYL9aSu'),(12,1,5,5,1,'Bracelet Arenale Or Jaune Amethyste','Arenale Bracelet Yellow Gold Amethyst Bracelet','Bracelet Or Jaune 375/1000 Améthyste Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Amethyst Bracelet Closed Setting Convict Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw7c720818/images/B3BFJYI020-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw60e0d279/images/B3BFJYI020-view1.jpg?sw=1024&sh=1024\"]',0.63,99,353,'2024-07-30 22:23:43','price_1PjMnBGrTRGUcbUFiDtpadMI'),(13,1,5,NULL,1,'Bracelet Arenale Or Jaune Quartz','Arenale Yellow Gold Quartz Bracelet','Bracelet Or Jaune 375/1000 Quartz Fume Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Bracelet Smoky Quartz Closed Setting Convict Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw45e603e7/images/B3BFJQM018-master.jpg?sw=1024&sh=1024\"]',0.64,99,355,'2024-07-30 22:20:09','price_1PjMoFGrTRGUcbUFAS1NN20y'),(14,1,5,NULL,1,'Bracelet Or Jaune Arenale Topaze','Arenale Topaz Yellow Gold Bracelet','Bracelet Or Jaune 375/1000 Topaze Azur 0.5 Cts Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Bracelet Azure Topaz 0.5 Cts Closed Setting Forçat Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwbc10c207/images/B3BFJTB016-master.jpg?sw=1024&sh=1024\"]',0.75,98.99,356,'2024-07-30 22:23:00','price_1PjMopGrTRGUcbUFUsdR4KFV'),(15,1,6,NULL,1,'Pendentif Alyssa Croix Or Jaune','Alyssa Cross Pendant Yellow Gold','Pendentif Or Jaune 375/1000 Motif Croix Relief\n','375/1000 Yellow Gold Pendant with Relief Cross Motif\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw241990bd/images/B3PMJW0591-view2.jpg?sw=1024&sh=1024\"]',0.6,89,343,'2024-07-30 22:28:50','price_1PjMpFGrTRGUcbUFdQRSgdnU'),(16,1,7,11,1,'Créoles Andgelina Rondes Or Jaune Oxyde De Zirconium','Andgelina Round Yellow Gold Zirconium Oxide Creoles','Creoles Or Jaune 375/1000 Serti 4 Griffes Oxydes De Zirconium Blancs\n','375/1000 Yellow Gold Creoles Set with 4 Claws and White Zirconium Oxides\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw20feb8dc/images/B3OFJZW814-master.jpg?sw=1024&sh=1024\"]',0.84,109,354,'2024-07-30 22:30:28','price_1PjMphGrTRGUcbUFHjHXA4AK'),(17,1,7,11,2,'Créoles Andgelina Rondes Or Blanc Oxyde De Zirconium','Andgelina Round White Gold Zirconium Oxide Creoles ','Créoles Or Blanc 375/1000 Oxydes De Zirconium Diamètre 7.3mm Largeur 2mm\n','Creoles White Gold 375/1000 Zirconium Oxides Diameter 7.3mm Width 2mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwb027e861/images/B3OFBZW583-master.jpg?sw=1024&sh=1024\"]',0.91,109,346,'2024-07-30 22:32:04','price_1PjMq7GrTRGUcbUFGIwTaCca'),(18,1,7,11,1,'Créoles Andgelina Rondes Or Jaune Oxyde De Zirconium','Andgelina Round Yellow Gold Zirconium Oxide Creoles','Creoles Or Jaune 375/1000 Serti 4 Griffes Oxydes De Zirconium Bleus\n','375/1000 Yellow Gold Creoles Set with 4 Claws and Blue Zirconium Oxides\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwc8a1ba40/images/B3OFJZB116-master.jpg?sw=1024&sh=1024\"]',0.7,109,356,'2024-07-30 22:33:24','price_1PjMqTGrTRGUcbUFxGWq8OqI'),(19,1,7,11,3,'Créoles Or Rose Andgelina Oxyde','Andgelina Round Oxide Rose Gold Creoles','Créoles Or Rose 375/1000 Oxydes De Zirconium Serti Griffes 7.3mm\n','375/1000 Rose Gold Hoop Earrings Zirconium Oxides Claw Setting 7.3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw36670795/images/B3OFRZW057-master.jpg?sw=1024&sh=1024\"]',0.82,109,432,'2024-07-30 22:35:03','price_1PjMr5GrTRGUcbUFYFO6lbld');
+INSERT INTO `product` VALUES (1,3,3,11,1,'Bague Manon Or Jaune Oxyde De Zirconium','Manon Yellow Gold Zirconium Oxide Ring','Bague Or Jaune 375/1000 Oxyde De Zirconium Central Accompagne D\'oxydes De Zirconium','375/1000 Yellow Gold Ring with Central Zirconium Oxide Accompanied by Zirconium Oxides','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwed995558/images/B3DFJZW160-master.jpg?sw=1024&sh=1024\"]',1.24,179,300,'2024-07-30 19:49:12','price_1PjMbxGrTRGUcbUFMKaWTFhz'),(2,1,3,5,2,'Bague Manon Or Blanc Amethyste','Manon White Gold Amethyst Ring','375/1000 White Gold Ring Central Amethyst Accompanied By Amethysts','Bague Or Blanc 375/1000 Amethyste Centrale Accompagnee D\'amethystes','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw595f7c46/images/B3DFBYI016-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwd4cd99eb/images/B3DFBYI016-view1.jpg?sw=1024&sh=1024\"]',1.1,169,300,'2024-07-30 19:56:38','price_1PjMceGrTRGUcbUFMrD9zUBO'),(3,1,3,2,2,'Bague Manon Or Blanc Saphir Et Diamant','Manon White Gold Sapphire and Diamond Ring','Bague Or Blanc 375/1000 Saphir Central Accompagne De Diamants','375/1000 White Gold Ring with Central Sapphire and Diamonds','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw504a4e4e/images/B3DFBSB787-master.jpg?sw=1024&sh=1024\"]',1.18,570,340,'2024-07-30 19:58:27','price_1PjMeTGrTRGUcbUF6YRy1q3G'),(4,2,3,11,3,'Bague Solitaire Manon Or Rose Oxyde De Zirconium','Manon Solitaire Ring Rose Gold Zirconium Oxide','Solitaire Or Rose 375/1000 Oxyde De Zirconium Rond 4 Griffes Accompagne Oxydes De Zirconium','Solitaire Rose Gold 375/1000 Zirconium Oxide Round 4 Claws Accompanies Zirconium Oxides','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw5ba245e5/images/B3DFRZW01U-master.jpg?sw=1024&sh=1024\", [\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw3f33d6db/images/B3DFRZW01U-view1.jpg?sw=1024&sh=1024\"]]',1.24,179,436,'2024-07-30 20:13:41','price_1PjMhpGrTRGUcbUFTPYxuXpT'),(6,1,2,11,1,'Collier Ponama Or Jaune Oxyde De Zirconium','Ponama Yellow Gold Zirconium Oxide Necklace','Collier Or Jaune 375/1000 Maille Forçat Oxyde De Zirconium 4mm Pm 42cm','375/1000 Yellow Gold Necklace Forçat Mesh Zirconium Oxide 4mm Pm 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw098ae5e8/images/B3CFJZW134-master.jpg?sw=1024&sh=1024\"]',1.08,99,-2,'2024-08-06 12:30:01','price_1PjMibGrTRGUcbUFeznPWjY8'),(7,1,2,11,2,'Collier Ponama Or Blanc Oxyde De Zirconium','Ponama White Gold Zirconium Oxide Necklace','Collier Or Blanc 375/1000 Maille Forçat Oxyde De Zirconium 4mm 42cm\n','375/1000 White Gold Necklace Zirconium Oxide Forçat Mesh 4mm 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw73af259b/images/B3CFBZW015-master.jpg?sw=1024&sh=1024\"]',1.09,99,5,'2024-07-31 18:57:05','price_1PjMjbGrTRGUcbUFrjVkeDud'),(8,1,2,11,3,'Collier Colby Or Rose Oxyde De Zirconium','Ponama Rose Gold Zirconium Oxide Necklace','Collier Or Rose 375/1000 Solitaire Oxyde De Zirconium 4griffes 0.451cts Maille Forcat 42cm\n','375/1000 Rose Gold Necklace Solitaire Zirconium Oxide 4 claws 0.451cts Forcat Mesh 42cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw0b368dc1/images/B3CFRZW059-master.jpg?sw=1024&sh=1024\"]',0.77,99,355,'2024-07-30 21:09:18','price_1PjMkHGrTRGUcbUFjlEP99MU'),(9,1,4,NULL,2,'Alliance Caroline Sablee Ruban Plat Or Blanc','Caroline Sablee Flat Ribbon White Gold Wedding Ring','Alliance Or Blanc Rhodie 375/1000 Collection Caroline Fantaisie Intérieur Sable 3mm\n','White Gold Rhodium Wedding Band 375/1000 Caroline Fantaisie Collection Sand Interior 3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwf4e51d16/images/B3AFBW0403-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw1b0efc54/images/B3AFBW0403-view1.jpg?sw=1024&sh=1024\"]',1.4,239,564,'2024-07-30 22:00:27','price_1PjMlEGrTRGUcbUFYYmkpsbI'),(10,1,4,NULL,1,'Alliance Caroline Sablee Ruban Plat Or Bicolore','Caroline Sablee Band Flat Ribbon Two-Tone Gold Wedding Ring','Alliance Or Bicolore Jaune Et Blanc Rhodie 375/1000 Fantaisie Sable 3mm\n','Two-Tone Yellow and White Rhodium Gold Wedding Band 375/1000 Fancy Sand 3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwc5636811/images/B3AF2W0405-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwe00d67c3/images/B3AF2W0405-view1.jpg?sw=1024&sh=1024\"]',1.14,229,432,'2024-07-30 22:10:04','price_1PjMlpGrTRGUcbUFWn0qkSxz'),(11,1,5,NULL,1,'Bracelet Aliz Or Jaune','Aliz Yellow Gold Bracelet','Bracelet Or Jaune 375/1000 Vague Argente Glitter Maille Jaseron 16+2cm\n','375/1000 Yellow Gold Bracelet Silver Wave Glitter Jaseron Mesh 16+2cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw774c3c79/images/B3BFJW00CP-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw2b23accd/images/B3BFJW00CP-view1.jpg?sw=1024&sh=1024\"]',0.65,99,345,'2024-07-30 22:11:47','price_1PjMmOGrTRGUcbUFLpYL9aSu'),(12,1,5,5,1,'Bracelet Arenale Or Jaune Amethyste','Arenale Bracelet Yellow Gold Amethyst Bracelet','Bracelet Or Jaune 375/1000 Améthyste Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Amethyst Bracelet Closed Setting Convict Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw7c720818/images/B3BFJYI020-master.jpg?sw=1024&sh=1024\", \"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw60e0d279/images/B3BFJYI020-view1.jpg?sw=1024&sh=1024\"]',0.63,99,353,'2024-07-30 22:23:43','price_1PjMnBGrTRGUcbUFiDtpadMI'),(13,1,5,NULL,1,'Bracelet Arenale Or Jaune Quartz','Arenale Yellow Gold Quartz Bracelet','Bracelet Or Jaune 375/1000 Quartz Fume Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Bracelet Smoky Quartz Closed Setting Convict Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw45e603e7/images/B3BFJQM018-master.jpg?sw=1024&sh=1024\"]',0.64,99,355,'2024-07-30 22:20:09','price_1PjMoFGrTRGUcbUFAS1NN20y'),(14,1,5,NULL,1,'Bracelet Or Jaune Arenale Topaze','Arenale Topaz Yellow Gold Bracelet','Bracelet Or Jaune 375/1000 Topaze Azur 0.5 Cts Serti Clos Maille Forçat 18cm\n','375/1000 Yellow Gold Bracelet Azure Topaz 0.5 Cts Closed Setting Forçat Mesh 18cm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwbc10c207/images/B3BFJTB016-master.jpg?sw=1024&sh=1024\"]',0.75,98.99,356,'2024-07-30 22:23:00','price_1PjMopGrTRGUcbUFUsdR4KFV'),(15,1,6,NULL,1,'Pendentif Alyssa Croix Or Jaune','Alyssa Cross Pendant Yellow Gold','Pendentif Or Jaune 375/1000 Motif Croix Relief\n','375/1000 Yellow Gold Pendant with Relief Cross Motif\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw241990bd/images/B3PMJW0591-view2.jpg?sw=1024&sh=1024\"]',0.6,89,343,'2024-07-30 22:28:50','price_1PjMpFGrTRGUcbUFdQRSgdnU'),(16,1,7,11,1,'Créoles Andgelina Rondes Or Jaune Oxyde De Zirconium','Andgelina Round Yellow Gold Zirconium Oxide Creoles','Creoles Or Jaune 375/1000 Serti 4 Griffes Oxydes De Zirconium Blancs\n','375/1000 Yellow Gold Creoles Set with 4 Claws and White Zirconium Oxides\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw20feb8dc/images/B3OFJZW814-master.jpg?sw=1024&sh=1024\"]',0.84,109,354,'2024-07-30 22:30:28','price_1PjMphGrTRGUcbUFHjHXA4AK'),(17,1,7,11,2,'Créoles Andgelina Rondes Or Blanc Oxyde De Zirconium','Andgelina Round White Gold Zirconium Oxide Creoles ','Créoles Or Blanc 375/1000 Oxydes De Zirconium Diamètre 7.3mm Largeur 2mm\n','Creoles White Gold 375/1000 Zirconium Oxides Diameter 7.3mm Width 2mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwb027e861/images/B3OFBZW583-master.jpg?sw=1024&sh=1024\"]',0.91,109,346,'2024-07-30 22:32:04','price_1PjMq7GrTRGUcbUFGIwTaCca'),(18,1,7,11,1,'Créoles Andgelina Rondes Or Jaune Oxyde De Zirconium','Andgelina Round Yellow Gold Zirconium Oxide Creoles','Creoles Or Jaune 375/1000 Serti 4 Griffes Oxydes De Zirconium Bleus\n','375/1000 Yellow Gold Creoles Set with 4 Claws and Blue Zirconium Oxides\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwc8a1ba40/images/B3OFJZB116-master.jpg?sw=1024&sh=1024\"]',0.7,109,356,'2024-07-30 22:33:24','price_1PjMqTGrTRGUcbUFxGWq8OqI'),(19,1,7,11,3,'Créoles Or Rose Andgelina Oxyde','Andgelina Round Oxide Rose Gold Creoles','Créoles Or Rose 375/1000 Oxydes De Zirconium Serti Griffes 7.3mm\n','375/1000 Rose Gold Hoop Earrings Zirconium Oxides Claw Setting 7.3mm\n','[\"https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dw36670795/images/B3OFRZW057-master.jpg?sw=1024&sh=1024\"]',0.82,109,432,'2024-07-30 22:35:03','price_1PjMr5GrTRGUcbUFYFO6lbld');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,6 +281,33 @@ LOCK TABLES `promotion` WRITE;
 /*!40000 ALTER TABLE `promotion` DISABLE KEYS */;
 INSERT INTO `promotion` VALUES (1,0,'2024-07-30 21:28:34'),(2,20,'2024-07-30 21:30:34'),(3,30,'2024-07-30 22:28:34'),(4,40,'2024-07-30 22:30:34');
 /*!40000 ALTER TABLE `promotion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `promotional_code`
+--
+
+DROP TABLE IF EXISTS `promotional_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `promotional_code` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rate` int NOT NULL,
+  `begin` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `promotional_code`
+--
+
+LOCK TABLES `promotional_code` WRITE;
+/*!40000 ALTER TABLE `promotional_code` DISABLE KEYS */;
+INSERT INTO `promotional_code` VALUES (2,' 25c6cWynAt8BusY',5,'2024-08-06 15:15:37','2024-09-15 15:15:37'),(4,' WxJdyNV5zJxqkUE',5,'2024-08-06 15:47:26','2024-09-15 15:47:26'),(5,' pLgZp5N189hZeIt',5,'2024-08-06 15:48:55','2024-09-15 15:48:55');
+/*!40000 ALTER TABLE `promotional_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -281,6 +339,82 @@ CREATE TABLE `review` (
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_country`
+--
+
+DROP TABLE IF EXISTS `shipping_country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_country` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `blacklist` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_country`
+--
+
+LOCK TABLES `shipping_country` WRITE;
+/*!40000 ALTER TABLE `shipping_country` DISABLE KEYS */;
+INSERT INTO `shipping_country` VALUES (1,'Afghanistan',1),(2,'Albania',0),(3,'Algeria',0),(4,'Andorra',0),(5,'Angola',0),(6,'Antigua and Barbuda',0),(7,'Argentina',0),(8,'Armenia',0),(9,'Australia',0),(10,'Austria',0),(11,'Azerbaijan',0),(12,'The Bahamas',0),(13,'Bahrain',0),(14,'Bangladesh',0),(15,'Barbados',0),(16,'Belarus',1),(17,'Belgium',0),(18,'Belize',0),(19,'Benin',0),(20,'Bhutan',0),(21,'Bolivia',0),(22,'Bosnia and Herzegovina',0),(23,'Botswana',0),(24,'Brazil',0),(25,'Brunei',0),(26,'Bulgaria',0),(27,'Burkina Faso',0),(28,'Burundi',0),(29,'Cabo Verde',0),(30,'Cambodia',0),(31,'Cameroon',0),(32,'Canada',0),(33,'Central African Republic',0),(34,'Chad',0),(35,'Chile',0),(36,'China',0),(37,'Colombia',0),(38,'Comoros',0),(39,'Democratic Republic of the Congo',0),(40,'Republic of the Congo',0),(41,'Costa Rica',0),(42,'Côte d’Ivoire',0),(43,'Croatia',0),(44,'Cuba',0),(45,'Cyprus',0),(46,'Czech Republic',0),(47,'Denmark',0),(48,'Djibouti',0),(49,'Dominica',0),(50,'Dominican Republic',0),(51,'East Timor (Timor-Leste)',0),(52,'Ecuador',0),(53,'Egypt',0),(54,'El Salvador',0),(55,'Equatorial Guinea',0),(56,'Eritrea',1),(57,'Estonia',0),(58,'Eswatini',0),(59,'Ethiopia',0),(60,'Fiji',0),(61,'Finland',0),(62,'France',0),(63,'Gabon',0),(64,'The Gambia',0),(65,'Georgia',0),(66,'Germany',0),(67,'Ghana',0),(68,'Greece',0),(69,'Grenada',0),(70,'Guatemala',0),(71,'Guinea',0),(72,'Guinea-Bissau',0),(73,'Guyana',0),(74,'Haiti',1),(75,'Honduras',0),(76,'Hungary',0),(77,'Iceland',0),(78,'India',0),(79,'Indonesia',0),(80,'Iran',0),(81,'Iraq',1),(82,'Ireland',0),(83,'Israel',0),(84,'Italy',0),(85,'Jamaica',0),(86,'Japan',0),(87,'Jordan',0),(88,'Kazakhstan',0),(89,'Kenya',0),(90,'Kiribati',0),(91,'North Korea',1),(92,'South Korea',0),(93,'Kosovo',0),(94,'Kuwait',0),(95,'Kyrgyzstan',0),(96,'Laos',0),(97,'Latvia',0),(98,'Lebanon',0),(99,'Lesotho',0),(100,'Liberia',0),(101,'Libya',1),(102,'Liechtenstein',0),(103,'Lithuania',0),(104,'Luxembourg',0),(105,'Madagascar',0),(106,'Malawi',0),(107,'Malaysia',0),(108,'Maldives',0),(109,'Mali',1),(110,'Malta',0),(111,'Marshall Islands',0),(112,'Mauritania',0),(113,'Mauritius',0),(114,'Mexico',0),(115,'Federated States of Micronesia',0),(116,'Moldova',0),(117,'Monaco',0),(118,'Mongolia',0),(119,'Montenegro',0),(120,'Morocco',0),(121,'Mozambique',0),(122,'Myanmar (Burma)',0),(123,'Namibia',0),(124,'Nauru',0),(125,'Nepal',0),(126,'Netherlands',0),(127,'New Zealand',0),(128,'Nicaragua',0),(129,'Niger',0),(130,'Nigeria',0),(131,'North Macedonia',0),(132,'Norway',0),(133,'Oman',0),(134,'Pakistan',0),(135,'Palau',0),(136,'Panama',0),(137,'Papua New Guinea',0),(138,'Paraguay',0),(139,'Peru',0),(140,'Philippines',0),(141,'Poland',0),(142,'Portugal',0),(143,'Qatar',0),(144,'Romania',0),(145,'Russia',0),(146,'Rwanda',0),(147,'Saint Kitts and Nevis',0),(148,'Saint Lucia',0),(149,'Saint Vincent and the Grenadines',0),(150,'Samoa',0),(151,'San Marino',0),(152,'Sao Tome and Principe',0),(153,'Saudi Arabia',0),(154,'Senegal',0),(155,'Serbia',0),(156,'Seychelles',0),(157,'Sierra Leone',0),(158,'Singapore',0),(159,'Slovakia',0),(160,'Slovenia',0),(161,'Solomon Islands',0),(162,'Somalia',0),(163,'South Africa',0),(164,'Spain',0),(165,'Sri Lanka',0),(166,'Sudan',0),(167,'South Sudan',0),(168,'Suriname',0),(169,'Sweden',0),(170,'Switzerland',0),(171,'Syria',0),(172,'Taiwan',0),(173,'Tajikistan',0),(174,'Tanzania',0),(175,'Thailand',0),(176,'Togo',0),(177,'Tonga',0),(178,'Trinidad and Tobago',0),(179,'Tunisia',0),(180,'Turkey',0),(181,'Turkmenistan',0),(182,'Tuvalu',0),(183,'Uganda',0),(184,'Ukraine',0),(185,'United Arab Emirates',0),(186,'United Kingdom',0),(187,'United States',0),(188,'Uruguay',0),(189,'Uzbekistan',0),(190,'Vanuatu',0),(191,'Vatican City',0),(192,'Venezuela',0),(193,'Vietnam',0),(194,'Yemen',0),(195,'Zambia',0),(196,'Zimbabwe',0);
+/*!40000 ALTER TABLE `shipping_country` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_insurance`
+--
+
+DROP TABLE IF EXISTS `shipping_insurance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_insurance` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_insurance`
+--
+
+LOCK TABLES `shipping_insurance` WRITE;
+/*!40000 ALTER TABLE `shipping_insurance` DISABLE KEYS */;
+INSERT INTO `shipping_insurance` VALUES (1,'Standard','Livraison gratuite et non assurée partout dans le monde',0),(2,'Rapide','Livraison rapide sans assurance',5),(3,'Assurance','Livraison standard et assurée par notre boutique',10),(4,'VIP','Livraison rapide et assurée par notre boutique',20);
+/*!40000 ALTER TABLE `shipping_insurance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_threshold`
+--
+
+DROP TABLE IF EXISTS `shipping_threshold`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_threshold` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `continent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `threshold` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_threshold`
+--
+
+LOCK TABLES `shipping_threshold` WRITE;
+/*!40000 ALTER TABLE `shipping_threshold` DISABLE KEYS */;
+INSERT INTO `shipping_threshold` VALUES (1,'Asia-Pacific',500),(2,'Africa',300),(3,'Europe',300),(4,'Middle East',500),(5,'North America',400),(6,'South America',450);
+/*!40000 ALTER TABLE `shipping_threshold` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -413,7 +547,7 @@ CREATE TABLE `stats_product` (
 
 LOCK TABLES `stats_product` WRITE;
 /*!40000 ALTER TABLE `stats_product` DISABLE KEYS */;
-INSERT INTO `stats_product` VALUES (1,6,15,'2024-07-30 21:12:04'),(3,7,7,'2024-07-30 21:12:07'),(5,8,8,'2024-07-30 21:12:09'),(7,1,6,'2024-07-30 21:12:13'),(9,2,9,'2024-07-30 21:12:15'),(11,3,5,'2024-07-30 21:12:17'),(13,4,13,'2024-07-30 21:12:20'),(15,9,2,'2024-07-30 22:00:31'),(17,11,12,'2024-07-30 22:11:55'),(19,10,2,'2024-07-30 22:16:31'),(22,12,4,'2024-07-30 22:23:48'),(23,13,3,'2024-07-30 22:23:59'),(26,14,2,'2024-07-30 22:24:02'),(27,15,1,'2024-07-30 22:29:08'),(29,16,12,'2024-07-30 22:35:13'),(31,17,1,'2024-07-30 22:35:16'),(34,18,19,'2024-07-30 22:35:18'),(35,19,35,'2024-07-30 22:35:20');
+INSERT INTO `stats_product` VALUES (1,6,18,'2024-07-30 21:12:04'),(3,7,9,'2024-07-30 21:12:07'),(5,8,8,'2024-07-30 21:12:09'),(7,1,9,'2024-07-30 21:12:13'),(9,2,10,'2024-07-30 21:12:15'),(11,3,5,'2024-07-30 21:12:17'),(13,4,13,'2024-07-30 21:12:20'),(15,9,7,'2024-07-30 22:00:31'),(17,11,14,'2024-07-30 22:11:55'),(19,10,4,'2024-07-30 22:16:31'),(22,12,4,'2024-07-30 22:23:48'),(23,13,3,'2024-07-30 22:23:59'),(26,14,2,'2024-07-30 22:24:02'),(27,15,2,'2024-07-30 22:29:08'),(29,16,12,'2024-07-30 22:35:13'),(31,17,1,'2024-07-30 22:35:16'),(34,18,20,'2024-07-30 22:35:18'),(35,19,35,'2024-07-30 22:35:20');
 /*!40000 ALTER TABLE `stats_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -465,6 +599,8 @@ CREATE TABLE `user` (
   `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_number` int DEFAULT NULL,
   `last_updated` datetime DEFAULT NULL,
+  `adress_id` int DEFAULT NULL,
+  `region` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -476,7 +612,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'guillaume@gmail.com','[\"ROLE_ADMIN\"]','$2y$13$kq9NLEiLKPEXgqh590LNKOiFwXQ3MGKvyeWIhOdSDb4Xl7HCdK.f2',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'alice@gmail.com','[\"ROLE_USER\"]','$2y$13$lLiHrTrCoeM86V3hwp6n9uCZgxhUFOlOLrQ9dSnDekalLdCdtxH.a',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'zoe@gmail.com','[]','$2y$13$40ENJmHGO/9G4hK8aVmF6uofAUgUpyvu2XINf1mK.RYcBwo6lRfh6',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'aymeric@gmail.com','[]','$2y$13$/RWMFnnqzzaR8PckJabQi.Kjrab.tX7ItBRLB4hl0qIORRLkq8RT.',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'ambroise@gmail.com','[]','$2y$13$sPlaW1kLR0zu06zkDTmvq.yYD/5TBhi6dj1uydvpKa2DgfnDyZeOS',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'marco@gmail.com','[]','$2y$13$vj0yuO444yCQm1AvoxjsP.FHugZFQWqpYvSXk468drMd9CJmVPegm',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (1,'guillaume@gmail.com','[\"ROLE_ADMIN\"]','$2y$13$kq9NLEiLKPEXgqh590LNKOiFwXQ3MGKvyeWIhOdSDb4Xl7HCdK.f2',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'alice@gmail.com','[\"ROLE_USER\"]','$2y$13$lLiHrTrCoeM86V3hwp6n9uCZgxhUFOlOLrQ9dSnDekalLdCdtxH.a',0,NULL,NULL,NULL,NULL,'La Courneuve',NULL,NULL,'2024-08-06 22:55:02',NULL,'Seine saint denis'),(4,'zoe@gmail.com','[]','$2y$13$40ENJmHGO/9G4hK8aVmF6uofAUgUpyvu2XINf1mK.RYcBwo6lRfh6',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'aymeric@gmail.com','[]','$2y$13$/RWMFnnqzzaR8PckJabQi.Kjrab.tX7ItBRLB4hl0qIORRLkq8RT.',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'ambroise@gmail.com','[]','$2y$13$sPlaW1kLR0zu06zkDTmvq.yYD/5TBhi6dj1uydvpKa2DgfnDyZeOS',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'marco@gmail.com','[]','$2y$13$vj0yuO444yCQm1AvoxjsP.FHugZFQWqpYvSXk468drMd9CJmVPegm',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -545,4 +681,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-04 21:33:23
+-- Dump completed on 2024-08-07  1:05:51
