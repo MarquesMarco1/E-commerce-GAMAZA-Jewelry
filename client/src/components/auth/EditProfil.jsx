@@ -74,11 +74,6 @@ export default function EditProfil() {
       phone: phone,
       region: region,
     };
-<<<<<<< HEAD
-    // console.log(formData)
-=======
-    console.log(formData);
->>>>>>> c79874afcc62e1925a7af85c258a08e3d7c67c46
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {

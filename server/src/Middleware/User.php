@@ -29,8 +29,18 @@ class User
     {
         if ($this->email !== null) {
             $adress = $userRepository->getFullAdress($this->email);
-            if (count($adress) > 0 && $adress[0]["country"] !== "") {
-                return $adress[0]["country"];
+            $result = [];
+    
+            if (count($adress) > 0) {
+                $fields = ['firstname', 'adress', 'city', 'region', 'zip_code', 'country', 'email', 'phone_number'];
+    
+                foreach ($fields as $field) {
+                    if (!empty($adress[0][$field])) {
+                        $result[$field] = $adress[0][$field];
+                    }
+                }
+    
+                return $result;
             } else {
                 return false;
             }
