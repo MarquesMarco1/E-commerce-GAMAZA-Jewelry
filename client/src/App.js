@@ -26,6 +26,7 @@ import CartPopup from "./components/utils/CartPopup";
 import Cart from "./components/Cart";
 import CheckoutForm from "./components/utils/CheckoutForm";
 import Return from "./components/utils/Return";
+import { CartProvider } from "./CartContext";
 
 function App() {
   // SET LANGUAGE
@@ -45,8 +46,7 @@ function App() {
   );
 
   return (
-    <>
-      {/* // ROUTES */}
+    <CartProvider>
       <HelmetProvider>
         <BrowserRouter>
           <Routes>
@@ -96,7 +96,7 @@ function App() {
           </script>
         </Helmet>
       </HelmetProvider>
-    </>
+    </CartProvider>
   );
 }
 

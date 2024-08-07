@@ -1,25 +1,26 @@
-import cart from "../assets/cart.svg";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import cartIcon from '../assets/cart.svg';
 import profile from "../assets/profile.svg";
 import admin from "../assets/admin.svg";
 import lotus from "../assets/lotus.svg";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import localhost from "../config";
 import Lang from "./utils/SwitchLangue";
 import { useTranslation } from "react-i18next";
 import Switch from "./utils/Switch";
 import CartPopup from "./utils/CartPopup";
+import { useCart } from "../CartContext";
+import NotificationBadge from './NotificationBadge';
+import localhost from "../config";
 
 export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const { t } = useTranslation();
+  const { state: cart } = useCart();
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const email = localStorage.getItem("user");
-  const cartItems = [
-    { id: 1, name: "Article 1", quantity: 2, price: 10 },
-    { id: 2, name: "Article 2", quantity: 1, price: 20 },
-  ];
+  const cartItems = cart;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,11 @@ export default function Header() {
       }
     };
     fetchData();
-  }, [isAdmin, email]);
+  }, [email]);
+
+  useEffect(() => {
+    setCartItemCount(cartItems.reduce((acc, item) => acc + item.itemQty, 0));
+  }, [cartItems]);
 
   return (
     <header className="w-full flex flex-col sm:m-2 md:flex-row items-center justify-between bg-light-purple bg-opacity-20 h-auto md:h-24 p-4 md:p-6 md:px-24 mb-4 md:mb-0">
@@ -41,7 +46,7 @@ export default function Header() {
           alt="logo of a lotus that redirect to the landing/home page"
         />
       </Link>
-      <Switch/>
+      <Switch />
       <Lang />
       <h1 className="text-gold font-primary font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center flex-grow md:mx-4">
         G.A.M.A.Z.A .Co
@@ -90,13 +95,14 @@ export default function Header() {
         >
           <Link to={`/cart`} className="flex items-center">
             <img
-              src={cart}
+              src={cartIcon}
               className="mr-2 md:mr-8"
               alt="logo of a cart that redirect to your cart and the finalization of your order"
             />
             <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
               {t("header.cart")}
             </span>
+            <NotificationBadge count={cartItemCount} />
           </Link>
           <CartPopup show={showCartPopup} cartItems={cartItems} />
         </div>

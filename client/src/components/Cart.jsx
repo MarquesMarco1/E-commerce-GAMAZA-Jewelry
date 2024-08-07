@@ -101,7 +101,7 @@ export default function Cart() {
   const checkout = async () => {
     const email = localStorage.getItem("user");   
     if (!email) {
-      setShowAuthPopup(true);
+  //    setShowAuthPopup(true);
     } else {
       navigate("/checkout", { replace: true });
     }

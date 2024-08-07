@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: ecommerce
 -- ------------------------------------------------------
--- Server version	8.0.39-0ubuntu0.22.04.1
+-- Server version	8.0.39-0ubuntu0.20.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -204,7 +204,7 @@ CREATE TABLE `product` (
   `price` double NOT NULL,
   `stock_qty` int NOT NULL,
   `last_updated` datetime NOT NULL,
-  `key_stripe` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key_stripe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_D34A04AD139DF194` (`promotion_id`),
   KEY `IDX_D34A04AD12469DE2` (`category_id`),
@@ -281,6 +281,82 @@ CREATE TABLE `review` (
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_country`
+--
+
+DROP TABLE IF EXISTS `shipping_country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_country` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `blacklist` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_country`
+--
+
+LOCK TABLES `shipping_country` WRITE;
+/*!40000 ALTER TABLE `shipping_country` DISABLE KEYS */;
+INSERT INTO `shipping_country` VALUES (1,'Afghanistan',1),(2,'Albania',0),(3,'Algeria',0),(4,'Andorra',0),(5,'Angola',0),(6,'Antigua and Barbuda',0),(7,'Argentina',0),(8,'Armenia',0),(9,'Australia',0),(10,'Austria',0),(11,'Azerbaijan',0),(12,'The Bahamas',0),(13,'Bahrain',0),(14,'Bangladesh',0),(15,'Barbados',0),(16,'Belarus',1),(17,'Belgium',0),(18,'Belize',0),(19,'Benin',0),(20,'Bhutan',0),(21,'Bolivia',0),(22,'Bosnia and Herzegovina',0),(23,'Botswana',0),(24,'Brazil',0),(25,'Brunei',0),(26,'Bulgaria',0),(27,'Burkina Faso',0),(28,'Burundi',0),(29,'Cabo Verde',0),(30,'Cambodia',0),(31,'Cameroon',0),(32,'Canada',0),(33,'Central African Republic',0),(34,'Chad',0),(35,'Chile',0),(36,'China',0),(37,'Colombia',0),(38,'Comoros',0),(39,'Democratic Republic of the Congo',0),(40,'Republic of the Congo',0),(41,'Costa Rica',0),(42,'Côte d’Ivoire',0),(43,'Croatia',0),(44,'Cuba',0),(45,'Cyprus',0),(46,'Czech Republic',0),(47,'Denmark',0),(48,'Djibouti',0),(49,'Dominica',0),(50,'Dominican Republic',0),(51,'East Timor (Timor-Leste)',0),(52,'Ecuador',0),(53,'Egypt',0),(54,'El Salvador',0),(55,'Equatorial Guinea',0),(56,'Eritrea',1),(57,'Estonia',0),(58,'Eswatini',0),(59,'Ethiopia',0),(60,'Fiji',0),(61,'Finland',0),(62,'France',0),(63,'Gabon',0),(64,'The Gambia',0),(65,'Georgia',0),(66,'Germany',0),(67,'Ghana',0),(68,'Greece',0),(69,'Grenada',0),(70,'Guatemala',0),(71,'Guinea',0),(72,'Guinea-Bissau',0),(73,'Guyana',0),(74,'Haiti',1),(75,'Honduras',0),(76,'Hungary',0),(77,'Iceland',0),(78,'India',0),(79,'Indonesia',0),(80,'Iran',0),(81,'Iraq',1),(82,'Ireland',0),(83,'Israel',0),(84,'Italy',0),(85,'Jamaica',0),(86,'Japan',0),(87,'Jordan',0),(88,'Kazakhstan',0),(89,'Kenya',0),(90,'Kiribati',0),(91,'North Korea',1),(92,'South Korea',0),(93,'Kosovo',0),(94,'Kuwait',0),(95,'Kyrgyzstan',0),(96,'Laos',0),(97,'Latvia',0),(98,'Lebanon',0),(99,'Lesotho',0),(100,'Liberia',0),(101,'Libya',1),(102,'Liechtenstein',0),(103,'Lithuania',0),(104,'Luxembourg',0),(105,'Madagascar',0),(106,'Malawi',0),(107,'Malaysia',0),(108,'Maldives',0),(109,'Mali',1),(110,'Malta',0),(111,'Marshall Islands',0),(112,'Mauritania',0),(113,'Mauritius',0),(114,'Mexico',0),(115,'Federated States of Micronesia',0),(116,'Moldova',0),(117,'Monaco',0),(118,'Mongolia',0),(119,'Montenegro',0),(120,'Morocco',0),(121,'Mozambique',0),(122,'Myanmar (Burma)',0),(123,'Namibia',0),(124,'Nauru',0),(125,'Nepal',0),(126,'Netherlands',0),(127,'New Zealand',0),(128,'Nicaragua',0),(129,'Niger',0),(130,'Nigeria',0),(131,'North Macedonia',0),(132,'Norway',0),(133,'Oman',0),(134,'Pakistan',0),(135,'Palau',0),(136,'Panama',0),(137,'Papua New Guinea',0),(138,'Paraguay',0),(139,'Peru',0),(140,'Philippines',0),(141,'Poland',0),(142,'Portugal',0),(143,'Qatar',0),(144,'Romania',0),(145,'Russia',0),(146,'Rwanda',0),(147,'Saint Kitts and Nevis',0),(148,'Saint Lucia',0),(149,'Saint Vincent and the Grenadines',0),(150,'Samoa',0),(151,'San Marino',0),(152,'Sao Tome and Principe',0),(153,'Saudi Arabia',0),(154,'Senegal',0),(155,'Serbia',0),(156,'Seychelles',0),(157,'Sierra Leone',0),(158,'Singapore',0),(159,'Slovakia',0),(160,'Slovenia',0),(161,'Solomon Islands',0),(162,'Somalia',0),(163,'South Africa',0),(164,'Spain',0),(165,'Sri Lanka',0),(166,'Sudan',0),(167,'South Sudan',0),(168,'Suriname',0),(169,'Sweden',0),(170,'Switzerland',0),(171,'Syria',0),(172,'Taiwan',0),(173,'Tajikistan',0),(174,'Tanzania',0),(175,'Thailand',0),(176,'Togo',0),(177,'Tonga',0),(178,'Trinidad and Tobago',0),(179,'Tunisia',0),(180,'Turkey',0),(181,'Turkmenistan',0),(182,'Tuvalu',0),(183,'Uganda',0),(184,'Ukraine',0),(185,'United Arab Emirates',0),(186,'United Kingdom',0),(187,'United States',0),(188,'Uruguay',0),(189,'Uzbekistan',0),(190,'Vanuatu',0),(191,'Vatican City',0),(192,'Venezuela',0),(193,'Vietnam',0),(194,'Yemen',0),(195,'Zambia',0),(196,'Zimbabwe',0);
+/*!40000 ALTER TABLE `shipping_country` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_insurance`
+--
+
+DROP TABLE IF EXISTS `shipping_insurance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_insurance` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_insurance`
+--
+
+LOCK TABLES `shipping_insurance` WRITE;
+/*!40000 ALTER TABLE `shipping_insurance` DISABLE KEYS */;
+INSERT INTO `shipping_insurance` VALUES (1,'Standard','Livraison gratuite et non assurée partout dans le monde',0),(2,'Rapide','Livraison rapide sans assurance',5),(3,'Assurance','Livraison standard et assurée par notre boutique',10),(4,'VIP','Livraison rapide et assurée par notre boutique',20);
+/*!40000 ALTER TABLE `shipping_insurance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_threshold`
+--
+
+DROP TABLE IF EXISTS `shipping_threshold`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_threshold` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `continent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `threshold` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_threshold`
+--
+
+LOCK TABLES `shipping_threshold` WRITE;
+/*!40000 ALTER TABLE `shipping_threshold` DISABLE KEYS */;
+INSERT INTO `shipping_threshold` VALUES (1,'Asia-Pacific',500),(2,'Africa',300),(3,'Europe',300),(4,'Middle East',500),(5,'North America',400),(6,'South America',450);
+/*!40000 ALTER TABLE `shipping_threshold` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -545,4 +621,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-04 21:33:23
+-- Dump completed on 2024-08-05 16:44:23
