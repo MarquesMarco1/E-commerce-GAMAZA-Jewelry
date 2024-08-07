@@ -75,7 +75,9 @@ const Authentication = () => {
       localStorage.setItem("user", email);
       dispatch({ type: "RESET_CART", payload: [] });
 
-      const response_cart = await fetch(`${localhost}/api/cartItem/${email}`);
+      const response_cart = await fetch(`${localhost}/api/Item/${email}`, {
+        method: "GET",
+      });
       if (response_cart.ok) {
         const data = await response_cart.json();
         console.log(data);

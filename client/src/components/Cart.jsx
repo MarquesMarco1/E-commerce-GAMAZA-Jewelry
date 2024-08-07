@@ -24,20 +24,21 @@ export default function Cart() {
   const [tryCode, setTryCode] = useState(null);
   const [reduction, setReduction] = useState(null);
 
-  const [name, setName] = useState('')
-  const [company, setCompany] = useState('')
-  const [street1, setStreet1] = useState('')
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [zip, setZip] = useState('')
-  const [country, setCountry] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [street1, setStreet1] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [shippingCost, setShippingCost] = useState(0)
-  const [addressFrom, setAddressFrom] = useState(null)
-  const [addressTo, setAddressTo] = useState({})
-  const [parcels, setParcels] = useState([])
+  const [shippingCost, setShippingCost] = useState(0);
+  const [addressFrom, setAddressFrom] = useState(null);
+  const [addressTo, setAddressTo] = useState({});
+  const [parcels, setParcels] = useState([]);
+  const [shippingChoice, setShippingChoice] = useState([]);
 
   const user = localStorage.getItem("user");
 
@@ -72,38 +73,46 @@ export default function Cart() {
 
   const validateAdress = async (user) => {
     if (fetchIsLog()) {
-
       const response = await fetch(`${localhost}/api/validateAdress/${user}`);
       const data = await response.json();
 
       if (data.isAdressValide !== "null") {
-        if (data.isAdressValide.firstname !== undefined &&
+        if (
+          data.isAdressValide.firstname !== undefined &&
           data.isAdressValide.city !== undefined &&
           data.isAdressValide.adress !== undefined &&
           data.isAdressValide.region !== undefined &&
           data.isAdressValide.zip_code !== undefined &&
-          data.isAdressValide.country !== undefined) {
-          setName(data.isAdressValide.firstname)
-          setEmail(data.isAdressValide.email)
-          setPhone(data.isAdressValide.phone_number)
-          setCity(data.isAdressValide.city)
-          setStreet1(data.isAdressValide.adress)
-          setState(data.isAdressValide.region)
-          setZip(data.isAdressValide.zip_code)
-          setCountry(data.isAdressValide.country)
+          data.isAdressValide.country !== undefined
+        ) {
+          setName(data.isAdressValide.firstname);
+          setEmail(data.isAdressValide.email);
+          setPhone(data.isAdressValide.phone_number);
+          setCity(data.isAdressValide.city);
+          setStreet1(data.isAdressValide.adress);
+          setState(data.isAdressValide.region);
+          setZip(data.isAdressValide.zip_code);
+          setCountry(data.isAdressValide.country);
           return true;
         } else {
-          setName(data.isAdressValide.firstname)
-          setEmail(data.isAdressValide.email)
-          setPhone(data.isAdressValide.phone_number)
-          setCity(data.isAdressValide.city)
-          setStreet1(data.isAdressValide.adress)
-          setState(data.isAdressValide.region)
-          setZip(data.isAdressValide.zip_code)
-          setCountry(data.isAdressValide.country)
+          setName(data.isAdressValide.firstname);
+          setEmail(data.isAdressValide.email);
+          setPhone(data.isAdressValide.phone_number);
+          setCity(data.isAdressValide.city);
+          setStreet1(data.isAdressValide.adress);
+          setState(data.isAdressValide.region);
+          setZip(data.isAdressValide.zip_code);
+          setCountry(data.isAdressValide.country);
           return false;
         }
-      } else if (name !== "" && country !== "" && zip !== "" && state !== "" && city !== "" && street1 !== "") {
+      } else if (
+        name !== "" &&
+        country !== "" &&
+        zip !== "" &&
+        state !== "" &&
+        city !== "" &&
+        street1 !== ""
+      ) {
         const obj = {
           name: name, //required
           company: company,
@@ -114,14 +123,14 @@ export default function Cart() {
           country: country, // iso2 country code //required
           phone: phone,
           email: email,
-        }
-        setAddressTo(obj)
+        };
+        setAddressTo(obj);
         return true;
       } else {
-        return false
+        return false;
       }
     }
-  }
+  };
 
   const fetchShipping = async (user) => {
     const adressValide = await validateAdress(user);
@@ -136,25 +145,24 @@ export default function Cart() {
         country: country, // iso2 country code //required
         phone: phone,
         email: email,
-      }
-      setAddressTo(obj)
+      };
+      setAddressTo(obj);
       return true;
     }
     return false;
-  }
+  };
   const handleShipping = async (user) => {
     await fetchShipping(user);
     if (displayAdressPopup) {
-      setDisplayAdressPopup(false)
+      setDisplayAdressPopup(false);
     } else {
-      setDisplayAdressPopup(true)
+      setDisplayAdressPopup(true);
     }
-  }
-
+  };
 
   useEffect(() => {
-    fetchShipping(user)
-  }, [])
+    fetchShipping(user);
+  }, []);
 
   useEffect(() => {
     createShippoAddress();
@@ -173,16 +181,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-      (total +=
-        item.product.price * item.itemQty -
-        (
-          item.product.price *
-          item.itemQty *
-          ((item.product.promotion.id != 1
-            ? item.product.promotion.pourcentage
-            : 0) /
-            100)
-        ).toFixed())
+        (total +=
+          item.product.price * item.itemQty -
+          (
+            item.product.price *
+            item.itemQty *
+            ((item.product.promotion.id != 1
+              ? item.product.promotion.pourcentage
+              : 0) /
+              100)
+          ).toFixed())
     );
     setSubTotal(total);
   };
@@ -197,7 +205,8 @@ export default function Cart() {
   };
 
   const deleteProduct = async (item) => {
-    if (fetchIsLog()) {
+    // if (fetchIsLog()) {
+    if (localStorage.getItem(user)) {
       const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
         method: "DELETE",
       });
@@ -211,19 +220,55 @@ export default function Cart() {
   };
 
   const checkout = async (user) => {
-    const adressValide = await fetchShipping(user)
+    const adressValide = await fetchShipping(user);
 
-    if (adressValide && addressTo.name !== "" && addressTo.country !== "" && addressTo.zip !== "" && addressTo.state !== "" && addressTo.city !== "" && addressTo.street1 !== "") {
-
+    if (
+      adressValide &&
+      addressTo.name !== "" &&
+      addressTo.country !== "" &&
+      addressTo.zip !== "" &&
+      addressTo.state !== "" &&
+      addressTo.city !== "" &&
+      addressTo.street1 !== ""
+    ) {
       const shipment = await shippo.shipments.create({
         addressFrom: addressFrom,
         addressTo: addressTo,
         parcels: parcels,
-        async: false
+        async: false,
       });
-      console.log(shipment)
+      console.log(shipment);
+
+      if (shipment && shipment.rates.length > 0) {
+        let tmp = [];
+        shipment.rates.forEach((elem) => {
+          if (elem.attributes.length > 0) {
+            const obj = {
+              objectId: elem.objectId,
+              amount: elem.amount,
+              attributes: elem.attributes,
+              estimatedDays: elem.estimatedDays,
+              provider: elem.provider,
+              providerImg: elem.providerImage75,
+              currency: elem.currency,
+            };
+            tmp.push(obj);
+          }
+        });
+        setShippingChoice(tmp);
+      }
     }
     // navigate("/checkout", { replace: true });
+  };
+
+  const transaction = async (elem) => {
+    const transation = await shippo.transactions.create({
+      rate: elem?.objectId,
+      labelFileType: "PDF",
+      async: false,
+    });
+    // JE SAIS PAS QUOI FAIRE A PARTIR DE LA
+    console.log(transation);
   };
 
   const saveForLater = async (elem) => {
@@ -266,54 +311,112 @@ export default function Cart() {
   const adressPopup = () => {
     return (
       <div>
-        {displayAdressPopup && <div className="flex flex-col justify-center items-center">
-          <h1>Delevery & Billing adress</h1>
-          <label className="m-4">
-            Name:
-            <input className="ml-4 bg-grey" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="required" required />
-          </label>
-          <label className="m-4">
-            Email:
-            <input className="ml-4 bg-grey" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </label>
-          <label className="m-4">
-            Phone:
-            <input className="ml-4 bg-grey" type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-          </label>
-          <label className="m-4">
-            Company:
-            <input className="ml-4 bg-grey" type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
-          </label>
-          <label className="m-4">
-            Country:
-            <input className="ml-4 bg-grey" type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder="required" required />
-          </label>
-          <label className="m-4">
-            ZIP:
-            <input className="ml-4 bg-grey" type="text" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="required" required />
-          </label>
-          <label className="m-4">
-            State:
-            <input className="ml-4 bg-grey" type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder="required" required />
-          </label>
-          <label className="m-4">
-            City:
-            <input className="ml-4 bg-grey" type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="required" required />
-          </label>
-          <label className="m-4">
-            Street 1:
-            <input className="ml-4 bg-grey" type="text" value={street1} onChange={(e) => setStreet1(e.target.value)} placeholder="required" required />
-          </label>
-          <button onClick={() => handleShipping(user)}>Confirm</button>
-        </div>}
+        {displayAdressPopup && (
+          <div className="flex flex-col justify-center items-center">
+            <h1>Delevery & Billing adress</h1>
+            <label className="m-4">
+              Name:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <label className="m-4">
+              Email:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+            <label className="m-4">
+              Phone:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </label>
+            <label className="m-4">
+              Company:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+              />
+            </label>
+            <label className="m-4">
+              Country:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <label className="m-4">
+              ZIP:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <label className="m-4">
+              State:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <label className="m-4">
+              City:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <label className="m-4">
+              Street 1:
+              <input
+                className="ml-4 bg-grey"
+                type="text"
+                value={street1}
+                onChange={(e) => setStreet1(e.target.value)}
+                placeholder="required"
+                required
+              />
+            </label>
+            <button onClick={() => handleShipping(user)}>Confirm</button>
+          </div>
+        )}
       </div>
-    )
-  }
+    );
+  };
 
   const createParcels = () => {
     let tmp = [];
-    cart.map(item => {
-
+    cart.map((item) => {
       if (item.itemQty > 1) {
         for (let index = 0; index < item.itemQty; index++) {
           const obj = {
@@ -322,9 +425,9 @@ export default function Cart() {
             height: "22",
             distanceUnit: "cm",
             weight: item.product.weight.toString(),
-            massUnit: "kg"
-          }
-          tmp.push(obj)
+            massUnit: "kg",
+          };
+          tmp.push(obj);
         }
       } else {
         const obj = {
@@ -333,17 +436,17 @@ export default function Cart() {
           height: "22",
           distanceUnit: "cm",
           weight: item.product.weight.toString(),
-          massUnit: "kg"
-        }
-        tmp.push(obj)
+          massUnit: "kg",
+        };
+        tmp.push(obj);
       }
-    })
-    setParcels(tmp)
-  }
+    });
+    setParcels(tmp);
+  };
 
   useEffect(() => {
-    createParcels()
-  }, [cart])
+    createParcels();
+  }, [cart]);
 
   const product_list = () => {
     return (
@@ -429,7 +532,18 @@ export default function Cart() {
                         Delete
                       </button>
                     </div>
-                    {displayWishlist && (
+                    {/* {displayWishlist && (
+                      <div>
+                        <button
+                          className="flex font-primary"
+                          onClick={() => saveForLater(elem)}
+                        >
+                          <img className="mr-4" src={Save4later} alt="" />
+                          Save for later
+                        </button>
+                      </div>
+                    )} */}
+                    {localStorage.getItem("user") && (
                       <div>
                         <button
                           className="flex font-primary"
@@ -489,7 +603,7 @@ export default function Cart() {
                 Shipping&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {addressTo === null ? 'Need an adress' : '25$'}
+                {addressTo === null ? "Need an adress" : "25$"}
               </h3>
             </div>
             <div className="flex justify-between">
@@ -497,9 +611,56 @@ export default function Cart() {
                 Adress&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {addressTo === null ? <button onClick={() => handleShipping(user)}>No adress found</button> : `${country}, ${state} ${zip}, ${city}, ${street1}`}
+                {
+                  // addressTo === null
+                  Object.keys(addressTo).length === 0 ? (
+                    <button onClick={() => handleShipping(user)}>
+                      No adress found
+                    </button>
+                  ) : (
+                    `${country}, ${state} ${zip}, ${city}, ${street1}`
+                  )
+                }
               </h3>
             </div>
+
+            <div>
+              <ul>
+                {shippingChoice.length > 0 &&
+                  shippingChoice.map((elem, index) => (
+                    <li
+                      key={index}
+                      className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${
+                        elem.attributes[0] === "FASTEST" ? "bg-yellow-100" : ""
+                      }`}
+                      onClick={() => transaction(elem)}
+                    >
+                      <div>
+                        <img
+                          src={elem.providerImg}
+                          alt={elem.provider}
+                          className="w-4/4 h-4/4 mr-4"
+                        />
+                        <p>{elem.provider}</p>
+                      </div>
+                      <div className="flex-grow">
+                        <div className="font-bold text-gold text-lg">
+                          {elem.attributes.map((item, idx) => (
+                            <p key={idx}>{item}</p>
+                          ))}
+                        </div>
+                        <div className="font-bold text-gold text-lg">
+                          {elem.amount} {elem.currency}
+                        </div>
+                        <div className="text-gray-600 font-bold">
+                          Estimated days: {elem.estimatedDays} days
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               <button
                 className="font-primary text-3xl font-bold text-center m-2"

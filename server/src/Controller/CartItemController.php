@@ -20,7 +20,7 @@ class CartItemController extends AbstractController
         return $this->json(['success' => true], 200);
     }
 
-    #[Route('/api/cartItem/{email}', methods:["GET"] )]
+    #[Route('/api/Item/{email}', methods:["GET"] )]
     public function cartItem(EntityManagerInterface $entityManager, string $email){
         $user = $entityManager->getRepository(User::class)->findOneBy(["email"=>$email]);
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user]);
