@@ -7,18 +7,45 @@ import Delete from "../assets/delete.svg";
 import Save4later from "../assets/save4later.svg";
 import { useCart } from "../CartContext";
 import localhost from "../config";
+import { Shippo } from "shippo";
 
 export default function Cart() {
   const { t } = useTranslation();
   let navigate = useNavigate();
+  const { state: cart, dispatch } = useCart([]);
+
   const [nbrArticle, setNbrArticle] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
-  const { state: cart, dispatch } = useCart([]);
   const [displayWishlist, setDisplayWishlist] = useState(false);
+  const [shippingCost, setShippingCost] = useState(0)
+  const [addressFrom, setAddressFrom] = useState(null)
+  const [addressTo, setAddressTo] = useState(null)
+  const [parcels, setParcels] = useState([])
+
+  const shippo = new Shippo({
+    apiKeyHeader: "shippo_test_55d32d12f5ff622308a3b56d970d6727d8cd7dee",
+    // the API version can be globally set, though this is normally not required
+    // shippoApiVersion: "<YYYY-MM-DD>",
+  });
+
+  const createShippoAddress = async () => {
+      const data = await shippo.addresses.create({
+        name: "Shawn Ippotle",
+        company: "Shippo",
+        street1: "215 Clayton St.",
+        city: "San Francisco",
+        state: "CA",
+        zip: "94117",
+        country: "US", // iso2 country code
+        phone: "+1 555 341 9393",
+        email: "shippotle@shippo.com",
+      });
+
+      setAddressFrom(data);
+  };
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    validateAdress(email)
     if (email === null) {
       return false;
     }
@@ -28,11 +55,18 @@ export default function Cart() {
   const validateAdress = async (email) => {
     const response = await fetch(`${localhost}/api/validateAdress/${email}`);
     const data = await response.json();
-    // console.log(data)
+
+
+    if (data.isAdressValide) {
+      return data.isAdressValide;
+    } else {
+      return false;
+    }
   }
-  
-  useEffect(()=>{
-    if(fetchIsLog()){
+
+  useEffect(() => {
+    createShippoAddress();
+    if (fetchIsLog()) {
       setDisplayWishlist(true);
     }
   }, [])
@@ -86,13 +120,6 @@ export default function Cart() {
   };
 
   const checkout = () => {
-    const fetchIsLog = async () => {
-      const email = localStorage.getItem("user");
-      if (!email) {
-        navigate("/authentication", { replace: true });
-      }
-    };
-    fetchIsLog();
     navigate("/checkout", { replace: true });
   };
 
@@ -120,6 +147,19 @@ export default function Cart() {
       }
     }
   };
+
+  const setAdressTo = () => {
+    const message = '';
+    if (fetchIsLog) {
+      if (validateAdress) {
+
+      } else {
+
+      }
+    } else {
+      
+    }
+  }
 
   const product_list = () => {
     return (
@@ -240,6 +280,14 @@ export default function Cart() {
                 {subTotal}€
               </h3>
             </div>
+            <div className="flex justify-between">
+              <h3 className="font-primary text-xl text-center m-2">
+                Shipping&nbsp;
+              </h3>
+              <h3 className="font-primary text-xl text-center m-2">
+                {subTotal}€
+              </h3>
+            </div>
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               <button
                 className="font-primary text-3xl font-bold text-center m-2"
@@ -254,6 +302,7 @@ export default function Cart() {
     );
   };
 
+  // console.log(addressFrom)
   return (
     <>
       <Header />

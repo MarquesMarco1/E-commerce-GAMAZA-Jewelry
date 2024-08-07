@@ -17,7 +17,7 @@ class User
     {
         if ($this->email !== null) {
             $role = $userRepository->getRoles($this->email);
-            if ($role[0]['roles'] === '["ROLE_ADMIN"]') {
+            if (count($role) > 0 && $role[0]['roles'] === '["ROLE_ADMIN"]') {
                 return true;
             } else {
                 return false;
@@ -29,7 +29,7 @@ class User
     {
         if ($this->email !== null) {
             $adress = $userRepository->getFullAdress($this->email);
-            if ($adress !== null & $adress[0]["country"] !== "") {
+            if (count($adress) > 0 && $adress[0]["country"] !== "") {
                 return $adress[0]["country"];
             } else {
                 return false;
