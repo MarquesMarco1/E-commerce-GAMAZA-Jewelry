@@ -87,16 +87,26 @@ export default function Cart() {
     }
   };
 
-  const checkout = () => {
-    const fetchIsLog = async () => {
-      const email = localStorage.getItem("user");
-      if (!email) {
-        navigate("/authentication", { replace: true });
-      }
-    };
-    fetchIsLog();
-    navigate("/checkout", { replace: true });
+  // const checkout = () => {
+  //   const fetchIsLog = async () => {
+  //     const email = localStorage.getItem("user");
+  //     if (!email) {
+  //       navigate("/authentication", { replace: true });
+  //     }
+  //   };
+  //   fetchIsLog();
+  //   navigate("/checkout", { replace: true });
+  // };
+
+  const checkout = async () => {
+    const email = localStorage.getItem("user");   
+    if (!email) {
+      setShowAuthPopup(true);
+    } else {
+      navigate("/checkout", { replace: true });
+    }
   };
+  
 
   const saveForLater = async (elem) => {
     const formData = {
