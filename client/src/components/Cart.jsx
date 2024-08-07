@@ -67,6 +67,7 @@ export default function Cart() {
     if (user === null) {
       return false;
     }
+    validateAdress();
     return true;
   };
 
@@ -77,16 +78,38 @@ export default function Cart() {
       const data = await response.json();
 
       if (data.isAdressValide) {
-        setName(data.isAdressValide.firstname)
-        setEmail(data.isAdressValide.email)
-        setPhone(data.isAdressValide.phone_number)
-        setCity(data.isAdressValide.city)
-        setStreet1(data.isAdressValide.adress)
-        setState(data.isAdressValide.region)
-        setZip(data.isAdressValide.zip_code)
-        setCountry(data.isAdressValide.country)
+        if(data.isAdressValide.firstname !== undefined &&
+            data.isAdressValide.email !== undefined &&
+            data.isAdressValide.phone_number !== undefined && 
+            data.isAdressValide.city !== undefined &&
+            data.isAdressValide.adress !== undefined &&
+            data.isAdressValide.region !== undefined && 
+            data.isAdressValide.zip_code !== undefined &&
+            data.isAdressValide.country !== undefined) 
+          {
+          setName(data.isAdressValide.firstname)
+          setEmail(data.isAdressValide.email)
+          setPhone(data.isAdressValide.phone_number)
+          setCity(data.isAdressValide.city)
+          setStreet1(data.isAdressValide.adress)
+          setState(data.isAdressValide.region)
+          setZip(data.isAdressValide.zip_code)
+          setCountry(data.isAdressValide.country)
+          setAddressTo(true)
+          return true;
+        } else {
+          setName(data.isAdressValide.firstname)
+          setEmail(data.isAdressValide.email)
+          setPhone(data.isAdressValide.phone_number)
+          setCity(data.isAdressValide.city)
+          setStreet1(data.isAdressValide.adress)
+          setState(data.isAdressValide.region)
+          setZip(data.isAdressValide.zip_code)
+          setCountry(data.isAdressValide.country)
+          return false;
+        }
       } else {
-        setDisplayAdressPopup(true)
+        return false;
       }
     } 
     }
@@ -147,6 +170,7 @@ export default function Cart() {
   };
 
   const checkout = () => {
+
     navigate("/checkout", { replace: true });
   };
 
@@ -378,7 +402,15 @@ export default function Cart() {
                 Shipping&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {addressTo === null ? <button onClick={() => validateAdress(user)}>No adress found</button> : '25$'}
+                {addressTo === null ? 'Need an adress' : '25$'}
+              </h3>
+            </div>
+            <div className="flex justify-between">
+              <h3 className="font-primary text-xl text-center m-2">
+                Adress&nbsp;
+              </h3>
+              <h3 className="font-primary text-xl text-center m-2">
+                {addressTo === null ? <button onClick={() => validateAdress(user)}>No adress found</button> : `${country}, ${state} ${zip}, ${city}, ${street1}`}
               </h3>
             </div>
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
