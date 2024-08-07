@@ -36,9 +36,9 @@ export default function Cart() {
 
   const [shippingCost, setShippingCost] = useState(0)
   const [addressFrom, setAddressFrom] = useState(null)
-  const [addressTo, setAddressTo] = useState(null)
+  const [addressTo, setAddressTo] = useState({})
   const [parcels, setParcels] = useState([])
-  
+
   const user = localStorage.getItem("user");
 
   const shippo = new Shippo({
@@ -67,26 +67,22 @@ export default function Cart() {
     if (user === null) {
       return false;
     }
-    validateAdress();
     return true;
   };
 
   const validateAdress = async (user) => {
-    if(fetchIsLog()) {
+    if (fetchIsLog()) {
 
       const response = await fetch(`${localhost}/api/validateAdress/${user}`);
       const data = await response.json();
 
-      if (data.isAdressValide) {
-        if(data.isAdressValide.firstname !== undefined &&
-            data.isAdressValide.email !== undefined &&
-            data.isAdressValide.phone_number !== undefined && 
-            data.isAdressValide.city !== undefined &&
-            data.isAdressValide.adress !== undefined &&
-            data.isAdressValide.region !== undefined && 
-            data.isAdressValide.zip_code !== undefined &&
-            data.isAdressValide.country !== undefined) 
-          {
+      if (data.isAdressValide !== "null") {
+        if (data.isAdressValide.firstname !== undefined &&
+          data.isAdressValide.city !== undefined &&
+          data.isAdressValide.adress !== undefined &&
+          data.isAdressValide.region !== undefined &&
+          data.isAdressValide.zip_code !== undefined &&
+          data.isAdressValide.country !== undefined) {
           setName(data.isAdressValide.firstname)
           setEmail(data.isAdressValide.email)
           setPhone(data.isAdressValide.phone_number)
@@ -95,7 +91,6 @@ export default function Cart() {
           setState(data.isAdressValide.region)
           setZip(data.isAdressValide.zip_code)
           setCountry(data.isAdressValide.country)
-          setAddressTo(true)
           return true;
         } else {
           setName(data.isAdressValide.firstname)
@@ -108,12 +103,58 @@ export default function Cart() {
           setCountry(data.isAdressValide.country)
           return false;
         }
+      } else if (name !== "" && country !== "" && zip !== "" && state !== "" && city !== "" && street1 !== "") {
+        const obj = {
+          name: name, //required
+          company: company,
+          street1: street1, //required
+          city: city, //required
+          state: state, //required
+          zip: zip, //required
+          country: country, // iso2 country code //required
+          phone: phone,
+          email: email,
+        }
+        setAddressTo(obj)
+        return true;
       } else {
-        return false;
+        return false
       }
-    } 
     }
+  }
 
+  const fetchShipping = async (user) => {
+    const adressValide = await validateAdress(user);
+    if (adressValide) {
+      const obj = {
+        name: name, //required
+        company: company,
+        street1: street1, //required
+        city: city, //required
+        state: state, //required
+        zip: zip, //required
+        country: country, // iso2 country code //required
+        phone: phone,
+        email: email,
+      }
+      setAddressTo(obj)
+      return true;
+    }
+    return false;
+  }
+  const handleShipping = async (user) => {
+    await fetchShipping(user);
+    if (displayAdressPopup) {
+      setDisplayAdressPopup(false)
+    } else {
+      setDisplayAdressPopup(true)
+    }
+  }
+
+
+  useEffect(() => {
+    fetchShipping(user)
+  }, [])
 
   useEffect(() => {
     createShippoAddress();
@@ -169,9 +210,20 @@ export default function Cart() {
     }
   };
 
-  const checkout = () => {
+  const checkout = async (user) => {
+    const adressValide = await fetchShipping(user)
 
-    navigate("/checkout", { replace: true });
+    if (adressValide && addressTo.name !== "" && addressTo.country !== "" && addressTo.zip !== "" && addressTo.state !== "" && addressTo.city !== "" && addressTo.street1 !== "") {
+
+      const shipment = await shippo.shipments.create({
+        addressFrom: addressFrom,
+        addressTo: addressTo,
+        parcels: parcels,
+        async: false
+      });
+      console.log(shipment)
+    }
+    // navigate("/checkout", { replace: true });
   };
 
   const saveForLater = async (elem) => {
@@ -252,11 +304,46 @@ export default function Cart() {
             Street 1:
             <input className="ml-4 bg-grey" type="text" value={street1} onChange={(e) => setStreet1(e.target.value)} placeholder="required" required />
           </label>
-          <button onClick={() => setDisplayAdressPopup(false)}>Confirm</button>
+          <button onClick={() => handleShipping(user)}>Confirm</button>
         </div>}
       </div>
     )
   }
+
+  const createParcels = () => {
+    let tmp = [];
+    cart.map(item => {
+
+      if (item.itemQty > 1) {
+        for (let index = 0; index < item.itemQty; index++) {
+          const obj = {
+            length: "16",
+            width: "2",
+            height: "22",
+            distanceUnit: "cm",
+            weight: item.product.weight.toString(),
+            massUnit: "kg"
+          }
+          tmp.push(obj)
+        }
+      } else {
+        const obj = {
+          length: "16",
+          width: "2",
+          height: "22",
+          distanceUnit: "cm",
+          weight: item.product.weight.toString(),
+          massUnit: "kg"
+        }
+        tmp.push(obj)
+      }
+    })
+    setParcels(tmp)
+  }
+
+  useEffect(() => {
+    createParcels()
+  }, [cart])
 
   const product_list = () => {
     return (
@@ -410,13 +497,13 @@ export default function Cart() {
                 Adress&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {addressTo === null ? <button onClick={() => validateAdress(user)}>No adress found</button> : `${country}, ${state} ${zip}, ${city}, ${street1}`}
+                {addressTo === null ? <button onClick={() => handleShipping(user)}>No adress found</button> : `${country}, ${state} ${zip}, ${city}, ${street1}`}
               </h3>
             </div>
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               <button
                 className="font-primary text-3xl font-bold text-center m-2"
-                onClick={() => checkout()}
+                onClick={() => checkout(user)}
               >
                 ORDER NOW
               </button>
@@ -426,7 +513,7 @@ export default function Cart() {
       </div>
     );
   };
-
+  // console.log(addressTo)
   return (
     <>
       <Header />

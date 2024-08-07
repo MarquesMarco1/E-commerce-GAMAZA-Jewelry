@@ -42,7 +42,7 @@ class User
     
                 return $result;
             } else {
-                return false;
+                return $this->email;
             }
         }
     }
