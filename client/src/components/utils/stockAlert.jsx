@@ -11,6 +11,7 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
   const [productSelect, setproductSelect] = useState(null);
 
   useEffect(() => {
+    console.log(data);
     setproductSelect(data);
   }, [data]);
 
@@ -23,8 +24,9 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
     if (validateEmail(email)) {
       const formData = {
         email: email,
-        productName: productSelect,
+        productName: productSelect.id,
       };
+      console.log(formData);
       const response = await fetch(`${localhost}/api/notityStock`, {
         method: "POST",
         headers: {

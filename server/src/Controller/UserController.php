@@ -79,8 +79,11 @@ class UserController extends AbstractController
             if ($formData["phone"] !== null)
                 $user->setPhoneNumber($formData["phone"]);
 
+            if($formData["region"] !== null)
+                $user->setRegion($formData["region"]);
+
             $now = new DateTime();
-            $now->format("Y-m-d H   :i:s");
+            $now->format("Y-m-d H:i:s");
             $user->setLastUpdated($now);
 
             $entityManager->persist($user);

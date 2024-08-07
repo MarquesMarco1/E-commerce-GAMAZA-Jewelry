@@ -23,6 +23,7 @@ export default function CategoryPage() {
   const { language } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
+  const [elemSelect, setElemSelect] = useState({});
 
   const itemsPerPage = 6;
 
@@ -63,7 +64,8 @@ export default function CategoryPage() {
   };
 
   const handleStockAlert = (productName) => {
-    setproductSelect(productName);
+    setproductSelect(productName.name);
+    setElemSelect(productName);
     setIsOpen(true);
   };
 
@@ -121,7 +123,7 @@ export default function CategoryPage() {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          handleStockAlert(elem.name);
+                          handleStockAlert(elem);
                         }}
                         className="text-grey-500 underline dark:text-white"
                       >
@@ -156,7 +158,7 @@ export default function CategoryPage() {
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           onSubmit={handleSubmit}
-          data={productSelect}
+          data={elemSelect}
         />
       </div>
     </>

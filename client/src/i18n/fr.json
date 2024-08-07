@@ -67,6 +67,7 @@
     "email": "Email ",
     "password": "Mot de passe ",
     "adress": "Adresse ",
+    "region": "Region",
     "zip": "Code Postal ",
     "city": "Ville ",
     "country": "Pays ",
@@ -163,7 +164,8 @@
   "stockAlert": {
     "notify": "M'avertir du retour en stock",
     "email": "Entrez votre email",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "submit": "Envoyer"
   },
   "reviewPage": {
     "title": "Évaluez ce produit",
@@ -173,5 +175,10 @@
     "date": "Filter par date",
     "desc": "Filter par les avis les plus récents",
     "asc": "Filter par les avis les plus ancien"
+  },
+  "promotionCode": {
+    "title": "Generation un code promotionnel",
+    "button": "Générer",
+    "submit": "Generer le code promotionnel"
   }
 }

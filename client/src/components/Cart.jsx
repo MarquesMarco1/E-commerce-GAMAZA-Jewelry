@@ -69,7 +69,7 @@ export default function Cart() {
     if (fetchIsLog()) {
       setDisplayWishlist(true);
     }
-  }, [])
+  }, []);
 
   const SetNbrArticle = () => {
     let nbr = 0;
@@ -81,16 +81,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-      (total +=
-        item.product.price * item.itemQty -
-        (
-          item.product.price *
-          item.itemQty *
-          ((item.product.promotion.id != 1
-            ? item.product.promotion.pourcentage
-            : 0) /
-            100)
-        ).toFixed())
+        (total +=
+          item.product.price * item.itemQty -
+          (
+            item.product.price *
+            item.itemQty *
+            ((item.product.promotion.id != 1
+              ? item.product.promotion.pourcentage
+              : 0) /
+              100)
+          ).toFixed())
     );
     setSubTotal(total);
   };
@@ -113,8 +113,7 @@ export default function Cart() {
       if (response.ok) {
         dispatch({ type: "REMOVE_ITEM", payload: item });
       }
-    }
-    else {
+    } else {
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
@@ -245,15 +244,17 @@ export default function Cart() {
                         Delete
                       </button>
                     </div>
-                    {displayWishlist && <div>
-                      <button
-                        className="flex font-primary"
-                        onClick={() => saveForLater(elem)}
-                      >
-                        <img className="mr-4" src={Save4later} alt="" />
-                        Save for later
-                      </button>
-                    </div>}
+                    {displayWishlist && (
+                      <div>
+                        <button
+                          className="flex font-primary"
+                          onClick={() => saveForLater(elem)}
+                        >
+                          <img className="mr-4" src={Save4later} alt="" />
+                          Save for later
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -267,17 +268,35 @@ export default function Cart() {
               <h3 className="font-primary text-xl text-center m-2">
                 Promo Code&nbsp;
               </h3>
-              <button className="font-primary text-xl text-center m-2 underline">
+              <button
+                className="font-primary text-xl text-center m-2 underline"
+                onClick={() => setInputPromo(true)}
+              >
                 Ajouter
               </button>
             </div>
+            {inputPromo && (
+              <input
+                type="text"
+                onChange={(e) => setTryCode(e.target.value)}
+                onKeyDown={handleSearch}
+              />
+            )}
+            {reduction && <p>Reduction : {reduction}%</p>}
             <div className="border border-black my-4" />
             <div className="flex justify-between">
               <h3 className="font-primary text-xl text-center m-2">
                 Subtotal&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
-                {subTotal}€
+                {reduction ? (
+                  <>
+                    <span className="line-through">{subTotal}€</span>{" "}
+                    <span>{subTotal - (subTotal * reduction) / 100}</span>
+                  </>
+                ) : (
+                  <span>{subTotal}€</span>
+                )}
               </h3>
             </div>
             <div className="flex justify-between">

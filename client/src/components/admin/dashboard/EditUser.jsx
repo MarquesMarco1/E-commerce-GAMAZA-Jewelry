@@ -29,6 +29,7 @@ export default function EditUser() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
+  const [region, setRegion] = useState("");
 
   useEffect(() => {
     //////////////////////
@@ -46,7 +47,8 @@ export default function EditUser() {
         setZipcode(data.user.zIPCode);
         setCity(data.user.city);
         setCountry(data.user.country);
-        setPhone("0" + data.user.phoneNumber);
+        setPhone(data.user.phoneNumber);
+        setRegion(data.user.region);
       }
     };
     fetchData();
@@ -68,6 +70,7 @@ export default function EditUser() {
       city: city,
       country: country,
       phone: phone,
+      region: region,
     };
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
@@ -83,7 +86,7 @@ export default function EditUser() {
 
   return (
     <>
-      <Header></Header> 
+      <Header></Header>
       <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold">
         {t("editUser.title")}
       </h1>
@@ -175,6 +178,18 @@ export default function EditUser() {
           onChange={(e) => setCity(e.target.value)}
         />
 
+        {/* Region */}
+
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="city"
+          id="city"
+          placeholder={t("editProfil.region")}
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}
+        />
+
         {/* Country */}
 
         <input
@@ -199,7 +214,11 @@ export default function EditUser() {
           onChange={(e) => setPhone(e.target.value)}
         />
 
-        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
+        <button
+          type="submit"
+          id="submit"
+          className="dark:bg-gold dark:text-white"
+        >
           {t("editProfil.edit")}
         </button>
       </form>
