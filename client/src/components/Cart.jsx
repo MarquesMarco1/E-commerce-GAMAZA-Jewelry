@@ -51,11 +51,11 @@ export default function Cart() {
     const data = await shippo.addresses.create({
       name: "GAMAZA", //required
       company: "",
-      street1: "24 rue Pasteur", //required
-      city: "Paris", //required
-      state: "HB", //required
-      zip: "94270", //required
-      country: "FR", // iso2 country code //required
+      street1: "Broadway 1", //required
+      city: "New York", //required
+      state: "NY", //required
+      zip: "10007", //required
+      country: "US", // iso2 country code //required
       phone: "",
       email: "",
     });
@@ -110,7 +110,7 @@ export default function Cart() {
           street1: street1, //required
           city: city, //required
           state: state, //required
-          zip: zip, //required
+          zip: zip.toString(), //required
           country: country, // iso2 country code //required
           phone: phone,
           email: email,
@@ -132,7 +132,7 @@ export default function Cart() {
         street1: street1, //required
         city: city, //required
         state: state, //required
-        zip: zip, //required
+        zip: zip.toString(), //required
         country: country, // iso2 country code //required
         phone: phone,
         email: email,
