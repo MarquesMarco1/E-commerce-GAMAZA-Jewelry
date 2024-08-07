@@ -69,8 +69,13 @@ export default function EditCategory() {
     fetchData();
   }, []);
 
+  ///////////////////////////////
+  //  Function Edit User Data  //
+  ///////////////////////////////
+
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       name: name,
       image: image,
@@ -78,6 +83,7 @@ export default function EditCategory() {
       nomEn: nomEn,
       descriptionEn: descriptionEn,
     };
+
     const response = await fetch(`${localhost}/api/editCategory/${id}`, {
       method: "POST",
       headers: {
@@ -85,11 +91,13 @@ export default function EditCategory() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.status === 200) {
       const data = await response.json();
       navigate("/admin", { replace: true });
     }
   };
+
   return (
     <>
       <Header></Header>
@@ -97,7 +105,7 @@ export default function EditCategory() {
         className="flex flex-col justify-center	items-center"
         onSubmit={handelSubmit}
       >
-        {/* Category name */}
+        {/* Category name FR*/}
 
         <label for="nom">{t("createCategory.nameFR")}</label>
         <input
@@ -110,6 +118,8 @@ export default function EditCategory() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+
+        {/* Category name EN*/}
 
         <label for="nom">{t("createCategory.nameEN")}</label>
         <input
@@ -137,7 +147,7 @@ export default function EditCategory() {
           onChange={(e) => setImage(e.target.value)}
         />
 
-        {/* Description */}
+        {/* Description FR*/}
 
         <label for="content">{t("createProduct.descriptionFR")}</label>
         <textarea
@@ -150,6 +160,8 @@ export default function EditCategory() {
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
 
+        {/* Description EN*/}
+
         <label for="content">{t("createProduct.descriptionEn")}</label>
         <textarea
           className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl  mb-4"
@@ -161,7 +173,13 @@ export default function EditCategory() {
           onChange={(e) => setDescriptionEn(e.target.value)}
         ></textarea>
 
-        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
+        {/* Submit button*/}
+
+        <button
+          type="submit"
+          id="submit"
+          className="dark:bg-gold dark:text-white"
+        >
           {t("editCategory.button")}
         </button>
       </form>

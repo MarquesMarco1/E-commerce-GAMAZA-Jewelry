@@ -90,8 +90,10 @@ export default function EditProduct() {
       }
 
       const response_product = await fetch(`${localhost}/api/products/${id}`);
+
       if (response_product.status === 200) {
         const data_product = await response_product.json();
+
         setNom(data_product.products[0].name);
         setNomEN(data_product.products[0].nameEn);
         setCategory_id(data_product.products[0].category.id);
@@ -109,6 +111,7 @@ export default function EditProduct() {
         setDescriptionEN(data_product.products[0].descriptionEn);
       }
     };
+
     fetchData();
   }, [language]);
 
@@ -118,6 +121,7 @@ export default function EditProduct() {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       category_id: parseInt(category_id),
       material_id: parseInt(material),
@@ -131,6 +135,7 @@ export default function EditProduct() {
       description: description,
       descriptionEn: descriptionEN,
     };
+
     const response = await fetch(`${localhost}/api/editProduct/${id}`, {
       method: "POST",
       headers: {
@@ -138,10 +143,11 @@ export default function EditProduct() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
-      // navigate("/admin", { replace: true });
+
+      navigate("/admin", { replace: true });
     }
   };
 
@@ -157,6 +163,7 @@ export default function EditProduct() {
       },
       body: JSON.stringify({ imageURL: elem }),
     });
+
     if (response.status === 200) {
       const data = await response.json();
       setImage(data.image);

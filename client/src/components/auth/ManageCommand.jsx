@@ -2,8 +2,11 @@ import { useTranslation } from "react-i18next";
 
 export default function ManageCommand() {
   const { t } = useTranslation();
+
   return (
     <div>
+      {/* EXAMPLE DESIGN FOR ORDER COMMAND */}
+
       <ul className=" bg-white dark:bg-dark-mode-light-purple text-gold border m-2.5 rounded-2xl p-2.5">
         <li>
           <h3>{t("commandManage.order")}</h3>
@@ -17,6 +20,9 @@ export default function ManageCommand() {
           </button>
         </li>
       </ul>
+
+      {/* EXAMPLE DESIGN FOR SHIPPING COMMAND */}
+
       <ul className=" bg-white dark:bg-dark-mode-light-purple text-gold border m-2.5 rounded-2xl p-2.5">
         <li>
           <h3>{t("commandManage.order")}</h3>

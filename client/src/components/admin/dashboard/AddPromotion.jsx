@@ -1,15 +1,15 @@
 import { useEffect, useState, useContext } from "react";
-import localhost from "../../../config";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../../../LanguageContext";
 
 //////////////////
 //  Components  //
 //////////////////
 
-import { LanguageContext } from "../../../LanguageContext";
 import Footer from "../../Footer";
 import Header from "../../Header";
+import localhost from "../../../config";
 
 export default function AddPromotion() {
   let navigate = useNavigate();

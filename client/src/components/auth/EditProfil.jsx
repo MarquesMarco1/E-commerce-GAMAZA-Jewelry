@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-import localhost from "../../config";
+import { useTranslation } from "react-i18next";
 
 //////////////////
 //  Components  //
@@ -9,11 +8,12 @@ import localhost from "../../config";
 
 import Header from "../Header";
 import Footer from "../Footer";
-import { useTranslation } from "react-i18next";
+import localhost from "../../config";
 
 export default function EditProfil() {
   const { id } = useParams();
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -30,8 +30,6 @@ export default function EditProfil() {
   const [phone, setPhone] = useState("");
   const [region, setRegion] = useState("");
 
-  const { t } = useTranslation();
-
   useEffect(() => {
     //////////////////////
     // Fetch User Data  //
@@ -39,8 +37,10 @@ export default function EditProfil() {
 
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/user/${id}`);
+
       if (response.ok) {
         const data = await response.json();
+
         setFirstname(data.user.firstname);
         setLastname(data.user.lastname);
         setEmail(data.user.email);
@@ -52,6 +52,7 @@ export default function EditProfil() {
         setRegion(data.user.region);
       }
     };
+
     fetchData();
   }, [id]);
 
@@ -74,7 +75,7 @@ export default function EditProfil() {
       phone: phone,
       region: region,
     };
-    console.log(formData);
+
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {

@@ -52,61 +52,63 @@ export default function CreateUser() {
 
   return (
     <>
-    <div className="dark:bg-dark-mode-purple">
-      <Header></Header>
-      <div className="flex flex-col items-center justify-center">
-        <form
-          onSubmit={handleSubmitRegister}
-          className="w-1/2 flex flex-col items-center justify-center"
-        >
-          <label
-            htmlFor="mail"
-            className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+      <div className="dark:bg-dark-mode-purple">
+        <Header></Header>
+
+        <div className="flex flex-col items-center justify-center">
+          <form
+            onSubmit={handleSubmitRegister}
+            className="w-1/2 flex flex-col items-center justify-center"
           >
-            {t("editProfil.email")}
-          </label>
+            <label
+              htmlFor="mail"
+              className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+            >
+              {t("editProfil.email")}
+            </label>
 
-          {/* Email */}
+            {/* Email */}
 
-          <input
-            type="email"
-            placeholder={t("createUser.email")}
-            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label
-            htmlFor="password"
-            className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
-          >
-            {t("editProfil.password")}
-          </label>
+            <input
+              type="email"
+              placeholder={t("createUser.email")}
+              className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="password"
+              className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+            >
+              {t("editProfil.password")}
+            </label>
 
-          {/* Password */}
+            {/* Password */}
 
-          <input
-            type="password"
-            placeholder={t("createUser.password")}
-            className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="new-password"
-            required
-          />
+            <input
+              type="password"
+              placeholder={t("createUser.password")}
+              className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black dark:text-gold bg-white dark:bg-dark-mode-light-purple "
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+              required
+            />
 
-          {/* Handle Error */}
+            {/* Handle Error */}
 
-          {error && <p>{error}</p>}
+            {error && <p>{error}</p>}
 
-          {/* Submit button */}
+            {/* Submit button */}
 
-          <button className="w-3/4 p-3 bg-light-purple dark:bg-gold text-3xl font-bold text-black dark:text-white rounded-lg hover:bg-gold dark:hover:bg-white font-primary">
-            {t("createUser.button")}
-          </button>
-        </form>
-      </div>
-      <Footer></Footer>
+            <button className="w-3/4 p-3 bg-light-purple dark:bg-gold text-3xl font-bold text-black dark:text-white rounded-lg hover:bg-gold dark:hover:bg-white font-primary">
+              {t("createUser.button")}
+            </button>
+          </form>
+        </div>
+
+        <Footer></Footer>
       </div>
     </>
   );

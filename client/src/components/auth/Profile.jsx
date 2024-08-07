@@ -1,22 +1,35 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import localhost from "../../config";
 import ManageProfil from "./ManageProfil";
 import Header from "../Header";
 import ManageCommand from "./ManageCommand";
-import { useTranslation } from "react-i18next";
 import Delete from "../../assets/delete.svg";
 import Cart from "../../assets/cart.svg";
 import { useCart } from "../../CartContext";
 
 export default function Profile() {
+  const { t } = useTranslation();
+  let navigate = useNavigate();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [profil, setProfil] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const { state: cart, dispatch } = useCart([]);
 
-  const { t } = useTranslation();
-  let navigate = useNavigate();
+  ///////////////////////////////////////
+  //  Fetch Wishlist if the user have  //
+  ///////////////////////////////////////
 
   const fetchWishlist = async (id) => {
     const response = await fetch(`${localhost}/api/UserWishlist/${id}`);
@@ -25,6 +38,10 @@ export default function Profile() {
       setWishlists(data.wishlist);
     }
   };
+
+  ///////////////////////
+  //  Fetch user data  //
+  ///////////////////////
 
   const fetchData = async (email) => {
     const response = await fetch(`${localhost}/api/user`, {
@@ -42,9 +59,14 @@ export default function Profile() {
     }
   };
 
+  //////////////////////////////////
+  //  Check if one user is login  //
+  //////////////////////////////////
+
   useEffect(() => {
     const fetchIsLog = async () => {
       const email = localStorage.getItem("user");
+
       if (email) {
         fetchData(email);
         setRefresh(false);
@@ -52,14 +74,23 @@ export default function Profile() {
         navigate("/authentication", { replace: true });
       }
     };
+
     fetchIsLog();
   }, [refresh]);
+
+  //////////////
+  //  Logout  //
+  //////////////
 
   const logout = () => {
     localStorage.removeItem("user");
     dispatch({ type: "RESET_CART", payload: [] });
     navigate("/", { replace: true });
   };
+
+  ////////////////////////////////////////
+  //  Delete a product in the wishlist  //
+  ////////////////////////////////////////
 
   const deleteProduct = async (elem) => {
     const response = await fetch(`${localhost}/api/wishlist/${elem.id}`, {
@@ -68,21 +99,25 @@ export default function Profile() {
 
     if (response.ok) {
       const data = await response.json();
+
       if (data.success) {
         setRefresh(true);
       }
     }
   };
 
+  /////////////////////////////
+  //  Add a product to cart  //
+  /////////////////////////////
+
   const handleAddToCart = async (elem) => {
-    console.log("elem", elem);
     const formData = {
       product: parseInt(elem.product.id),
       quantity: parseInt(elem.itemQty),
       size: elem.size,
       user: localStorage.getItem("user"),
     };
-    console.log("formData", formData);
+
     const response = await fetch(`${localhost}/api/cartItem`, {
       method: "POST",
       headers: {
@@ -104,6 +139,7 @@ export default function Profile() {
     <>
       <div className="dark:bg-dark-mode-purple">
         <Header></Header>
+
         <div className="mr-24	ml-24	flex justify-between font-secondary">
           <div className="w-3/5	 mr-8">
             <h1 className="mt-16 text-3xl	text-gold mb-2">
@@ -111,6 +147,9 @@ export default function Profile() {
             </h1>
             <div className="border border-gray-400	w-4/4	"></div>
             <br></br>
+
+            {/* Manage Profil part  */}
+
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
@@ -120,6 +159,9 @@ export default function Profile() {
                 {t("profilPage.logout")}
               </button>
             </div>
+
+            {/* Manage Wishlist part  */}
+
             <h1 className="mt-16 text-3xl	text-gold mb-2">My wishlist</h1>
             <div className="border border-gray-400	w-4/4	"></div>
             <br></br>
@@ -177,6 +219,9 @@ export default function Profile() {
                         )}
                       </div>
                     </div>
+
+                    {/* Add || Delete Wishlist Item Part  */}
+
                     <div>
                       <div className="flex justify-around text-2xl p-2 mt-6">
                         <div>
@@ -188,6 +233,7 @@ export default function Profile() {
                             Delete
                           </button>
                         </div>
+
                         <div>
                           <button
                             className="flex font-primary"
@@ -203,6 +249,9 @@ export default function Profile() {
                 </div>
               ))}
           </div>
+
+          {/* Manage Command Part  */}
+
           <div className="w-2/5">
             <h1 className="mt-16 text-3xl	text-gold mb-2">
               {t("profilPage.command")}

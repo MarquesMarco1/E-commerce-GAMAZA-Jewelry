@@ -1,45 +1,73 @@
 import { useEffect, useState } from "react";
-import localhost from "../../config";
 import { useTranslation } from "react-i18next";
-import Review from "./Review";
 import { useNavigate } from "react-router-dom";
 
+//////////////////
+//  Components  //
+//////////////////
+
+import localhost from "../../config";
+import Review from "./Review";
+
 export default function ReviewForm(data) {
+  let navigate = useNavigate();
+  const { t } = useTranslation();
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [id, setId] = useState("");
   const [review, setReview] = useState("");
   const [selectedStar, setSelectedStar] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [reviews, setReviews] = useState([]);
-  const stars = [1, 2, 3, 4, 5];
-  const { t } = useTranslation();
   const [canPost, setCanPost] = useState(false);
   const [error, setError] = useState("");
-  let navigate = useNavigate();
+  const stars = [1, 2, 3, 4, 5];
+
+  //////////////////////
+  //  Get all review  //
+  //////////////////////
 
   useEffect(() => {
     setId(data.id);
+
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/review/${id}`);
+
       if (response.ok) {
         const data = await response.json();
         setReviews(data.reviews);
       }
+
       if (localStorage.getItem("user")) {
         setCanPost(true);
       } else {
         setError("Need to be connect");
       }
     };
+
     fetchData();
   }, [data]);
+
+  //////////////////////////
+  //  Set Stars Selected  //
+  //////////////////////////
 
   const setStar = (index) => {
     setSelectedStar(index);
   };
 
+  /////////////////////
+  //  Post a review  //
+  /////////////////////
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const email = localStorage.getItem("user");
+
     const formData = {
       selectedStar: selectedStar,
       review: review,
@@ -58,6 +86,7 @@ export default function ReviewForm(data) {
     if (response.ok) {
       setSelectedStar(0);
       setReview("");
+
       const data = await response.json();
       setReviews(data.reviews);
     }
@@ -72,6 +101,9 @@ export default function ReviewForm(data) {
         <h1 className="font-bold text-3xl m-6 font-primary ">
           {t("reviewPage.title")}
         </h1>
+
+        {/* RATING WITH STARS SYSTEM */}
+
         <div className="flex dark:text-gold m-4">
           {stars.map((elem) =>
             elem <= (hoveredStar || selectedStar) ? (
@@ -111,6 +143,9 @@ export default function ReviewForm(data) {
             )
           )}
         </div>
+
+        {/* REVIEWS POST  */}
+
         {canPost
           ? selectedStar > 0 && (
               <>
@@ -126,6 +161,9 @@ export default function ReviewForm(data) {
           : error}
       </form>
       <div className="border border-gray-300"></div>
+
+      {/* Composant to manage review */}
+
       <Review data={{ reviews: reviews, id: id }} />
     </div>
   );

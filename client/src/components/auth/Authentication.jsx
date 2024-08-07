@@ -1,28 +1,42 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import localhost from "../../config";
 import { Link } from "react-router-dom";
+import { useCart } from "../../CartContext";
+import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
+import localhost from "../../config";
 import register from "../../assets/register.jpg";
 import login from "../../assets/login.jpg";
 import facebook from "../../assets/facebook.svg";
 import twitter from "../../assets/twitter.svg";
 import instagram from "../../assets/instagram.svg";
 import Header from "../Header";
-import { useCart } from "../../CartContext";
-
-import { useTranslation } from "react-i18next";
 
 const Authentication = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
   let navigate = useNavigate();
   const { t } = useTranslation();
   const { state: cart, dispatch } = useCart([]);
 
+  ////////////////
+  //  UseState  //
+  ////////////////
+
+  const [error, setError] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //////////////////////////////////////////////
+  //  handleSubmitRegister: Register an user  //
+  //////////////////////////////////////////////
+
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailPattern.test(email)) {
       setError("Email is invalid");
@@ -45,19 +59,26 @@ const Authentication = () => {
     if (response.status === 200) {
       localStorage.setItem("user", email);
       dispatch({ type: "RESET_CART", payload: [] });
+
       navigate("/", { replace: true });
     } else {
       setError("Email already exists.");
     }
   };
 
+  ////////////////////////////////////////////////////////
+  //  handleSubmitLogin: Systeme to login with an email //
+  ////////////////////////////////////////////////////////
+
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailPattern.test(email)) {
       setError("Email is invalid");
       return;
     }
+
     const formData = {
       email: email,
       password: password,
@@ -75,10 +96,15 @@ const Authentication = () => {
       localStorage.setItem("user", email);
       dispatch({ type: "RESET_CART", payload: [] });
 
+      ////////////////////////
+      //  Fetch users'cart  //
+      ////////////////////////
+
       const response_cart = await fetch(`${localhost}/api/cartItem/${email}`);
+
       if (response_cart.ok) {
         const data = await response_cart.json();
-        console.log(data);
+
         if (data.cartItem.length > 0) {
           data.cartItem.forEach((elem) => {
             dispatch({ type: "ADD_ITEM", payload: elem });
@@ -107,6 +133,9 @@ const Authentication = () => {
             >
               <div className="mr-60 w-full flex items-center p-6">
                 <img src={login} alt="Login Image" className="w-1/2 rounded" />
+
+                {/* form to login  */}
+
                 <form
                   onSubmit={handleSubmitLogin}
                   className="w-1/2 flex flex-col items-center justify-center"
@@ -114,6 +143,9 @@ const Authentication = () => {
                   <h1 className="mt-10 text-center font-primary text-2xl font-bold leading-9 tracking-tight text-gold">
                     {t("auth.login")}
                   </h1>
+
+                  {/* social media link  */}
+
                   <div className="my-6 flex flex-wrap justify-center align-items space-between">
                     <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
                       {t("auth.social")}
@@ -141,6 +173,8 @@ const Authentication = () => {
                     </Link>
                   </div>
 
+                  {/* EMAIL  */}
+
                   <label
                     htmlFor="mail"
                     className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
@@ -156,6 +190,9 @@ const Authentication = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
+
+                  {/* PASSWORD  */}
+
                   <label
                     htmlFor="password"
                     className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
@@ -171,15 +208,24 @@ const Authentication = () => {
                     autoComplete="current-password"
                     required
                   />
+
+                  {/* LINK FORGOT PASSWORD  */}
+
                   <a
                     href="#"
                     className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
                   >
                     {t("auth.forgot")}
                   </a>
+
+                  {/* SUBMIT BUTTON LOGIN  */}
+
                   <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
                     {t("auth.login")}
                   </button>
+
+                  {/* LINK TO SIGNUP  */}
+
                   <p
                     className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
                     onClick={() => setIsSignUp(true)}
@@ -197,6 +243,8 @@ const Authentication = () => {
               }`}
             >
               <div className="ml-60 w-full flex items-center p-6">
+                {/* FORM TO SIGNUP  */}
+
                 <form
                   onSubmit={handleSubmitRegister}
                   className="w-1/2 flex flex-col items-center justify-center"
@@ -204,6 +252,9 @@ const Authentication = () => {
                   <h1 className="mt-10 text-center font-primary text-2xl font-bold leading-9 tracking-tight text-gold">
                     {t("auth.register")}
                   </h1>
+
+                  {/* SOCIAL MEDIA LINK  */}
+
                   <div className="my-6 flex flex-wrap justify-center align-items space-between">
                     <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
                       {t("auth.social")}
@@ -231,6 +282,8 @@ const Authentication = () => {
                     </Link>
                   </div>
 
+                  {/* EMAIL  */}
+
                   <label
                     htmlFor="mail"
                     className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
@@ -245,6 +298,9 @@ const Authentication = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
+
+                  {/* PASSWORD  */}
+
                   <label
                     htmlFor="password"
                     className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
@@ -260,15 +316,22 @@ const Authentication = () => {
                     autoComplete="new-password"
                     required
                   />
+
                   <a
                     href="#"
                     className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
                   >
                     {t("auth.no-account")}
                   </a>
+
+                  {/* SUBMIT BUTTON TO REGISTER  */}
+
                   <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
                     {t("auth.register")}
                   </button>
+
+                  {/* REDIRECT TO LOGIN  */}
+
                   <p
                     className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
                     onClick={() => setIsSignUp(false)}
@@ -276,12 +339,14 @@ const Authentication = () => {
                     {t("auth.no-account")}
                   </p>
                 </form>
+
                 <img
                   src={register}
                   alt="Register Image"
                   className="w-1/2 rounded"
                 />
               </div>
+
               {error && <p>{error}</p>}
             </div>
           </div>

@@ -38,8 +38,10 @@ export default function EditUser() {
 
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/user/${id}`);
+
       if (response.ok) {
         const data = await response.json();
+
         setFirstname(data.user.firstname);
         setLastname(data.user.lastname);
         setEmail(data.user.email);
@@ -51,6 +53,7 @@ export default function EditUser() {
         setRegion(data.user.region);
       }
     };
+
     fetchData();
   }, [id]);
 
@@ -60,6 +63,7 @@ export default function EditUser() {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       email: email,
       password: password ? password : null,
@@ -72,6 +76,7 @@ export default function EditUser() {
       phone: phone,
       region: region,
     };
+
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
       headers: {
@@ -79,6 +84,7 @@ export default function EditUser() {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.status === 200) {
       navigate("/admin", { replace: true });
     }
@@ -214,6 +220,8 @@ export default function EditUser() {
           onChange={(e) => setPhone(e.target.value)}
         />
 
+        {/* Submit Form Button */}
+
         <button
           type="submit"
           id="submit"
@@ -222,6 +230,7 @@ export default function EditUser() {
           {t("editProfil.edit")}
         </button>
       </form>
+
       <Footer></Footer>
     </>
   );
