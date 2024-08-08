@@ -1,24 +1,41 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import { LanguageContext } from "../../LanguageContext";
 import localhost from "../../config";
 
 export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const { t } = useTranslation();
   const { language } = useContext(LanguageContext);
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [productSelect, setproductSelect] = useState(null);
 
   useEffect(() => {
-    console.log(data);
     setproductSelect(data);
   }, [data]);
+
+  ///////////////////////////////
+  //  Regex to validate email  //
+  ///////////////////////////////
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
+
+  ///////////////////////////
+  //  Send a notify email  //
+  ///////////////////////////
 
   const handleSubmit = async () => {
     if (validateEmail(email)) {
@@ -26,7 +43,7 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
         email: email,
         productName: productSelect.id,
       };
-      console.log(formData);
+
       const response = await fetch(`${localhost}/api/notityStock`, {
         method: "POST",
         headers: {
@@ -34,6 +51,7 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
         },
         body: JSON.stringify({ formData }),
       });
+
       if (response.ok) {
         onSubmit(email);
         setEmail("");
@@ -51,6 +69,9 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
         <h2 className="text-lg mb-4">{t("stockAlert.notify")}</h2>
+
+        {/* EMAIL  */}
+
         <input
           type="email"
           placeholder={t("stockAlert.email")}
@@ -59,6 +80,9 @@ export default function StockAlert({ isOpen, onClose, onSubmit, data }) {
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
         {error && <p className="text-red text-sm mb-4">{error}</p>}
+
+        {/* BUTTON TO SEND EMAIL  */}
+
         <div className="flex justify-end space-x-2">
           <button
             onClick={onClose}

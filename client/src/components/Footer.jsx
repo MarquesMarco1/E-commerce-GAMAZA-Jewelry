@@ -1,14 +1,23 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import L from "leaflet";
 import customMarker from "../leaf-red.png";
-import { useTranslation } from "react-i18next";
 
 export default function Footer() {
-  const parisPosition = [48.8566, 2.3522];
   const { t } = useTranslation();
+  const parisPosition = [48.8566, 2.3522];
+
+  /////////////////////////////
+  //  POSITION OF OWN STORE  //
+  /////////////////////////////
 
   const stores = [
     {
@@ -48,11 +57,16 @@ export default function Footer() {
   return (
     <footer className="flex flex-col md:flex-row items-center justify-between bg-purple bg-opacity-20 h-auto md:h-96 mt-10 w-full p-4 border-t border-gray-300">
       <div className="flex-1 flex flex-col items-center md:items-start justify-center p-4 text-center md:text-left">
+        {/* STORE INFO  */}
+
         <h2 className="text-gold text-4xl font-primary mb-2">
           {t("footer.title")}
         </h2>
         <p className="text-gold mb-4">74 avenue GAMAZA, GAMAZA CITY</p>
         <p className="text-gold mb-4">Email: gamaza@gamaza.com</p>
+
+        {/* SOCIAL MEDIA ICON */}
+
         <div className="flex space-x-4">
           <a
             href="https://facebook.com"
@@ -64,7 +78,7 @@ export default function Footer() {
             href="https://twitter.com"
             className="text-white hover:text-gray-400"
           >
-            <FaTwitter size={24} color="#BF9553"/>
+            <FaTwitter size={24} color="#BF9553" />
           </a>
           <a
             href="https://instagram.com"
@@ -74,6 +88,9 @@ export default function Footer() {
           </a>
         </div>
       </div>
+
+      {/* MAPS CONTAINER  */}
+
       <div className="flex-1 h-64 md:h-full w-full md:w-1/2 p-4">
         <MapContainer
           center={parisPosition}

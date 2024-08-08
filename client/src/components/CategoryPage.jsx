@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+//////////////////
+//  Components  //
+//////////////////
+
 import { LanguageContext } from "../LanguageContext";
-
 import localhost from "../config";
-
 import Header from "./Header";
 import Footer from "./Footer";
 import inStock from "../assets/inStock.svg";
@@ -14,26 +17,36 @@ import soldOut from "../assets/soldOut.svg";
 import StockAlert from "./utils/stockAlert";
 
 export default function CategoryPage() {
+  const { id } = useParams();
+  const { t } = useTranslation();
+  const { language } = useContext(LanguageContext);
+
+  ////////////////
+  //  UseState  //
+  ////////////////
+
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { id } = useParams();
-  const { t } = useTranslation();
-
-  const { language } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [productSelect, setproductSelect] = useState(null);
   const [elemSelect, setElemSelect] = useState({});
 
   const itemsPerPage = 6;
 
+  //////////////////////////
+  //  Fetch all product   //
+  //////////////////////////
+
   useEffect(() => {
     const fetchData = async () => {
       const language = localStorage.getItem("language");
 
       const response = await fetch(`${localhost}/api/categoryElem/${id}`);
+
       if (response.status === 200) {
         const data = await response.json();
+
         if (data.products.length > 0) {
           setName(
             language === "FR"
@@ -41,17 +54,27 @@ export default function CategoryPage() {
               : data.products[0].category.nameEn
           );
         }
+
         setProducts(data.products);
       }
     };
+
     fetchData();
   }, [id, language]);
+
+  /////////////////////////
+  //  Pagination System  //
+  /////////////////////////
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  //////////////////////////////
+  //  System to render stock  //
+  //////////////////////////////
 
   const manageStock = (stockQty) => {
     if (stockQty >= 10) {
@@ -63,11 +86,19 @@ export default function CategoryPage() {
     }
   };
 
+  //////////////////////////////
+  //  System to render stock  //
+  //////////////////////////////
+
   const handleStockAlert = (productName) => {
     setproductSelect(productName.name);
     setElemSelect(productName);
     setIsOpen(true);
   };
+
+  ////////////////////////
+  //  POPUP EMAIL SEND  //
+  ////////////////////////
 
   const handleSubmit = (email) => {
     alert(
@@ -80,6 +111,9 @@ export default function CategoryPage() {
     <>
       <div className="bg-white dark:bg-dark-mode-purple">
         <Header />
+
+        {/* BREADCRUMBS */}
+
         <ul className="flex flex-wrap space-x-2 p-4 dark:text-gold">
           <li>
             <Link to={`/`}>{t("categoryPage.homepage")}</Link>
@@ -90,6 +124,9 @@ export default function CategoryPage() {
         <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-primary">
           {name}
         </h1>
+
+        {/* RENDER ALL PRODUCT  */}
+
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4 md:mx-20 mb-8">
           {currentProducts.length > 0 ? (
             currentProducts.map((elem) => {
@@ -140,6 +177,9 @@ export default function CategoryPage() {
             </p>
           )}
         </ul>
+
+        {/* PAGINATION  */}
+
         <div className="flex justify-center space-x-2 mb-8">
           {Array.from({ length: totalPages }, (_, index) => (
             <button
@@ -154,6 +194,9 @@ export default function CategoryPage() {
           ))}
         </div>
         <Footer />
+
+        {/* STOCK ALERT */}
+
         <StockAlert
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
