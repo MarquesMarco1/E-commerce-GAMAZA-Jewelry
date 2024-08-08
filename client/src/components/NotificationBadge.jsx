@@ -12,3 +12,5 @@ const NotificationBadge = ({ count }) => {
 };
 
 export default NotificationBadge;
+
+// bulle nombre d'articles dans le panier mise à jour en direct (badge)
