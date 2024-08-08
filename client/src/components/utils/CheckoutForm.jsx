@@ -1,57 +1,65 @@
 import React, { useCallback, useEffect, useState } from "react";
-import localhost from '../../config';
-import { useCart } from "../../CartContext";
 import {
-    EmbeddedCheckoutProvider,
-    EmbeddedCheckout
-} from '@stripe/react-stripe-js';
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout,
+} from "@stripe/react-stripe-js";
+
+//////////////////
+//  Components  //
+//////////////////
+
+import localhost from "../../config";
+import { useCart } from "../../CartContext";
 
 export default function CheckoutForm(props) {
-    const { state: cart, dispatch } = useCart([]);
-    const [stripeData, setStripeData] = useState([]);
-    const [clientSecret, setClientSecret] = useState('');
+  ////////////////
+  //  UseState  //
+  ////////////////
 
-    useEffect(() => {
-        const newStripeData = cart.map((item) => {
-            return {
-                price: item.product.keyStripe,
-                quantity: item.itemQty
-            };
-        });
-        setStripeData(newStripeData);
-    }, [cart]);
+  const { state: cart, dispatch } = useCart([]);
+  const [stripeData, setStripeData] = useState([]);
+  const [clientSecret, setClientSecret] = useState("");
 
-    const fetchClientSecret = useCallback(async () => {
-        if (stripeData.length === 0) return;
+  useEffect(() => {
+    const newStripeData = cart.map((item) => {
+      return {
+        price: item.product.keyStripe,
+        quantity: item.itemQty,
+      };
+    });
+    setStripeData(newStripeData);
+  }, [cart]);
 
-            const res = await fetch(`${localhost}/api/checkout`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(stripeData),
-            });
+  const fetchClientSecret = useCallback(async () => {
+    if (stripeData.length === 0) return;
 
-            const data = await res.json();
-            if (data.clientSecret) {
-                setClientSecret(data.clientSecret);
-            }
-    }, [stripeData]);
+    const res = await fetch(`${localhost}/api/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(stripeData),
+    });
 
-    useEffect(() => {
-        fetchClientSecret();
-    }, [stripeData, fetchClientSecret]);
+    const data = await res.json();
+    if (data.clientSecret) {
+      setClientSecret(data.clientSecret);
+    }
+  }, [stripeData]);
 
-    const options = { clientSecret };
+  useEffect(() => {
+    fetchClientSecret();
+  }, [stripeData, fetchClientSecret]);
 
-    return (
-        <div id="checkout">
-            {clientSecret && <EmbeddedCheckoutProvider
-                stripe={props.stripe}
-                options={options}
-            >
-                <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>}
-        </div>
-    );
+  const options = { clientSecret };
+
+  return (
+    <div id="checkout">
+      {clientSecret && (
+        <EmbeddedCheckoutProvider stripe={props.stripe} options={options}>
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      )}
+    </div>
+  );
 }
