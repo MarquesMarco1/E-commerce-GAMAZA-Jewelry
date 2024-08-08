@@ -150,7 +150,7 @@
     "button": "Ajouter"
   },
   "manageShipping": {
-    "shippingTitle": "Gérer l'expédition",
+    "shippingTitle": "Gérer les expéditions",
     "whitelist": "Pays whitelistés",
     "blacklist": "Pays blacklistés",
     "thresholdsTitle": "Palliers de livraison gratuite"
