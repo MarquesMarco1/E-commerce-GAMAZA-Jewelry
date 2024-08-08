@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AuthPopup = ({ onClose }) => {
   const navigate = useNavigate();
 
   const handleLoginRedirect = () => {
-    navigate('/login');
+    navigate('/profile');
     onClose();
   };
 
@@ -15,30 +15,24 @@ const AuthPopup = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-5 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold">Veuillez vous connecter</h2>
-        <p className="mt-2">Vous devez être connecté pour passer une commande.</p>
-        <div className="mt-4 flex justify-around">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-50">
+      <div className="bg-grey p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div className="flex flex-col space-y-4">
           <button
             onClick={handleLoginRedirect}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-black font-medium py-2 rounded-lg transition duration-200"
           >
             Se connecter
           </button>
+        </div>
+        <div className="flex flex-col space-y-4">
           <button
             onClick={handleCartRedirect}
-            className="bg-gray-300 text-black px-4 py-2 rounded"
+            className="bg-green-500 hover:bg-green-600 text-black font-medium py-2 rounded-lg transition duration-200"
           >
-            Retourner au panier
+            Continuer la commande
           </button>
         </div>
-        <button
-          onClick={onClose}
-          className="mt-4 text-red-500 underline"
-        >
-          Fermer
-        </button>
       </div>
     </div>
   );
