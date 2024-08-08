@@ -14,7 +14,7 @@ export default function Switch() {
     return(
         <>
             <div>
-                <DarkModeSwitch checked={darkMode} onChange={toggleDarkMode} size={42} color="#BF9553"/>
+                <DarkModeSwitch checked={darkMode} onChange={toggleDarkMode} size={32} color="#BF9553"/>
             </div>
         </>
     );

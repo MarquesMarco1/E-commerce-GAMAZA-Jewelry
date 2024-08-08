@@ -51,8 +51,12 @@ export default function Footer() {
         <h2 className="text-gold text-4xl font-primary mb-2">
           {t("footer.title")}
         </h2>
-        <p className="text-gold mb-4">74 avenue GAMAZA, GAMAZA CITY</p>
-        <p className="text-gold mb-4">Email: gamaza@gamaza.com</p>
+        <p className="text-gold mb-4">
+          {t("footer.adress")}
+        </p>
+        <p className="text-gold mb-4">
+          Email : gamaza@gamaza.com
+          </p>
         <div className="flex space-x-4">
           <a
             href="https://facebook.com"

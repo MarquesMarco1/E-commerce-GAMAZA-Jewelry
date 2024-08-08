@@ -28,7 +28,8 @@
     "cart": "Panier"
   },
   "footer": {
-    "title": "Nous contacter"
+    "title": "Nous contacter",
+    "adress": "Adresse : 74 Avenue de Gamaza, 94270, G.A.M.A.Z.A City"
   },
   "categoryPage": {
     "homepage": "Accueil",

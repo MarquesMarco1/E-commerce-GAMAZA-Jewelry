@@ -28,7 +28,8 @@
     "cart": "Cart"
   },
   "footer": {
-    "title": "Contact us"
+    "title": "Contact us",
+    "adress": "Adress: 74th Gamaza Street, 94270, G.A.M.A.Z.A City"
   },
   "categoryPage": {
     "homepage": "Homepage",
