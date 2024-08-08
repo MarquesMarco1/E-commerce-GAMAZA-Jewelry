@@ -623,10 +623,14 @@ export default function Cart() {
 
             <div>
               <ul>
-                {shippingChoice.length > 0 ?
+                {shippingChoice.length > 0 &&
                   shippingChoice.map((elem, index) => (
                     <div className="flex" >
-                      <input type="checkbox"></input>
+                      <input
+                        type="checkbox"
+                        checked={shippingOption === index}
+                        onChange={() => setShippingOption(index)}
+                      />
                       <li
                         key={index}
                         className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${elem.attributes[0] === "FASTEST" ? "bg-yellow-100" : ""
@@ -652,7 +656,7 @@ export default function Cart() {
                         </div>
                       </li>
                     </div>
-                  )) : <Loading />}
+                  ))}
               </ul>
             </div>
             {/* {console.log(addressTo)} */}
