@@ -39,7 +39,7 @@ export default function Header() {
     if (!email) {
       setShowAuthPopup(true);
     } else {
-      navigate('/cart'); // Redirige vers la page cart
+      navigate('/cart'); 
     }
   };
 
