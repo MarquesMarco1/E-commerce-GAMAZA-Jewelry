@@ -51,10 +51,10 @@ export default function Footer() {
         <h2 className="text-gold text-4xl font-primary mb-2">
           {t("footer.title")}
         </h2>
-        <p className="text-gold mb-4">
+        <p className="text-gold mb-4 font-primary">
           {t("footer.adress")}
         </p>
-        <p className="text-gold mb-4">
+        <p className="text-gold mb-4 font-primary">
           Email : gamaza@gamaza.com
           </p>
         <div className="flex space-x-4">
@@ -78,15 +78,14 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="flex-1 h-64 md:h-full w-full md:w-1/2 p-4">
+      <div className="flex-1 h-64 md:h-full w-full p-4">
         <MapContainer
           center={parisPosition}
           zoom={6}
+          className="h-full w-full rounded-lg shadow-md"
           style={{
             height: "100%",
             width: "100%",
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
           <TileLayer

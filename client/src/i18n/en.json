@@ -25,7 +25,9 @@
   "header": {
     "profile": "Profile",
     "admin": "Admin",
-    "cart": "Cart"
+    "cart": "Cart",
+    "languages": "Languages",
+    "darkmode": "Dark Mode"
   },
   "footer": {
     "title": "Contact us",
