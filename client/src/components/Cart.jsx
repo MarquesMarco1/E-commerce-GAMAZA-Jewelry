@@ -8,6 +8,7 @@ import Save4later from "../assets/save4later.svg";
 import { useCart } from "../CartContext";
 import localhost from "../config";
 import { Shippo } from "shippo";
+import Loading from "./utils/Loading";
 
 export default function Cart() {
   const { t } = useTranslation();
@@ -34,11 +35,14 @@ export default function Cart() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const [shippingCost, setShippingCost] = useState(0);
+  const [shippingOption, setShippingOption] = useState(0);
   const [addressFrom, setAddressFrom] = useState(null);
   const [addressTo, setAddressTo] = useState({});
   const [parcels, setParcels] = useState([]);
   const [shippingChoice, setShippingChoice] = useState([]);
+
+  const [cartState, setCartState] = useState(0);
+  const stateManager = ["Confirm Adress", "Select Shipping Method", "Go to Payment"]
 
   const user = localStorage.getItem("user");
 
@@ -181,16 +185,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-        (total +=
-          item.product.price * item.itemQty -
-          (
-            item.product.price *
-            item.itemQty *
-            ((item.product.promotion.id != 1
-              ? item.product.promotion.pourcentage
-              : 0) /
-              100)
-          ).toFixed())
+      (total +=
+        item.product.price * item.itemQty -
+        (
+          item.product.price *
+          item.itemQty *
+          ((item.product.promotion.id != 1
+            ? item.product.promotion.pourcentage
+            : 0) /
+            100)
+        ).toFixed())
     );
     setSubTotal(total);
   };
@@ -220,6 +224,7 @@ export default function Cart() {
   };
 
   const checkout = async (user) => {
+    console.log(addressTo)
     const adressValide = await fetchShipping(user);
 
     if (
@@ -231,13 +236,13 @@ export default function Cart() {
       addressTo.city !== "" &&
       addressTo.street1 !== ""
     ) {
+      setCartState(1);
       const shipment = await shippo.shipments.create({
         addressFrom: addressFrom,
         addressTo: addressTo,
         parcels: parcels,
         async: false,
       });
-      console.log(shipment);
 
       if (shipment && shipment.rates.length > 0) {
         let tmp = [];
@@ -258,7 +263,10 @@ export default function Cart() {
         setShippingChoice(tmp);
       }
     }
-    // navigate("/checkout", { replace: true });
+    if (cartState === 2) {
+      // if()
+      navigate("/checkout", { replace: true });
+    }
   };
 
   const transaction = async (elem) => {
@@ -268,7 +276,7 @@ export default function Cart() {
       async: false,
     });
     // JE SAIS PAS QUOI FAIRE A PARTIR DE LA
-    console.log(transation);
+    setCartState(2);
   };
 
   const saveForLater = async (elem) => {
@@ -532,17 +540,6 @@ export default function Cart() {
                         Delete
                       </button>
                     </div>
-                    {/* {displayWishlist && (
-                      <div>
-                        <button
-                          className="flex font-primary"
-                          onClick={() => saveForLater(elem)}
-                        >
-                          <img className="mr-4" src={Save4later} alt="" />
-                          Save for later
-                        </button>
-                      </div>
-                    )} */}
                     {localStorage.getItem("user") && (
                       <div>
                         <button
@@ -598,14 +595,14 @@ export default function Cart() {
                 )}
               </h3>
             </div>
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <h3 className="font-primary text-xl text-center m-2">
                 Shipping&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
                 {addressTo === null ? "Need an adress" : "25$"}
               </h3>
-            </div>
+            </div> */}
             <div className="flex justify-between">
               <h3 className="font-primary text-xl text-center m-2">
                 Adress&nbsp;
@@ -626,48 +623,48 @@ export default function Cart() {
 
             <div>
               <ul>
-                {shippingChoice.length > 0 &&
+                {shippingChoice.length > 0 ?
                   shippingChoice.map((elem, index) => (
-                    <li
-                      key={index}
-                      className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${
-                        elem.attributes[0] === "FASTEST" ? "bg-yellow-100" : ""
-                      }`}
-                      onClick={() => transaction(elem)}
-                    >
-                      <div>
-                        <img
-                          src={elem.providerImg}
-                          alt={elem.provider}
-                          className="w-4/4 h-4/4 mr-4"
-                        />
-                        <p>{elem.provider}</p>
-                      </div>
-                      <div className="flex-grow">
-                        <div className="font-bold text-gold text-lg">
-                          {elem.attributes.map((item, idx) => (
-                            <p key={idx}>{item}</p>
-                          ))}
+                    <div className="flex" >
+                      <input type="checkbox"></input>
+                      <li
+                        key={index}
+                        className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${elem.attributes[0] === "FASTEST" ? "bg-yellow-100" : ""
+                          }`}
+                        onClick={() => transaction(elem)}
+                      >
+                        <div>
+                          <img
+                            src={elem.providerImg}
+                            alt={elem.provider}
+                            className="w-4/4 h-4/4 mr-4"
+                          />
+                          <p>{elem.provider}</p>
                         </div>
-                        <div className="font-bold text-gold text-lg">
-                          {elem.amount} {elem.currency}
+                        <div className="flex-grow">
+                          <div className="flex">
+                            <p className="font-bold text-gold text-lg">{elem.attributes[0]}&nbsp;</p>
+                            <p>{(elem.amount * 0.91).toFixed()}€</p>
+                          </div>
+                          <div className="text-gray-600 font-bold">
+                            Estimated days: {elem.estimatedDays} days
+                          </div>
                         </div>
-                        <div className="text-gray-600 font-bold">
-                          Estimated days: {elem.estimatedDays} days
-                        </div>
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    </div>
+                  )) : <Loading />}
               </ul>
             </div>
-
+            {/* {console.log(addressTo)} */}
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
-              <button
-                className="font-primary text-3xl font-bold text-center m-2"
-                onClick={() => checkout(user)}
-              >
-                ORDER NOW
-              </button>
+              {addressTo.name === undefined ?
+                <Loading />
+                : <button
+                  className="font-primary text-3xl font-bold text-center m-2"
+                  onClick={() => checkout(user)}
+                >
+                  {stateManager[cartState]}
+                </button>}
             </div>
           </div>
         </div>
