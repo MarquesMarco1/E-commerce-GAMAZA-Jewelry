@@ -19,6 +19,9 @@ class ShippingCountry
     #[ORM\Column]
     private ?bool $blacklist = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $countryCode = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class ShippingCountry
     public function setBlacklist(bool $backlist): static
     {
         $this->blacklist = $backlist;
+
+        return $this;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(string $countryCode): static
+    {
+        $this->countryCode = $countryCode;
 
         return $this;
     }

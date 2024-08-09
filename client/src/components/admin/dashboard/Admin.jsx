@@ -11,6 +11,7 @@ import Header from "../../Header";
 import Footer from "../../Footer";
 import NavBarAdmin from "../../utils/navbarAdmin";
 import { useTranslation } from "react-i18next";
+import Organizer from "./Organizer";
 
 export default function Admin() {
   let navigate = useNavigate();
@@ -129,15 +130,21 @@ export default function Admin() {
   const addPromo = () => {
     navigate(`/addPromo`, { replace: true });
   };
+
+  const manageShipping = () => {
+    navigate("/manageShipping", { replace: true });
+  }
+
   return (
     <>
       <div className="dark:bg-dark-mode-purple">
         <Header></Header>
         <div className="mr-24	ml-24	">
           <NavBarAdmin></NavBarAdmin>
-          <div className="border	border-grey	w-2/4	"></div>
+          <div className="border border-grey	w-2/4	"></div>
           <br></br>
 
+          <Organizer />
           {/* //////////////////////// */}
           {/* // Navigate to a CRUD // */}
           {/* //////////////////////// */}
@@ -160,6 +167,13 @@ export default function Admin() {
               onClick={() => addPromo()}
             >
               {t("adminPage.promotion")}
+            </button>
+
+            <button
+              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              onClick={() => manageShipping()}
+            >
+              {t("adminPage.shipping")}
             </button>
             <br></br>
           </div>

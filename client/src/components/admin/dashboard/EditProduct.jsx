@@ -140,8 +140,7 @@ export default function EditProduct() {
     });
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
-      // navigate("/admin", { replace: true });
+      navigate("/admin", { replace: true });
     }
   };
 

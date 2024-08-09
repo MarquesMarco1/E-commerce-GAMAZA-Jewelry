@@ -73,49 +73,38 @@ export default function AddPromotion() {
     setIsSearching(true);
     let list = [];
 
-    if (language === "FR") {
-      if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
-          list.push(elem);
-        });
-      } else {
-        if (categoryName === "All Categories") {
-          let result = product.filter((elem) =>
-            elem.name.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(result);
-        } else {
-          let result = product.filter(
-            (elem) =>
-              elem.category.name === categoryName &&
-              elem.name.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(result);
-        }
-      }
-      setSearchResults(list[0]);
+    if (
+      categoryName !== "Toutes les catégories" &&
+      categoryName !== "All Categories"
+    ) {
+      list = product.filter(
+        (elem) =>
+          (elem.category.name === categoryName &&
+            elem.name
+              .toLocaleLowerCase()
+              .includes(productName.toLocaleLowerCase())) ||
+          (elem.category.nameEn === categoryName &&
+            elem.nameEn
+              .toLocaleLowerCase()
+              .includes(productName.toLocaleLowerCase()))
+      );
     } else {
-      if (categoryName === "All Categories" && productName === "") {
-        product.map((elem) => {
-          list.push(elem);
-        });
+      if (productName === "") {
+        list = [...product];
       } else {
-        if (categoryName === "All Categories") {
-          let result = product.filter((elem) =>
-            elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(result);
-        } else {
-          let result = product.filter(
-            (elem) =>
-              elem.category.nameEn === categoryName &&
-              elem.nameEn.toLowerCase().includes(productName.toLowerCase())
-          );
-          list.push(result);
-        }
+        list = product.filter(
+          (elem) =>
+            elem.name
+              .toLocaleLowerCase()
+              .includes(productName.toLocaleLowerCase()) ||
+            elem.nameEn
+              .toLocaleLowerCase()
+              .includes(productName.toLocaleLowerCase())
+        );
       }
-      setSearchResults(list[0]);
     }
+
+    setSearchResults(list);
   };
 
   ////////////////////////
