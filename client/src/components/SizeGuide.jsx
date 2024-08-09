@@ -19,7 +19,7 @@ export default function SizeGuide(data) {
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    console.log(email)
+    // console.log(email)
     if (email === null) {
       return false;
     }
@@ -107,7 +107,7 @@ export default function SizeGuide(data) {
         product: data.data,
         size: selectedSize
       }
-      console.log(item)
+      // console.log(item)
       dispatch({ type: "ADD_ITEM", payload: item });
       navigate("/", { replace: true });
     }

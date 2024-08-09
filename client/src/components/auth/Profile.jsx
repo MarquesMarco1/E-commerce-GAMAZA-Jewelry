@@ -75,14 +75,14 @@ export default function Profile() {
   };
 
   const handleAddToCart = async (elem) => {
-    console.log("elem", elem);
+    // console.log("elem", elem);
     const formData = {
       product: parseInt(elem.product.id),
       quantity: parseInt(elem.itemQty),
       size: elem.size,
       user: localStorage.getItem("user"),
     };
-    console.log("formData", formData);
+    // console.log("formData", formData);
     const response = await fetch(`${localhost}/api/cartItem`, {
       method: "POST",
       headers: {

@@ -11,6 +11,7 @@ import Header from "../../Header";
 import Footer from "../../Footer";
 import NavBarAdmin from "../../utils/navbarAdmin";
 import { useTranslation } from "react-i18next";
+import Organizer from "./Organizer";
 
 export default function Admin() {
   let navigate = useNavigate();
@@ -135,9 +136,10 @@ export default function Admin() {
         <Header></Header>
         <div className="mr-24	ml-24	">
           <NavBarAdmin></NavBarAdmin>
-          <div className="border	border-grey	w-2/4	"></div>
+          <div className="border border-grey	w-2/4	"></div>
           <br></br>
 
+          <Organizer />
           {/* //////////////////////// */}
           {/* // Navigate to a CRUD // */}
           {/* //////////////////////// */}
