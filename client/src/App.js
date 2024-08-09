@@ -23,7 +23,7 @@ import EditUser from "./components/admin/dashboard/EditUser";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "./LanguageContext";
 import CartPopup from "./components/utils/CartPopup";
-import Cart from "./components/Cart";
+import Cart from "./components/cart/Cart";
 import CheckoutForm from "./components/utils/CheckoutForm";
 import Return from "./components/utils/Return";
 import { CartProvider } from "./CartContext";
