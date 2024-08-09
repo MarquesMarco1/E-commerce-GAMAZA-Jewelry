@@ -28,6 +28,7 @@ export default function Header() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(localhost);
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
       if (response.status === 200) {
         const data = await response.json();

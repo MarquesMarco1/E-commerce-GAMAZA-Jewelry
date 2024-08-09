@@ -26,6 +26,7 @@ import CartPopup from "./components/utils/CartPopup";
 import Cart from "./components/cart/Cart";
 import CheckoutForm from "./components/utils/CheckoutForm";
 import Return from "./components/utils/Return";
+import ManageShipping from "./components/admin/dashboard/Shipping";
 import { CartProvider } from "./CartContext";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
             <Route path="/admin/stats" element={<Stats />}></Route>
             <Route path="/addPromo" element={<AddPromotion />}></Route>
             <Route path="/admin/code" element={<PromotionalCode />}></Route>
+            <Route path="/manageShipping" element={<ManageShipping />}></Route>
             {/* USERS */}
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
