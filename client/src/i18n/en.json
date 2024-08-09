@@ -67,6 +67,7 @@
     "email": "Email ",
     "password": "Password ",
     "adress": "Adress ",
+    "region": "Region",
     "zip": "ZipCode ",
     "city": "City ",
     "country": "Country ",
@@ -182,5 +183,10 @@
     "date": "Filter by date",
     "desc": "Filter by most recent reviews",
     "asc": "Filter by oldest reviews"
+  },
+  "promotionCode": {
+    "title": "Generation a promotional code",
+    "button": "Generate",
+    "submit": "Generate promotional code"
   }
 }

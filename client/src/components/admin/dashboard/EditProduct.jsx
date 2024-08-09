@@ -357,7 +357,11 @@ export default function EditProduct() {
 
         {/* Submit Button */}
 
-        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
+        <button
+          type="submit"
+          id="submit"
+          className="dark:bg-gold dark:text-white"
+        >
           {t("editProduct.button")}
         </button>
       </form>

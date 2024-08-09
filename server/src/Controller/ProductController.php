@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\AlertStock;
 use App\Entity\Category;
 use App\Entity\Material;
 use App\Entity\Product;
@@ -17,6 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Middleware\User;
 use App\Repository\UserRepository;
 use DateTime;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 class ProductController extends AbstractController
 {
@@ -73,10 +77,23 @@ class ProductController extends AbstractController
     }
 
     #[Route("/api/editProduct/{id}",name : "editProduct")]
-    public function editProduct(Request $request, EntityManagerInterface $entityManager, Product $product, int $id)
+    public function editProduct(Request $request, EntityManagerInterface $entityManager, Product $product, int $id, MailerInterface $mailer)
     {
         $data = json_decode($request->getContent(), true);
         $formData = $data["formData"];
+
+        $alerts = $entityManager->getRepository(AlertStock::class)->findBy(["product"=>$product]);
+        if($alerts){
+            foreach($alerts as $elem){
+                $email = (new TemplatedEmail())
+                    ->from(new Address('gamaza@gamaza.com'))
+                    ->to($elem->getEmail())
+                    ->subject($product->getName(). ' in stock')
+                    ->html('<p>'.$product->getName().' is back, you can order now</p>');
+                $mailer->send($email);
+            }
+        }
+
         $category = $entityManager->getRepository(Category::class)->find($formData["category_id"]);
         $material = $entityManager->getRepository(Material::class)->find($formData["material_id"]);
         if($formData["stone_id"] !== null){

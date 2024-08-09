@@ -51,7 +51,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if($email !== null) {
             $conn = $this->getEntityManager()->getConnection();
 
-            $sql = 'SELECT country FROM user WHERE email = :email';
+            $sql = 'SELECT firstname, adress, city, region, zip_code, country, email, phone_number FROM user WHERE email = :email';
     
             $resultSet = $conn->executeQuery($sql, ['email' => $email]);
     
