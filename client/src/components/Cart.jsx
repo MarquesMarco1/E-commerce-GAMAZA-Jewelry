@@ -100,35 +100,35 @@ export default function Cart() {
 
   const product_list = () => {
     return (
-      <div className="flex">
-        <div>
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full lg:w-3/5">
           {cart.map((elem, index) => (
-            <div key={index} className="ml-8">
-              <div className="flex flex-col m-8">
+            <div key={index} className="ml-4 lg:ml-8 mb-8">
+              <div className="flex flex-col lg:flex-row m-4 lg:m-8">
                 <div className="flex">
                   <img
-                    className="w-1/3 h-1/3 border border-grey"
+                    className="w-1/2 lg:w-1/3 h-auto border border-grey"
                     src={`${elem.product.images[0]}`}
                     alt={elem.product.name}
                   />
                   <div className="flex flex-col ml-4">
-                    <h2 className="font-primary text-3xl text-gold">
+                    <h2 className="font-primary text-2xl lg:text-3xl text-gold">
                       {elem.product.name}
                     </h2>
-                    <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
                       Size:&nbsp;<h2>{elem.size}</h2>
                     </span>
-                    <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
                       Material:&nbsp;<h2>{elem.product.material.name}</h2>
                     </span>
                     {elem.product.stone && (
-                      <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Stone:&nbsp;
                         <h2>{elem.product.stone.name}</h2>
                       </span>
                     )}
                     {elem.product.promotion.id != 1 && (
-                      <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Price:&nbsp;
                         <h2 className="line-through">
                           ${elem.product.price * elem.itemQty}&nbsp;
@@ -148,13 +148,13 @@ export default function Cart() {
                       </span>
                     )}
                     {elem.product.promotion.id == 1 && (
-                      <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Price:&nbsp;
                         <h2>{elem.product.price * elem.itemQty}€</h2>
                       </span>
                     )}
-                    <span className="flex text-2xl p-2 font-primary">
-                      Quantity:&nbsp;
+                    <span className="font-primary flex text-xl lg:text-2xl p-2">
+                    Quantity:&nbsp;
                       <input
                         className="border border-grey"
                         type="number"
@@ -172,7 +172,7 @@ export default function Cart() {
                   </div>
                 </div>
                 <div>
-                  <div className="flex justify-around text-2xl p-2 mt-6">
+                  <div className="flex justify-around text-xl lg:text-2xl p-2 mt-6">
                     <div>
                       <button
                         className="flex font-primary"
@@ -197,29 +197,29 @@ export default function Cart() {
             </div>
           ))}
         </div>
-        <div className="w-2/5  mr-8 flex flex-col justify-start">
+        <div className="w-full lg:w-2/5 mr-4 lg:mr-8 flex flex-col justify-start">
           <div className="bg-grey m-4 rounded-2xl p-4">
-            <h1 className="font-primary text-3xl text-center m-2">Order</h1>
+            <h1 className="font-primary text-2xl lg:text-3xl text-center m-2">Order</h1>
             <div className="flex justify-between my-4">
-              <h3 className="font-primary text-xl text-center m-2">
+              <h3 className="font-primary text-lg lg:text-xl text-center m-2">
                 Promo Code&nbsp;
               </h3>
-              <button className="font-primary text-xl text-center m-2 underline">
+              <button className="font-primary text-lg lg:text-xl text-center m-2 underline">
                 Ajouter
               </button>
             </div>
             <div className="border border-black my-4" />
             <div className="flex justify-between">
-              <h3 className="font-primary text-xl text-center m-2">
+              <h3 className="font-primary text-lg lg:text-xl text-center m-2">
                 Subtotal&nbsp;
               </h3>
-              <h3 className="font-primary text-xl text-center m-2">
+              <h3 className="font-primary text-lg lg:text-xl text-center m-2">
                 {subTotal}€
               </h3>
             </div>
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               <button
-                className="font-primary text-3xl font-bold text-center m-2"
+                className="font-primary text-2xl lg:text-3xl font-bold text-center m-2"
                 onClick={() => checkout()}
               >
                 ORDER NOW
@@ -237,18 +237,18 @@ export default function Cart() {
     <>
       <Header />
       <div className="mb-24">
-        <div className="m-16">
+        <div className="m-8 lg:m-16">
           {nbrArticle >= 0 && nbrArticle !== 1 && (
-            <h1 className="font-primary text-3xl text-gold mr-4">
+            <h1 className="font-primary text-2xl lg:text-3xl text-gold mr-4">
               {`My Cart (` + nbrArticle + ` articles)`}
             </h1>
           )}
           {nbrArticle === 1 && (
-            <h1 className="font-primary text-3xl text-gold mr-4">
+            <h1 className="font-primary text-2xl lg:text-3xl text-gold mr-4">
               {`My Cart (` + nbrArticle + ` article)`}
             </h1>
           )}
-          <div className="border border-grey w-2/4 mt-4" />
+          <div className="border border-grey w-full lg:w-2/4 mt-4" />
         </div>
         <div>{product_list()}</div>
       </div>

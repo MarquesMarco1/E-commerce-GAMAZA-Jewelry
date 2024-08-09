@@ -23,11 +23,13 @@
     "loading": "Recherche en cours ..."
   },
   "header": {
+    "home": "Accueil",
     "profile": "Profil",
     "admin": "Administrateur",
     "cart": "Panier",
     "languages": "Langues",
-    "darkmode": "Dark Mode"
+    "lightmode": "Mode claire",
+    "darkmode": "Mode sombre"
   },
   "footer": {
     "title": "Nous contacter",

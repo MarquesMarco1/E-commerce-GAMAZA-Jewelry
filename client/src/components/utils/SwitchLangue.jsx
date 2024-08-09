@@ -17,13 +17,13 @@ const Lang = () => {
 
   return (
     <div className="flex justify-center items-center rounded-md">
-      <div className="flex flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+      <div className="items-center space-y-2 block py-2 px-4 hover:bg-light-purple hover:bg-opacity-50 rounded">
         <img
           src={languages}
-          className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
+          className="w-8 h-8 md:w-12 md:h-12 hover:scale-110 transition duration-300"
           alt="logo of a cart that redirect to your cart and the finalization of your order"
         />
-        <span className="hidden md:block text-sm md:text-xl sm:text-2xl text-gold font-primary font-extrabold ml-2">
+        <span className="block md:hidden text-sm md:text-xl sm:text-2xl text-gold font-primary font-extrabold ml-2 hover:text-light-purple transition duration-300">
           {t("header.languages")}
         </span>
         <select

@@ -23,10 +23,12 @@
     "loading": "Searching ..."
   },
   "header": {
+    "home": "Home",
     "profile": "Profile",
     "admin": "Admin",
     "cart": "Cart",
     "languages": "Languages",
+    "lightmode": "Light Mode",
     "darkmode": "Dark Mode"
   },
   "footer": {

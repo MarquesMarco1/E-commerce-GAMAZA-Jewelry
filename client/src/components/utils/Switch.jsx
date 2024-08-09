@@ -22,7 +22,7 @@ export default function Switch() {
                     color="#BF9553"
                     className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
                 />
-            <span className="hidden md:block text-xl sm:text-2xl text-gold font-primary font-extrabold ml-2">
+            <span className="block md:hidden text-sm text-gold font-primary font-extrabold ml-2 hover:text-light-purple transition duration-300">
                 {t("header.darkmode")}
               </span>
             </div>
