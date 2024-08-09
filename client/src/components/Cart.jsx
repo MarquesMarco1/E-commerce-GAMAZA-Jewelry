@@ -36,11 +36,13 @@ export default function Cart() {
   const [email, setEmail] = useState("");
 
   const [shippingOption, setShippingOption] = useState(0);
+  const [shippingOptionValid, setShippingOptionValid] = useState(false);
   const [addressFrom, setAddressFrom] = useState(null);
   const [addressTo, setAddressTo] = useState({});
   const [parcels, setParcels] = useState([]);
   const [shippingChoice, setShippingChoice] = useState([]);
 
+  const [isWaiting, setIsWaiting] = useState(true)
   const [cartState, setCartState] = useState(0);
   const stateManager = [
     "Confirm Adress",
@@ -136,16 +138,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-        (total +=
-          item.product.price * item.itemQty -
-          (
-            item.product.price *
-            item.itemQty *
-            ((item.product.promotion.id != 1
-              ? item.product.promotion.pourcentage
-              : 0) /
-              100)
-          ).toFixed())
+      (total +=
+        item.product.price * item.itemQty -
+        (
+          item.product.price *
+          item.itemQty *
+          ((item.product.promotion.id != 1
+            ? item.product.promotion.pourcentage
+            : 0) /
+            100)
+        ).toFixed())
     );
     setSubTotal(total);
   };
@@ -239,6 +241,9 @@ export default function Cart() {
   const checkout = async () => {
     if (cartState === 2) {
       navigate("/checkout", { replace: true });
+    } else if (cartState === 1) {
+      transaction(shippingOption)
+      setShippingOptionValid(true)
     } else {
       if (
         addressTo.name !== "" &&
@@ -272,11 +277,12 @@ export default function Cart() {
             }
           });
           setShippingChoice(tmp);
+          setIsWaiting(false)
         }
       }
     }
   };
-
+  
   const transaction = async (elem) => {
     const trans = await shippo.transactions.create({
       rate: elem?.objectId,
@@ -284,7 +290,6 @@ export default function Cart() {
       async: false,
     });
     console.log(trans);
-    // JE SAIS PAS QUOI FAIRE A PARTIR DE LA
     setCartState(2);
   };
 
@@ -571,21 +576,12 @@ export default function Cart() {
                 )}
               </h3>
             </div>
-            {/* <div className="flex justify-between">
-              <h3 className="font-primary text-xl text-center m-2">
-                Shipping&nbsp;
-              </h3>
-              <h3 className="font-primary text-xl text-center m-2">
-                {addressTo === null ? "Need an adress" : "25$"}
-              </h3>
-            </div> */}
             <div className="flex justify-between">
               <h3 className="font-primary text-xl text-center m-2">
                 Adress&nbsp;
               </h3>
               <h3 className="font-primary text-xl text-center m-2">
                 {
-                  // addressTo === null
                   Object.keys(addressTo).length === 0 ? (
                     <button onClick={() => openPopUp()}>No adress found</button>
                   ) : (
@@ -594,53 +590,89 @@ export default function Cart() {
                 }
               </h3>
             </div>
-
-            <div>
-              <ul>
-                {shippingChoice.length > 0 ? (
-                  shippingChoice.map((elem, index) => (
-                    <div className="flex" onClick={() => transaction(elem)}>
-                      <input
-                        type="checkbox"
-                        checked={shippingOption === index}
-                        onChange={() => setShippingOption(index)}
-                      />
-                      <li
-                        key={index}
-                        className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${
-                          elem.attributes[0] === "FASTEST"
+            <div className="flex justify-between">
+              <h3 className="font-primary text-xl text-center m-2">
+                Shipping Method&nbsp;
+              </h3>
+              {isWaiting && cartState === 1 && <Loading />}
+              <div>
+                <ul>
+                  {!shippingOptionValid && shippingChoice.length > 0 && (
+                    shippingChoice.map((elem, index) => (
+                      <div className="flex">
+                        <input
+                          type="checkbox"
+                          checked={shippingOption === elem || false}
+                          onChange={() => setShippingOption(elem)}
+                        />
+                        <li
+                          key={index}
+                          className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${elem.attributes[0] === "FASTEST"
                             ? "bg-yellow-100"
                             : ""
-                        }`}
+                            }`}
+                        >
+                          <div>
+                            <img
+                              src={elem.providerImg}
+                              alt={elem.provider}
+                              className="w-4/4 h-4/4 mr-4"
+                            />
+                            <p>{elem.provider}</p>
+                          </div>
+                          <div className="flex-grow">
+                            <div className="flex">
+                              <p className="font-bold text-gold text-lg">
+                                {elem.attributes[0]}&nbsp;
+                              </p>
+                              <p>{(elem.amount * 0.91).toFixed()}€</p>
+                            </div>
+                            <div className="text-gray-600 font-bold">
+                              Estimated days: {elem.estimatedDays} days
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    ))
+                  )}
+                  {shippingOptionValid &&
+                    <div className="flex">
+                      <input
+                        type="checkbox"
+                        checked={true}
+                      />
+                      <li
+                        key={shippingOption.objectId}
+                        className={`border-b border-gray-600:last:border-0 flex items-center p-4 hover:bg-gray-100 cursor-pointer ${shippingOption.attributes[0] === "FASTEST"
+                          ? "bg-yellow-100"
+                          : ""
+                          }`}
                       >
                         <div>
                           <img
-                            src={elem.providerImg}
-                            alt={elem.provider}
+                            src={shippingOption.providerImg}
+                            alt={shippingOption.provider}
                             className="w-4/4 h-4/4 mr-4"
                           />
-                          <p>{elem.provider}</p>
+                          <p>{shippingOption.provider}</p>
                         </div>
                         <div className="flex-grow">
                           <div className="flex">
                             <p className="font-bold text-gold text-lg">
-                              {elem.attributes[0]}&nbsp;
+                              {shippingOption.attributes[0]}&nbsp;
                             </p>
-                            <p>{(elem.amount * 0.91).toFixed()}€</p>
+                            <p>{(shippingOption.amount * 0.91).toFixed()}€</p>
                           </div>
                           <div className="text-gray-600 font-bold">
-                            Estimated days: {elem.estimatedDays} days
+                            Estimated days: {shippingOption.estimatedDays} days
                           </div>
                         </div>
                       </li>
                     </div>
-                  ))
-                ) : (
-                  <Loading />
-                )}
-              </ul>
+                  }
+                </ul>
+              </div>
             </div>
-            {/* {console.log(addressTo)} */}
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               {addressTo.name === undefined ? (
                 <Loading />
@@ -658,7 +690,7 @@ export default function Cart() {
       </div>
     );
   };
-  // console.log(addressTo)
+
   return (
     <>
       <Header />
