@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import localhost from "../../../config";
 import { useTranslation } from "react-i18next";
-import switchIcon from '../../../assets/switchList.svg';
+import switchIcon from "../../../assets/switchList.svg";
 
 //////////////////
 //  Components  //
@@ -12,8 +12,7 @@ import Footer from "../../Footer";
 import Header from "../../Header";
 
 export default function ManageShipping() {
-    const { t } = useTranslation();
-  
+  const { t } = useTranslation();
 
   ////////////////
   //  UseState  //
@@ -23,17 +22,17 @@ export default function ManageShipping() {
   const [blacklist, setBlacklist] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
 
-    ///////////////////////////////////////////////
+  //////////////////////////////////////////////////////
   //  Fetch Whitelist, Blacklist, language, shipping  //
-  ///////////////////////////////////////////////
+  //////////////////////////////////////////////////////
 
   async function getCountries() {
     try {
       const res = await fetch(`${localhost}/api/shippingCountry`);
-      if(!res.ok) {
+      if (!res.ok) {
         throw new Error(`HTTP error : ${res.status}`);
       }
-      const data = await res.json();  
+      const data = await res.json();
       setWhitelist(data.whitelist);
       setBlacklist(data.blacklist);
     } catch (error) {
@@ -45,21 +44,50 @@ export default function ManageShipping() {
     getCountries();
   }, []);
 
-  const sortedWhitelist = whitelist.slice().sort((a, b) => a.name.localeCompare(b.name));
-  const sortedBlacklist = blacklist.slice().sort((a, b) => a.name.localeCompare(b.name));
+  const switchCountry = async (name, elem) => {
+    const formData = {
+      list: name,
+      countryId: elem,
+    };
+    const response = await fetch(`${localhost}/api/switchCountry`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
 
-  const switchLists = () => {
-    if(!selectedCountry) return;
+    if (response.ok) {
+      const data = await response.json();
+      setWhitelist(data.whitelist);
+      setBlacklist(data.blacklist);
+    }
+  };
 
-    const whitelistCountries = whitelist.find(country => country.name === selectedCountry);
-    const blacklistCountries = blacklist.find(country => country.name === selectedCountry);
+  const sortedWhitelist = whitelist
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-    if(whitelistCountries) {
-      setWhitelist(whitelist.filter(country => country.name !== selectedCountry));
-      setBlacklist([...blacklist, whitelistCountries]);
-    }else if (blacklistCountries) {
-      setBlacklist(blacklist.filter(country => country.name !== selectedCountry));
-      setWhitelist([...whitelist, blacklistCountries]);
+  const sortedBlacklist = blacklist
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const switchLists = async (e) => {
+    e.preventDefault();
+    if (!selectedCountry) return;
+
+    const whitelistCountries = whitelist.find(
+      (country) => country.name === selectedCountry
+    );
+
+    const blacklistCountries = blacklist.find(
+      (country) => country.name === selectedCountry
+    );
+
+    if (whitelistCountries) {
+      switchCountry("whiteList", whitelistCountries.id);
+    } else if (blacklistCountries) {
+      switchCountry("blackList", blacklistCountries.id);
     }
     setSelectedCountry(null);
   };
@@ -70,31 +98,33 @@ export default function ManageShipping() {
 
   return (
     <>
-        <div className="dark:bg-dark-mode-purple">
-            <Header />
-            <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold font-primary">
-                {t("manageShipping.shippingTitle")}
-            </h1>
-            <div className="dropdown-container flex justify-center space-x-4">
-              <div className="dropdown">
-                <h2 className="text-center text-xl mb-4 mt-4 text-black dark:text-gold font-primary">
-                {t("manageShipping.whitelist")}
-              </h2>
-              <select 
-                className="w-full p-2 border border-gold rounded dark:bg-dark-mode-purple dark:border-gold"
-                onChange={handleSelect}
-                value={selectedCountry || ""}
-                >
-                  <option value="" disabled>Select a country</option>
-                {sortedWhitelist.map((country) => (
+      <div className="dark:bg-dark-mode-purple">
+        <Header />
+        <h1 className="text-center	text-2xl	mb-4	mt-4 text-gold font-primary">
+          {t("manageShipping.shippingTitle")}
+        </h1>
+        <div className="dropdown-container flex justify-center space-x-4">
+          <div className="dropdown">
+            <h2 className="text-center text-xl mb-4 mt-4 text-black dark:text-gold font-primary">
+              {t("manageShipping.whitelist")}
+            </h2>
+            <select
+              className="w-full p-2 border border-gold rounded dark:bg-dark-mode-purple dark:border-gold"
+              onChange={handleSelect}
+              value={selectedCountry || ""}
+            >
+              <option value="" disabled>
+                Select a country
+              </option>
+              {sortedWhitelist.map((country) => (
                 <option key={country.id} value={country.name}>
                   {country.name}
                 </option>
-                ))}
-              </select>
-            </div>
+              ))}
+            </select>
+          </div>
 
-            <button
+          <button
             onClick={switchLists}
             className="bg-transparent border-none cursor-pointer"
           >
@@ -105,31 +135,32 @@ export default function ManageShipping() {
             />
           </button>
 
-            <div className="dropdown">
-              <h2 className="text-center text-xl mb-4 mt-4 text-black dark:text-gold font-primary">
-                {t("manageShipping.blacklist")}
-              </h2>
-              <select 
-                className="w-full p-2 border border-gold rounded dark:bg-dark-mode-purple dark:border-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple"
-                onChange={handleSelect}
-                value={selectedCountry || ""}
-              >
-                <option value="" disabled>Select a country</option>
-                {sortedBlacklist.map((country) => (
-                  <option key={country.id} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="dropdown">
+            <h2 className="text-center text-xl mb-4 mt-4 text-black dark:text-gold font-primary">
+              {t("manageShipping.blacklist")}
+            </h2>
+            <select
+              className="w-full p-2 border border-gold rounded dark:bg-dark-mode-purple dark:border-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple"
+              onChange={handleSelect}
+              value={selectedCountry || ""}
+            >
+              <option value="" disabled>
+                Select a country
+              </option>
+              {sortedBlacklist.map((country) => (
+                <option key={country.id} value={country.name}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="text-center mt-4">
-          </div>
-          <h1 className="text-center text-2xl mb-4 mt-4 text-gold">
-            {t("manageShipping.thresholdsTitle")}
-          </h1>
-          <Footer></Footer>
         </div>
+        <div className="text-center mt-4"></div>
+        <h1 className="text-center text-2xl mb-4 mt-4 text-gold">
+          {t("manageShipping.thresholdsTitle")}
+        </h1>
+        <Footer></Footer>
+      </div>
     </>
   );
 }
