@@ -2,7 +2,7 @@ import cart from "../assets/cart.svg";
 import profile from "../assets/profile.svg";
 import admin from "../assets/admin.svg";
 import lotus from "../assets/lotus.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import localhost from "../config";
 import Lang from "./utils/SwitchLangue";
@@ -13,6 +13,7 @@ import AuthPopup from './utils/AuthPopup';
 
 export default function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [showAuthPopup, setShowAuthPopup] = useState(false);
@@ -36,10 +37,10 @@ export default function Header() {
   }, [email]);
 
   const handleCartClick = () => {
-    if (!email) {
+    if (email) {
+      navigate('/cart');
+    } else if (location.pathname !== '/cart') {
       setShowAuthPopup(true);
-    } else {
-      navigate('/cart'); 
     }
   };
 
@@ -103,8 +104,6 @@ export default function Header() {
             <div 
               className="flex items-center cursor-pointer" 
               onClick={handleCartClick}
-              onMouseEnter={() => setShowCartPopup(true)} 
-              onMouseLeave={() => setShowCartPopup(false)}
             >
               <img
                 src={cart}
@@ -115,7 +114,13 @@ export default function Header() {
                 {t("header.cart")}
               </span>
             </div>
-            {email && <CartPopup show={showCartPopup} cartItems={cartItems} />} 
+            {showCartPopup && (
+              <CartPopup 
+                show={showCartPopup} 
+                cartItems={cartItems} 
+                isLoggedIn={!!email}
+              />
+            )}
           </div>
         </div>
       </header>

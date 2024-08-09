@@ -39,7 +39,7 @@ export default function Cart() {
   const [parcels, setParcels] = useState([])
   
   const user = localStorage.getItem("user");
-
+// Importez useLocation
   const shippo = new Shippo({
     apiKeyHeader: "shippo_test_55d32d12f5ff622308a3b56d970d6727d8cd7dee",
     // the API version can be globally set, though this is normally not required
