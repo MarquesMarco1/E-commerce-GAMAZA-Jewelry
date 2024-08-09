@@ -150,8 +150,6 @@ export default function Cart() {
     }
   };
   
-  
-
   const checkout = () => {
     navigate("/checkout", { replace: true });
   };

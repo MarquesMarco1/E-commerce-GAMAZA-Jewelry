@@ -1,4 +1,4 @@
-import cart from "../assets/cart.svg";
+import cartIcon from '../assets/cart.svg';
 import profile from "../assets/profile.svg";
 import admin from "../assets/admin.svg";
 import lotus from "../assets/lotus.svg";
@@ -9,6 +9,8 @@ import Lang from "./utils/SwitchLangue";
 import { useTranslation } from "react-i18next";
 import Switch from "./utils/Switch";
 import CartPopup from "./utils/CartPopup";
+import { useCart } from "../CartContext";
+import NotificationBadge from './NotificationBadge';
 import AuthPopup from './utils/AuthPopup';
 
 export default function Header() {
@@ -18,12 +20,11 @@ export default function Header() {
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [showAuthPopup, setShowAuthPopup] = useState(false);
   const { t } = useTranslation();
+  const { state: cart } = useCart();
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const email = localStorage.getItem("user");
-  const cartItems = [
-    { id: 1, name: "Article 1", quantity: 2, price: 10 },
-    { id: 2, name: "Article 2", quantity: 1, price: 20 },
-  ];
+  const cartItems = cart;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +36,11 @@ export default function Header() {
     };
     fetchData();
   }, [email]);
+
+  useEffect(() => {
+    setCartItemCount(cartItems.reduce((acc, item) => acc + item.itemQty, 0));
+  }, [cartItems]);
+      
 
   const handleCartClick = () => {
     if (email) {
@@ -113,6 +119,38 @@ export default function Header() {
               <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
                 {t("header.cart")}
               </span>
+            </Link>
+          </>
+        ) : (
+          <Link to={`/profile`} className="flex items-center">
+            <img
+              src={profile}
+              className="mr-2 md:mr-8"
+              alt="logo of a person that redirect to your profile and the edition or suppression of your profile"
+            />
+            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+              {t("header.profile")}
+            </span>
+          </Link>
+        )}
+
+        <div
+          className="relative"
+          onMouseEnter={() => setShowCartPopup(true)}
+          onMouseLeave={() => setShowCartPopup(false)}
+        >
+          <Link to={`/cart`} className="flex items-center">
+            <img
+              src={cartIcon}
+              className="mr-2 md:mr-8"
+              alt="logo of a cart that redirect to your cart and the finalization of your order"
+            />
+            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
+              {t("header.cart")}
+            </span>
+            <NotificationBadge count={cartItemCount} />
+          </Link>
+          <CartPopup show={showCartPopup} cartItems={cartItems} />
             </div>
             {showCartPopup && (
               <CartPopup 
