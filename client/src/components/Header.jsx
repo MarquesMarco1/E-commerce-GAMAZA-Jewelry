@@ -1,4 +1,4 @@
-import cartIcon from '../assets/cart.svg';
+import cartIcon from "../assets/cart.svg";
 import profile from "../assets/profile.svg";
 import admin from "../assets/admin.svg";
 import lotus from "../assets/lotus.svg";
@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 import Switch from "./utils/Switch";
 import CartPopup from "./utils/CartPopup";
 import { useCart } from "../CartContext";
-import NotificationBadge from './NotificationBadge';
-import AuthPopup from './utils/AuthPopup';
+import NotificationBadge from "./NotificationBadge";
+import AuthPopup from "./utils/AuthPopup";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -40,12 +40,11 @@ export default function Header() {
   useEffect(() => {
     setCartItemCount(cartItems.reduce((acc, item) => acc + item.itemQty, 0));
   }, [cartItems]);
-      
 
   const handleCartClick = () => {
     if (email) {
-      navigate('/cart');
-    } else if (location.pathname !== '/cart') {
+      navigate("/cart");
+    } else if (location.pathname !== "/cart") {
       setShowAuthPopup(true);
     }
   };
@@ -107,62 +106,27 @@ export default function Header() {
             onMouseEnter={() => setShowCartPopup(true)}
             onMouseLeave={() => setShowCartPopup(false)}
           >
-            <div 
-              className="flex items-center cursor-pointer" 
+            <div
+              className="flex items-center cursor-pointer"
               onClick={handleCartClick}
             >
               <img
-                src={cart}
+                src={cartIcon}
                 className="mr-2 md:mr-8"
                 alt="logo of a cart that redirect to your cart and the finalization of your order"
               />
               <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
                 {t("header.cart")}
               </span>
-            </Link>
-          </>
-        ) : (
-          <Link to={`/profile`} className="flex items-center">
-            <img
-              src={profile}
-              className="mr-2 md:mr-8"
-              alt="logo of a person that redirect to your profile and the edition or suppression of your profile"
-            />
-            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
-              {t("header.profile")}
-            </span>
-          </Link>
-        )}
-
-        <div
-          className="relative"
-          onMouseEnter={() => setShowCartPopup(true)}
-          onMouseLeave={() => setShowCartPopup(false)}
-        >
-          <Link to={`/cart`} className="flex items-center">
-            <img
-              src={cartIcon}
-              className="mr-2 md:mr-8"
-              alt="logo of a cart that redirect to your cart and the finalization of your order"
-            />
-            <span className="block md:hidden text-2xl text-gold font-primary font-extrabold">
-              {t("header.cart")}
-            </span>
-            <NotificationBadge count={cartItemCount} />
-          </Link>
-          <CartPopup show={showCartPopup} cartItems={cartItems} />
+              <NotificationBadge count={cartItemCount} />
             </div>
-            {showCartPopup && (
-              <CartPopup 
-                show={showCartPopup} 
-                cartItems={cartItems} 
-                isLoggedIn={!!email}
-              />
-            )}
+            <CartPopup show={showCartPopup} cartItems={cartItems} />
           </div>
         </div>
       </header>
-      {showAuthPopup && !email && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
+      {showAuthPopup && !email && (
+        <AuthPopup onClose={() => setShowAuthPopup(false)} />
+      )}
     </>
   );
 }
