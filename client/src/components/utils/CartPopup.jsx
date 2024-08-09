@@ -16,6 +16,7 @@ const CartPopup = ({ show }) => {
 
   const SetNbrArticle = () => {
     let nbr = 0;
+
     cart.map((item) => (nbr += item.itemQty));
     setNbrArticle(nbr);
 };

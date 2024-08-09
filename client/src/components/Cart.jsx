@@ -35,6 +35,7 @@ export default function Cart() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
+  const [shippingCost, setShippingCost] = useState(0)
   const [shippingOption, setShippingOption] = useState(0);
   const [shippingOptionValid, setShippingOptionValid] = useState(false);
   const [addressFrom, setAddressFrom] = useState(null);
@@ -51,6 +52,7 @@ export default function Cart() {
   ];
 
   // const user = localStorage.getItem("user");
+
 
   const shippo = new Shippo({
     apiKeyHeader: "shippo_test_55d32d12f5ff622308a3b56d970d6727d8cd7dee",
@@ -162,16 +164,17 @@ export default function Cart() {
   };
 
   const deleteProduct = async (item) => {
-    // if (fetchIsLog()) {
     if (localStorage.getItem("user")) {
       const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
         method: "DELETE",
       });
-
+  
       if (response.ok) {
+        console.log("Product deleted successfully from server");
         dispatch({ type: "REMOVE_ITEM", payload: item });
       }
     } else {
+      console.log("User not logged in, removing from local cart");
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
@@ -673,6 +676,7 @@ export default function Cart() {
                 </ul>
               </div>
             </div>
+
             <div className="rounded-3xl bg-gold m-6 flex justify-center">
               {addressTo.name === undefined ? (
                 <Loading />
