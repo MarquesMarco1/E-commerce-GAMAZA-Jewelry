@@ -19,11 +19,11 @@ class ShippingCountryController extends AbstractController
         $whitelist = [];
         foreach($country as $elem){
             if($elem->isBlacklist() === true){
-                array_push($whitelist, $elem);
-            }else{
                 array_push($blacklist, $elem);
+            }else{
+                array_push($whitelist, $elem);
             }
         }
-        return $this->json(["blacklist"=>$blacklist, "whitelist"=>$whitelist], 200);
+        return $this->json(["whitelist"=>$whitelist, "blacklist"=>$blacklist], 200);
     }
 }
