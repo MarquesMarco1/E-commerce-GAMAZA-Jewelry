@@ -68,14 +68,16 @@ export default function Header() {
       icon: darkMode ? sunnyOutline : moonOutline,
       dis: "translate-x-64",
       action: toggleDarkMode,
+      hideOnMobile: true,
     },
     {
-      name: t("header.language"),
+      name: t("header.languages"),
       icon: globeOutline,
       dis: "translate-x-80",
       action: () => setShowLanguageSelect(!showLanguageSelect),
       showLanguageSelect,
-      languageOptions: ["en", "fr", "es"],
+      languageOptions: ["en", "fr"],
+      hideOnMobile: true,
     },
   ].filter(Boolean);
 
@@ -99,9 +101,8 @@ export default function Header() {
   };
 
   return (
-    <header className="">
-      <div className="flex justify-between items-center">
-        <div onClick={handleLogoClick} className="flex items-center cursor-pointer">
+    <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 md:max-h-fit px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
+        <div onClick={handleLogoClick} className="flex flex-col justify-center items-center md:flex-row md:justify-between md:px-10">
           <img
             src={lotus}
             className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
@@ -111,7 +112,7 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex justify-end items-center space-x-4 mb-4 md:mb-0">
           {/* Dark Mode Toggle */}
           <div onClick={() => handleMenuClick(Menus.length - 2, null, toggleDarkMode)} className="cursor-pointer">
             <IonIcon
@@ -127,12 +128,12 @@ export default function Header() {
               onClick={() => setShowLanguageSelect(!showLanguageSelect)}
             />
             {showLanguageSelect && (
-              <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
+              <div className="absolute left-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
                 {Menus[Menus.length - 1].languageOptions.map((lng) => (
                   <button
                     key={lng}
                     onClick={() => changeLanguage(lng)}
-                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purple"
                   >
                     {lng.toUpperCase()}
                   </button>
@@ -141,13 +142,13 @@ export default function Header() {
             )}
           </div>
         </div>
-      </div>
 
-      <div className="h-auto flex justify-center items-center bg-light-purple bg-opacity-20 max-h-[4.4rem] px-6 rounded-t-xl w-full overflow-x-auto">
-      <ul className="flex relative flex-wrap">
+      {/* NavBar  */}
+      <div className="bg-white max-w-fit mx-auto flex justify-center max-h-fit px-6 rounded-t-xl ">
+      <ul className="flex relative">
           {Menus[active] && (
             <span
-              className={`bg-light-purple dark:bg-dark-purple duration-500 ${Menus[active].dis} border-4 border-grey h-16 w-16 absolute -top-5 rounded-full`}
+              className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple border-opacity-20 dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
             >
               <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
               <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
@@ -162,13 +163,13 @@ export default function Header() {
               >
                 <span
                   className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
-                    i === active && "-mt-6 text-white"
+                    i === active && "-mt-6 text-gold"
                   }`}
                 >
                   <IonIcon icon={menu.icon} />
                 </span>
                 <span
-                  className={`${
+                  className={`text-gold font-primary ${
                     active === i
                       ? "translate-y-4 duration-700 opacity-100"
                       : "opacity-0 translate-y-10"
