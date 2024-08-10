@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import localhost from "../../config";
 import { useTranslation } from "react-i18next";
 import Review from "./Review";
+import { useNavigate } from "react-router-dom";
 
 export default function ReviewForm(data) {
   const [id, setId] = useState("");
@@ -11,6 +12,9 @@ export default function ReviewForm(data) {
   const [reviews, setReviews] = useState([]);
   const stars = [1, 2, 3, 4, 5];
   const { t } = useTranslation();
+  const [canPost, setCanPost] = useState(false);
+  const [error, setError] = useState("");
+  let navigate = useNavigate();
 
   useEffect(() => {
     setId(data.id);
@@ -19,6 +23,11 @@ export default function ReviewForm(data) {
       if (response.ok) {
         const data = await response.json();
         setReviews(data.reviews);
+      }
+      if (localStorage.getItem("user")) {
+        setCanPost(true);
+      } else {
+        setError("Need to be connect");
       }
     };
     fetchData();
@@ -45,6 +54,7 @@ export default function ReviewForm(data) {
       },
       body: JSON.stringify({ formData }),
     });
+
     if (response.ok) {
       setSelectedStar(0);
       setReview("");
@@ -55,8 +65,13 @@ export default function ReviewForm(data) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
-        <h1 className="font-bold text-3xl m-6 font-primary ">{t("reviewPage.title")}</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col justify-center items-center"
+      >
+        <h1 className="font-bold text-3xl m-6 font-primary ">
+          {t("reviewPage.title")}
+        </h1>
         <div className="flex dark:text-gold m-4">
           {stars.map((elem) =>
             elem <= (hoveredStar || selectedStar) ? (
@@ -96,11 +111,19 @@ export default function ReviewForm(data) {
             )
           )}
         </div>
-        <textarea
-          className="border border-solid border-slate-500 w-96 p-4 rounded-xl mb-4 dark:bg-dark-mode-light-purple dark:text-gold dark:border-gold"
-          onChange={(e) => setReview(e.target.value)}
-        ></textarea>
-        <button className="dark:text-gold">{t("reviewPage.button")}</button>
+        {canPost
+          ? selectedStar > 0 && (
+              <>
+                <textarea
+                  className="border border-solid border-slate-500 w-96 p-4 rounded-xl mb-4 dark:bg-dark-mode-light-purple dark:text-gold dark:border-gold"
+                  onChange={(e) => setReview(e.target.value)}
+                ></textarea>
+                <button className="dark:text-gold">
+                  {t("reviewPage.button")}
+                </button>
+              </>
+            )
+          : error}
       </form>
       <div className="border border-gray-300"></div>
       <Review data={{ reviews: reviews, id: id }} />

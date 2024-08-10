@@ -17,10 +17,32 @@ class User
     {
         if ($this->email !== null) {
             $role = $userRepository->getRoles($this->email);
-            if ($role[0]['roles'] === '["ROLE_ADMIN"]') {
+            if (count($role) > 0 && $role[0]['roles'] === '["ROLE_ADMIN"]') {
                 return true;
             } else {
                 return false;
+            }
+        }
+    }
+
+    public function isAdressValide(UserRepository $userRepository)
+    {
+        if ($this->email !== null) {
+            $adress = $userRepository->getFullAdress($this->email);
+            $result = [];
+    
+            if (count($adress) > 0) {
+                $fields = ['firstname', 'adress', 'city', 'region', 'zip_code', 'country', 'email', 'phone_number'];
+    
+                foreach ($fields as $field) {
+                    if (!empty($adress[0][$field])) {
+                        $result[$field] = $adress[0][$field];
+                    }
+                }
+    
+                return $result;
+            } else {
+                return $this->email;
             }
         }
     }

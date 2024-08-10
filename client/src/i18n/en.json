@@ -66,12 +66,13 @@
     "buttonShip": "Shipped"
   },
   "editProfil": {
-    "title": "Update your information",
+    "title": "Update your profile",
     "firstname": "Firstname",
     "lastname": "Lastname",
     "email": "Email ",
     "password": "Password ",
     "adress": "Adress ",
+    "region": "Region",
     "zip": "ZipCode ",
     "city": "City ",
     "country": "Country ",
@@ -84,6 +85,7 @@
     "product": "Add a product",
     "category": "Add a category",
     "user": "Add a user",
+    "code": "Create a discount coupon",
     "manageUser": "Manage Users :",
     "FullName": "Full name :",
     "Badmin": "Become Admin",
@@ -94,7 +96,8 @@
     "color": "Color :",
     "price": "Price :",
     "manageCategory": "Manage Category :",
-    "promotion": "Promotion"
+    "promotion": "Promotion",
+    "shipping": "Shipping"
   },
   "createProduct": {
     "title": "Create a product",
@@ -140,12 +143,11 @@
   "editUser": {
     "title": "Edit a user"
   },
-  
+
   "popup": {
     "basket": "Shopping basket",
     "articles": "Number of articles :",
     "subPrice": "Total price :"
-
   },
   "createPromotion": {
     "title": " Add an promotion",
@@ -153,8 +155,15 @@
     "product": "Select a product",
     "button": "Add"
   },
+  "manageShipping": {
+    "shippingTitle": "Manage Shipping",
+    "whitelist": "Whitelist Countries",
+    "blacklist": "Blacklist Countries",
+    "thresholdsTitle": "Free Shipping Thresholds",
+    "countrySelect": "Select a country"
+  },
   "sizeGuidePage": {
-    "tailleChoose": "Select my size :",
+    "tailleChoose": "Size:",
     "button": "Size guide",
     "guideRings": "Ring/wedding ring size guide (EU)",
     "taille": "Size (EU)",
@@ -179,5 +188,10 @@
     "date": "Filter by date",
     "desc": "Filter by most recent reviews",
     "asc": "Filter by oldest reviews"
+  },
+  "promotionCode": {
+    "title": "Generation a promotional code",
+    "button": "Generate",
+    "submit": "Generate promotional code"
   }
 }

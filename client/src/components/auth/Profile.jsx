@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { resolvePath, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import localhost from "../../config";
 import ManageProfil from "./ManageProfil";
 import Header from "../Header";
@@ -57,6 +57,7 @@ export default function Profile() {
 
   const logout = () => {
     localStorage.removeItem("user");
+    dispatch({ type: "RESET_CART", payload: [] });
     navigate("/", { replace: true });
   };
 
@@ -74,14 +75,14 @@ export default function Profile() {
   };
 
   const handleAddToCart = async (elem) => {
-    console.log('elem',elem)
+    // console.log("elem", elem);
     const formData = {
       product: parseInt(elem.product.id),
       quantity: parseInt(elem.itemQty),
       size: elem.size,
       user: localStorage.getItem("user"),
     };
-    console.log('formData',formData)
+    // console.log("formData", formData);
     const response = await fetch(`${localhost}/api/cartItem`, {
       method: "POST",
       headers: {
@@ -101,118 +102,116 @@ export default function Profile() {
 
   return (
     <>
-    <div className="dark:bg-dark-mode-purple">
-      <Header></Header>
-      <div className="mr-24	ml-24	flex justify-between font-secondary">
-        <div className="w-3/5	 mr-8">
-          <h1 className="mt-16 text-3xl	text-gold mb-2">
-            {t("profilPage.profil")}
-          </h1>
-          <div className="border border-gray-400	w-4/4	"></div>
-          <br></br>
-          <ManageProfil data={profil} />
-          <div className="text-center">
-            <button
-              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
-              onClick={() => logout()}
-            >
-              {t("profilPage.logout")}
-            </button>
-          </div>
-          <h1 className="mt-16 text-3xl	text-gold mb-2">
-            My wishlist
-          </h1>
-          <div className="border border-gray-400	w-4/4	"></div>
-          <br></br>
-          {wishlists.length > 0 &&
-            wishlists.map((elem, index) => (
-              <div key={index} className="ml-8">
-                <div className="flex flex-col m-8">
-                  <div className="flex">
-                    <img
-                      className="w-1/3 h-1/3 border border-grey"
-                      src={`${elem.product.images[0]}`}
-                      alt={elem.product.name}
-                    />
-                    <div className="flex flex-col ml-4">
-                      <h2 className="font-primary text-3xl text-gold">
-                        {elem.product.name}
-                      </h2>
-                      <span className="font-primary flex text-2xl p-2">
-                        Size:&nbsp;<h2>{elem.size}</h2>
-                      </span>
-                      <span className="font-primary flex text-2xl p-2">
-                        Material:&nbsp;<h2>{elem.product.material.name}</h2>
-                      </span>
-                      {elem.product.stone && (
+      <div className="dark:bg-dark-mode-purple">
+        <Header></Header>
+        <div className="mr-24	ml-24	flex justify-between font-secondary">
+          <div className="w-3/5	 mr-8">
+            <h1 className="mt-16 text-3xl	text-gold mb-2">
+              {t("profilPage.profil")}
+            </h1>
+            <div className="border border-gray-400	w-4/4	"></div>
+            <br></br>
+            <ManageProfil data={profil} />
+            <div className="text-center">
+              <button
+                className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
+                onClick={() => logout()}
+              >
+                {t("profilPage.logout")}
+              </button>
+            </div>
+            <h1 className="mt-16 text-3xl	text-gold mb-2">My wishlist</h1>
+            <div className="border border-gray-400	w-4/4	"></div>
+            <br></br>
+            {wishlists.length > 0 &&
+              wishlists.map((elem, index) => (
+                <div key={index} className="ml-8">
+                  <div className="flex flex-col m-8">
+                    <div className="flex">
+                      <img
+                        className="w-1/3 h-1/3 border border-grey"
+                        src={`${elem.product.images[0]}`}
+                        alt={elem.product.name}
+                      />
+                      <div className="flex flex-col ml-4">
+                        <h2 className="font-primary text-3xl text-gold">
+                          {elem.product.name}
+                        </h2>
                         <span className="font-primary flex text-2xl p-2">
-                          Stone:&nbsp;
-                          <h2>{elem.product.stone.name}</h2>
+                          Size:&nbsp;<h2>{elem.size}</h2>
                         </span>
-                      )}
-                      {elem.product.promotion.id != 1 && (
                         <span className="font-primary flex text-2xl p-2">
-                          Price:&nbsp;
-                          <h2 className="line-through">
-                            ${elem.product.price * elem.itemQty}&nbsp;
-                          </h2>
-                          <h2>
-                            $
-                            {elem.product.price * elem.itemQty -
-                              (
-                                elem.product.price *
-                                elem.itemQty *
-                                ((elem.product.promotion.id != 1
-                                  ? elem.product.promotion.pourcentage
-                                  : 0) /
-                                  100)
-                              ).toFixed()}
-                          </h2>
+                          Material:&nbsp;<h2>{elem.product.material.name}</h2>
                         </span>
-                      )}
-                      {elem.product.promotion.id == 1 && (
-                        <span className="font-primary flex text-2xl p-2">
-                          Price:&nbsp;
-                          <h2>{elem.product.price * elem.itemQty}€</h2>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-around text-2xl p-2 mt-6">
-                      <div>
-                        <button
-                          className="flex font-primary"
-                          onClick={() => deleteProduct(elem)}
-                        >
-                          <img className="mr-4" src={Delete} alt="" />
-                          Delete
-                        </button>
+                        {elem.product.stone && (
+                          <span className="font-primary flex text-2xl p-2">
+                            Stone:&nbsp;
+                            <h2>{elem.product.stone.name}</h2>
+                          </span>
+                        )}
+                        {elem.product.promotion.id != 1 && (
+                          <span className="font-primary flex text-2xl p-2">
+                            Price:&nbsp;
+                            <h2 className="line-through">
+                              ${elem.product.price * elem.itemQty}&nbsp;
+                            </h2>
+                            <h2>
+                              $
+                              {elem.product.price * elem.itemQty -
+                                (
+                                  elem.product.price *
+                                  elem.itemQty *
+                                  ((elem.product.promotion.id != 1
+                                    ? elem.product.promotion.pourcentage
+                                    : 0) /
+                                    100)
+                                ).toFixed()}
+                            </h2>
+                          </span>
+                        )}
+                        {elem.product.promotion.id == 1 && (
+                          <span className="font-primary flex text-2xl p-2">
+                            Price:&nbsp;
+                            <h2>{elem.product.price * elem.itemQty}€</h2>
+                          </span>
+                        )}
                       </div>
-                      <div>
-                        <button
-                          className="flex font-primary"
-                          onClick={()=>handleAddToCart(elem)}
-                        >
-                          <img className="mr-4" src={Cart} alt="" />
-                          {t("specProduct.cart")}
-                        </button>
+                    </div>
+                    <div>
+                      <div className="flex justify-around text-2xl p-2 mt-6">
+                        <div>
+                          <button
+                            className="flex font-primary"
+                            onClick={() => deleteProduct(elem)}
+                          >
+                            <img className="mr-4" src={Delete} alt="" />
+                            Delete
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className="flex font-primary"
+                            onClick={() => handleAddToCart(elem)}
+                          >
+                            <img className="mr-4" src={Cart} alt="" />
+                            {t("specProduct.cart")}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
+          <div className="w-2/5">
+            <h1 className="mt-16 text-3xl	text-gold mb-2">
+              {t("profilPage.command")}
+            </h1>
+            <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
+            <br></br>
+            <ManageCommand />
+          </div>
         </div>
-        <div className="w-2/5">
-          <h1 className="mt-16 text-3xl	text-gold mb-2">
-            {t("profilPage.command")}
-          </h1>
-          <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
-          <br></br>
-          <ManageCommand />
-        </div>
-      </div>
       </div>
     </>
   );

@@ -15,7 +15,21 @@ export default function SizeGuide(data) {
   const { state: cart, dispatch } = useCart([]);
   let navigate = useNavigate();
   const { id } = useParams();
+  const [displayWishlist, setDisplayWishlist] = useState(false);
+
+  const fetchIsLog = () => {
+    const email = localStorage.getItem("user");
+    // console.log(email)
+    if (email === null) {
+      return false;
+    }
+    return true;
+  };
+  
   useEffect(() => {
+    if(fetchIsLog()){
+      setDisplayWishlist(true);
+    }
     const fetchData = async () => {
 
       setCategory(data.data.category.name);
@@ -72,17 +86,29 @@ export default function SizeGuide(data) {
       size: selectedSize,
       user: localStorage.getItem("user"),
     };
-    const response = await fetch(`${localhost}/api/cartItem`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ formData }),
-    });
 
-    if (response.ok) {
-      const data = await response.json();
-      dispatch({ type: "ADD_ITEM", payload: data.success });
+    if(fetchIsLog()){
+      const response = await fetch(`${localhost}/api/cartItem`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: "ADD_ITEM", payload: data.success });
+        navigate("/", { replace: true });
+      }
+    } else {
+      const item = {
+        itemQty: quantity,
+        product: data.data,
+        size: selectedSize
+      }
+      // console.log(item)
+      dispatch({ type: "ADD_ITEM", payload: item });
       navigate("/", { replace: true });
     }
   };
@@ -105,7 +131,7 @@ export default function SizeGuide(data) {
   
   return (
     <>
-      {sizeGuide.length > 0 ? (
+      {sizeGuide.length > 0 && (
         <div className="mb-4">
           <label htmlFor="size" className="block text-lg font-primary">
             {t("sizeGuidePage.tailleChoose")}
@@ -127,8 +153,6 @@ export default function SizeGuide(data) {
             {t("sizeGuidePage.button")}
           </button>
         </div>
-      ) : (
-        t("sizeGuidePage.error")
       )}
       <div className="mb-4">
         <label htmlFor="quantity" className="block text-lg font-primary">
@@ -153,7 +177,7 @@ export default function SizeGuide(data) {
       >
         {t("specProduct.cart")}
       </button>
-      <div className="mt-6 flex justify-center items-center">
+      {displayWishlist && <div className="mt-6 flex justify-center items-center">
         <button
           className="flex font-primary text-2xl"
           onClick={saveForLater}
@@ -161,7 +185,7 @@ export default function SizeGuide(data) {
           <img className="mr-4" src={Save4later} alt="" />
           Save for later
         </button>
-      </div>
+      </div>}
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white dark:bg-dark-mode-light-purple p-4 max-w-lg max-h-full overflow-auto">

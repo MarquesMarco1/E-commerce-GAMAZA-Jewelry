@@ -66,12 +66,13 @@
     "buttonShip": "Envoyer"
   },
   "editProfil": {
-    "title": "Créer un produit",
+    "title": "Modifier son profile",
     "firstname": "Prénom",
     "lastname": "Nom",
     "email": "Email ",
     "password": "Mot de passe ",
     "adress": "Adresse ",
+    "region": "Region",
     "zip": "Code Postal ",
     "city": "Ville ",
     "country": "Pays ",
@@ -84,6 +85,7 @@
     "product": "Ajouter un produit",
     "category": "Ajouter une categorie",
     "user": "Ajouter un utilisateur",
+    "code": "Créer un coupon de reduction",
     "manageUser": "Gestion des utilisateurs :",
     "FullName": "Nom complet :",
     "Badmin": "Transformer en administrateur",
@@ -94,7 +96,8 @@
     "color": "Couleur :",
     "price": "Prix :",
     "manageCategory": "Gestion des categories :",
-    "promotion": "Promotion"
+    "promotion": "Promotion",
+    "shipping": "Expéditions"
   },
   "createProduct": {
     "title": "Créer un produit",
@@ -140,7 +143,7 @@
   "editUser": {
     "title": "Modifier les information d'un utilisateur"
   },
-  
+
   "popup": {
     "basket": "Résumé du Panier",
     "articles": "Nombre d'articles :",
@@ -152,8 +155,15 @@
     "product": "Choisir un produit",
     "button": "Ajouter"
   },
+  "manageShipping": {
+    "shippingTitle": "Gérer les expéditions",
+    "whitelist": "Pays whitelistés",
+    "blacklist": "Pays blacklistés",
+    "thresholdsTitle": "Palliers de livraison gratuite",
+    "countrySelect": "Sélectionner un pays"
+  },
   "sizeGuidePage": {
-    "tailleChoose": "Sélectionner ma taille :",
+    "tailleChoose": "Taille:",
     "button": "Guide des tailles",
     "guideRings": "Guide des tailles pour bagues/alliances (EU)",
     "taille": "Taille (EU)",
@@ -167,7 +177,8 @@
   "stockAlert": {
     "notify": "M'avertir du retour en stock",
     "email": "Entrez votre email",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "submit": "Envoyer"
   },
   "reviewPage": {
     "title": "Évaluez ce produit",
@@ -177,5 +188,10 @@
     "date": "Filter par date",
     "desc": "Filter par les avis les plus récents",
     "asc": "Filter par les avis les plus ancien"
+  },
+  "promotionCode": {
+    "title": "Generation un code promotionnel",
+    "button": "Générer",
+    "submit": "Generer le code promotionnel"
   }
 }

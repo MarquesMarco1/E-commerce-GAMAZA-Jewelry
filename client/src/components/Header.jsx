@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { IonIcon } from "@ionic/react";
 import {
   homeOutline,
@@ -11,27 +10,34 @@ import {
   sunnyOutline,
 } from "ionicons/icons";
 import lotus from "../assets/lotus.svg";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import CartPopup from "./utils/CartPopup";
+import { useCart } from "../CartContext";
+import NotificationBadge from "./NotificationBadge";
+import AuthPopup from "./utils/AuthPopup";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [active, setActive] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
   const { t, i18n } = useTranslation();
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
-  const navigate = useNavigate();
+  const [showAuthPopup, setShowAuthPopup] = useState(false);
+  const { state: cart } = useCart();
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const email = localStorage.getItem("user");
-  const cartItems = [
-    { id: 1, name: "Article 1", quantity: 2, price: 10 },
-    { id: 2, name: "Article 2", quantity: 1, price: 20 },
-  ];
+  const cartItems = cart;
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(localhost);
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
       if (response.status === 200) {
         const data = await response.json();
@@ -49,6 +55,10 @@ export default function Header() {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    setCartItemCount(cartItems.reduce((acc, item) => acc + item.quantity, 0));
+  }, [cartItems]);
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -62,7 +72,14 @@ export default function Header() {
     { name: t("header.home"), icon: homeOutline, path: "/", dis: "translate-x-0" },
     { name: t("header.profile"), icon: personOutline, path: "/profile", dis: "translate-x-16" },
     isAdmin && { name: t("header.admin"), icon: personCircleOutline, path: "/admin", dis: "translate-x-32" },
-    { name: t("header.cart"), icon: cartOutline, path: "/cart", dis: "translate-x-48" },
+    { 
+      name: t("header.cart"), 
+      icon: cartOutline, 
+      path: "/cart", 
+      dis: "translate-x-48" ,
+      action: handleCartClick,
+      hasBadge: true,
+    },
     {
       name: darkMode ? t("header.lightmode") : t("header.darkmode"),
       icon: darkMode ? sunnyOutline : moonOutline,
@@ -87,11 +104,12 @@ export default function Header() {
       action();
     }
     setTimeout(() => {
-      if (path) {
+      if (path && i !== Menus.findIndex(menu => menu.name === t("header.cart"))) {
         navigate(path);
       }
     }, 300);
   };
+
 
   const handleLogoClick = () => {
     setActive(0);
@@ -101,6 +119,7 @@ export default function Header() {
   };
 
   return (
+    <>
     <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 md:max-h-fit px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
         <div onClick={handleLogoClick} className="flex flex-col justify-center items-center md:flex-row md:justify-between md:px-10">
           <img
@@ -145,29 +164,40 @@ export default function Header() {
 
       {/* NavBar  */}
       <div className="bg-white max-w-fit mx-auto flex justify-center max-h-fit px-6 rounded-t-xl ">
-      <ul className="flex relative">
-          {Menus[active] && (
-            <span
-              className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple border-opacity-20 dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
-            >
-              <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
-              <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
-            </span>
-          )}
+        <ul className="flex relative">
+            {Menus[active] && (
+              <span
+                className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple border-opacity-20 dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
+              >
+                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
+                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
+              </span>
+            )}  
 
           {Menus.map((menu, i) => (
-            <li key={i} className="w-16">
+            <li key={i} className={`w-16 ${menu.hideOnMobile} ? hidden md:block" : ""}`}>
               <button
                 className="flex flex-col text-center pt-6"
                 onClick={() => handleMenuClick(i, menu.path, menu.action)}
+                onMouseEnter={menu.name === t("header.cart") ? () => setShowCartPopup(true) : null}
+                onMouseLeave={menu.name === t("header.cart") ? () => setShowCartPopup(false) : null}
               >
                 <span
                   className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
                     i === active && "-mt-6 text-gold"
                   }`}
                 >
-                  <IonIcon icon={menu.icon} />
-                </span>
+              {/* Logic Cart  */}
+                {menu.hasBadge ? (
+                      <>
+                        <IonIcon icon={cartOutline} />
+                        <NotificationBadge count={cartItemCount} />
+                      </>
+                    ) : (
+                      <IonIcon icon={menu.icon} />
+                    )}
+                  </span>
+
                 <span
                   className={`text-gold font-primary ${
                     active === i
@@ -184,5 +214,10 @@ export default function Header() {
         </ul>
       </div>
     </header>
+    {showAuthPopup && !email && (
+    <AuthPopup onClose={() => setShowAuthPopup(false)} />
+    )}
+    </>
   );
 }
+

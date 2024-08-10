@@ -29,6 +29,7 @@ export default function EditUser() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
+  const [region, setRegion] = useState("");
 
   useEffect(() => {
     //////////////////////
@@ -46,7 +47,8 @@ export default function EditUser() {
         setZipcode(data.user.zIPCode);
         setCity(data.user.city);
         setCountry(data.user.country);
-        setPhone("0" + data.user.phoneNumber);
+        setPhone(data.user.phoneNumber);
+        setRegion(data.user.region);
       }
     };
     fetchData();
@@ -68,6 +70,7 @@ export default function EditUser() {
       city: city,
       country: country,
       phone: phone,
+      region: region,
     };
     const response = await fetch(`${localhost}/api/editUser/${id}`, {
       method: "POST",
@@ -99,7 +102,6 @@ export default function EditUser() {
           name="firstname"
           id="firstname"
           placeholder={t("editProfil.firstname")}
-          required
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
@@ -112,7 +114,6 @@ export default function EditUser() {
           name="lastname"
           id="lastname"
           placeholder={t("editProfil.lastname")}
-          required
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
@@ -125,7 +126,6 @@ export default function EditUser() {
           name="email"
           id="email"
           placeholder={t("editProfil.email")}
-          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -137,7 +137,6 @@ export default function EditUser() {
           type="password"
           name="password"
           id="password"
-          //   required
           placeholder={t("createUser.password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -150,7 +149,6 @@ export default function EditUser() {
           type="text"
           name="adress"
           id="adress"
-          required
           placeholder={t("editProfil.adress")}
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
@@ -163,7 +161,6 @@ export default function EditUser() {
           type="number"
           name="zipCode"
           id="zipCode"
-          required
           placeholder={t("editProfil.zip")}
           value={zipCode}
           onChange={(e) => setZipcode(e.target.value)}
@@ -177,9 +174,20 @@ export default function EditUser() {
           name="city"
           id="city"
           placeholder={t("editProfil.city")}
-          required
           value={city}
           onChange={(e) => setCity(e.target.value)}
+        />
+
+        {/* Region */}
+
+        <input
+          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          type="text"
+          name="city"
+          id="city"
+          placeholder={t("editProfil.region")}
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}
         />
 
         {/* Country */}
@@ -189,7 +197,6 @@ export default function EditUser() {
           type="text"
           name="country"
           id="country"
-          required
           placeholder={t("editProfil.country")}
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -202,13 +209,16 @@ export default function EditUser() {
           type="number"
           name="phone"
           id="phone"
-          required
           placeholder={t("editProfil.phone")}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
 
-        <button type="submit" id="submit" className="dark:bg-gold dark:text-white">
+        <button
+          type="submit"
+          id="submit"
+          className="dark:bg-gold dark:text-white"
+        >
           {t("editProfil.edit")}
         </button>
       </form>
