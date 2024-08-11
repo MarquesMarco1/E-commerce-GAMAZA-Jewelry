@@ -55,7 +55,7 @@ export default function Header() {
   }, [darkMode]);
 
   useEffect(() => {
-    setCartItemCount(cartItems.reduce((acc, item) => acc + item.quantity, 0));
+    setCartItemCount(cartItems.length);
   }, [cartItems]);
 
   const toggleDarkMode = () => {
@@ -76,14 +76,29 @@ export default function Header() {
   };
 
   const Menus = [
-    { name: t("header.home"), icon: homeOutline, path: "/", dis: "translate-x-0" },
-    { name: t("header.profile"), icon: personOutline, path: "/profile", dis: "translate-x-16" },
-    isAdmin && { name: t("header.admin"), icon: personCircleOutline, path: "/admin", dis: "translate-x-32" },
-    { 
-      name: t("header.cart"), 
-      icon: cartOutline, 
-      path: "/cart", 
-      dis: "translate-x-48" ,
+    {
+      name: t("header.home"),
+      icon: homeOutline,
+      path: "/",
+      dis: "translate-x-0",
+    },
+    {
+      name: t("header.profile"),
+      icon: personOutline,
+      path: "/profile",
+      dis: "translate-x-16",
+    },
+    isAdmin && {
+      name: t("header.admin"),
+      icon: personCircleOutline,
+      path: "/admin",
+      dis: "translate-x-32",
+    },
+    {
+      name: t("header.cart"),
+      icon: cartOutline,
+      path: "/cart",
+      dis: "translate-x-48",
       action: handleCartClick,
       hasBadge: true,
     },
@@ -111,12 +126,14 @@ export default function Header() {
       action();
     }
     setTimeout(() => {
-      if (path && i !== Menus.findIndex(menu => menu.name === t("header.cart"))) {
+      if (
+        path &&
+        i !== Menus.findIndex((menu) => menu.name === t("header.cart"))
+      ) {
         navigate(path);
       }
     }, 300);
   };
-
 
   const handleLogoClick = () => {
     setActive(0);
@@ -127,8 +144,11 @@ export default function Header() {
 
   return (
     <>
-    <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
-        <div onClick={handleLogoClick} className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
+        <div
+          onClick={handleLogoClick}
+          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2"
+        >
           <img
             src={lotus}
             className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
@@ -139,14 +159,14 @@ export default function Header() {
           </h1>
         </div>
         {/* <div className="flex justify-end items-center space-x-4 mb-4 md:mb-0"> */}
-          {/* Dark Mode Toggle */}
-          {/* <div onClick={() => handleMenuClick(Menus.length - 2, null, toggleDarkMode)} className="cursor-pointer"> */}
-            {/* <IonIcon */}
-              {/* icon={darkMode ? sunnyOutline : moonOutline} */}
-              {/* className="text-2xl md:text-3xl hover:scale-110 transition duration-300" */}
-            {/* /> */}
-          {/* </div> */}
-          {/* Language Selector
+        {/* Dark Mode Toggle */}
+        {/* <div onClick={() => handleMenuClick(Menus.length - 2, null, toggleDarkMode)} className="cursor-pointer"> */}
+        {/* <IonIcon */}
+        {/* icon={darkMode ? sunnyOutline : moonOutline} */}
+        {/* className="text-2xl md:text-3xl hover:scale-110 transition duration-300" */}
+        {/* /> */}
+        {/* </div> */}
+        {/* Language Selector
           <div className="relative">
             <IonIcon
               icon={globeOutline}
@@ -169,9 +189,9 @@ export default function Header() {
           </div>
         </div> */}
 
-      {/* NavBar  */}
-      <div className="bg-white dark:bg-black max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
-        <ul className="flex relative items-center">
+        {/* NavBar  */}
+        <div className="bg-white dark:bg-black max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
+          <ul className="flex relative items-center">
             {Menus[active] && (
               <span
                 className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
@@ -179,23 +199,36 @@ export default function Header() {
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
               </span>
-            )}  
+            )}
 
-          {Menus.map((menu, i) => (
-           <li key={i} className={`relative w-16 ${menu.hideOnMobile ? "hidden md:block" : ""}`}>
-              <button
-                className="flex flex-col text-center pt-6"
-                onClick={() => handleMenuClick(i, menu.path, menu.action)}
-                onMouseEnter={menu.name === t("header.cart") ? () => setShowCartPopup(true) : null}
-                onMouseLeave={menu.name === t("header.cart") ? () => setShowCartPopup(false) : null}
+            {Menus.map((menu, i) => (
+              <li
+                key={i}
+                className={`relative w-16 ${
+                  menu.hideOnMobile ? "hidden md:block" : ""
+                }`}
               >
-                <span
-                  className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
-                    i === active && "-mt-6 text-gold dark:text-white"
-                  }`}
+                <button
+                  className="flex flex-col text-center pt-6"
+                  onClick={() => handleMenuClick(i, menu.path, menu.action)}
+                  onMouseEnter={
+                    menu.name === t("header.cart")
+                      ? () => setShowCartPopup(true)
+                      : null
+                  }
+                  onMouseLeave={
+                    menu.name === t("header.cart")
+                      ? () => setShowCartPopup(false)
+                      : null
+                  }
                 >
-              {/* Logic Cart  */}
-                {menu.hasBadge ? (
+                  <span
+                    className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
+                      i === active && "-mt-6 text-gold dark:text-white"
+                    }`}
+                  >
+                    {/* Logic Cart  */}
+                    {menu.hasBadge ? (
                       <>
                         <IonIcon icon={cartOutline} />
                         <NotificationBadge count={cartItemCount} />
@@ -205,39 +238,40 @@ export default function Header() {
                     )}
                   </span>
 
-                <span
-                  className={`text-gold font-primary ${
-                    active === i
-                      ? "translate-y-4 duration-700 opacity-100"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                >
-                  {menu.name}
-                </span>
-              </button>
-              {menu.name === "Languages" && showLanguageSelect && (
-                <div className="absolute left-0 mt-6 w-20 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
-                  {menu.languageOptions.map((lng) => (
-                    <button
-                      key={lng}
-                      onClick={() => changeLanguage(lng)}
-                      className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purplex²"
-                    >
-                      {lng.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {menu.name === t("header.cart") && showCartPopup && <CartPopup show={showCartPopup} cartItems={cartItems} />}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </header>
-    {showAuthPopup && !email && (
-    <AuthPopup onClose={() => setShowAuthPopup(false)} />
-    )}
+                  <span
+                    className={`text-gold font-primary ${
+                      active === i
+                        ? "translate-y-4 duration-700 opacity-100"
+                        : "opacity-0 translate-y-10"
+                    }`}
+                  >
+                    {menu.name}
+                  </span>
+                </button>
+                {menu.name === "Languages" && showLanguageSelect && (
+                  <div className="absolute left-0 mt-6 w-20 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
+                    {menu.languageOptions.map((lng) => (
+                      <button
+                        key={lng}
+                        onClick={() => changeLanguage(lng)}
+                        className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purplex²"
+                      >
+                        {lng.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {menu.name === t("header.cart") && showCartPopup && (
+                  <CartPopup show={showCartPopup} cartItems={cartItems} />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </header>
+      {showAuthPopup && !email && (
+        <AuthPopup onClose={() => setShowAuthPopup(false)} />
+      )}
     </>
   );
 }
-
