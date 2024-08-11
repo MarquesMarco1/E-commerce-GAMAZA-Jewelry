@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { IonIcon } from "@ionic/react";
 import {
   homeOutline,
@@ -17,6 +17,7 @@ import CartPopup from "./utils/CartPopup";
 import { useCart } from "../CartContext";
 import NotificationBadge from "./NotificationBadge";
 import AuthPopup from "./utils/AuthPopup";
+import { LanguageContext } from "../LanguageContext";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function Header() {
   const [showAuthPopup, setShowAuthPopup] = useState(false);
   const { state: cart } = useCart();
   const [cartItemCount, setCartItemCount] = useState(0);
+  const { language, changeLanguage } = useContext(LanguageContext);
 
   const email = localStorage.getItem("user");
   const cartItems = cart;
@@ -62,8 +64,9 @@ export default function Header() {
     setDarkMode(!darkMode);
   };
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
+  const setLanguage = (lng) => {
+    changeLanguage(lng);
+    i18n.changeLanguage(lng.toLowerCase());
     setShowLanguageSelect(false);
   };
 
@@ -248,13 +251,13 @@ export default function Header() {
                     {menu.name}
                   </span>
                 </button>
-                {menu.name === "Languages" && showLanguageSelect && (
+                {menu.name === t("header.languages") && showLanguageSelect && (
                   <div className="absolute left-0 mt-6 w-20 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
                     {menu.languageOptions.map((lng) => (
                       <button
                         key={lng}
-                        onClick={() => changeLanguage(lng)}
-                        className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purplex²"
+                        onClick={() => setLanguage(lng)}
+                        className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purple"
                       >
                         {lng.toUpperCase()}
                       </button>

@@ -13,6 +13,7 @@ export default function Accueil() {
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
+    console.log(language);
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/categorie/${language}`);
       if (response.status === 200) {
@@ -39,7 +40,7 @@ export default function Accueil() {
             ))}
         </ul>
       </div>
-        <Search />
+      <Search />
       <Carousel />
       <Promotion />
       <Footer />
