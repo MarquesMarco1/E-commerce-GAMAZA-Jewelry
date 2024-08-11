@@ -98,31 +98,31 @@ export default function Header() {
       dis: "translate-x-32",
     },
     {
-      name: t("header.cart"),
-      icon: cartOutline,
-      path: "/cart",
-      dis: "translate-x-48",
-      action: handleCartClick,
-      hasBadge: true,
-    },
-    {
       name: darkMode ? t("header.lightmode") : t("header.darkmode"),
       icon: darkMode ? sunnyOutline : moonOutline,
-      dis: "translate-x-64",
+      dis: "translate-x-48",
       action: toggleDarkMode,
       hideOnMobile: true,
     },
     {
       name: t("header.languages"),
       icon: globeOutline,
-      dis: "translate-x-80",
+      dis: "translate-x-64",
       action: () => setShowLanguageSelect(!showLanguageSelect),
       showLanguageSelect,
       languageOptions: ["en", "fr"],
       hideOnMobile: true,
     },
+    {
+      name: t("header.cart"),
+      icon: cartOutline,
+      path: "/cart",
+      dis: "translate-x-80",
+      action: handleCartClick,
+      hasBadge: true,
+    },
   ].filter(Boolean);
-
+  
   const handleMenuClick = (i, path, action) => {
     setActive(i);
     if (action) {
@@ -147,10 +147,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none mb-6">
         <div
           onClick={handleLogoClick}
-          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2"
+          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-6"
         >
           <img
             src={lotus}
@@ -193,14 +193,16 @@ export default function Header() {
         </div> */}
 
         {/* NavBar  */}
-        <div className="bg-white dark:bg-black max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
+        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[5.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
               <span
-                className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
+                className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500 
+                  ${Menus[active].dis} border-4 border-light-purple dark:border-dark-purple
+                  h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
               >
-                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
-                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
+                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1 dark:shadow-myShadow3"></span>
+                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2 dark:shadow-myShadow4"></span>
               </span>
             )}
 
@@ -227,7 +229,7 @@ export default function Header() {
                 >
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
-                      i === active && "-mt-6 text-gold dark:text-white"
+                      i === active && "mt-[-2.5rem] text-gold font-primary font-extrabold"
                     }`}
                   >
                     {/* Logic Cart  */}
@@ -242,7 +244,7 @@ export default function Header() {
                   </span>
 
                   <span
-                    className={`text-gold font-primary ${
+                    className={`text-gold font-primary font-extrabold items-center justify-center ${
                       active === i
                         ? "translate-y-4 duration-700 opacity-100"
                         : "opacity-0 translate-y-10"
@@ -252,7 +254,7 @@ export default function Header() {
                   </span>
                 </button>
                 {menu.name === t("header.languages") && showLanguageSelect && (
-                  <div className="absolute left-0 mt-6 w-20 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
+                  <div className="absolute left-0 mt-4 w-16 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
                     {menu.languageOptions.map((lng) => (
                       <button
                         key={lng}
