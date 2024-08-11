@@ -11,7 +11,6 @@ import {
 } from "ionicons/icons";
 import lotus from "../assets/lotus.svg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import CartPopup from "./utils/CartPopup";
@@ -68,6 +67,14 @@ export default function Header() {
     setShowLanguageSelect(false);
   };
 
+  const handleCartClick = () => {
+    if (email) {
+      navigate("/cart");
+    } else if (location.pathname !== "/cart") {
+      setShowAuthPopup(true);
+    }
+  };
+
   const Menus = [
     { name: t("header.home"), icon: homeOutline, path: "/", dis: "translate-x-0" },
     { name: t("header.profile"), icon: personOutline, path: "/profile", dis: "translate-x-16" },
@@ -120,8 +127,8 @@ export default function Header() {
 
   return (
     <>
-    <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 md:max-h-fit px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
-        <div onClick={handleLogoClick} className="flex flex-col justify-center items-center md:flex-row md:justify-between md:px-10">
+    <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple bg-opacity-20 px-6 rounded-t-xl md:rounded-b-none overflow-x-auto mb-4">
+        <div onClick={handleLogoClick} className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2">
           <img
             src={lotus}
             className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
@@ -131,15 +138,15 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        <div className="flex justify-end items-center space-x-4 mb-4 md:mb-0">
+        {/* <div className="flex justify-end items-center space-x-4 mb-4 md:mb-0"> */}
           {/* Dark Mode Toggle */}
-          <div onClick={() => handleMenuClick(Menus.length - 2, null, toggleDarkMode)} className="cursor-pointer">
-            <IonIcon
-              icon={darkMode ? sunnyOutline : moonOutline}
-              className="text-2xl md:text-3xl hover:scale-110 transition duration-300"
-            />
-          </div>
-          {/* Language Selector */}
+          {/* <div onClick={() => handleMenuClick(Menus.length - 2, null, toggleDarkMode)} className="cursor-pointer"> */}
+            {/* <IonIcon */}
+              {/* icon={darkMode ? sunnyOutline : moonOutline} */}
+              {/* className="text-2xl md:text-3xl hover:scale-110 transition duration-300" */}
+            {/* /> */}
+          {/* </div> */}
+          {/* Language Selector
           <div className="relative">
             <IonIcon
               icon={globeOutline}
@@ -160,14 +167,14 @@ export default function Header() {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
       {/* NavBar  */}
-      <div className="bg-white max-w-fit mx-auto flex justify-center max-h-fit px-6 rounded-t-xl ">
-        <ul className="flex relative">
+      <div className="bg-white dark:bg-black max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
+        <ul className="flex relative items-center">
             {Menus[active] && (
               <span
-                className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple border-opacity-20 dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
+                className={`bg-light-purple dark:bg-dark-mode-light-purple duration-500 ${Menus[active].dis} border-4 border-light-purple dark:border-dark-mode-light-purple h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full`}
               >
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1"></span>
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2"></span>
@@ -175,7 +182,7 @@ export default function Header() {
             )}  
 
           {Menus.map((menu, i) => (
-            <li key={i} className={`w-16 ${menu.hideOnMobile} ? hidden md:block" : ""}`}>
+           <li key={i} className={`relative w-16 ${menu.hideOnMobile ? "hidden md:block" : ""}`}>
               <button
                 className="flex flex-col text-center pt-6"
                 onClick={() => handleMenuClick(i, menu.path, menu.action)}
@@ -184,7 +191,7 @@ export default function Header() {
               >
                 <span
                   className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
-                    i === active && "-mt-6 text-gold"
+                    i === active && "-mt-6 text-gold dark:text-white"
                   }`}
                 >
               {/* Logic Cart  */}
@@ -208,7 +215,20 @@ export default function Header() {
                   {menu.name}
                 </span>
               </button>
-              {menu.name === t("header.cart") && showCartPopup && <CartPopup cartItems={cartItems} />}
+              {menu.name === "Languages" && showLanguageSelect && (
+                <div className="absolute left-0 mt-6 w-20 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
+                  {menu.languageOptions.map((lng) => (
+                    <button
+                      key={lng}
+                      onClick={() => changeLanguage(lng)}
+                      className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-light-purplex²"
+                    >
+                      {lng.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {menu.name === t("header.cart") && showCartPopup && <CartPopup show={showCartPopup} cartItems={cartItems} />}
             </li>
           ))}
         </ul>

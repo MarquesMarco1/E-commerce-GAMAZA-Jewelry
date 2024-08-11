@@ -160,38 +160,6 @@ const SpecProduct = () => {
 
   return (
     <>
-<<<<<<< HEAD
-    <div className="bg-white dark:bg-dark-mode-purple">
-      <Header />
-      <nav className="bg-gray-200 py-2 px-6">
-        <ul className="flex space-x-4  dark:text-gold">
-          <li>
-            <Link to={`/`}>{t("specProduct.homepage")}</Link>
-          </li>
-          <li>/</li>
-          {product.category && (
-            <>
-              <li>
-                <Link to={`/category/${product.category.id}`}>
-                  {language === "FR"
-                    ? product.category.name
-                    : product.category.nameEn}
-                </Link>
-              </li>
-              <li>/</li>
-            </>
-          )}
-          <li className="font-semibold font-primary dark:text-gold">
-            {language === "FR" ? product.name : product.nameEn}
-          </li>
-        </ul>
-      </nav>
-      {/* <main className="py-6 px-4 max-w-7xl mx-auto"> */}
-        <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
-          <div className="flex flex-col items-center md:w-1/3">
-              <div
-                className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
-=======
       <div className="bg-white dark:bg-dark-mode-purple">
         <Header />
         <nav className="bg-gray-200 py-2 px-6">
@@ -224,22 +192,12 @@ const SpecProduct = () => {
               <div
                 className="flex flex-col space-y-4 overflow-auto"
                 style={{ maxHeight: "600px" }}
->>>>>>> 620260d4a1c4cd8e4756ec7f94dd0b1b7facbacb
               >
                 {product.images &&
                   product.images.map((image, index) => (
                     <img
                       key={index}
                       className={`w-20 h-20 cursor-pointer border-2 ${
-<<<<<<< HEAD
-                      selectedImage === image
-                        ? "border-gold"
-                        : "border-gray-300"
-                    }`}
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    onClick={() => setSelectedImage(image)}
-=======
                         selectedImage === image
                           ? "border-gold"
                           : "border-gray-300"
@@ -259,7 +217,6 @@ const SpecProduct = () => {
                     src={selectedImage}
                     alt={product.name}
                     onClick={openModal}
->>>>>>> 620260d4a1c4cd8e4756ec7f94dd0b1b7facbacb
                   />
                 )}
               </div>
@@ -296,11 +253,6 @@ const SpecProduct = () => {
               <SizeGuide data={product} />
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="flex-1">
-            <div className="flex items-center justify-center mb-4 w-full max-w-full h-[600px] bg-gray-100">
-              {selectedImage && (
-=======
         </main>
         <ReviewForm id={id} />
 
@@ -321,7 +273,6 @@ const SpecProduct = () => {
                 &times;
               </button>
               <div className="flex justify-center">
->>>>>>> 620260d4a1c4cd8e4756ec7f94dd0b1b7facbacb
                 <img
                   className={`cursor-zoom-in ${
                     isZoomed ? "transform scale-150" : "transform scale-100"
@@ -333,69 +284,7 @@ const SpecProduct = () => {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="lg:w-1/3">
-            <h1 className="dark:text-gold text-5xl mb-6 font-primary">
-              {language === "FR" ? product.name : product.nameEn}
-            </h1>
-
-            <p className="text-2xl mb-4">
-              {product.promotion.id !== 1 ? (
-                <>
-                  <span className=" dark:text-gold line-through">${product.price}</span>{" "}
-                  <span className=" dark:text-gold">
-                    $
-                    {product.price -
-                      (product.price * product.promotion.pourcentage) / 100}
-                  </span>
-                </>
-              ) : (
-                <span>${product.price}</span>
-              )}
-            </p>
-            <div className="mb-4 dark:text-gold">
-              <label htmlFor="color" className="block text-lg font-primary">
-                {t("specProduct.material")}
-              </label>
-              {allModele.length > 0 && <ModeleProduct data={allModele} />}
-            </div>
-            <SizeGuide data={product} />
-          </div>
-        </div>
-      <ReviewForm id={id} />
-
-      <Footer />
-      <StockAlert
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSubmit={handleSubmit}
-      />
-
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white p-4 max-w-3xl max-h-full overflow-auto">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-            >
-              &times;
-            </button>
-            <div className="flex justify-center">
-              <img
-                className={`cursor-zoom-in ${
-                  isZoomed ? "transform scale-150" : "transform scale-100"
-                }`}
-                src={selectedImage}
-                alt={product.name}
-                onClick={toggleZoom}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-=======
         )}
->>>>>>> 620260d4a1c4cd8e4756ec7f94dd0b1b7facbacb
       </div>
     </>
   );

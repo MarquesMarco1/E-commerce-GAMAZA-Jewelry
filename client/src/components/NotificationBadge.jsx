@@ -2,6 +2,7 @@ import React from 'react';
 
 const NotificationBadge = ({ count }) => {
     if (count <= 0) {
+        console.log(count)
         return null;
     }
     return (
