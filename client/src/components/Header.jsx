@@ -38,7 +38,6 @@ export default function Header() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(localhost);
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
       if (response.status === 200) {
         const data = await response.json();
@@ -122,7 +121,7 @@ export default function Header() {
       hasBadge: true,
     },
   ].filter(Boolean);
-  
+
   const handleMenuClick = (i, path, action) => {
     setActive(i);
     if (action) {
@@ -229,7 +228,8 @@ export default function Header() {
                 >
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
-                      i === active && "mt-[-2.5rem] text-gold font-primary font-extrabold"
+                      i === active &&
+                      "mt-[-2.5rem] text-gold font-primary font-extrabold"
                     }`}
                   >
                     {/* Logic Cart  */}

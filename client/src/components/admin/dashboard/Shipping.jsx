@@ -58,6 +58,7 @@ export default function ManageShipping() {
 
     if (response.ok) {
       const data = await response.json();
+
       setWhitelist(data.whitelist);
       setBlacklist(data.blacklist);
     }
@@ -112,7 +113,11 @@ export default function ManageShipping() {
               onChange={handleSelect}
               value={selectedCountry || ""}
             >
-              <option className="text-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple font-primary"value="" disabled>
+              <option
+                className="text-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple font-primary"
+                value=""
+                disabled
+              >
                 {t("manageShipping.countrySelect")}
               </option>
               {sortedWhitelist.map((country) => (
@@ -143,11 +148,19 @@ export default function ManageShipping() {
               onChange={handleSelect}
               value={selectedCountry || ""}
             >
-              <option className="text-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple font-primary" value="" disabled>
+              <option
+                className="text-gold hover:bg-light-purple dark:hover:bg-dark-mode-light-purple font-primary"
+                value=""
+                disabled
+              >
                 {t("manageShipping.countrySelect")}
               </option>
               {sortedBlacklist.map((country) => (
-                <option key={country.id} value={country.name} className="hover:bg-light-purple dark:hover:bg-dark-mode-light-purple text-gold font-primary">
+                <option
+                  key={country.id}
+                  value={country.name}
+                  className="hover:bg-light-purple dark:hover:bg-dark-mode-light-purple text-gold font-primary"
+                >
                   {country.name}
                 </option>
               ))}

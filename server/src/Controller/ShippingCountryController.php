@@ -35,7 +35,7 @@ class ShippingCountryController extends AbstractController
         $country = $entityManager->getRepository(ShippingCountry::class)->findOneBy(['id'=>$formData["countryId"]]);
 
         if($formData["list"] === "whiteList"){
-            $country->setBlacklist(false);
+            $country->setBlacklist(true);
             $entityManager->persist($country);
             $entityManager->flush();
 
@@ -44,15 +44,15 @@ class ShippingCountryController extends AbstractController
             $whitelist = [];
             foreach($country as $elem){
                 if($elem->isBlacklist() === true){
-                    array_push($whitelist, $elem);
-                }else{
                     array_push($blacklist, $elem);
+                }else{
+                    array_push($whitelist, $elem);
                 }
             }
             return $this->json(["blacklist"=>$blacklist, "whitelist"=>$whitelist], 200);
             
         }else{
-            $country->setBlacklist(true);
+            $country->setBlacklist(false);
             $entityManager->persist($country);
             $entityManager->flush();
             
@@ -61,9 +61,9 @@ class ShippingCountryController extends AbstractController
             $whitelist = [];
             foreach($country as $elem){
                 if($elem->isBlacklist() === true){
-                    array_push($whitelist, $elem);
-                }else{
                     array_push($blacklist, $elem);
+                }else{
+                    array_push($whitelist, $elem);
                 }
             }
             return $this->json(["blacklist"=>$blacklist, "whitelist"=>$whitelist], 200);

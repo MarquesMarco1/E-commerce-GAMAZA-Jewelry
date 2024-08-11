@@ -35,16 +35,16 @@ export default function Cart() {
     let total = 0;
     cart.map(
       (item) =>
-      (total +=
-        item.product.price * item.itemQty -
-        (
-          item.product.price *
-          item.itemQty *
-          ((item.product.promotion.id != 1
-            ? item.product.promotion.pourcentage
-            : 0) /
-            100)
-        ).toFixed())
+        (total +=
+          item.product.price * item.itemQty -
+          (
+            item.product.price *
+            item.itemQty *
+            ((item.product.promotion.id != 1
+              ? item.product.promotion.pourcentage
+              : 0) /
+              100)
+          ).toFixed())
     );
     setSubTotal(total);
   };
@@ -122,13 +122,13 @@ export default function Cart() {
                       Material:&nbsp;<h2>{elem.product.material.name}</h2>
                     </span>
                     {elem.product.stone && (
-                    <span className="font-primary flex text-xl lg:text-2xl p-2">
+                      <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Stone:&nbsp;
                         <h2>{elem.product.stone.name}</h2>
                       </span>
                     )}
                     {elem.product.promotion.id != 1 && (
-                    <span className="font-primary flex text-xl lg:text-2xl p-2">
+                      <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Price:&nbsp;
                         <h2 className="line-through">
                           ${elem.product.price * elem.itemQty}&nbsp;
@@ -148,13 +148,13 @@ export default function Cart() {
                       </span>
                     )}
                     {elem.product.promotion.id == 1 && (
-                    <span className="font-primary flex text-xl lg:text-2xl p-2">
+                      <span className="font-primary flex text-xl lg:text-2xl p-2">
                         Price:&nbsp;
                         <h2>{elem.product.price * elem.itemQty}€</h2>
                       </span>
                     )}
                     <span className="font-primary flex text-xl lg:text-2xl p-2">
-                    Quantity:&nbsp;
+                      Quantity:&nbsp;
                       <input
                         className="border border-grey"
                         type="number"
@@ -199,7 +199,9 @@ export default function Cart() {
         </div>
         <div className="w-full lg:w-2/5 mr-4 lg:mr-8 flex flex-col justify-start">
           <div className="bg-grey m-4 rounded-2xl p-4">
-            <h1 className="font-primary text-2xl lg:text-3xl text-center m-2">Order</h1>
+            <h1 className="font-primary text-2xl lg:text-3xl text-center m-2">
+              Order
+            </h1>
             <div className="flex justify-between my-4">
               <h3 className="font-primary text-lg lg:text-xl text-center m-2">
                 Promo Code&nbsp;
@@ -230,8 +232,6 @@ export default function Cart() {
       </div>
     );
   };
-
-  // console.log(cart);
 
   return (
     <>

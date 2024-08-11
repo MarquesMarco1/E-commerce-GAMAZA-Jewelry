@@ -13,17 +13,16 @@ const Autocomplete = ({ autocompleteData, activeSuggestion, onClick }) => {
   }, [autocompleteData, activeSuggestion]);
 
   let suggestionsListComponent;
-  // console.log('filteredSuggestions', filteredSuggestions)
   if (filteredSuggestions && filteredSuggestions.length > 0) {
     suggestionsListComponent = (
       <ul className="absolute border border-gray-600 border-t-0 list-none mt-12 max-h-36 overflow-y-auto pl-0 w-full bg-grey shadow-lg md:w-72">
         {filteredSuggestions.map((suggestion, index) => {
           let className = "p-2 flex items-center ";
           if (index === activeSuggestionIndex) {
-            className += "bg-light-purple hover:text-black hover:cursor-pointer hover:font-bold";
+            className +=
+              "bg-light-purple hover:text-black hover:cursor-pointer hover:font-bold";
           }
-          
-          // console.log('testetete', filteredSuggestions)
+
           return (
             <li
               className={`${className} border-b border-gray-600:last:border-0`}
@@ -32,12 +31,12 @@ const Autocomplete = ({ autocompleteData, activeSuggestion, onClick }) => {
             >
               <img
                 src={suggestion.images}
-                alt={language === 'FR' ? suggestion.name : suggestion.nameEn}
+                alt={language === "FR" ? suggestion.name : suggestion.nameEn}
                 className="w-10 h-10 mr-2 object-cover"
               />
               <div>
                 <div className="font-bold text-gold font-primary text-lg">
-                  {language === 'FR' ? suggestion.name : suggestion.nameEn}
+                  {language === "FR" ? suggestion.name : suggestion.nameEn}
                 </div>
                 <div className="text-gray-600 font-bold font-primary">
                   ${suggestion.price}
@@ -50,11 +49,7 @@ const Autocomplete = ({ autocompleteData, activeSuggestion, onClick }) => {
     );
   }
 
-  return (
-    <Fragment>
-      {suggestionsListComponent}
-    </Fragment>
-  );
+  return <Fragment>{suggestionsListComponent}</Fragment>;
 };
 
 Autocomplete.propTypes = {

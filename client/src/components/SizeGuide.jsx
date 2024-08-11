@@ -7,6 +7,7 @@ import Save4later from "../assets/save4later.svg";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
+  const [product, setProduct] = useState([]);
   const [sizeGuide, setSizeGuide] = useState([]);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("no size");
@@ -19,20 +20,19 @@ export default function SizeGuide(data) {
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    // console.log(email)
     if (email === null) {
       return false;
     }
     return true;
   };
-  
+
   useEffect(() => {
-    if(fetchIsLog()){
+    if (fetchIsLog()) {
       setDisplayWishlist(true);
     }
     const fetchData = async () => {
-
       setCategory(data.data.category.name);
+      setProduct(data.data);
 
       switch (data.data.category.name) {
         case "Colliers":
@@ -87,7 +87,7 @@ export default function SizeGuide(data) {
       user: localStorage.getItem("user"),
     };
 
-    if(fetchIsLog()){
+    if (fetchIsLog()) {
       const response = await fetch(`${localhost}/api/cartItem`, {
         method: "POST",
         headers: {
@@ -95,7 +95,7 @@ export default function SizeGuide(data) {
         },
         body: JSON.stringify({ formData }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: "ADD_ITEM", payload: data.success });
@@ -105,14 +105,14 @@ export default function SizeGuide(data) {
       const item = {
         itemQty: quantity,
         product: data.data,
-        size: selectedSize
-      }
-      // console.log(item)
+        size: selectedSize,
+      };
+
       dispatch({ type: "ADD_ITEM", payload: item });
       navigate("/", { replace: true });
     }
   };
-  
+
   const saveForLater = async () => {
     const formData = {
       product: parseInt(id),
@@ -128,7 +128,7 @@ export default function SizeGuide(data) {
       body: JSON.stringify({ formData }),
     });
   };
-  
+
   return (
     <>
       {sizeGuide.length > 0 && (
@@ -173,19 +173,28 @@ export default function SizeGuide(data) {
       </div>
       <button
         onClick={handleAddToCart}
-        className="w-full bg-gold text-white px-4 py-2 rounded-lg"
+        className="w-full bg-gold text-white px-4 py-2 rounded-lg mb-4"
       >
         {t("specProduct.cart")}
       </button>
-      {displayWishlist && <div className="mt-6 flex justify-center items-center">
-        <button
-          className="flex font-primary text-2xl"
-          onClick={saveForLater}
-        >
-          <img className="mr-4" src={Save4later} alt="" />
-          Save for later
-        </button>
-      </div>}
+      <div className="mb-4">
+        <p className="block text-lg font-primary">
+          {t("specProduct.stockQty")} {product && product.stockQty}
+        </p>
+      </div>
+      <div className="mb-4">
+        <p className="block text-lg font-primary">
+          {t("specProduct.weight")} {product && product.weight}g
+        </p>
+      </div>
+      {displayWishlist && (
+        <div className="mt-6 flex justify-center items-center">
+          <button className="flex font-primary text-2xl" onClick={saveForLater}>
+            <img className="mr-4" src={Save4later} alt="" />
+            Save for later
+          </button>
+        </div>
+      )}
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white dark:bg-dark-mode-light-purple p-4 max-w-lg max-h-full overflow-auto">

@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom"; 
+import { Link, useParams } from "react-router-dom";
 import localhost from "../config"; // Import de la configuration localhost
 import React, { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next"; // Import du hook pour la traduction
@@ -10,9 +10,10 @@ import inStock from "../assets/inStock.svg"; // Image du 'in stock'
 import lowStock from "../assets/lowInStock.svg"; // Image du 'low in stock'
 import soldOut from "../assets/soldOut.svg"; //Image du 'soldout'
 import StockAlert from "./utils/stockAlert"; // Alerte stock
-import ModeleProduct from "./ModeleProduct"; 
+import ModeleProduct from "./ModeleProduct";
 import SizeGuide from "./SizeGuide"; // Guide des tailles
 import ReviewForm from "./review/ReviewForm"; // Avis
+import { lastDayOfDecade } from "date-fns";
 
 const SpecProduct = () => {
   const { id } = useParams(); // Récupération de l'ID du produit à partir des paramètres de l'URL
@@ -53,16 +54,20 @@ const SpecProduct = () => {
     const words = elem.nameEn.split(" ");
     const firstWorld = words[0];
     let lastWord = "";
+
     if (words[words.length - 1] === "") {
       lastWord = words[words.length - 2];
     } else {
       lastWord = words[words.length - 1];
     }
+
     const response = await fetch(
       `${localhost}/api/filterModele/${firstWorld}/${lastWord}`
     );
+
     if (response.ok) {
       const data = await response.json();
+
       setAllModele(data.products);
     }
   };
@@ -250,6 +255,7 @@ const SpecProduct = () => {
                 </label>
                 {allModele.length > 0 && <ModeleProduct data={allModele} />}
               </div>
+
               <SizeGuide data={product} />
             </div>
           </div>

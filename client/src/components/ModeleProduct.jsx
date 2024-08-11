@@ -18,7 +18,6 @@ export default function ModeleProduct(data) {
             <p>
               {language === "FR" ? elem.material.name : elem.material.nameEn}
             </p>
-            {/* <p>{elem.stone && elem.stone.name}</p> */}
             <Link to={`/product/${elem.id}`}>
               <img
                 className={`w-20 h-20 cursor-pointer border-2`}

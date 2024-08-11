@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -59,30 +59,41 @@ export default function Search() {
     }, 500);
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     const userInput = e.currentTarget.value.toLowerCase();
 
-    const filteredSuggestions = suggestions.filter(suggestion =>
-      (suggestion.name && suggestion.name.toLocaleLowerCase().indexOf(userInput) > -1) ||
-      (suggestion.nameEn && suggestion.nameEn.toLocaleLowerCase().indexOf(userInput) > - 1)
+    const filteredSuggestions = suggestions.filter(
+      (suggestion) =>
+        (suggestion.name &&
+          suggestion.name.toLocaleLowerCase().indexOf(userInput) > -1) ||
+        (suggestion.nameEn &&
+          suggestion.nameEn.toLocaleLowerCase().indexOf(userInput) > -1)
     );
 
     setActiveSuggestion(0);
     setFilteredSuggestions(filteredSuggestions);
     setUserInput(userInput);
-    setAutocompleteData(filteredSuggestions.map(suggestion =>
-      typeof suggestion === 'object' ? suggestion : { name: suggestion.name, image: '', prix: '' }
-    ));
+    setAutocompleteData(
+      filteredSuggestions.map((suggestion) =>
+        typeof suggestion === "object"
+          ? suggestion
+          : { name: suggestion.name, image: "", prix: "" }
+      )
+    );
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13) {
       setActiveSuggestion(0);
       setFilteredSuggestions([]);
       setUserInput(filteredSuggestions[activeSuggestion]);
-      setAutocompleteData(filteredSuggestions.map(suggestion =>
-        typeof suggestion === 'object' ? suggestion : { name: suggestion.name, image: '', prix: '' }
-      ));
+      setAutocompleteData(
+        filteredSuggestions.map((suggestion) =>
+          typeof suggestion === "object"
+            ? suggestion
+            : { name: suggestion.name, image: "", prix: "" }
+        )
+      );
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
@@ -96,7 +107,7 @@ export default function Search() {
     }
   };
 
-  const onClick = e => {
+  const onClick = (e) => {
     setActiveSuggestion(0);
     setUserInput(e.currentTarget.innerText);
   };
@@ -104,28 +115,36 @@ export default function Search() {
   const sortResults = () => {
     let list = [];
 
-    if (categoryName !== "Toutes les catégories" && categoryName !== "All Categories") {
-      // console.log('if /', categoryName)
+    if (
+      categoryName !== "Toutes les catégories" &&
+      categoryName !== "All Categories"
+    ) {
       list = product.filter(
         (elem) =>
-          elem.category.name === categoryName &&
-          elem.name.toLocaleLowerCase().includes(userInput.toLocaleLowerCase()) ||
-          elem.category.nameEn === categoryName &&
-          elem.nameEn.toLocaleLowerCase().includes(userInput.toLocaleLowerCase())
-        );
+          (elem.category.name === categoryName &&
+            elem.name
+              .toLocaleLowerCase()
+              .includes(userInput.toLocaleLowerCase())) ||
+          (elem.category.nameEn === categoryName &&
+            elem.nameEn
+              .toLocaleLowerCase()
+              .includes(userInput.toLocaleLowerCase()))
+      );
+    } else {
+      if (userInput === "") {
+        list = [...product];
       } else {
-        if (userInput === "") {
-          // console.log('else / if')
-          list = [...product];
-        } else {
-          // console.log('else / else', userInput)
-          list = product.filter((elem) =>
-            elem.name.toLocaleLowerCase().includes(userInput.toLocaleLowerCase()) ||
-            elem.nameEn.toLocaleLowerCase().includes(userInput.toLocaleLowerCase())
+        list = product.filter(
+          (elem) =>
+            elem.name
+              .toLocaleLowerCase()
+              .includes(userInput.toLocaleLowerCase()) ||
+            elem.nameEn
+              .toLocaleLowerCase()
+              .includes(userInput.toLocaleLowerCase())
         );
       }
     }
-    // console.log(list)
     setSearchResults(list);
   };
 
@@ -201,7 +220,9 @@ export default function Search() {
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
-            value={language === 'FR' ? 'Toutes les catégories' : 'All categories'}
+            value={
+              language === "FR" ? "Toutes les catégories" : "All categories"
+            }
             className="text-gold font-primary bg-light-purple bg-opacity-20 hover:bg-light-purple dark:bg-gold dark:text-white dark:hover-bg-dark-mode-light-purple"
           >
             {t("search.select")}

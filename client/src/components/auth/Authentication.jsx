@@ -80,7 +80,7 @@ const Authentication = () => {
       });
       if (response_cart.ok) {
         const data = await response_cart.json();
-        console.log(data);
+
         if (data.cartItem.length > 0) {
           data.cartItem.forEach((elem) => {
             dispatch({ type: "ADD_ITEM", payload: elem });
