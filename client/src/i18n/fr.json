@@ -23,12 +23,17 @@
     "loading": "Recherche en cours ..."
   },
   "header": {
+    "home": "Accueil",
     "profile": "Profil",
     "admin": "Administrateur",
-    "cart": "Panier"
+    "cart": "Panier",
+    "languages": "Langues",
+    "lightmode": "Mode claire",
+    "darkmode": "Mode sombre"
   },
   "footer": {
-    "title": "Nous contacter"
+    "title": "Nous contacter",
+    "adress": "Adresse : 74 Avenue de Gamaza, 94270, G.A.M.A.Z.A City"
   },
   "categoryPage": {
     "homepage": "Accueil",

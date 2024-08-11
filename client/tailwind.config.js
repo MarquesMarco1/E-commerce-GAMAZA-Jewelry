@@ -23,7 +23,8 @@ module.exports = {
         "dark-mode-light-purple": "#6D4FAE",
         black: "#0C0910",
         white: "#F5F5F5",
-        grey: "#DEDEE0"
+        grey: "#DEDEE0",
+        navbar: "#111827",
       },
       backgroundImage: {
         login: "url('./assets/login.jpg')",
@@ -44,6 +45,12 @@ module.exports = {
       zIndex: {
         10: "10",
         20: "20",
+      },
+      boxShadow: {
+        myShadow1: "4.1px -5px 0 0 rgb(205 146 242)",
+        myShadow2: "-4.1px -5px 0 0 rgb(205 146 242)",
+        myShadow3: "4.1px -5px 0 0 rgb(123 22 185)",
+        myShadow4: "-4.1px -5px 0 0 rgb(123 22 185)",
       },
     },
   },

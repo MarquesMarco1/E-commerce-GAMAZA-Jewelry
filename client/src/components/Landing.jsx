@@ -13,6 +13,7 @@ export default function Accueil() {
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
+    console.log(language);
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/categorie/${language}`);
       if (response.status === 200) {
@@ -25,7 +26,7 @@ export default function Accueil() {
   }, [language]);
 
   return (
-    <div className="bg-white dark:bg-dark-mode-purple">
+    <div className="bg-grey dark:bg-dark-mode-purple shadow-md">
       <Header />
       <div className="mt-20 flex flex-col items-center justify-center">
         <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
@@ -39,7 +40,7 @@ export default function Accueil() {
             ))}
         </ul>
       </div>
-        <Search />
+      <Search />
       <Carousel />
       <Promotion />
       <Footer />

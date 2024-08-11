@@ -166,14 +166,14 @@ export default function EditProduct() {
     <>
       <Header></Header>
       <form
-        className="flex flex-col justify-center	items-center"
+        className="flex flex-col justify-center	items-center p-4 md:p-8 lg:p-12"
         onSubmit={handelSubmit}
       >
         {/* Name FR*/}
 
         <label for="nom">{t("createProduct.productFR")}</label>
         <input
-          className="border	border-solid	border-slate-500 w-96 p-2.5	rounded-xl mb-4"
+          className="border	border-solid border-slate-500 w-96 sm:w-64 p-2.5 rounded-xl mb-4"
           type="text"
           name="nom"
           id="nom"

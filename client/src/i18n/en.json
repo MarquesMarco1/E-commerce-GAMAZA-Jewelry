@@ -23,12 +23,17 @@
     "loading": "Searching ..."
   },
   "header": {
+    "home": "Home",
     "profile": "Profile",
     "admin": "Admin",
-    "cart": "Cart"
+    "cart": "Cart",
+    "languages": "Languages",
+    "lightmode": "Light Mode",
+    "darkmode": "Dark Mode"
   },
   "footer": {
-    "title": "Contact us"
+    "title": "Contact us",
+    "adress": "Adress: 74th Gamaza Street, 94270, G.A.M.A.Z.A City"
   },
   "categoryPage": {
     "homepage": "Homepage",
@@ -44,7 +49,7 @@
     "password": "Password :",
     "forgot": "Forgot password?",
     "login": "Login",
-    "no-account": "You doesn't have an account?",
+    "no-account": "You don't have an account?",
     "register": "Register"
   },
   "profilPage": {
