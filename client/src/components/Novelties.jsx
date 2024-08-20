@@ -1,27 +1,26 @@
 import { useEffect, useState, useContext } from "react";
-import localhost from '../config';
+import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import { Link } from "react-router-dom";
 
 export default function Novelties() {
-    const [newProducts, setNewProducts] = useState([]);
-    const { t } = useTranslation();
+  const [newProducts, setNewProducts] = useState([]);
+  const { t } = useTranslation();
 
-    const { language } = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          const response = await fetch(`${localhost}/api/allNovelties`);
-          if (response.ok) {
-            const data = await response.json();
-            setNewProducts(data.products);
-          }
-        };
-        fetchData();
-      }, [language]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`${localhost}/api/allNovelties`);
+      if (response.ok) {
+        const data = await response.json();
+        setNewProducts(data.arrivals);
+      }
+    };
+    fetchData();
+  }, [language]);
 
-      
   return (
     <>
       <h1 className="text-black dark:text-gold text-3xl md:text-5xl font-primary m-8 text-center">
@@ -60,5 +59,4 @@ export default function Novelties() {
       </div>
     </>
   );
-    
 }
