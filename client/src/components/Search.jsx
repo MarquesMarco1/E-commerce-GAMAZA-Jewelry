@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from "react-router-dom";
+import { IonIcon } from '@ionic/react';
+import { searchOutline } from "ionicons/icons";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -13,6 +15,7 @@ export default function Search() {
   const [error, setError] = useState("");
   const { t } = useTranslation();
   const [isSearching, setIsSearching] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const { language } = useContext(LanguageContext);
   const [activeSuggestion, setActiveSuggestion] = useState(0);
@@ -154,11 +157,27 @@ export default function Search() {
         Error: {error.message}
       </div>
     );
+
   return (
     <div className="p-5 bg-gray-100 rounded-lg shadow-md">
+
+        <div className="flex justify-center mb-5">
+        <button
+          onClick={() => setShowSearchBar(!showSearchBar)}
+          className="focus:outline-none"
+        >
+          <IonIcon
+            icon={searchOutline}
+            className="text-3xl text-dark-purple transition-transform duration-300 transform hover:scale-110"
+          />
+        </button>
+      </div>
+
       <form
-        onSubmit={handleSearch}
-        className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
+          onSubmit={handleSearch}
+        className={`${
+          showSearchBar ? "opacity-100 max-h-full" : "opacity-0 max-h-0"
+        } flex flex-col md:flex-row items-center justify-center gap-2 mb-5 transition-all duration-500 ease-in-out overflow-hidden`}
       >
         <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
           <input

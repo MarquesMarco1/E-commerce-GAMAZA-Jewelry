@@ -44,38 +44,50 @@ export default function Review(data) {
     }
   };
 
-  return (
-    <>
-      <div className="mb-4">
-        <h2>{t("reviewPage.filter")}</h2>
-        <select className="dark:bg-dark-mode-light-purple dark:text-gold"
+    <div className="mb-4">
+      <h2 className="text-gold font-primary font-bold text-lg mb-2">
+        {t("reviewPage.filter")}
+      </h2>
+      <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+        <select
+          className="dark:bg-dark-mode-light-purple text-gold p-2 rounded"
           onChange={(e) => setNote(e.target.value)}
           onClick={handleSortNote}
         >
           <option value={0}>0</option>
           {stars.map((elem) => (
-            <option value={elem}>
+            <option key={elem} value={elem}>
               {elem} {t("reviewPage.stars")}
             </option>
           ))}
         </select>
-        <select className="dark:bg-dark-mode-light-purple dark:text-gold"onClick={(e) => handleSort(e.target.value)}>
-          <option value=""> {t("reviewPage.date")}</option>
+        <select
+          className="dark:bg-dark-mode-light-purple dark:text-gold p-2 rounded"
+          onClick={(e) => handleSort(e.target.value)}
+        >
+          <option value="">{t("reviewPage.date")}</option>
           <option value="desc">{t("reviewPage.desc")}</option>
-          <option value="acs">{t("reviewPage.asc")}</option>
+          <option value="asc">{t("reviewPage.asc")}</option>
         </select>
       </div>
-      {reviews.length > 0 &&
-        reviews.map((elem) => (
-          <ul className="mb-4 dark:text-gold">
-            <li>
-              {elem.stars} {t("reviewPage.stars")}
-            </li>
-            <li>{elem.user.email}</li>
-            <li>{date(elem.publication)}</li>
-            <li>{elem.description}</li>
-          </ul>
+    </div>
+    {reviews.length > 0 && (
+      <div className="space-y-4">
+        {reviews.map((elem) => (
+          <div
+            key={elem.id}
+            className="p-4 border rounded-lg dark:border-dark-mode-light-purpletext-gold"
+          >
+            <ul className="space-y-2">
+              <li className="font-primary font-bold text-gold">
+                {elem.stars} {t("reviewPage.stars")}
+              </li>
+              <li className="text-sm text-gold font-primary">{elem.user.email}</li>
+              <li className="text-sm text-gold font-primary">{date(elem.publication)}</li>
+              <li className="text-base font-primary">{elem.description}</li>
+            </ul>
+          </div>
         ))}
-    </>
-  );
+    </div>
+  )}
 }

@@ -97,199 +97,199 @@ const Authentication = () => {
   };
 
   return (
-    <>
-      <div className="bg-white dark:bg-dark-mode-purple">
-        <Header />
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-          <div className="relative w-4/5 bg-white shadow-lg rounded-lg">
-            <div
-              className={`absolute inset-0 flex transform transition-transform duration-500 ${
-                isSignUp ? "-translate-x-full" : "translate-x-0"
-              }`}
+<>
+  <div className="bg-white dark:bg-dark-mode-purple">
+    <Header />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-dark-mode-purple">
+      <div className="relative w-full max-w-4xl bg-white shadow-lg rounded-lg dark:bg-dark-mode-light-purple">
+        <div
+          className={`absolute inset-0 flex transform transition-transform duration-500 ${
+            isSignUp ? "-translate-x-full" : "translate-x-0"
+          }`}
+        >
+          <div className="w-full flex flex-col md:flex-row items-center p-6">
+            <img src={login} alt="Login Image" className="w-full md:w-1/2 rounded" />
+            <form
+              onSubmit={handleSubmitLogin}
+              className="w-full md:w-1/2 flex flex-col items-center justify-center"
             >
-              <div className="mr-60 w-full flex items-center p-6">
-                <img src={login} alt="Login Image" className="w-1/2 rounded" />
-                <form
-                  onSubmit={handleSubmitLogin}
-                  className="w-1/2 flex flex-col items-center justify-center"
-                >
-                  <h1 className="mt-10 text-center font-primary text-2xl font-bold leading-9 tracking-tight text-gold">
-                    {t("auth.login")}
-                  </h1>
-                  <div className="my-6 flex flex-wrap justify-center align-items space-between">
-                    <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
-                      {t("auth.social")}
-                    </span>
-                    <Link to={`https://www.facebook.com/?locale=fr_FR`}>
-                      <img
-                        src={facebook}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
-                        alt="logo of Facebook that redirects to the Facebook's homepage"
-                      />
-                    </Link>
-                    <Link to={`https://x.com/?lang=fr`}>
-                      <img
-                        src={twitter}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
-                        alt="logo of Twitter that redirects to the Twitter's homepage"
-                      />
-                    </Link>
-                    <Link to={`https://www.instagram.com/`}>
-                      <img
-                        src={instagram}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
-                        alt="logo of Instagram that redirects to the Instagram's homepage"
-                      />
-                    </Link>
-                  </div>
-
-                  <label
-                    htmlFor="mail"
-                    className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
-                  >
-                    {t("auth.email")}
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder={t("auth.email")}
-                    className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold "
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+              <h1 className="mt-10 text-center font-primary text-3xl md:text-5xl font-bold leading-9 tracking-tight text-gold">
+                {t("auth.login")}
+              </h1>
+              <div className="my-6 flex flex-wrap justify-center items-center space-x-2">
+                <span className="block text-xl font-primary font-bold leading-6 text-black dark:text-gold">
+                  {t("auth.social")}
+                </span>
+                <Link to={`https://www.facebook.com/?locale=fr_FR`}>
+                  <img
+                    src={facebook}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full bg-[#adf0d1] border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
+                    alt="logo of Facebook that redirects to the Facebook's homepage"
                   />
-                  <label
-                    htmlFor="password"
-                    className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
-                  >
-                    {t("auth.password")}
-                  </label>
-                  <input
-                    type="password"
-                    placeholder={t("auth.password")}
-                    className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    required
+                </Link>
+                <Link to={`https://x.com/?lang=fr`}>
+                  <img
+                    src={twitter}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
+                    alt="logo of Twitter that redirects to the Twitter's homepage"
                   />
-                  <a
-                    href="#"
-                    className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
-                  >
-                    {t("auth.forgot")}
-                  </a>
-                  <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
-                    {t("auth.login")}
-                  </button>
-                  <p
-                    className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
-                    onClick={() => setIsSignUp(true)}
-                  >
-                    {t("auth.no-account")}
-                  </p>
-                </form>
-                {error && <p>{error}</p>}
+                </Link>
+                <Link to={`https://www.instagram.com/`}>
+                  <img
+                    src={instagram}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full bg-[#adf0d1] dark:bg-dark-mode-light-purple border border-[rgba(0,32,63,.45)] dark:border-gold transition-all duration-700 ease-in-out"
+                    alt="logo of Instagram that redirects to the Instagram's homepage"
+                  />
+                </Link>
               </div>
-            </div>
 
-            <div
-              className={`absolute inset-0 flex transform transition-transform duration-500 ${
-                isSignUp ? "translate-x-0" : "translate-x-full"
-              }`}
-            >
-              <div className="ml-60 w-full flex items-center p-6">
-                <form
-                  onSubmit={handleSubmitRegister}
-                  className="w-1/2 flex flex-col items-center justify-center"
-                >
-                  <h1 className="mt-10 text-center font-primary text-2xl font-bold leading-9 tracking-tight text-gold">
-                    {t("auth.register")}
-                  </h1>
-                  <div className="my-6 flex flex-wrap justify-center align-items space-between">
-                    <span className="block text-md font-primary font-bold leading-6 text-black dark:text-gold">
-                      {t("auth.social")}
-                    </span>
-                    <Link to={`https://www.facebook.com/?locale=fr_FR`}>
-                      <img
-                        src={facebook}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
-                        alt="logo of Facebook that redirects to the Facebook's homepage"
-                      />
-                    </Link>
-                    <Link to={`https://x.com/?lang=fr`}>
-                      <img
-                        src={twitter}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full  dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
-                        alt="logo of Twitter that redirects to the Twitter's homepage"
-                      />
-                    </Link>
-                    <Link to={`https://www.instagram.com/`}>
-                      <img
-                        src={instagram}
-                        className="inline-flex justify-center items-center m-0 mx-1 h-10 w-10 rounded-full  dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
-                        alt="logo of Instagram that redirects to the Instagram's homepage"
-                      />
-                    </Link>
-                  </div>
-
-                  <label
-                    htmlFor="mail"
-                    className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
-                  >
-                    {t("auth.email")}
-                  </label>
-                  <input
-                    type="email"
-                    placeholder={t("auth.email")}
-                    className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <label
-                    htmlFor="password"
-                    className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
-                  >
-                    {t("auth.password")}
-                  </label>
-                  <input
-                    type="password"
-                    placeholder={t("auth.password")}
-                    className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white  dark:bg-dark-mode-light-purple dark:text-gold "
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="new-password"
-                    required
-                  />
-                  <a
-                    href="#"
-                    className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
-                  >
-                    {t("auth.no-account")}
-                  </a>
-                  <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
-                    {t("auth.register")}
-                  </button>
-                  <p
-                    className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
-                    onClick={() => setIsSignUp(false)}
-                  >
-                    {t("auth.no-account")}
-                  </p>
-                </form>
-                <img
-                  src={register}
-                  alt="Register Image"
-                  className="w-1/2 rounded"
-                />
-              </div>
-              {error && <p>{error}</p>}
-            </div>
+              <label
+                htmlFor="mail"
+                className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+              >
+                {t("auth.email")}
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder={t("auth.email")}
+                className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label
+                htmlFor="password"
+                className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+              >
+                {t("auth.password")}
+              </label>
+              <input
+                type="password"
+                placeholder={t("auth.password")}
+                className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+              <a
+                href="#"
+                className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
+              >
+                {t("auth.forgot")}
+              </a>
+              <button className="w-3/4 p-3 text-3xl text-black font-bold rounded-lg bg-light-purple hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
+                {t("auth.login")}
+              </button>
+              <p
+                className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
+                onClick={() => setIsSignUp(true)}
+              >
+                {t("auth.no-account")}
+              </p>
+            </form>
+            {error && <p>{error}</p>}
           </div>
         </div>
+
+        <div
+          className={`absolute inset-0 flex transform transition-transform duration-500 ${
+            isSignUp ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="w-full flex flex-col md:flex-row items-center p-6">
+            <form
+              onSubmit={handleSubmitRegister}
+              className="w-full md:w-1/2 flex flex-col items-center justify-center"
+            >
+              <h1 className="mt-10 text-center font-primary text-3xl md:text-5xl font-bold leading-9 tracking-tight text-gold">
+                {t("auth.register")}
+              </h1>
+              <div className="my-6 flex flex-wrap justify-center items-center space-x-2">
+                <span className="block text-xl font-primary font-bold leading-6 text-black dark:text-gold">
+                  {t("auth.social")}
+                </span>
+                <Link to={`https://www.facebook.com/?locale=fr_FR`}>
+                  <img
+                    src={facebook}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                    alt="logo of Facebook that redirects to the Facebook's homepage"
+                  />
+                </Link>
+                <Link to={`https://x.com/?lang=fr`}>
+                  <img
+                    src={twitter}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                    alt="logo of Twitter that redirects to the Twitter's homepage"
+                  />
+                </Link>
+                <Link to={`https://www.instagram.com/`}>
+                  <img
+                    src={instagram}
+                    className="inline-flex justify-center items-center h-10 w-10 rounded-full dark:bg-dark-mode-light-purple dark:text-gold bg-[#adf0d1] border border-[rgba(0,32,63,.45)] transition-all duration-700 ease-in-out"
+                    alt="logo of Instagram that redirects to the Instagram's homepage"
+                  />
+                </Link>
+              </div>
+
+              <label
+                htmlFor="mail"
+                className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+              >
+                {t("auth.email")}
+              </label>
+              <input
+                type="email"
+                placeholder={t("auth.email")}
+                className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label
+                htmlFor="password"
+                className="block text-md font-primary font-bold leading-6 text-black dark:text-gold"
+              >
+                {t("auth.password")}
+              </label>
+              <input
+                type="password"
+                placeholder={t("auth.password")}
+                className="w-3/4 p-3 mb-4 border border-gold rounded font-primary text-black bg-white dark:bg-dark-mode-light-purple dark:text-gold"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
+                required
+              />
+              <a
+                href="#"
+                className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
+              >
+                {t("auth.no-account")}
+              </a>
+              <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
+                {t("auth.register")}
+              </button>
+              <p
+                className="mt-4 cursor-pointer text-blue-500 dark:text-gold"
+                onClick={() => setIsSignUp(false)}
+              >
+                {t("auth.no-account")}
+              </p>
+            </form>
+            <img
+              src={register}
+              alt="Register Image"
+              className="w-full md:w-1/2 rounded"
+            />
+          </div>
+          {error && <p>{error}</p>}
+        </div>
       </div>
-    </>
+    </div>
+  </div>
+</>
   );
 };
 

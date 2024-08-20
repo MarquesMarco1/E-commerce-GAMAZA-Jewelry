@@ -6,6 +6,7 @@
     "homepage": "Homepage",
     "category": "Category:",
     "material": "Material:",
+    "price": "Price",
     "stone": "Stone:",
     "color": "Color:",
     "size": "Size:",
@@ -49,7 +50,7 @@
     "password": "Password :",
     "forgot": "Forgot password?",
     "login": "Login",
-    "no-account": "You don't have an account?",
+    "no-account": "Don't have an account?",
     "register": "Register"
   },
   "profilPage": {

@@ -133,7 +133,7 @@ export default function SizeGuide(data) {
     <>
       {sizeGuide.length > 0 && (
         <div className="mb-4">
-          <label htmlFor="size" className="block text-lg font-primary">
+          <label htmlFor="size" className="block text-lg font-primary text-gold font-bold">
             {t("sizeGuidePage.tailleChoose")}
           </label>
           <select
@@ -148,22 +148,22 @@ export default function SizeGuide(data) {
           </select>
           <button
             onClick={openSizeGuide}
-            className="mt-2 text-sm text-blue-500 underline"
+            className="mt-2 text-sm text-dark-purple dark:text-light-purple font-primary font-semibold underline"
           >
             {t("sizeGuidePage.button")}
           </button>
         </div>
       )}
       <div className="mb-4">
-        <label htmlFor="quantity" className="block text-lg font-primary">
+        <label htmlFor="quantity" className="block text-lg font-primary font-bold text-gold">
           {t("specProduct.quantity")}:
         </label>
         <select
           id="quantity"
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
-          className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-        >
+          className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple text-gold"
+          >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>
               {num + 1}
@@ -173,17 +173,17 @@ export default function SizeGuide(data) {
       </div>
       <button
         onClick={handleAddToCart}
-        className="w-full bg-gold text-white px-4 py-2 rounded-lg mb-4"
+        className="w-full bg-gold text-white px-4 py-2 rounded-lg mb-4 transition transform duration-300"
       >
         {t("specProduct.cart")}
       </button>
       <div className="mb-4">
-        <p className="block text-lg font-primary">
+        <p className="block text-lg font-primary text-gold font-bold">
           {t("specProduct.stockQty")} {product && product.stockQty}
         </p>
       </div>
       <div className="mb-4">
-        <p className="block text-lg font-primary">
+        <p className="block text-lg font-primary font-bold text-gold">
           {t("specProduct.weight")} {product && product.weight}g
         </p>
       </div>
@@ -197,7 +197,7 @@ export default function SizeGuide(data) {
       )}
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white dark:bg-dark-mode-light-purple p-4 max-w-lg max-h-full overflow-auto">
+          <div className="relative bg-light-purple dark:bg-dark-mode-purple p-4 max-w-lg max-h-full overflow-auto">
             <button
               onClick={closeSizeGuide}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -209,82 +209,82 @@ export default function SizeGuide(data) {
               {sizeGuide.length > 0 ? (
                 sizeGuide[0].diameter ? (
                   <div>
-                    <h2 className="text-2xl font-semibold mb-4">
+                    <h2 className="text-2xl font-semibold mb-4 font-primary text-gold">
                       {t("sizeGuidePage.guideRings")}
                     </h2>
                     <div className="flex">
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.name}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.name}</li>
                         ))}
                       </ul>
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.circonférence")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">
+                          <li className="border px-4 py-2 font-primary text-gold">
                             {elem.circumference}
                           </li>
                         ))}
                       </ul>
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.diamètre")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.diameter}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.diameter}</li>
                         ))}
                       </ul>
                     </div>
                   </div>
                 ) : category === "Colliers" ? (
                   <div>
-                    <h2 className="text-2xl font-semibold mb-4">
+                    <h2 className="text-2xl font-semibold mb-4 font-primary text-gold">
                       {t("sizeGuidePage.guideNecklaces")}
                     </h2>
                     <div className="flex">
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.name}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.name}</li>
                         ))}
                       </ul>
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.value}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.value}</li>
                         ))}
                       </ul>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <h2 className="text-2xl font-semibold mb-4">
+                    <h2 className="text-2xl font-semibold mb-4 font-primary text-gold">
                       {t("sizeGuidePage.guideBracelets")}
                     </h2>
                     <div className="flex">
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.name}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.name}</li>
                         ))}
                       </ul>
                       <ul>
-                        <li className="border px-4 py-2">
+                        <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2">{elem.value}</li>
+                          <li className="border px-4 py-2 font-primary text-gold">{elem.value}</li>
                         ))}
                       </ul>
                     </div>

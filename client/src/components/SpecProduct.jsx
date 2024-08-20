@@ -165,10 +165,10 @@ const SpecProduct = () => {
 
   return (
     <>
-      <div className="bg-white dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
         <Header />
         <nav className="bg-gray-200 py-2 px-6">
-          <ul className="flex space-x-4 text-gold">
+          <ul className="flex space-x-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
             <li>
               <Link to={`/`}>{t("specProduct.homepage")}</Link>
             </li>
@@ -188,23 +188,20 @@ const SpecProduct = () => {
             <li>{language === "FR" ? product.name : product.nameEn}</li>
           </ul>
         </nav>
-        <h1 className="text-gold text-5xl mb-6 font-primary text-center mt-4">
+        <h1 className="text-gold font-extrabold text-5xl mb-6 font-primary text-center mt-4">
           {language === "FR" ? product.name : product.nameEn}
         </h1>
         <main className="py-6 px-4 max-w-7xl mx-auto">
-          <div className="flex space-x-8">
-            <div className="flex flex-col items-center">
-              <div
-                className="flex flex-col space-y-4 overflow-auto"
-                style={{ maxHeight: "600px" }}
-              >
+        <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
                 {product.images &&
                   product.images.map((image, index) => (
                     <img
                       key={index}
-                      className={`w-20 h-20 cursor-pointer border-2 ${
+                      className={`w-20 h-20 cursor-pointer border-2 transition-transform duration-300 ${
                         selectedImage === image
-                          ? "border-gold"
+                          ? "border-gold transform scale-105"
                           : "border-gray-300"
                       }`}
                       src={image}
@@ -215,19 +212,19 @@ const SpecProduct = () => {
               </div>
             </div>
             <div className="flex-1">
-              <div className="flex items-center justify-center mb-4 w-full max-w-4xl h-[600px] bg-gray-100">
+              <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
                 {selectedImage && (
-                  <img
-                    className="object-contain w-full h-full cursor-pointer"
-                    src={selectedImage}
-                    alt={product.name}
-                    onClick={openModal}
-                  />
-                )}
+                      <img
+                        className="object-contain w-full h-full cursor-pointer"
+                        src={selectedImage}
+                        alt={product.name}
+                        onClick={openModal}
+                      />
+                  )}
               </div>
             </div>
-            <div className="w-1/3">
-              <h2 className="text-gold text-2xl mb-6 font-primary">
+            <div className="lg:w-1/3 w-full">
+              <h2 className="text-gold text-3xl mb-6 font-primary font-bold">
                 {language === "FR"
                   ? product.description
                   : product.descriptionEn}
@@ -235,10 +232,13 @@ const SpecProduct = () => {
               <p className="text-2xl mb-4">
                 {product.promotion.id !== 1 ? (
                   <>
-                    <span className=" dark:text-gold line-through">
+                <label htmlFor="price" className="block text-lg font-primary text-gold font-bold">
+                  {t("specProduct.price")}
+                </label>
+                    <span className="text-gold line-through font-primary font-semibold">
                       ${product.price}
                     </span>{" "}
-                    <span className=" dark:text-gold">
+                    <span className="text-light-purple font-primary font-bold">
                       $
                       {product.price -
                         (product.price * product.promotion.pourcentage) / 100}
@@ -248,9 +248,9 @@ const SpecProduct = () => {
                   <span>${product.price}</span>
                 )}
               </p>
-              <div className="mb-4  dark:text-gold"></div>
-              <div className="mb-4  dark:text-gold">
-                <label htmlFor="color" className="block text-lg font-primary">
+              <div className="mb-4 dark:text-gold"></div>
+              <div className="mb-4 text-gold">
+                <label htmlFor="color" className="block text-lg font-primary text-gold font-bold">
                   {t("specProduct.material")}
                 </label>
                 {allModele.length > 0 && <ModeleProduct data={allModele} />}
@@ -270,17 +270,17 @@ const SpecProduct = () => {
         />
 
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative bg-white p-4 max-w-3xl max-h-full overflow-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+            <div className="relative bg-white dark:bg-dark-mode-purple p-4 max-w-3xl max-h-full overflow-auto">
               <button
                 onClick={closeModal}
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                className="absolute top-2 right-2 text-light-purple hover:text-gray-700"
               >
                 &times;
               </button>
               <div className="flex justify-center">
                 <img
-                  className={`cursor-zoom-in ${
+                  className={`cursor-zoom-in transition-transform duration-300 ${
                     isZoomed ? "transform scale-150" : "transform scale-100"
                   }`}
                   src={selectedImage}
