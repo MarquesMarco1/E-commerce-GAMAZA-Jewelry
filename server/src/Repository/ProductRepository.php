@@ -42,13 +42,13 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findByLastUpdate(): array
+   {
+       return $this->createQueryBuilder('p')
+           ->orderBy('p.lastUpdated', 'DESC')
+           ->setMaxResults(5)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 }

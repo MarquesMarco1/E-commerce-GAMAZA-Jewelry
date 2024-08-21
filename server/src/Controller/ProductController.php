@@ -165,4 +165,10 @@ class ProductController extends AbstractController
         $result = $user->isAdressValide($userRepository);
         return $this->json(['isAdressValide' => $result], 200);
     }
+
+    #[Route("/api/allNovelties", methods:["GET"])]
+    public function newArrivals(EntityManagerInterface $entityManager){
+        $arrivals = $entityManager->getRepository(Product::class)->findByLastUpdate();
+        return $this->json(["arrivals"=>$arrivals], 200);
+    }
 }
