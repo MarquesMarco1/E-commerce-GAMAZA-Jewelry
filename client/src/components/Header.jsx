@@ -56,7 +56,9 @@ export default function Header() {
   }, [darkMode]);
 
   useEffect(() => {
-    setCartItemCount(cartItems.length);
+    let nbr = 0;
+    cartItems.map((item) => (nbr += item.itemQty));
+    setCartItemCount(nbr);
   }, [cartItems]);
 
   const toggleDarkMode = () => {
