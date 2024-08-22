@@ -153,7 +153,7 @@ export default function Header() {
         >
           <img
             src={lotus}
-            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:scale-110 transition duration-300"
+            className="w-12 h-12 hover:scale-110 transition duration-300"
             alt="Logo de G.A.M.A.Z.A. Co"
           />
           <h1 className="text-gold text-center font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">

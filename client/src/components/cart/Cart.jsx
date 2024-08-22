@@ -22,8 +22,8 @@ useEffect(() => {
   return (
     <>
       <Header />
-      <div className="mb-24 bg-light-purple dark:bg-dark-mode-purple">
-        <div className="m-16 bg-light-purple dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple ">
+        <div className="bg-light-purple dark:bg-dark-mode-purple">
           {nbrArticle >= 0 && nbrArticle !== 1 && (
             <h1 className="font-primary text-3xl text-gold mr-4">
               {`My Cart (` + nbrArticle + ` articles)`}

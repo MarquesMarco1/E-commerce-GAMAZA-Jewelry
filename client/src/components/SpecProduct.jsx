@@ -194,12 +194,12 @@ const SpecProduct = () => {
         <main className="py-6 px-4 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
           <div className="flex flex-col items-center">
-            <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
+            <div className="flex flex-col space-y-4 overflow-auto max-h-[600px] rounded-md">
                 {product.images &&
                   product.images.map((image, index) => (
                     <img
                       key={index}
-                      className={`w-20 h-20 cursor-pointer border-2 transition-transform duration-300 ${
+                      className={`w-20 h-20 rounded-md border-2 transition-transform duration-300 ${
                         selectedImage === image
                           ? "border-gold transform scale-105"
                           : "border-gray-300"
@@ -215,7 +215,7 @@ const SpecProduct = () => {
               <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
                 {selectedImage && (
                       <img
-                        className="object-contain w-full h-full cursor-pointer"
+                        className="object-contain w-full h-full rounded-md"
                         src={selectedImage}
                         alt={product.name}
                         onClick={openModal}
@@ -245,10 +245,10 @@ const SpecProduct = () => {
                     </span>
                   </>
                 ) : (
-                  <span>${product.price}</span>
+                  <span className="font-primary text-gold font-bold">${product.price}</span>
                 )}
               </p>
-              <div className="mb-4 dark:text-gold"></div>
+              <div className="mb-4 text-gold"></div>
               <div className="mb-4 text-gold">
                 <label htmlFor="color" className="block text-lg font-primary text-gold font-bold">
                   {t("specProduct.material")}

@@ -15,22 +15,22 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                     <h2 className="font-primary text-3xl text-gold">
                         {item.product.name}
                     </h2>
-                    <span className="font-primary flex text-2xl text-gold p-2">
+                    <span className="font-primary flex text-2xl p-2">
                         Size:&nbsp;<h2>{item.size}</h2>
                     </span>
-                    <span className="font-primary flex text-2xl text-gold p-2">
+                    <span className="font-primary flex text-2xl p-2">
                         Material:&nbsp;<h2>{item.product.material.name}</h2>
                     </span>
                     {item.product.stone && (
-                        <span className="font-primary flex text-2xl text-gold p-2">
+                        <span className="font-primary flex text-2xl p-2">
                             Stone:&nbsp;<h2>{item.product.stone.name}</h2>
                         </span>
                     )}
-                    <span className="font-primary flex text-2xl text-gold p-2">
+                    <span className="font-primary flex text-2xl p-2">
                         Price:&nbsp;
                         {item.product.promotion.id !== 1 ? (
                             <>
-                                <h2 className="line-through text-gold font-primary">
+                                <h2 className="line-through">
                                     ${item.product.price * item.itemQty}&nbsp;
                                 </h2>
                                 <h2>
@@ -50,10 +50,10 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                             <h2>{item.product.price * item.itemQty}€</h2>
                         )}
                     </span>
-                    <span className="flex text-2xl p-2 font-primary text-gold">
+                    <span className="flex text-2xl p-2 font-primary">
                         Quantity:&nbsp;
                         <input
-                            className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple text-gold"
+                            className="border border-grey"
                             type="number"
                             min={0}
                             max={item.product.stockQty}

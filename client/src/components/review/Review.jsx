@@ -76,7 +76,7 @@ export default function Review(data) {
         {reviews.map((elem) => (
           <div
             key={elem.id}
-            className="p-4 border rounded-lg dark:border-dark-mode-light-purpletext-gold"
+            className="p-4 border rounded-lg dark:border-dark-mode-light-purple text-gold"
           >
             <ul className="space-y-2">
               <li className="font-primary font-bold text-gold">

@@ -7,14 +7,6 @@ module.exports = {
       primary: "Poiret One",
       secondary: "Thasadith",
     },
-    colors: {
-      gold: "#BF9553",
-      "light-purple": "#CD92F2",
-      "dark-purple": "#7B16B9",
-      black: "#0C0910",
-      white: "#DEDEE0",
-    },
-    extend: {
       colors: {
         gold: "#BF9553",
         "light-purple": "#CD92F2",
@@ -33,7 +25,6 @@ module.exports = {
       transitionProperty: {
         "width-height": "width, height",
       },
-
       transform: {
         "translate-20p": "translateX(20%)",
         "translate-100n": "translateX(-100%)",
@@ -52,7 +43,6 @@ module.exports = {
         myShadow3: "4.1px -5px 0 0 rgb(123 22 185)",
         myShadow4: "-4.1px -5px 0 0 rgb(123 22 185)",
       },
-    },
   },
   variants: {
     extend: {
@@ -60,5 +50,20 @@ module.exports = {
       transitionProperty: ["responsive", "hover", "focus"],
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addComponents }) {
+      addComponents({
+        '.button-primary': {
+          backgroundColor: '#CD92F2',
+          backgroundOpacity: '0.2',
+          color: '#BF9553',
+          padding: '0.5rem 1rem',
+          borderRadius: '0.375rem',
+          '&:hover': {
+            backgroundColor: '#BF9553',
+          },
+        },
+      });
+    },
+  ],
 };
