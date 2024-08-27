@@ -27,6 +27,7 @@
     "profile": "Profil",
     "admin": "Administrateur",
     "cart": "Panier",
+    "search": "Barre de recherche",
     "languages": "Langues",
     "lightmode": "Mode claire",
     "darkmode": "Mode sombre"
@@ -193,5 +194,8 @@
     "title": "Generation un code promotionnel",
     "button": "Générer",
     "submit": "Generer le code promotionnel"
+  },
+  "novelties": {
+    "new": "Nouveautés"
   }
 }

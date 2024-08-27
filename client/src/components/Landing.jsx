@@ -7,6 +7,7 @@ import Promotion from "./Promotion";
 import { LanguageContext } from "../LanguageContext";
 import Footer from "./Footer";
 import Search from "./Search";
+import Novelties from "./Novelties";
 
 export default function Accueil() {
   const { language } = useContext(LanguageContext);
@@ -42,6 +43,7 @@ export default function Accueil() {
       <Search />
       <Carousel />
       <Promotion />
+      <Novelties />
       <Footer />
     </div>
   );
