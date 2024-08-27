@@ -133,15 +133,15 @@ export default function Admin() {
 
   const manageShipping = () => {
     navigate("/manageShipping", { replace: true });
-  }
+  };
 
   return (
     <>
-      <div className="dark:bg-dark-mode-purple">
+      <div className="bg-grey dark:bg-dark-mode-light-purple">
         <Header></Header>
-        <div className="mr-24	ml-24	">
+        <div className="mr-24	ml-24">
           <NavBarAdmin></NavBarAdmin>
-          <div className="border border-grey	w-2/4	"></div>
+          <div className="border border-gold w-3/4"></div>
           <br></br>
 
           <Organizer />

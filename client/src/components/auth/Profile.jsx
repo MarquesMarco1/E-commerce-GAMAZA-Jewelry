@@ -102,7 +102,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className="dark:bg-dark-mode-purple">
+      <div className="dark:bg-dark-mode-light-purple bg-grey">
         <Header></Header>
         <div className="mr-24	ml-24	flex justify-between font-secondary">
           <div className="w-3/5	 mr-8">

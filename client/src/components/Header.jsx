@@ -29,7 +29,7 @@ export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [active, setActive] = useState(0);
-  const [previousActive, setPreviousActive] = useState(0);
+  // const [previousActive, setPreviousActive] = useState();
   // const [darkMode, setDarkMode] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const { t, i18n } = useTranslation();
@@ -37,29 +37,37 @@ export default function Header() {
   const [showAuthPopup, setShowAuthPopup] = useState(false);
   const { state: cart } = useCart();
   const [cartItemCount, setCartItemCount] = useState(0);
-  const { language, changeLanguage} = useContext(LanguageContext);
+  const { language, changeLanguage } = useContext(LanguageContext);
 
   const email = localStorage.getItem("user");
   const cartItems = cart;
+
+  const handleCartClick = () => {
+    if (email) {
+      navigate("/cart");
+    } else if (location.pathname !== "/cart") {
+      setShowAuthPopup(true);
+    }
+  };
 
   const Menus = [
     {
       name: t("header.home"),
       icon: homeOutline,
       path: "/",
-      // dis: "translate-x-0",
+      dis: "translate-x-0",
     },
     {
       name: t("header.profile"),
       icon: personOutline,
       path: "/profile",
-      // dis: "translate-x-16",
+      dis: "translate-x-16",
     },
     isAdmin && {
       name: t("header.admin"),
       icon: personCircleOutline,
       path: "/admin",
-      // dis: "translate-x-32",
+      dis: "translate-x-32",
     },
     // {
     //   name: t("header.searchBar"),
@@ -72,15 +80,8 @@ export default function Header() {
       name: t("header.cart"),
       icon: cartOutline,
       path: "/cart",
-      // dis: "translate-x-48",
-      action:() => {
-        if (email) {
-          navigate("/cart");
-        } else if (location.pathname !== "/cart") {
-          setShowAuthPopup(true);
-        }
-      },
-      hasBadge: true,
+      dis: "translate-x-48",
+      action: handleCartClick,
     },
   ].filter(Boolean);
 
@@ -109,29 +110,25 @@ export default function Header() {
     setCartItemCount(nbr);
   }, [cartItems]);
 
-  // const toggleDarkMode = () => {
-  //   setDarkMode(!darkMode);
-  // };
-
   // const setLanguage = (lng) => {
   //   changeLanguage(lng);
   //   i18n.changeLanguage(lng.toLowerCase());
   //   setShowLanguageSelect(false);
   // };
 
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const activeMenuIndex = Menus.findIndex(
-      (menu) => menu.path === currentPath
-    );
-    if (activeMenuIndex !== -1) {
-      setPreviousActive(active);
-      setActive(activeMenuIndex);
-    }
-  }, [location.pathname, Menus]);
+  // useEffect(() => {
+  //   const currentPath = location.pathname;
+  //   const activeMenuIndex = Menus.findIndex(
+  //     (menu) => menu.path === currentPath
+  //   );
+  //   if (activeMenuIndex !== -1) {
+  //     // setPreviousActive(active);
+  //     setActive(activeMenuIndex);
+  //   }
+  // }, [location.pathname, Menus]);
 
   const handleMenuClick = (i, path, action) => {
-    setPreviousActive(active);
+    // setPreviousActive(active);
     setActive(i);
     if (action) {
       action();
@@ -143,13 +140,6 @@ export default function Header() {
   // const toggleSearchBar = () => {
   //   setShowSearchBar(!showSearchBar);
   // };
-  // const handleCartClick = () => {
-  //   if (email) {
-  //     navigate("/cart");
-  //   } else if (location.pathname !== "/cart") {
-  //     setShowAuthPopup(true);
-  //   }
-  // };
 
   // const handleLogoClick = () => {
   //   setPreviousActive(active);
@@ -159,30 +149,31 @@ export default function Header() {
   //   }, 300);
   // };
 
-  const AnimationNav = (index) => {
-    const direction = index > previousActive ? "translate-x" : "-translate-x";
-    switch (index) {
-      case 0:
-        return `${direction}-0`;
-      case 1:
-        return `${direction}-16`;
-      case 2:
-        return `${direction}-32`;
-      case 3:
-        return `${direction}-48`;
-      case 4:
-        return `${direction}-64`;
-      default:
-        return `${direction}-0`;
-    }
-  };
+  // const AnimationNav = (index) => {
+  //   const direction = index > active ? "translate-x" : "-translate-x";
+  //   switch (index) {
+  //     case 0:
+  //       return `${direction}-0`;
+  //     case 1:
+  //       return `${direction}-16`;
+  //     case 2:
+  //       return `${direction}-32`;
+  //     case 3:
+  //       return `${direction}-48`;
+  //     // case 4:
+  //     // return `${direction}-64`;
+  //     default:
+  //       return `${direction}-0`;
+  //   }
+  // };
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none mb-2 shadow-md">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md">
         <div
           // onClick={handleLogoClick}
-          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2">
+          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2"
+        >
           <img
             src={lotus}
             className="w-20 h-20"
@@ -195,17 +186,18 @@ export default function Header() {
         {/* NavBar  */}
         <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
           <ul className="flex relative items-center">
-            {/* {Menus[active] && ( */}
+            {Menus[active] && (
               <span
-                className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
-                  border-4 border-light-purple bg-opacity-20 dark:border-dark-mode-purple
-                  h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full ${AnimationNav(active)}
+                className={`bg-dark-purple dark:bg-dark-mode-light-purple
+                  border-4 border-light-purple dark:border-dark-mode-purple
+                  h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full ${Menus[active].dis}
                 `}
               >
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1 dark:shadow-myShadow3"></span>
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2 dark:shadow-myShadow4"></span>
               </span>
-              
+            )}
+
             {Menus.map((menu, i) => (
               <li
                 key={i}
@@ -230,7 +222,7 @@ export default function Header() {
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
                       i === active &&
-                      "mt-[-2.5rem] text-gold font-primary font-extrabold"
+                      "mt-[-1.5rem] text-gold font-primary font-extrabold"
                     }`}
                   >
                     {/* Logic Cart  */}
@@ -279,8 +271,8 @@ export default function Header() {
         </div>
         <div className="flex justify-center items-center">
           <Switch />
-        {language && <Lang />}
-        {/* <Lang /> */}
+          {language && <Lang />}
+          {/* <Lang /> */}
           {/* <Search /> */}
         </div>
       </header>

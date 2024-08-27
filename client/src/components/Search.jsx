@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
 import { useNavigate } from "react-router-dom";
-import { IonIcon } from '@ionic/react';
+import { IonIcon } from "@ionic/react";
 import { searchOutline } from "ionicons/icons";
 
 export default function Search() {
@@ -160,7 +160,7 @@ export default function Search() {
 
   return (
     <div className="p-5 bg-gray-100 rounded-lg shadow-md">
-        <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-5">
         <button
           onClick={() => setShowSearchBar(!showSearchBar)}
           className="focus:outline-none"
@@ -173,7 +173,7 @@ export default function Search() {
       </div>
 
       <form
-          onSubmit={handleSearch}
+        onSubmit={handleSearch}
         className={`${
           showSearchBar ? "opacity-100 max-h-full" : "opacity-0 max-h-0"
         } flex flex-col md:flex-row items-center justify-center gap-2 mb-5 transition-all duration-500 ease-in-out overflow-hidden`}

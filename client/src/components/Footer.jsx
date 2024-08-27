@@ -46,7 +46,7 @@ export default function Footer() {
   });
 
   return (
-    <footer className="flex flex-col md:flex-row items-center justify-between bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple h-auto md:h-96 mt-10 w-full p-4 border-t rounded-md">
+    <footer className="flex flex-col md:flex-row items-center justify-between bg-light-purple dark:bg-dark-mode-purple h-auto md:h-96 mt-10 w-full p-4 border-t rounded-md">
       <div className="flex-1 flex flex-col items-center md:items-start justify-center p-4 text-center md:text-left">
         <h2 className="text-gold text-4xl font-extrabold font-primary mb-2">
           {t("footer.title")}
@@ -56,7 +56,7 @@ export default function Footer() {
         </p>
         <p className="text-gold mb-4 text-2xl font-bold font-primary">
           Email : gamaza@gamaza.com
-          </p>
+        </p>
         <div className="flex space-x-4">
           <a
             href="https://facebook.com"
@@ -68,7 +68,7 @@ export default function Footer() {
             href="https://twitter.com"
             className="text-white hover:text-gray-400"
           >
-            <FaTwitter size={24} color="#BF9553"/>
+            <FaTwitter size={24} color="#BF9553" />
           </a>
           <a
             href="https://instagram.com"
