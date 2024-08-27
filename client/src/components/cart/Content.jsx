@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
 import localhost from "../../config";
 import { Shippo } from "shippo";
-import AddressPopup from "./adressPopup";
+import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
 import Promo from "./Promo";
@@ -24,6 +24,7 @@ export default function Content() {
   const [addressTo, setAddressTo] = useState({});
   const [addressFrom, setAddressFrom] = useState(null);
   const [parcels, setParcels] = useState([]);
+  const [savedAddresses, setSavedAddresses] = useState([]);
 
   const [shippingChoice, setShippingChoice] = useState([]);
   const [shippingOption, setShippingOption] = useState(0);
@@ -323,6 +324,7 @@ export default function Content() {
         onClose={() => setDisplayAdressPopup(false)}
         onSave={handleShipping}
         initialData={addressTo}
+        savedAddresses={savedAddresses}
       />
     </div>
   );
