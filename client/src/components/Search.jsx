@@ -160,7 +160,6 @@ export default function Search() {
 
   return (
     <div className="p-5 bg-gray-100 rounded-lg shadow-md">
-
         <div className="flex justify-center mb-5">
         <button
           onClick={() => setShowSearchBar(!showSearchBar)}

@@ -38,10 +38,10 @@ module.exports = {
         20: "20",
       },
       boxShadow: {
-        myShadow1: "4.1px -5px 0 0 rgb(205 146 242)",
-        myShadow2: "-4.1px -5px 0 0 rgb(205 146 242)",
-        myShadow3: "4.1px -5px 0 0 rgb(123 22 185)",
-        myShadow4: "-4.1px -5px 0 0 rgb(123 22 185)",
+        myShadow1: "4.1px -5px 0 0 rgb(205 146 242 0.2)",
+        myShadow2: "-4.1px -5px 0 0 rgb(205 146 242 0.2)",
+        myShadow3: "4.1px -5px 0 0 rgb(21 5 54)",
+        myShadow4: "-4.1px -5px 0 0 rgb(21 5 54)",
       },
   },
   variants: {

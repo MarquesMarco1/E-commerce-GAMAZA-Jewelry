@@ -7,7 +7,8 @@ const cartReducer = (state, action) => {
     case "ADD_ITEM":
       const existingItem = state.find(
         (item) =>
-          item.id === action.payload.id && item.size === action.payload.size
+          item.product.id === action.payload.product.id &&
+          item.size === action.payload.size
       );
 
       if (existingItem) {

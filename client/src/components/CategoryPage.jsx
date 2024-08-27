@@ -78,7 +78,7 @@ export default function CategoryPage() {
 
   return (
     <>
-      <div className="bg-white dark:bg-dark-mode-purple">
+      <div className="bg-light-purple dark:bg-dark-mode-purple">
         <Header />
         <ul className="flex flex-wrap space-x-2 p-4 dark:text-gold">
           <li>
