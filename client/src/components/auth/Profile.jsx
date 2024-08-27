@@ -52,6 +52,7 @@ export default function Profile() {
         navigate("/authentication", { replace: true });
       }
     };
+
     fetchIsLog();
   }, [refresh]);
 
