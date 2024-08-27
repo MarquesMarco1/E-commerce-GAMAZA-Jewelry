@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Router, useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
 import localhost from "../../config";
 import { Shippo } from "shippo";
-import AddressPopup from "./adressPopup";
+import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
 import Promo from "./Promo";
@@ -24,6 +24,7 @@ export default function Content() {
   const [addressTo, setAddressTo] = useState({});
   const [addressFrom, setAddressFrom] = useState(null);
   const [parcels, setParcels] = useState([]);
+  const [savedAddresses, setSavedAddresses] = useState([]);
 
   const [shippingChoice, setShippingChoice] = useState([]);
   const [shippingOption, setShippingOption] = useState(0);
@@ -208,7 +209,7 @@ export default function Content() {
 
   const checkout = async () => {
     if (cartState === 2) {
-      navigate("/checkout", { replace: true });
+      // navigate("/checkout", { replace: true });
     } else if (cartState === 1) {
       setShippingOptionValid(true);
       transaction(shippingOption);
@@ -257,6 +258,49 @@ export default function Content() {
       labelFileType: "PDF",
       async: false,
     });
+
+    console.log(trans);
+    if (trans) {
+      if (localStorage.getItem("user")) {
+        const formData = {
+          user: localStorage.getItem("user"),
+          number: trans.objectId,
+          status: "PRE_TRANSIT",
+        };
+
+        const response = await fetch(`${localhost}/api/tracking`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ formData }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            navigate("/profile", { replace: true });
+          }
+        }
+      } else {
+        const formData = {
+          addressTo: addressTo.email,
+          number: trans.objectId,
+          status: "PRE_TRANSIT",
+        };
+
+        const response = await fetch(`${localhost}/api/trackingNotLogin`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ formData }),
+        });
+
+        if (response.ok) {
+          // const data = await response.json();
+          // if (data.success) {
+          navigate("/", { replace: true });
+          // }
+        }
+      }
+    }
 
     setCartState(2);
   };
@@ -323,6 +367,7 @@ export default function Content() {
         onClose={() => setDisplayAdressPopup(false)}
         onSave={handleShipping}
         initialData={addressTo}
+        savedAddresses={savedAddresses}
       />
     </div>
   );
