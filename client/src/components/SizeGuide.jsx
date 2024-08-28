@@ -107,9 +107,11 @@ export default function SizeGuide(data) {
         product: data.data,
         size: selectedSize,
       };
+      console.log("item ", item);
 
-      dispatch({ type: "ADD_ITEM", payload: item });
-      navigate("/", { replace: true });
+      // dispatch({ type: "ADD_ITEM", payload: item });
+      console.log("cart ", dispatch({ type: "ADD_ITEM", payload: item }));
+      // navigate("/", { replace: true });
     }
   };
 

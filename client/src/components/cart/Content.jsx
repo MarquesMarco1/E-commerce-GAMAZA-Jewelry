@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Router, useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
 import localhost from "../../config";
 import { Shippo } from "shippo";
-import AddressPopup from "./adressPopup";
+import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
 import Promo from "./Promo";
@@ -24,6 +24,7 @@ export default function Content() {
   const [addressTo, setAddressTo] = useState({});
   const [addressFrom, setAddressFrom] = useState(null);
   const [parcels, setParcels] = useState([]);
+  const [savedAddresses, setSavedAddresses] = useState([]);
 
   const [shippingChoice, setShippingChoice] = useState([]);
   const [shippingOption, setShippingOption] = useState(0);
@@ -31,6 +32,7 @@ export default function Content() {
 
   const [isWaiting, setIsWaiting] = useState(true);
   const [cartState, setCartState] = useState(0);
+  
   const stateManager = [
     "Confirm Address",
     "Select Shipping Method",
@@ -208,7 +210,9 @@ export default function Content() {
 
   const checkout = async () => {
     if (cartState === 2) {
-      navigate("/checkout", { replace: true });
+      // console.log(`adressTo => ${JSON.stringify(addressTo)}; shippingOptions => ${JSON.stringify(shippingOption)}`)
+      // console.log({adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays})
+      navigate("/checkout", { state: {adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays}});
     } else if (cartState === 1) {
       setShippingOptionValid(true);
       transaction(shippingOption);
@@ -258,6 +262,34 @@ export default function Content() {
       async: false,
     });
 
+    if (trans) {
+      if (localStorage.getItem("user")) {
+        const formData = {
+          user: localStorage.getItem("user"),
+          number: trans.objectId,
+          status: "PRE_TRANSIT",
+        };
+
+        await fetch(`${localhost}/api/tracking`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ formData }),
+        });
+
+      } else {
+        const formData = {
+          addressTo: addressTo.email,
+          number: trans.objectId,
+          status: "PRE_TRANSIT",
+        };
+
+        await fetch(`${localhost}/api/trackingNotLogin`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ formData }),
+        });
+      }
+    }
     setCartState(2);
   };
 
@@ -323,6 +355,7 @@ export default function Content() {
         onClose={() => setDisplayAdressPopup(false)}
         onSave={handleShipping}
         initialData={addressTo}
+        savedAddresses={savedAddresses}
       />
     </div>
   );

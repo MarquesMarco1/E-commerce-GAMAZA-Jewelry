@@ -21,6 +21,7 @@
     "searchBar": "Search by name",
     "select": "All Categories",
     "cart": "Add to cart",
+    "search": "Search Bar",
     "loading": "Searching ..."
   },
   "header": {
@@ -194,5 +195,8 @@
     "title": "Generation a promotional code",
     "button": "Generate",
     "submit": "Generate promotional code"
+  },
+  "novelties": {
+    "new": "New arrivals"
   }
 }
