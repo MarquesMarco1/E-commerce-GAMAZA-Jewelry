@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import localhost from '../../config';
 import { useCart } from "../../CartContext";
+import { useLocation } from "react-router-dom";
 import {
     EmbeddedCheckoutProvider,
     EmbeddedCheckout
@@ -11,11 +12,23 @@ export default function CheckoutForm(props) {
     const [stripeData, setStripeData] = useState([]);
     const [clientSecret, setClientSecret] = useState('');
 
+    const params = useLocation();
+    const adress = params.state.adress;
+    const shipping_amount = params.state.shipping_amount;
+    const shipping_name = params.state.shipping_name;
+    const shipping_estimatedDays = params.state.shipping_estimatedDays;
+
+
+    // console.log(`adress => ${params.state.adress} | shipping => ${params.state.shipping}`)
     useEffect(() => {
         const newStripeData = cart.map((item) => {
             return {
                 price: item.product.keyStripe,
-                quantity: item.itemQty
+                quantity: item.itemQty, 
+                adress: adress,
+                shipping_amount: shipping_amount,
+                shipping_name: shipping_name,
+                shipping_estimatedDays: shipping_estimatedDays
             };
         });
         setStripeData(newStripeData);
@@ -23,7 +36,6 @@ export default function CheckoutForm(props) {
 
     const fetchClientSecret = useCallback(async () => {
         if (stripeData.length === 0) return;
-
             const res = await fetch(`${localhost}/api/checkout`, {
                 method: "POST",
                 headers: {
@@ -33,6 +45,8 @@ export default function CheckoutForm(props) {
             });
 
             const data = await res.json();
+
+            console.log(data)
             if (data.clientSecret) {
                 setClientSecret(data.clientSecret);
             }

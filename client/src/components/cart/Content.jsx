@@ -32,6 +32,7 @@ export default function Content() {
 
   const [isWaiting, setIsWaiting] = useState(true);
   const [cartState, setCartState] = useState(0);
+  
   const stateManager = [
     "Confirm Address",
     "Select Shipping Method",
@@ -209,7 +210,9 @@ export default function Content() {
 
   const checkout = async () => {
     if (cartState === 2) {
-      // navigate("/checkout", { replace: true });
+      // console.log(`adressTo => ${JSON.stringify(addressTo)}; shippingOptions => ${JSON.stringify(shippingOption)}`)
+      // console.log({adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays})
+      navigate("/checkout", { state: {adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays}});
     } else if (cartState === 1) {
       setShippingOptionValid(true);
       transaction(shippingOption);
@@ -259,7 +262,6 @@ export default function Content() {
       async: false,
     });
 
-    console.log(trans);
     if (trans) {
       if (localStorage.getItem("user")) {
         const formData = {
@@ -268,18 +270,12 @@ export default function Content() {
           status: "PRE_TRANSIT",
         };
 
-        const response = await fetch(`${localhost}/api/tracking`, {
+        await fetch(`${localhost}/api/tracking`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ formData }),
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            navigate("/profile", { replace: true });
-          }
-        }
       } else {
         const formData = {
           addressTo: addressTo.email,
@@ -287,21 +283,13 @@ export default function Content() {
           status: "PRE_TRANSIT",
         };
 
-        const response = await fetch(`${localhost}/api/trackingNotLogin`, {
+        await fetch(`${localhost}/api/trackingNotLogin`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ formData }),
         });
-
-        if (response.ok) {
-          // const data = await response.json();
-          // if (data.success) {
-          navigate("/", { replace: true });
-          // }
-        }
       }
     }
-
     setCartState(2);
   };
 
