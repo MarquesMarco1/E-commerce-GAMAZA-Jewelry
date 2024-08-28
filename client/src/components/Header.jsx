@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { IonIcon } from "@ionic/react";
 import {
   homeOutline,
@@ -157,11 +158,13 @@ export default function Header() {
     <>
       <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none mb-6">
         <div className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-6">
-          <img
-            src={lotus}
-            className="w-20 h-20"
-            alt="Logo de G.A.M.A.Z.A. Co"
-          />
+          <Link to={`/`}>
+            <img
+              src={lotus}
+              className="w-20 h-20"
+              alt="Logo de G.A.M.A.Z.A. Co"
+            />
+          </Link>
           <h1 className="text-gold text-center font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
             G.A.M.A.Z.A. Co
           </h1>
