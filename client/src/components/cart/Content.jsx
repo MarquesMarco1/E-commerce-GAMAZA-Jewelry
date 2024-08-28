@@ -32,7 +32,7 @@ export default function Content() {
 
   const [isWaiting, setIsWaiting] = useState(true);
   const [cartState, setCartState] = useState(0);
-  
+
   const stateManager = [
     "Confirm Address",
     "Select Shipping Method",
@@ -212,7 +212,14 @@ export default function Content() {
     if (cartState === 2) {
       // console.log(`adressTo => ${JSON.stringify(addressTo)}; shippingOptions => ${JSON.stringify(shippingOption)}`)
       // console.log({adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays})
-      navigate("/checkout", { state: {adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays}});
+      navigate("/checkout", {
+        state: {
+          adress: JSON.stringify(addressTo),
+          shipping_amount: shippingOption.amount,
+          shipping_name: shippingOption.attributes[0],
+          shipping_estimatedDays: shippingOption.estimatedDays,
+        },
+      });
     } else if (cartState === 1) {
       setShippingOptionValid(true);
       transaction(shippingOption);
@@ -275,7 +282,6 @@ export default function Content() {
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ formData }),
         });
-
       } else {
         const formData = {
           addressTo: addressTo.email,

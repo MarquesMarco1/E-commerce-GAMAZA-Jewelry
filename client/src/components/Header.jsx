@@ -234,7 +234,7 @@ export default function Header() {
                 {menu.name === t("header.search") && showSearchBar && (
                   <Search />
                 )}
-                {menu.name === t("header.languages") && showLanguageSelect && (
+                {/* {menu.name === t("header.languages") && showLanguageSelect && (
                   <div className="absolute left-0 mt-4 w-16 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
                     {menu.languageOptions.map((lng) => (
                       <button
@@ -246,7 +246,7 @@ export default function Header() {
                       </button>
                     ))}
                   </div>
-                )}
+                )} */}
                 {menu.name === t("header.cart") && showCartPopup && (
                   <CartPopup show={showCartPopup} cartItems={cartItems} />
                 )}
