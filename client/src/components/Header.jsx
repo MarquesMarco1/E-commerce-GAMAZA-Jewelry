@@ -11,7 +11,7 @@ import {
   searchOutline,
 } from "ionicons/icons";
 import lotus from "../assets/lotus.svg";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import CartPopup from "./utils/CartPopup";
@@ -67,10 +67,6 @@ export default function Header() {
     setCartItemCount(nbr);
   }, [cartItems]);
 
-  // const toggleDarkMode = () => {
-  //   setDarkMode(!darkMode);
-  // };
-
   const setLanguage = (lng) => {
     changeLanguage(lng);
     i18n.changeLanguage(lng.toLowerCase());
@@ -80,6 +76,7 @@ export default function Header() {
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
   };
+
   const handleCartClick = () => {
     if (email) {
       navigate("/cart");
@@ -93,48 +90,25 @@ export default function Header() {
       name: t("header.home"),
       icon: homeOutline,
       path: "/",
-      // dis: "translate-x-0",
     },
     {
       name: t("header.profile"),
       icon: personOutline,
       path: "/profile",
-      // dis: "translate-x-16",
     },
     isAdmin && {
       name: t("header.admin"),
       icon: personCircleOutline,
       path: "/admin",
-      // dis: "translate-x-32",
     },
     {
       name: t("header.searchBar"),
       icon: searchOutline,
       action: toggleSearchBar,
-      // path: "/profile",
-      // dis: "translate-x-16",
     },
-    // {
-    //   name: darkMode ? t("header.lightmode") : t("header.darkmode"),
-    //   icon: darkMode ? sunnyOutline : moonOutline,
-    //   dis: "translate-x-48",
-    //   action: toggleDarkMode,
-    //   hideOnMobile: true,
-    // },
-    // {
-    //   name: t("header.languages"),
-    //   icon: globeOutline,
-    //   dis: "translate-x-64",
-    //   action: () => setShowLanguageSelect(!showLanguageSelect),
-    //   showLanguageSelect,
-    //   languageOptions: ["en", "fr"],
-    //   hideOnMobile: true,
-    // },
     {
       name: t("header.cart"),
       icon: cartOutline,
-      path: "/cart",
-      // dis: "translate-x-48",
       action: handleCartClick,
       hasBadge: true,
     },
@@ -161,14 +135,6 @@ export default function Header() {
     }
   };
 
-  // const handleLogoClick = () => {
-  //   setPreviousActive(active);
-  //   setActive(0);
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 300);
-  // };
-
   const AnimationNav = (index) => {
     const direction = index > previousActive ? "translate-x" : "-translate-x";
     switch (index) {
@@ -190,10 +156,7 @@ export default function Header() {
   return (
     <>
       <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none mb-6">
-        <div
-          // onClick={handleLogoClick}
-          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-6"
-        >
+        <div className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-6">
           <img
             src={lotus}
             className="w-20 h-20"
@@ -203,7 +166,6 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        {/* NavBar  */}
         <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
@@ -246,7 +208,6 @@ export default function Header() {
                       "mt-[-2.5rem] text-gold font-primary font-extrabold"
                     }`}
                   >
-                    {/* Logic Cart  */}
                     {menu.hasBadge ? (
                       <>
                         <IonIcon icon={cartOutline} />
@@ -268,9 +229,7 @@ export default function Header() {
                   </span>
                 </button>
                 {menu.name === t("header.search") && showSearchBar && (
-                  <>
-                    <Search />
-                  </>
+                  <Search />
                 )}
                 {menu.name === t("header.languages") && showLanguageSelect && (
                   <div className="absolute left-0 mt-4 w-16 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
