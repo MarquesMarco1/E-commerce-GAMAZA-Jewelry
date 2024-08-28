@@ -224,6 +224,8 @@
     "productPrice": "Prix",
     "productQuantity": "Quantité",
     "productDelete": "Supprimer",
-    "productSave": "Mettre de coté"
+    "productSave": "Mettre de coté",
+    "isPromoCode": "Code Promo",
+    "addPromo": "Ajouter"
   }
 }
