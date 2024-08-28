@@ -50,7 +50,7 @@ export default function Novelties() {
                         : elem.descriptionEn}
                     </p>
                     <p className="font-bold font-primary text-black">
-                      <span className="line-through">${elem.price}</span>{" "}
+                      <span>${elem.price}</span>{" "}
                     </p>
                   </div>
                 </Link>
