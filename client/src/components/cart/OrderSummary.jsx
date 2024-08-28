@@ -55,7 +55,7 @@ export default function OrderSummary({
           {Object.keys(addressTo).length === 0 ? (
             <button
               onClick={onOpenAddressPopup}
-              className="p-2 md:px-4 bg-light-purple border font-extrabold text-xs border-gold text-black rounded-md hover:bg-dark-purple transition duration-300 dark:text-gold dark:bg-dark-purple dark:hover:bg-light-purple"
+              className="p-2 md:px-4 bg-light-purple border font-extrabold text-xs border-gold text-black rounded-md hover:bg-dark-purple transition duration-300 dark:text-gold dark:hover:bg-dark-mode-purple dark:bg-dark-mode-light-purple"
             >
               No address found
             </button>

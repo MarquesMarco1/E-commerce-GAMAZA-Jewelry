@@ -16,8 +16,8 @@ const Lang = () => {
   };
 
   return (
-    <div className="flex items-center justify-center rounded-md">
-      <div className="space-y-2 flex hover:bg-light-purple hover:bg-opacity-50 rounded">
+    <div className="flex items-center justify-end rounded-md">
+      <div className="space-y-4 py-2 px-4 flex items-center dark:hover:bg-dark-purple hover:bg-dark-mode-light-purple hover:bg-opacity-50 rounded">
         {/* <img
           src={languages}
           className="w-8 h-8 md:w-12 md:h-12 hover:scale-110 transition duration-300"

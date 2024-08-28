@@ -178,7 +178,7 @@ export default function Search() {
           showSearchBar ? "opacity-100 max-h-full" : "opacity-0 max-h-0"
         } flex flex-col md:flex-row items-center justify-center gap-2 mb-5 transition-all duration-500 ease-in-out overflow-hidden`}
       >
-        <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
+        <div className="flex p-3 w-full md:w-auto bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple rounded-md">
           <input
             type="text"
             className="w-full md:w-72 p-2 border border-gold rounded-md font-primary bg-white dark:bg-dark-mode-light-purple dark:placeholder-gold"

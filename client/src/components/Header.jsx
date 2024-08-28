@@ -11,7 +11,7 @@ import {
   searchOutline,
 } from "ionicons/icons";
 import lotus from "../assets/lotus.svg";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import CartPopup from "./utils/CartPopup";
@@ -21,7 +21,6 @@ import AuthPopup from "./utils/AuthPopup";
 import { LanguageContext } from "../LanguageContext";
 import Switch from "./utils/Switch";
 import Lang from "./utils/SwitchLangue";
-import Search from "./Search";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,9 +28,7 @@ export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [active, setActive] = useState(0);
-  // const [previousActive, setPreviousActive] = useState();
-  // const [darkMode, setDarkMode] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false);
+  // const [previousActive, setPreviousActive] = useState(0);
   const { t, i18n } = useTranslation();
   // const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showAuthPopup, setShowAuthPopup] = useState(false);
@@ -55,33 +52,27 @@ export default function Header() {
       name: t("header.home"),
       icon: homeOutline,
       path: "/",
-      dis: "translate-x-0",
+      // dis: "translate-x-0",
     },
     {
       name: t("header.profile"),
       icon: personOutline,
       path: "/profile",
-      dis: "translate-x-16",
+      // dis: "translate-x-16",
     },
     isAdmin && {
       name: t("header.admin"),
       icon: personCircleOutline,
       path: "/admin",
-      dis: "translate-x-32",
+      // dis: "translate-x-32",
     },
-    // {
-    //   name: t("header.searchBar"),
-    //   icon: searchOutline,
-    //   action: () => setShowSearchBar(!showSearchBar),
-    //   // path: "/profile",
-    //   // dis: "translate-x-16",
-    // },
     {
       name: t("header.cart"),
       icon: cartOutline,
       path: "/cart",
-      dis: "translate-x-48",
+      // dis: "translate-x-48",
       action: handleCartClick,
+      hasBadge: true,
     },
   ].filter(Boolean);
 
@@ -116,16 +107,16 @@ export default function Header() {
   //   setShowLanguageSelect(false);
   // };
 
-  // useEffect(() => {
-  //   const currentPath = location.pathname;
-  //   const activeMenuIndex = Menus.findIndex(
-  //     (menu) => menu.path === currentPath
-  //   );
-  //   if (activeMenuIndex !== -1) {
-  //     // setPreviousActive(active);
-  //     setActive(activeMenuIndex);
-  //   }
-  // }, [location.pathname, Menus]);
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeMenuIndex = Menus.findIndex(
+      (menu) => menu.path === currentPath
+    );
+    if (activeMenuIndex !== -1) {
+      // setPreviousActive(active);
+      setActive(activeMenuIndex);
+    }
+  }, [location.pathname, Menus, active]);
 
   const handleMenuClick = (i, path, action) => {
     // setPreviousActive(active);
@@ -133,76 +124,71 @@ export default function Header() {
     if (action) {
       action();
     }
-    if (path) {
+    if (
+      path &&
+      i !== Menus.findIndex((menu) => menu.name === t("header.cart"))
+    ) {
       navigate(path);
     }
   };
-  // const toggleSearchBar = () => {
-  //   setShowSearchBar(!showSearchBar);
-  // };
 
-  // const handleLogoClick = () => {
-  //   setPreviousActive(active);
-  //   setActive(0);
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 300);
-  // };
+  const handleLogoClick = () => {
+    // setPreviousActive(active);
+    setActive(0);
+    setTimeout(() => {
+      navigate("/");
+    }, 300);
+  };
 
-  // const AnimationNav = (index) => {
-  //   const direction = index > active ? "translate-x" : "-translate-x";
-  //   switch (index) {
-  //     case 0:
-  //       return `${direction}-0`;
-  //     case 1:
-  //       return `${direction}-16`;
-  //     case 2:
-  //       return `${direction}-32`;
-  //     case 3:
-  //       return `${direction}-48`;
-  //     // case 4:
-  //     // return `${direction}-64`;
-  //     default:
-  //       return `${direction}-0`;
-  //   }
-  // };
+  const AnimationNav = (index) => {
+    console.log(index);
+    // const direction = index > previousActive ? "translate-x" : "-translate-x";
+    switch (index) {
+      case 0:
+        return `translate-x-0`;
+      case 1:
+        return `translate-x-16`;
+      case 2:
+        return `translate-x-32`;
+      case 3:
+        return `translate-x-48`;
+      // case 4:
+      // return `${direction}-64`;
+      default:
+        return `translate-x-0`;
+    }
+  };
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md mb-6">
         <div
-          // onClick={handleLogoClick}
-          className="flex flex-col justify-left md:flex-row md:justify-left md:px-10 mb-2"
+          onClick={handleLogoClick}
+          className="flex flex-row justify-start items-center md:px-10 mb-2"
         >
           <img
             src={lotus}
             className="w-20 h-20"
             alt="Logo de G.A.M.A.Z.A. Co"
           />
-          <h1 className="text-gold text-left font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
+          <h1 className="text-gold text-left font-secondary font-bold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
             G.A.M.A.Z.A. Co
           </h1>
-          <div className="flex justify-end">
-            <Switch />
-            {language && <Lang />}
-            {/* <Lang /> */}
-            {/* <Search /> */}
-          </div>
         </div>
+
         {/* NavBar  */}
         <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
           <ul className="flex relative items-center">
-            {Menus[active] && (
-              <span
-                className={`bg-dark-purple dark:bg-dark-mode-light-purple
+            <span
+              className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
                   border-4 border-light-purple dark:border-dark-mode-purple
-                  h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full ${Menus[active].dis}
+                  h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full
+                  ${AnimationNav(active)}
                 `}
-              >
-                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1 dark:shadow-myShadow3"></span>
-                <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2 dark:shadow-myShadow4"></span>
-              </span>
-            )}
+            >
+              <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1 dark:shadow-myShadow3"></span>
+              <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2 dark:shadow-myShadow4"></span>
+            </span>
 
             {Menus.map((menu, i) => (
               <li
@@ -228,7 +214,7 @@ export default function Header() {
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
                       i === active &&
-                      "mt-[-1.5rem] text-gold dark:text-dark-purple"
+                      "mt-[-1.2rem] text-gold dark:text-light-purple"
                     }`}
                   >
                     {/* Logic Cart  */}
@@ -245,7 +231,7 @@ export default function Header() {
                   <span
                     className={`text-gold dark:text-dark-purple font-primary font-extrabold items-center justify-center ${
                       active === i
-                        ? "translate-y-4 duration-700 opacity-100"
+                        ? "translate-y-4 mt-4 duration-700 opacity-100"
                         : "opacity-0 translate-y-10"
                     }`}
                   >
@@ -274,6 +260,12 @@ export default function Header() {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="flex flex-col justify-end -mt-[7.4rem]">
+          <Switch />
+          {language && <Lang />}
+          {/* <Lang /> */}
+          {/* <Search /> */}
         </div>
       </header>
       {showAuthPopup && !email && (
