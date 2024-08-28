@@ -1,6 +1,7 @@
 import React from "react";
 import Delete from "../../assets/delete.svg";
 import Save4later from "../../assets/save4later.svg";
+import { useTranslation } from "react-i18next";
 
 export default function ProductItem({
   item,
@@ -8,6 +9,7 @@ export default function ProductItem({
   onSaveForLater,
   onQtyChange,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col m-8">
       <div className="flex">
@@ -21,18 +23,18 @@ export default function ProductItem({
             {item.product.name}
           </h2>
           <span className="font-primary flex text-2xl p-2 font-bold text-gold">
-            Size:&nbsp;<h2>{item.size}</h2>
+            {t("cartPage.productSize")}:&nbsp;<h2>{item.size}</h2>
           </span>
           <span className="font-primary flex text-2xl p-2 font-bold text-gold">
-            Material:&nbsp;<h2>{item.product.material.name}</h2>
+            {t("cartPage.productMaterial")}:&nbsp;<h2>{item.product.material.name}</h2>
           </span>
           {item.product.stone && (
             <span className="font-primary flex text-2xl p-2 font-bold text-gold">
-              Stone:&nbsp;<h2>{item.product.stone.name}</h2>
+              {t("cartPage.productStone")}:&nbsp;<h2>{item.product.stone.name}</h2>
             </span>
           )}
           <span className="font-primary flex text-2xl p-2 font-bold text-gold">
-            Price:&nbsp;
+            {t("cartPage.productPrice")}:&nbsp;
             {item.product.promotion.id !== 1 ? (
               <>
                 <h2 className="line-through text-gold">
@@ -56,7 +58,7 @@ export default function ProductItem({
             )}
           </span>
           <span className="flex text-2xl p-2 font-primary font-bold text-gold ">
-            Quantity:&nbsp;
+          {t("cartPage.productQuantity")}:&nbsp;
             <input
               className="bg-white border border-gold text-gold dark:bg-dark-mode-purple dark:text-gold rounded-md"
               type="number"
@@ -81,7 +83,7 @@ export default function ProductItem({
               onClick={() => onDelete(item)}
             >
               <img className="mr-4" src={Delete} alt="" />
-              Delete
+              {t("cartPage.productDelete")}
             </button>
           </div>
           {localStorage.getItem("user") && (
@@ -91,7 +93,7 @@ export default function ProductItem({
                 onClick={() => onSaveForLater(item)}
               >
                 <img className="mr-4" src={Save4later} alt="" />
-                Save for later
+                {t("cartPage.productSave")}
               </button>
             </div>
           )}

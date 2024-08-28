@@ -139,6 +139,13 @@ export default function Header() {
       navigate("/");
     }, 300);
   };
+  // const handleLogoClick = () => {
+  //   setPreviousActive(active);
+  //   setActive(0);
+  //   setTimeout(() => {
+  //     navigate("/");
+  //   }, 300);
+  // };
 
   const AnimationNav = (index) => {
     console.log(index);
@@ -217,7 +224,6 @@ export default function Header() {
                       "mt-[-1.2rem] text-gold dark:text-light-purple"
                     }`}
                   >
-                    {/* Logic Cart  */}
                     {menu.hasBadge ? (
                       <>
                         <IonIcon icon={cartOutline} />

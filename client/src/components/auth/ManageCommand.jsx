@@ -52,39 +52,21 @@ export default function ManageCommand() {
   }, []);
 
   return (
-    <div>
-      {command &&
+    <div className="overflow-auto h-80">
+      {command ?
         command.map((elem) => (
           <ul className=" bg-white dark:bg-dark-mode-light-purple text-gold border m-2.5 rounded-2xl p-2.5">
-            <li>
+            <li key={elem.id}>
               <h3>
                 {t("commandManage.order")} : {elem.number}
               </h3>
             </li>
             <li>Status : {elem.status}</li>
-            {/* <li>{t("commandManage.adress")}</li> */}
-            {/* <li>{t("commandManage.total")}</li> */}
-            <li className=" text-center	">
-              <button className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2">
-                {t("commandManage.button")}
-              </button>
-            </li>
           </ul>
-        ))}
+        )) :
+        <p>test</p>
+      }
 
-      <ul className=" bg-white dark:bg-dark-mode-light-purple text-gold border m-2.5 rounded-2xl p-2.5">
-        <li>
-          <h3>{t("commandManage.order")}</h3>
-        </li>
-        <li>{t("commandManage.articles")}</li>
-        <li>{t("commandManage.adress")}</li>
-        <li>{t("commandManage.total")}</li>
-        <li className=" text-center	">
-          <button className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2">
-            {t("commandManage.buttonShip")}
-          </button>
-        </li>
-      </ul>
     </div>
   );
 }

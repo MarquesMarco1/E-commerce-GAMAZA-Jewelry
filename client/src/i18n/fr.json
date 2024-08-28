@@ -198,5 +198,34 @@
   },
   "novelties": {
     "new": "Nouveautés"
+  },
+  "addressPopup": {
+    "addressOption": "Sélectionner une adresse",
+    "addressChoice": "Choisir cette adresse",
+    "addressName": "Nom",
+    "addressEmail": "Mail",
+    "addressPhone": "Téléphone",
+    "addressCompany": "Société",
+    "addressCountry": "Pays",
+    "addressZIP": "Code Postal",
+    "addressState": "Province",
+    "addressCity": "Ville",
+    "addressStreet": "Nom et numéro de voie"
+  },
+  "cartPage": {
+    "myCart": "Mon panier",
+    "shippingMethod": "Mode de livraison",
+    "estimatedTime": "Délai de livraison estimé",
+    "days": "jours",
+    "isGift": "C'est un cadeau ?",
+    "productSize": "Taille",
+    "productMaterial": "Matériau",
+    "productStone": "Pierre",
+    "productPrice": "Prix",
+    "productQuantity": "Quantité",
+    "productDelete": "Supprimer",
+    "productSave": "Mettre de coté",
+    "isPromoCode": "Code Promo",
+    "addPromo": "Ajouter"
   }
 }

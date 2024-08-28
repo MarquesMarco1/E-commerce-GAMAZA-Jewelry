@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function AddressPopup({
   displayAdressPopup,
@@ -17,6 +18,7 @@ export default function AddressPopup({
   const [country, setCountry] = useState(initialData.country || "");
   const [phone, setPhone] = useState(initialData.phone || "");
   const [email, setEmail] = useState(initialData.email || "");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const storedAddresses =
