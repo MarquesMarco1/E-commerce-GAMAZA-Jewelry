@@ -18,14 +18,14 @@ import { lastDayOfDecade } from "date-fns";
 const SpecProduct = () => {
   const { id } = useParams(); // Récupération de l'ID du produit à partir des paramètres de l'URL
   const { t } = useTranslation(); // Utilisation du hook de traduction
-  const [product, setProduct] = useState(null); // État pour stocker les informations du produit
-  const [error, setError] = useState(null); // État pour stocker les erreurs
-  const [selectedImage, setSelectedImage] = useState(""); // État pour stocker l'image sélectionnée
-  const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture du modal
-  const [isZoomed, setIsZoomed] = useState(false); // État pour gérer le zoom de l'image
-  const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture de l'alerte de stock
-  const [productSelect, setproductSelect] = useState(null); // État pour stocker le produit sélectionné
-  const [allModele, setAllModele] = useState([]); // État pour stocker tous les modèles du produit
+  const [product, setProduct] = useState(null); // Stocker les informations du produit
+  const [error, setError] = useState(null); // Stocker les erreurs
+  const [selectedImage, setSelectedImage] = useState(""); // Stocker l'image sélectionnée
+  const [isModalOpen, setIsModalOpen] = useState(false); // Gérer l'ouverture du modal
+  const [isZoomed, setIsZoomed] = useState(false); // Gérer le zoom de l'image
+  const [isOpen, setIsOpen] = useState(false); // Gérer l'ouverture de l'alerte de stock
+  const [productSelect, setproductSelect] = useState(null); // Stocker le produit sélectionné
+  const [allModele, setAllModele] = useState([]); // Stocker tous les modèles du produit
 
   const { language } = useContext(LanguageContext); // Utilisation du contexte de langue
 
@@ -117,7 +117,6 @@ const SpecProduct = () => {
     setIsZoomed(!isZoomed);
   };
 
-  // Affichage d'une erreur s'il y en a une
   if (error) {
     return (
       <div className="text-center py-4 text-red-500">
