@@ -22,7 +22,7 @@ export default function Cart() {
   return (
     <>
       <Header />
-      <div className="bg-grey bg-opacity-50 dark:bg-dark-mode-light-purple">
+      <div className="p-4 -mb-10 bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple rounded-xl">
         {/* <div className="bg-light-purple dark:bg-dark-mode-purple"> */}
         {nbrArticle >= 0 && nbrArticle !== 1 && (
           <h1 className="font-primary text-3xl text-gold mr-4">
@@ -34,7 +34,7 @@ export default function Cart() {
             {`My Cart (` + nbrArticle + ` article)`}
           </h1>
         )}
-        <div className="border border-grey w-2/4 mt-4" />
+        <div className="border border-grey w-2/4" />
         {/* </div> */}
         <div>
           <Content />

@@ -102,26 +102,26 @@ export default function Profile() {
 
   return (
     <>
-      <div className="dark:bg-dark-mode-light-purple bg-grey">
+      <div className="dark:bg-dark-mode-light-purple bg-light-purple bg-opacity-20">
         <Header></Header>
         <div className="mr-24	ml-24	flex justify-between font-secondary">
-          <div className="w-3/5	 mr-8">
-            <h1 className="mt-16 text-3xl	text-gold mb-2">
+          <div className="w-3/5	mr-8">
+            <h1 className="mt-16 text-3xl text-gold mb-2">
               {t("profilPage.profil")}
             </h1>
-            <div className="border border-gray-400	w-4/4	"></div>
+            <div className="border border-gold w-4/4	"></div>
             <br></br>
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-                className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
+                className="text-gold font-primary bg-light-purple hover:bg-dark-purple focus:ring-4 focus:outline-none focus:ring-gold font-bold rounded-lg text-lg w-1/2 px-5 py-2.5 text-center dark:bg-light-purple dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
             </div>
             <h1 className="mt-16 text-3xl	text-gold mb-2">My wishlist</h1>
-            <div className="border border-gray-400	w-4/4	"></div>
+            <div className="border border-gold w-4/4	"></div>
             <br></br>
             {wishlists.length > 0 &&
               wishlists.map((elem, index) => (
@@ -129,7 +129,7 @@ export default function Profile() {
                   <div className="flex flex-col m-8">
                     <div className="flex">
                       <img
-                        className="w-1/3 h-1/3 border border-grey"
+                        className="w-1/3 h-1/3 border border-gold"
                         src={`${elem.product.images[0]}`}
                         alt={elem.product.name}
                       />
@@ -207,7 +207,7 @@ export default function Profile() {
             <h1 className="mt-16 text-3xl	text-gold mb-2">
               {t("profilPage.command")}
             </h1>
-            <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
+            <div className="border border-gold w-4/4"></div>
             <br></br>
             <ManageCommand />
           </div>

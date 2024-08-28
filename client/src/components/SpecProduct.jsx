@@ -168,7 +168,7 @@ const SpecProduct = () => {
       <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
         <Header />
         <nav className="bg-gray-200 py-2 px-6">
-          <ul className="flex space-x-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
+          <ul className="flex space-x-4 p-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
             <li>
               <Link to={`/`}>{t("specProduct.homepage")}</Link>
             </li>
@@ -192,9 +192,9 @@ const SpecProduct = () => {
           {language === "FR" ? product.name : product.nameEn}
         </h1>
         <main className="py-6 px-4 max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
-          <div className="flex flex-col items-center">
-            <div className="flex flex-col space-y-4 overflow-auto max-h-[600px] rounded-md">
+          <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col space-y-4 overflow-auto max-h-[600px] rounded-md">
                 {product.images &&
                   product.images.map((image, index) => (
                     <img
@@ -214,13 +214,13 @@ const SpecProduct = () => {
             <div className="flex-1">
               <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
                 {selectedImage && (
-                      <img
-                        className="object-contain w-full h-full rounded-md"
-                        src={selectedImage}
-                        alt={product.name}
-                        onClick={openModal}
-                      />
-                  )}
+                  <img
+                    className="object-contain w-full h-full rounded-md"
+                    src={selectedImage}
+                    alt={product.name}
+                    onClick={openModal}
+                  />
+                )}
               </div>
             </div>
             <div className="lg:w-1/3 w-full">
@@ -232,9 +232,12 @@ const SpecProduct = () => {
               <p className="text-2xl mb-4">
                 {product.promotion.id !== 1 ? (
                   <>
-                <label htmlFor="price" className="block text-lg font-primary text-gold font-bold">
-                  {t("specProduct.price")}
-                </label>
+                    <label
+                      htmlFor="price"
+                      className="block text-lg font-primary text-gold font-bold"
+                    >
+                      {t("specProduct.price")}
+                    </label>
                     <span className="text-gold line-through font-primary font-semibold">
                       ${product.price}
                     </span>{" "}
@@ -245,12 +248,17 @@ const SpecProduct = () => {
                     </span>
                   </>
                 ) : (
-                  <span className="font-primary text-gold font-bold">${product.price}</span>
+                  <span className="font-primary text-gold font-bold">
+                    ${product.price}
+                  </span>
                 )}
               </p>
               <div className="mb-4 text-gold"></div>
               <div className="mb-4 text-gold">
-                <label htmlFor="color" className="block text-lg font-primary text-gold font-bold">
+                <label
+                  htmlFor="color"
+                  className="block text-lg font-primary text-gold font-bold"
+                >
                   {t("specProduct.material")}
                 </label>
                 {allModele.length > 0 && <ModeleProduct data={allModele} />}

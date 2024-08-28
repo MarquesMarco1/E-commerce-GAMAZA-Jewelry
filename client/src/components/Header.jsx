@@ -169,19 +169,25 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
         <div
           // onClick={handleLogoClick}
-          className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-2"
+          className="flex flex-col justify-left md:flex-row md:justify-left md:px-10 mb-2"
         >
           <img
             src={lotus}
             className="w-20 h-20"
             alt="Logo de G.A.M.A.Z.A. Co"
           />
-          <h1 className="text-gold text-center font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
+          <h1 className="text-gold text-left font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
             G.A.M.A.Z.A. Co
           </h1>
+          <div className="flex justify-end">
+            <Switch />
+            {language && <Lang />}
+            {/* <Lang /> */}
+            {/* <Search /> */}
+          </div>
         </div>
         {/* NavBar  */}
         <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
@@ -222,7 +228,7 @@ export default function Header() {
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
                       i === active &&
-                      "mt-[-1.5rem] text-gold font-primary font-extrabold"
+                      "mt-[-1.5rem] text-gold dark:text-dark-purple"
                     }`}
                   >
                     {/* Logic Cart  */}
@@ -237,7 +243,7 @@ export default function Header() {
                   </span>
 
                   <span
-                    className={`text-gold font-primary font-extrabold items-center justify-center ${
+                    className={`text-gold dark:text-dark-purple font-primary font-extrabold items-center justify-center ${
                       active === i
                         ? "translate-y-4 duration-700 opacity-100"
                         : "opacity-0 translate-y-10"
@@ -268,12 +274,6 @@ export default function Header() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="flex justify-center items-center">
-          <Switch />
-          {language && <Lang />}
-          {/* <Lang /> */}
-          {/* <Search /> */}
         </div>
       </header>
       {showAuthPopup && !email && (

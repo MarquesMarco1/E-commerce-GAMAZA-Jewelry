@@ -344,7 +344,7 @@ export default function Content() {
           />
         ))}
       </div>
-      <div className="w-2/5  mr-8 flex flex-col justify-start">
+      <div className="w-2/5 mr-8 flex flex-col justify-start">
         <Promo onApply={handlePromoApply} />
         <OrderSummary
           subTotal={subTotal}
