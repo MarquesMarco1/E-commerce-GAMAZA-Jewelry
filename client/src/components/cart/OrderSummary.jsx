@@ -36,7 +36,7 @@ export default function OrderSummary({
   }, []);
 
   return (
-    <div className="bg-grey m-4 rounded-2xl p-4">
+    <div className="bg-grey bg-opacity-50 m-4 rounded-2xl p-4">
       <h1 className="font-primary text-3xl text-center m-2">Order</h1>
       <div className="flex justify-between my-4">
         <h3 className="font-primary text-xl text-center m-2">Subtotal&nbsp;</h3>
@@ -55,7 +55,12 @@ export default function OrderSummary({
         <h3 className="font-primary text-xl text-center m-2">Address&nbsp;</h3>
         <h3 className="font-primary text-xl text-center m-2">
           {Object.keys(addressTo).length === 0 ? (
-            <button onClick={onOpenAddressPopup}>No address found</button>
+            <button
+              onClick={onOpenAddressPopup}
+              className="p-2 md:px-4 bg-light-purple border font-extrabold text-xs border-gold text-black rounded-md hover:bg-dark-purple transition duration-300 dark:text-gold dark:bg-dark-purple dark:hover:bg-light-purple"
+            >
+              No address found
+            </button>
           ) : (
             `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
           )}

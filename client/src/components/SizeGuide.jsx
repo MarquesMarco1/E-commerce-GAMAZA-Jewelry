@@ -198,8 +198,8 @@ export default function SizeGuide(data) {
         </div>
       )}
       {isSizeGuideOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-light-purple dark:bg-dark-mode-purple p-4 max-w-lg max-h-full overflow-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gold bg-opacity-50">
+          <div className="relative bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple p-4 max-w-lg max-h-full overflow-auto">
             <button
               onClick={closeSizeGuide}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -224,7 +224,7 @@ export default function SizeGuide(data) {
                         ))}
                       </ul>
                       <ul>
-                        <li className="border px-4 py-2 font-primary text-gold">
+                        <li className="border px-4 py-2 font-primary text-gold rounded-md">
                           {t("sizeGuidePage.circonférence")}
                         </li>
                         {sizeGuide.map((elem) => (
@@ -248,7 +248,7 @@ export default function SizeGuide(data) {
                     <h2 className="text-2xl font-semibold mb-4 font-primary text-gold">
                       {t("sizeGuidePage.guideNecklaces")}
                     </h2>
-                    <div className="flex">
+                    <div className="flex justify-center">
                       <ul>
                         <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.taille")}
@@ -272,7 +272,7 @@ export default function SizeGuide(data) {
                     <h2 className="text-2xl font-semibold mb-4 font-primary text-gold">
                       {t("sizeGuidePage.guideBracelets")}
                     </h2>
-                    <div className="flex">
+                    <div className="flex justify-center">
                       <ul>
                         <li className="border px-4 py-2 font-primary text-gold">
                           {t("sizeGuidePage.taille")}

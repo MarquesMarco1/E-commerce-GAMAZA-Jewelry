@@ -29,11 +29,11 @@ export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [active, setActive] = useState(0);
-  const [previousActive, setPreviousActive] = useState(0);
-  const [darkMode, setDarkMode] = useState(false);
+  // const [previousActive, setPreviousActive] = useState();
+  // const [darkMode, setDarkMode] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const { t, i18n } = useTranslation();
-  const [showLanguageSelect, setShowLanguageSelect] = useState(false);
+  // const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showAuthPopup, setShowAuthPopup] = useState(false);
   const { state: cart } = useCart();
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -42,6 +42,7 @@ export default function Header() {
   const email = localStorage.getItem("user");
   const cartItems = cart;
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/isAdmin/${email}`);
@@ -77,6 +78,8 @@ export default function Header() {
     setShowSearchBar(!showSearchBar);
   };
 
+=======
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
   const handleCartClick = () => {
     if (email) {
       navigate("/cart");
@@ -90,16 +93,25 @@ export default function Header() {
       name: t("header.home"),
       icon: homeOutline,
       path: "/",
+<<<<<<< HEAD
+=======
+      dis: "translate-x-0",
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
     },
     {
       name: t("header.profile"),
       icon: personOutline,
       path: "/profile",
+<<<<<<< HEAD
+=======
+      dis: "translate-x-16",
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
     },
     isAdmin && {
       name: t("header.admin"),
       icon: personCircleOutline,
       path: "/admin",
+<<<<<<< HEAD
     },
     {
       name: t("header.searchBar"),
@@ -109,23 +121,70 @@ export default function Header() {
     {
       name: t("header.cart"),
       icon: cartOutline,
+=======
+      dis: "translate-x-32",
+    },
+    // {
+    //   name: t("header.searchBar"),
+    //   icon: searchOutline,
+    //   action: () => setShowSearchBar(!showSearchBar),
+    //   // path: "/profile",
+    //   // dis: "translate-x-16",
+    // },
+    {
+      name: t("header.cart"),
+      icon: cartOutline,
+      path: "/cart",
+      dis: "translate-x-48",
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
       action: handleCartClick,
-      hasBadge: true,
     },
   ].filter(Boolean);
 
   useEffect(() => {
-    const currentPath = location.pathname;
-    const activeMenuIndex = Menus.findIndex(
-      (menu) => menu.path === currentPath
-    );
-    if (activeMenuIndex !== -1) {
-      setActive(activeMenuIndex);
-    }
-  }, [location.pathname, Menus]);
+    const fetchData = async () => {
+      const response = await fetch(`${localhost}/api/isAdmin/${email}`);
+      if (response.status === 200) {
+        const data = await response.json();
+        setIsAdmin(data.isAdmin);
+      }
+    };
+    fetchData();
+  }, [email]);
+
+  // useEffect(() => {
+  //   if (darkMode) {
+  //     document.documentElement.classList.add("dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //   }
+  // }, [darkMode]);
+
+  useEffect(() => {
+    let nbr = 0;
+    cartItems.map((item) => (nbr += item.itemQty));
+    setCartItemCount(nbr);
+  }, [cartItems]);
+
+  // const setLanguage = (lng) => {
+  //   changeLanguage(lng);
+  //   i18n.changeLanguage(lng.toLowerCase());
+  //   setShowLanguageSelect(false);
+  // };
+
+  // useEffect(() => {
+  //   const currentPath = location.pathname;
+  //   const activeMenuIndex = Menus.findIndex(
+  //     (menu) => menu.path === currentPath
+  //   );
+  //   if (activeMenuIndex !== -1) {
+  //     // setPreviousActive(active);
+  //     setActive(activeMenuIndex);
+  //   }
+  // }, [location.pathname, Menus]);
 
   const handleMenuClick = (i, path, action) => {
-    setPreviousActive(active);
+    // setPreviousActive(active);
     setActive(i);
     if (action) {
       action();
@@ -134,7 +193,11 @@ export default function Header() {
       navigate(path);
     }
   };
+  // const toggleSearchBar = () => {
+  //   setShowSearchBar(!showSearchBar);
+  // };
 
+<<<<<<< HEAD
   const AnimationNav = (index) => {
     const direction = index > previousActive ? "translate-x" : "-translate-x";
     switch (index) {
@@ -157,24 +220,64 @@ export default function Header() {
     <>
       <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none mb-6">
         <div className="flex flex-col justify-center items-center md:flex-row md:justify-center md:px-10 mb-6">
+=======
+  // const handleLogoClick = () => {
+  //   setPreviousActive(active);
+  //   setActive(0);
+  //   setTimeout(() => {
+  //     navigate("/");
+  //   }, 300);
+  // };
+
+  // const AnimationNav = (index) => {
+  //   const direction = index > active ? "translate-x" : "-translate-x";
+  //   switch (index) {
+  //     case 0:
+  //       return `${direction}-0`;
+  //     case 1:
+  //       return `${direction}-16`;
+  //     case 2:
+  //       return `${direction}-32`;
+  //     case 3:
+  //       return `${direction}-48`;
+  //     // case 4:
+  //     // return `${direction}-64`;
+  //     default:
+  //       return `${direction}-0`;
+  //   }
+  // };
+
+  return (
+    <>
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
+        <div
+          // onClick={handleLogoClick}
+          className="flex flex-col justify-left md:flex-row md:justify-left md:px-10 mb-2"
+        >
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
           <img
             src={lotus}
             className="w-20 h-20"
             alt="Logo de G.A.M.A.Z.A. Co"
           />
-          <h1 className="text-gold text-center font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
+          <h1 className="text-gold text-left font-primary font-extrabold text-xl md:text-3xl lg:text-4xl xl:text-5xl ml-2">
             G.A.M.A.Z.A. Co
           </h1>
+          <div className="flex justify-end">
+            <Switch />
+            {language && <Lang />}
+            {/* <Lang /> */}
+            {/* <Search /> */}
+          </div>
         </div>
         <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
               <span
-                className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
-                  border-4 border-light-purple dark:border-dark-purple
-                  h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full ${AnimationNav(
-                    active
-                  )}`}
+                className={`bg-dark-purple dark:bg-dark-mode-light-purple
+                  border-4 border-light-purple dark:border-dark-mode-purple
+                  h-16 w-16 absolute -top-5 left-[-1.2rem] rounded-full ${Menus[active].dis}
+                `}
               >
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] rounded-tr-[11px] shadow-myShadow1 dark:shadow-myShadow3"></span>
                 <span className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] rounded-tl-[11px] shadow-myShadow2 dark:shadow-myShadow4"></span>
@@ -205,7 +308,7 @@ export default function Header() {
                   <span
                     className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
                       i === active &&
-                      "mt-[-2.5rem] text-gold font-primary font-extrabold"
+                      "mt-[-1.5rem] text-gold dark:text-dark-purple"
                     }`}
                   >
                     {menu.hasBadge ? (
@@ -219,7 +322,7 @@ export default function Header() {
                   </span>
 
                   <span
-                    className={`text-gold font-primary font-extrabold items-center justify-center ${
+                    className={`text-gold dark:text-dark-purple font-primary font-extrabold items-center justify-center ${
                       active === i
                         ? "translate-y-4 duration-700 opacity-100"
                         : "opacity-0 translate-y-10"
@@ -228,10 +331,17 @@ export default function Header() {
                     {menu.name}
                   </span>
                 </button>
+<<<<<<< HEAD
                 {menu.name === t("header.search") && showSearchBar && (
                   <Search />
                 )}
                 {menu.name === t("header.languages") && showLanguageSelect && (
+=======
+                {/* {menu.name === t("header.search") && showSearchBar && (
+                    <Search />
+                )} */}
+                {/* {menu.name === t("header.languages") && showLanguageSelect && (
+>>>>>>> 6e7c34c8ebb3fd4aef729ee7cfd50d846c8e8cee
                   <div className="absolute left-0 mt-4 w-16 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden z-50">
                     {menu.languageOptions.map((lng) => (
                       <button
@@ -243,18 +353,13 @@ export default function Header() {
                       </button>
                     ))}
                   </div>
-                )}
+                )} */}
                 {menu.name === t("header.cart") && showCartPopup && (
                   <CartPopup show={showCartPopup} cartItems={cartItems} />
                 )}
               </li>
             ))}
           </ul>
-        </div>
-        <div className="flex justify-center items-center">
-          <Switch />
-          <Lang />
-          <Search />
         </div>
       </header>
       {showAuthPopup && !email && (

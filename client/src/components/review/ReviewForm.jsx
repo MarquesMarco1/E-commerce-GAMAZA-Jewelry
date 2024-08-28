@@ -115,10 +115,10 @@ export default function ReviewForm(data) {
           ? selectedStar > 0 && (
               <>
                 <textarea
-                  className="border border-solid border-slate-500 w-96 p-4 rounded-xl mb-4 dark:bg-dark-mode-light-purple dark:text-gold dark:border-gold"
+                  className="border border-solid border-slate-500 w-96 p-4 rounded-xl mb-4 dark:bg-dark-mode-light-purple text-gold border-gold"
                   onChange={(e) => setReview(e.target.value)}
                 ></textarea>
-                <button className="dark:text-gold">
+                <button className="text-gold">
                   {t("reviewPage.button")}
                 </button>
               </>

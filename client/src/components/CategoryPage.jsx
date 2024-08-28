@@ -78,9 +78,9 @@ export default function CategoryPage() {
 
   return (
     <>
-      <div className="bg-white dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-purple">
         <Header />
-        <ul className="flex flex-wrap space-x-2 p-4 dark:text-gold">
+        <ul className="flex space-x-4 p-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
           <li>
             <Link to={`/`}>{t("categoryPage.homepage")}</Link>
           </li>

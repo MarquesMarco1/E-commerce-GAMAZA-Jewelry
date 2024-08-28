@@ -26,14 +26,14 @@ export default function Accueil() {
   }, [language]);
 
   return (
-    <div className="bg-grey dark:bg-dark-mode-purple shadow-md">
+    <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple shadow-md">
       <Header />
-      <div className="mt-20 flex flex-col items-center justify-center">
+      <div className="mt-8 flex flex-col items-center justify-center bg-white dark:bg-dark-mode-purple shadow-md hover:shadow-lg p-4 m-2 rounded-lg">
         <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
           {category &&
             category.map((elem) => (
               <Link to={`/category/${elem.id}`} key={elem.id}>
-                <li className="flex justify-center items-center font-primary text-gold text-xl md:text-2xl lg:text-3xl xl:text-4xl hover:text-light-purple transition duration-300">
+                <li className="flex justify-center items-center font-primary text-gold text-md font-bold md:text-xl lg:text-2xl xl:text-3xl hover:text-dark-purple rounded-lg transition duration-300">
                   {language === "FR" ? elem.name : elem.nameEn}
                 </li>
               </Link>
