@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function AddressPopup({
   displayAdressPopup,
@@ -17,6 +18,7 @@ export default function AddressPopup({
   const [country, setCountry] = useState(initialData.country || "");
   const [phone, setPhone] = useState(initialData.phone || "");
   const [email, setEmail] = useState(initialData.email || "");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const storedAddresses =
@@ -85,13 +87,13 @@ export default function AddressPopup({
       {savedAddresses.length > 0 && (
         <div className="m-4">
           <label>
-            Select an address:
+          {t("addressPopup.addressOption")}
             <select
               className="ml-4 bg-grey"
               onChange={(e) => setSelectedAddressIndex(e.target.value)}
               value={selectedAddressIndex || ""}
             >
-              <option value="">Choose Address</option>
+              <option value="">{t("addressPopup.addressChoice")}</option>
               {savedAddresses.map((address, index) => (
                 <option key={index} value={index}>
                   {`${address.name}, ${address.country}, ${address.zip}, ${address.state}, ${address.city}, ${address.street1}`}
@@ -102,7 +104,7 @@ export default function AddressPopup({
         </div>
       )}
       <label className="m-4">
-        Name:
+      {t("addressPopup.addressName")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -113,7 +115,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        Email:
+      {t("addressPopup.addressEmail")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -124,7 +126,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        Phone:
+      {t("addressPopup.addressPhone")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -133,7 +135,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        Company:
+      {t("addressPopup.addressCompany")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -142,7 +144,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        Country:
+      {t("addressPopup.addressCountry")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -153,7 +155,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        ZIP:
+      {t("addressPopup.addressZIP")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -164,7 +166,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        State:
+      {t("addressPopup.addressState")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -175,7 +177,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        City:
+      {t("addressPopup.addressCity")}
         <input
           className="ml-4 bg-grey"
           type="text"
@@ -186,7 +188,7 @@ export default function AddressPopup({
         />
       </label>
       <label className="m-4">
-        Street 1:
+      {t("addressPopup.addressStreet")}
         <input
           className="ml-4 bg-grey"
           type="text"

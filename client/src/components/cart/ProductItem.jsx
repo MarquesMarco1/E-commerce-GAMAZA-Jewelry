@@ -1,8 +1,10 @@
 import React from 'react';
 import Delete from '../../assets/delete.svg';
 import Save4later from '../../assets/save4later.svg';
+import { useTranslation } from "react-i18next";
 
 export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChange }) {
+    const { t } = useTranslation();
     return (
         <div className="flex flex-col m-8">
             <div className="flex">
@@ -16,18 +18,18 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                         {item.product.name}
                     </h2>
                     <span className="font-primary flex text-2xl text-gold p-2">
-                        Size:&nbsp;<h2>{item.size}</h2>
+                        {t("cartPage.productSize")}:&nbsp;<h2>{item.size}</h2>
                     </span>
                     <span className="font-primary flex text-2xl text-gold p-2">
-                        Material:&nbsp;<h2>{item.product.material.name}</h2>
+                        {t("cartPage.productMaterial")}:&nbsp;<h2>{item.product.material.name}</h2>
                     </span>
                     {item.product.stone && (
                         <span className="font-primary flex text-2xl text-gold p-2">
-                            Stone:&nbsp;<h2>{item.product.stone.name}</h2>
+                        {t("cartPage.productStone")}:&nbsp;<h2>{item.product.stone.name}</h2>
                         </span>
                     )}
                     <span className="font-primary flex text-2xl text-gold p-2">
-                        Price:&nbsp;
+                    {t("cartPage.productPrice")}:&nbsp;
                         {item.product.promotion.id !== 1 ? (
                             <>
                                 <h2 className="line-through text-gold font-primary">
@@ -51,7 +53,7 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                         )}
                     </span>
                     <span className="flex text-2xl p-2 font-primary text-gold">
-                        Quantity:&nbsp;
+                        {t("cartPage.productQuantity")}:&nbsp;
                         <input
                             className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple text-gold"
                             type="number"
@@ -73,14 +75,14 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                     <div>
                         <button className="flex font-primary" onClick={() => onDelete(item)}>
                             <img className="mr-4" src={Delete} alt="" />
-                            Delete
+                            {t("cartPage.productDelete")}
                         </button>
                     </div>
                     {localStorage.getItem('user') && (
                         <div>
                             <button className="flex font-primary" onClick={() => onSaveForLater(item)}>
                                 <img className="mr-4" src={Save4later} alt="" />
-                                Save for later
+                                {t("cartPage.productSave")}
                             </button>
                         </div>
                     )}

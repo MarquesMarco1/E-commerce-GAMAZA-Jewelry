@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import localhost from "../../config";
+import { useTranslation } from "react-i18next";
 
 export default function OrderSummary({
   subTotal,
@@ -18,6 +19,7 @@ export default function OrderSummary({
 }) {
   const [gift, setGift] = useState([]);
   const date = new Date().toISOString().split("T")[0];
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +63,7 @@ export default function OrderSummary({
       </div>
       <div className="flex justify-between">
         <h3 className="font-primary text-xl text-center m-2">
-          Shipping Method&nbsp;
+        {t("cartPage.shippingMethod")}&nbsp;
         </h3>
         {isWaiting && cartState === 1 && <Loading />}
         <div>
@@ -96,7 +98,7 @@ export default function OrderSummary({
                         <p>{(elem.amount * 0.91).toFixed()}€</p>
                       </div>
                       <div className="text-gray-600 font-bold">
-                        Estimated days: {elem.estimatedDays} days
+                      {t("cartPage.estimatedTime")}: {elem.estimatedDays} {t("cartPage.days")}
                       </div>
                     </div>
                   </li>
@@ -129,7 +131,7 @@ export default function OrderSummary({
                       <p>{(shippingOption.amount * 0.91).toFixed()}€</p>
                     </div>
                     <div className="text-gray-600 font-bold">
-                      Estimated days: {shippingOption.estimatedDays} days
+                    {t("cartPage.estimatedTime")}: {shippingOption.estimatedDays} {t("cartPage.days")}
                     </div>
                   </div>
                 </li>
@@ -145,7 +147,7 @@ export default function OrderSummary({
             <li className="flex justify-between	mb-2">
               <input type="radio" name="gift" />
               <p>
-                C'est un cadeau <br />
+              {t("cartPage.isGift")} <br />
                 <span className="text-gold">Offert</span>
               </p>
               <img src={elem.image} alt={elem.id} className="w-1/4 h-1/4" />
