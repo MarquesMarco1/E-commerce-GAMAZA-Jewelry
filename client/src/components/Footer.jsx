@@ -46,9 +46,9 @@ export default function Footer() {
   });
 
   return (
-    <footer className="flex flex-col md:flex-row items-center justify-between bg-purple bg-opacity-20 h-auto md:h-96 mt-10 w-full p-4 border-t border-gray-300">
-      <div className="flex-1 flex flex-col items-center md:items-start justify-center p-4 text-center md:text-left">
-        <h2 className="text-gold text-4xl font-primary mb-2">
+    <footer className="flex flex-col md:flex-row items-start justify-between bg-purple bg-opacity-20 h-auto mt-10 w-full p-8 border-t border-gray-300">
+      <div className="flex flex-col flex-1 p-4 text-left">
+        <h2 className="text-gold text-4xl font-primary mb-4">
           {t("footer.title")}
         </h2>
         <p className="text-gold mb-4 font-primary">
@@ -56,8 +56,8 @@ export default function Footer() {
         </p>
         <p className="text-gold mb-4 font-primary">
           Email : gamaza@gamaza.com
-          </p>
-        <div className="flex space-x-4">
+        </p>
+        <div className="flex space-x-4 mb-6">
           <a
             href="https://facebook.com"
             className="text-white hover:text-gray-400"
@@ -77,29 +77,75 @@ export default function Footer() {
             <FaInstagram size={24} color="#BF9553" />
           </a>
         </div>
+        <div className="w-full h-64 md:h-64">
+          <MapContainer
+            center={parisPosition}
+            zoom={6}
+            className="h-full w-full rounded-lg shadow-md"
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {stores.map((store, index) => (
+              <Marker key={index} position={store.position} icon={customIcon}>
+                <Popup>
+                  {store.name} <br /> {store.address}
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        </div>
       </div>
-      <div className="flex-1 h-64 md:h-full w-full p-4">
-        <MapContainer
-          center={parisPosition}
-          zoom={6}
-          className="h-full w-full rounded-lg shadow-md"
-          style={{
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {stores.map((store, index) => (
-            <Marker key={index} position={store.position} icon={customIcon}>
-              <Popup>
-                {store.name} <br /> {store.address}
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+
+      <div className="flex-1 flex flex-col md:flex-row justify-between md:pl-8">
+        <div className="flex flex-col mb-6 md:mb-0 p-4">
+          <h3 className="text-gold text-2xl font-primary mb-2">Service Client</h3>
+          <ul className="text-white">
+            <li><a href="#" className="hover:underline">Contactez-nous</a></li>
+            <li><a href="#" className="hover:underline">Retours</a></li>
+            <li><a href="#" className="hover:underline">Suivi de commande</a></li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col mb-6 md:mb-0 p-4">
+          <h3 className="text-gold text-2xl font-primary mb-2">Politiques Légales</h3>
+          <ul className="text-white">
+            <li><a href="#" className="hover:underline">Mentions Légales</a></li>
+            <li><a href="#" className="hover:underline">Politique de Confidentialité</a></li>
+            <li><a href="#" className="hover:underline">Protection des Données</a></li>
+            <li><a href="#" className="hover:underline">Conditions Générales de Vente</a></li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col mb-6 md:mb-0 p-4">
+          <h3 className="text-gold text-2xl font-primary mb-2">À Propos</h3>
+          <ul className="text-white">
+            <li><a href="#" className="hover:underline">Trouver une Boutique</a></li>
+            <li><a href="#" className="hover:underline">Notre Histoire</a></li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col mb-6 md:mb-0 p-4">
+          <h3 className="text-gold text-2xl font-primary mb-2">Modes de Paiement</h3>
+          <ul className="text-white">
+            <li><a href="#" className="hover:underline">Cartes de Crédit</a></li>
+            <li><a href="#" className="hover:underline">PayPal</a></li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col mb-6 md:mb-0 p-4">
+          <h3 className="text-gold text-2xl font-primary mb-2">Modes de Livraison</h3>
+          <ul className="text-white">
+            <li><a href="#" className="hover:underline">Livraison Standard</a></li>
+            <li><a href="#" className="hover:underline">Livraison Express</a></li>
+            <li><a href="#" className="hover:underline">Click & Collect</a></li>
+          </ul>
+        </div>
       </div>
     </footer>
   );
