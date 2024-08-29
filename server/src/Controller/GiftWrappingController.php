@@ -15,7 +15,7 @@ class GiftWrappingController extends AbstractController
         $explode_date = explode("-",$date);
         array_shift($explode_date);
         $date_final = implode("-",$explode_date);
-       $giftWrapping = $entityManager->getRepository(GiftWrapping::class)->findGift('12-23');
+        $giftWrapping = $entityManager->getRepository(GiftWrapping::class)->findGift($date_final);
         return $this->json(["giftWrapping"=>$giftWrapping], 200);
     }
 }
