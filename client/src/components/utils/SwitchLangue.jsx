@@ -15,8 +15,8 @@ const Lang = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="flex items-center justify-end rounded-md">
+      <div className="space-y-4 py-2 px-4 flex items-center dark:hover:dark-purple hover:bg-dark-mode-light-purple hover:bg-opacity-50 rounded">
         {language == "FR" && (
           <select
             value={language}

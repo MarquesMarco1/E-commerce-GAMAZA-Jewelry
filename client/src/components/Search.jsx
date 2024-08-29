@@ -155,12 +155,12 @@ export default function Search() {
       </div>
     );
   return (
-    <div className="p-5 bg-gray-100 rounded-lg shadow-md">
+    <div className="p-2 m-2 bg-light-purple dark:bg-dark-mode-light-purple rounded-lg shadow-md">
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
-        <div className="flex p-3 w-full md:w-auto  bg-white dark:bg-dark-mode-purple">
+        <div className="flex p-3 w-full md:w-auto  bg-light-purple bg-opqcity-20 dark:bg-dark-mode-purple rounded-md">
           <input
             type="text"
             className="w-full md:w-72 p-2 border border-gold rounded-md font-primary bg-white dark:bg-dark-mode-light-purple dark:placeholder-gold"
@@ -176,14 +176,14 @@ export default function Search() {
           />
           <button
             type="submit"
-            className="p-3 md:px-4 bg-light-purple border border-black text-black rounded-md hover:bg-gold transition duration-300 dark:bg-gold"
+            className="p-2 md:px-4 bg-gold border border-black text-white rounded-md hover:bg-light-purple transition duration-300 font-primary"
           >
             {t("search.button")}
           </button>
           {isSearching && (
             <div className="text-center flex font-primary py-4">
               <svg
-                className="animate-spin h-5 w-5 mr-3 text-dark-purple"
+                className="animate-spin h-5 w-5 mr-3 text-dark-purple dark:text-gold"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -216,7 +216,7 @@ export default function Search() {
         </div>
         <select
           value={categoryName}
-          className="w-full md:w-auto p-2 font-primary border border-gold rounded-md  dark:bg-dark-mode-light-purple dark:text-gold"
+          className="w-full md:w-auto p-4 font-primary border border-gold rounded-md dark:bg-dark-mode-light-purple dark:text-gold"
           onChange={(e) => setCategoryName(e.target.value)}
         >
           <option
@@ -247,7 +247,7 @@ export default function Search() {
           searchResults.map((result) => (
             <div
               key={result.id}
-              className="flex flex-col justify-between h-full bg-white border border-gold rounded-lg p-5 shadow-lg"
+              className="flex flex-col justify-between h-full bg-white dark:bg-dark-mode-purple border border-gold rounded-lg p-5 shadow-lg"
             >
               <img
                 src={result.images}

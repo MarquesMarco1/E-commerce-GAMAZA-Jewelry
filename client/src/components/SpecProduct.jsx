@@ -165,10 +165,10 @@ const SpecProduct = () => {
 
   return (
     <>
-      <div className="bg-white dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
         <Header />
         <nav className="bg-gray-200 py-2 px-6">
-          <ul className="flex space-x-4 text-gold">
+          <ul className="flex space-x-4 p-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
             <li>
               <Link to={`/`}>{t("specProduct.homepage")}</Link>
             </li>

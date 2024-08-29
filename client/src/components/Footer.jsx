@@ -46,7 +46,7 @@ export default function Footer() {
   });
 
   return (
-    <footer className="flex flex-col md:flex-row items-center justify-between bg-purple bg-opacity-20 h-auto md:h-96 mt-10 w-full p-4 border-t border-gray-300">
+    <footer className="flex flex-col md:flex-row items-center justify-between bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple h-auto md:h-96 mt-10 w-full p-4 border-t border-gray-300">
       <div className="flex-1 flex flex-col items-center md:items-start justify-center p-4 text-center md:text-left">
         <h2 className="text-gold text-4xl font-primary mb-2">
           {t("footer.title")}

@@ -53,7 +53,11 @@ export default function OrderSummary({
         <h3 className="font-primary text-xl text-center m-2">Address&nbsp;</h3>
         <h3 className="font-primary text-xl text-center m-2">
           {Object.keys(addressTo).length === 0 ? (
-            <button onClick={onOpenAddressPopup}>No address found</button>
+            <button className="p-2 md:px-4 font-primary bg-gold border font-bold text-xs border-black text-white rounded-md hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple" 
+            onClick={onOpenAddressPopup}
+            >
+              No address found
+              </button>
           ) : (
             `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
           )}

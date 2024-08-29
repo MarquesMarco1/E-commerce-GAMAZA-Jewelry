@@ -17,7 +17,8 @@ export default function Switch() {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex justify-end items-center">
+        <div className="space-y-4 flex py-2 px-4 dark:hover:bg-dark-purple hover:bg-dark-mode-purple hover:bg-opacity-50 rounded">
         <DarkModeSwitch
           checked={darkMode}
           onChange={toggleDarkMode}
@@ -27,6 +28,7 @@ export default function Switch() {
         <span className="text-sm text-gold font-primary font-extrabold ml-2 hover:text-light-purple transition duration-300">
           {darkMode ? t("header.darkmode") : t("header.lightmode")}
         </span>
+      </div>
       </div>
     </>
   );
