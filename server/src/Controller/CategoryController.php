@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route("/api/categorie/{lang}", name:"category")]
-    public function getCategory(EntityManagerInterface $entityManager, CategoryRepository $repository, string $lang){
+    public function getCategory(EntityManagerInterface $entityManager, string $lang){
         if($lang == "FR"){
             $categories = $entityManager->getRepository(Category::class)->findAllInFR();
             return $this->json(["allCategory"=>$categories], 200);

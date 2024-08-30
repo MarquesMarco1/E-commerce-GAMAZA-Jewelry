@@ -67,7 +67,7 @@ class CheckoutController extends AbstractController
                         ],
                     ],
                 ],
-            ],
+            ],  
             'payment_method_types' => ['card', 'paypal'],
             'return_url' => $YOUR_DOMAIN . '/return?session_id={CHECKOUT_SESSION_ID}',
         ]);
