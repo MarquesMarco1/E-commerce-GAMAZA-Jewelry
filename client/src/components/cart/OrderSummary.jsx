@@ -34,7 +34,7 @@ export default function OrderSummary({
   }, []);
 
   return (
-    <div className="bg-grey m-4 rounded-2xl p-4">
+    <div className="bg-grey opacity-50 m-4 rounded-2xl p-4">
       <h1 className="font-primary text-3xl text-center m-2">Order</h1>
       <div className="flex justify-between my-4">
         <h3 className="font-primary text-xl text-center m-2">Subtotal&nbsp;</h3>

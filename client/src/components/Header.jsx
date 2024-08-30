@@ -156,7 +156,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
         <div className="flex flex-row justify-center items-center md:px-10 mb-2">
           <Link to={`/`}>
             <img
@@ -169,7 +169,7 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
+        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[8.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
               <span

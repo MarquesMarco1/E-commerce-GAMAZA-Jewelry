@@ -141,7 +141,7 @@ export default function Admin() {
         <Header></Header>
         <div className="mr-24	ml-24	">
           <NavBarAdmin></NavBarAdmin>
-          <div className="border border-grey	w-2/4	"></div>
+          <div className="border border-gold	w-3/4	"></div>
           <br></br>
 
           <Organizer />
@@ -163,7 +163,7 @@ export default function Admin() {
               {t("adminPage.code")}
             </Link>
             <button
-              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              className="rounded-lg bg-gold text-white p-2.5 mt-2"
               onClick={() => addPromo()}
             >
               {t("adminPage.promotion")}
