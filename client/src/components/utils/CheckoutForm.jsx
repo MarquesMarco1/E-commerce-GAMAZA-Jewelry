@@ -13,6 +13,7 @@ export default function CheckoutForm(props) {
   const [clientSecret, setClientSecret] = useState("");
 
   const params = useLocation();
+  console.log(params);
   const adress = params.state.adress;
   const shipping_amount = params.state.shipping_amount;
   const shipping_name = params.state.shipping_name;
