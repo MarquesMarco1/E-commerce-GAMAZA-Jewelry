@@ -163,7 +163,11 @@ export default function Admin() {
               {t("adminPage.code")}
             </Link>
             <button
+<<<<<<< HEAD
               className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+=======
+              className="rounded-lg bg-gold text-white p-2.5 mt-2"
+>>>>>>> fbfa0f5be762c11eba45372f0373eccb7c5172ea
               onClick={() => addPromo()}
             >
               {t("adminPage.promotion")}

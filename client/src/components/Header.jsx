@@ -169,7 +169,7 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[4.4rem]">
+        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[8.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
               <span
