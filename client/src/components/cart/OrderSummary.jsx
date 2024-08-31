@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import localhost from "../../config";
+import Promo from "./Promo";
 
 export default function OrderSummary({
   subTotal,
@@ -19,6 +20,7 @@ export default function OrderSummary({
   const [gift, setGift] = useState([]);
   const date = new Date().toISOString().split("T")[0];
 
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${localhost}/api/giftWrapping/${date}`, {
@@ -33,8 +35,20 @@ export default function OrderSummary({
     fetchData();
   }, []);
 
+  const handlePromoApply = async (code) => {
+    const response = await fetch(`${localhost}/api/coupon/${code}`);
+    if (response.ok) {
+      const data = await response.json();
+      // setReduction(data.promo[0].rate);
+    } 
+    // else {
+    //   setReduction(null);
+    // }
+  };
+
   return (
-    <div className="bg-grey m-4 rounded-2xl p-4">
+    <div className="bg-grey opacity-50 m-4 rounded-2xl p-4">
+    <Promo onApply={handlePromoApply} />
       <h1 className="font-primary text-3xl text-center m-2">Order</h1>
       <div className="flex justify-between my-4">
         <h3 className="font-primary text-xl text-center m-2">Subtotal&nbsp;</h3>

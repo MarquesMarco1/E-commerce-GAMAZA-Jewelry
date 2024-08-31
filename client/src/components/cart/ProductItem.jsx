@@ -7,26 +7,15 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
         <div className="flex flex-col m-8">
             <div className="flex">
                 <img
-                    className="w-1/3 h-1/3 border border-grey"
+                    className="w-1/3 h-1/3 border-8 border-grey"
                     src={`${item.product.images[0]}`}
                     alt={item.product.name}
                 />
                 <div className="flex flex-col ml-4">
-                    <h2 className="font-primary text-3xl text-gold">
+                    <h2 className="font-primary font-bold text-3xl dark:text-white">
                         {item.product.name}
                     </h2>
-                    <span className="font-primary flex text-2xl p-2">
-                        Size:&nbsp;<h2>{item.size}</h2>
-                    </span>
-                    <span className="font-primary flex text-2xl p-2">
-                        Material:&nbsp;<h2>{item.product.material.name}</h2>
-                    </span>
-                    {item.product.stone && (
-                        <span className="font-primary flex text-2xl p-2">
-                            Stone:&nbsp;<h2>{item.product.stone.name}</h2>
-                        </span>
-                    )}
-                    <span className="font-primary flex text-2xl p-2">
+                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
                         Price:&nbsp;
                         {item.product.promotion.id !== 1 ? (
                             <>
@@ -50,10 +39,21 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                             <h2>{item.product.price * item.itemQty}€</h2>
                         )}
                     </span>
-                    <span className="flex text-2xl p-2 font-primary">
+                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
+                        Size:&nbsp;<h2>{item.size}</h2>
+                    </span>
+                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
+                        Material:&nbsp;<h2>{item.product.material.name}</h2>
+                    </span>
+                    {item.product.stone && (
+                        <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
+                            Stone:&nbsp;<h2>{item.product.stone.name}</h2>
+                        </span>
+                    )}
+                    <span className="flex text-2xl p-2 font-primary font-semibold dark:text-white">
                         Quantity:&nbsp;
                         <input
-                            className="border border-grey"
+                            className="border border-grey rounded-md dark:border-gold text-black dark:text-gold"
                             type="number"
                             min={0}
                             max={item.product.stockQty}
@@ -71,14 +71,14 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
             <div>
                 <div className="flex justify-around text-2xl p-2 mt-6">
                     <div>
-                        <button className="flex font-primary" onClick={() => onDelete(item)}>
+                        <button className="flex font-primary font-medium dark:text-white" onClick={() => onDelete(item)}>
                             <img className="mr-4" src={Delete} alt="" />
                             Delete
                         </button>
                     </div>
                     {localStorage.getItem('user') && (
                         <div>
-                            <button className="flex font-primary" onClick={() => onSaveForLater(item)}>
+                            <button className="flex font-primary font-medium dark:text-white" onClick={() => onSaveForLater(item)}>
                                 <img className="mr-4" src={Save4later} alt="" />
                                 Save for later
                             </button>

@@ -85,7 +85,7 @@ export default function AddressPopup({
     // Modal //
     <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
-        <div className="border-0 rounded-lg relative flex flex-col w-full bg-white dark:bg-dark-mode-purple outline-none focus:outline-none shadow-lg">
+        <div className="border dark:border-gold rounded-lg relative flex flex-col w-full bg-white dark:bg-dark-mode-purple outline-none focus:outline-none shadow-lg ">
           <div className="flex items-start justify-between p-5 border-b border-solid border-grey dark:border-gold rounded-t shadow-lg">
             {/* <form class="w-full max-w-lg"> */}
             {/* <div className="flex flex-col justifxy-center items-center"> */}

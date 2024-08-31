@@ -7,7 +7,7 @@ import { Shippo } from "shippo";
 import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
-import Promo from "./Promo";
+// import Promo from "./Promo";
 
 export default function Content() {
   const { t } = useTranslation();
@@ -339,7 +339,7 @@ export default function Content() {
         ))}
       </div>
       <div className="w-2/5  mr-8 flex flex-col justify-start">
-        <Promo onApply={handlePromoApply} />
+      {/* <Promo onApply={handlePromoApply} /> */}
         <OrderSummary
           subTotal={subTotal}
           reduction={reduction}

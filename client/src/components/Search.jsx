@@ -155,12 +155,12 @@ export default function Search() {
       </div>
     );
   return (
-    <div className="p-2 m-2 bg-light-purple dark:bg-dark-mode-light-purple rounded-lg shadow-md">
+    <div className="p-2 m-2 bg-transparent rounded-lg shadow-md">
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5"
       >
-        <div className="flex p-3 w-full md:w-auto  bg-light-purple bg-opqcity-20 dark:bg-dark-mode-purple rounded-md">
+        <div className="flex p-3 w-full md:w-auto  bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple rounded-md">
           <input
             type="text"
             className="w-full md:w-72 p-2 border border-gold rounded-md font-primary bg-white dark:bg-dark-mode-light-purple dark:placeholder-gold"

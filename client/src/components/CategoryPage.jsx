@@ -90,6 +90,7 @@ export default function CategoryPage() {
         <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-primary">
           {name}
         </h1>
+        
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4 md:mx-20 mb-8">
           {currentProducts.length > 0 ? (
             currentProducts.map((elem) => {

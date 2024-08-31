@@ -156,7 +156,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
+      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
         <div className="flex flex-row justify-center items-center md:px-10 mb-2">
           <Link to={`/`}>
             <img
@@ -174,7 +174,7 @@ export default function Header() {
             {Menus[active] && (
               <span
                 className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
-                  border-4 border-light-purple dark:border-dark-purple
+                  border-4 border-light-purple-20 dark:border-dark-mode-purple
                   h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full ${AnimationNav(
                     active
                   )}`}
