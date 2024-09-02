@@ -28,6 +28,7 @@ import CheckoutForm from "./components/utils/CheckoutForm";
 import Return from "./components/utils/Return";
 import ManageShipping from "./components/admin/dashboard/Shipping";
 import { CartProvider } from "./CartContext";
+// import 'react-refresh/runtime';
 
 function App() {
   // SET LANGUAGE
@@ -78,6 +79,8 @@ function App() {
               element={<CheckoutForm stripe={stripePromise} />}
             />
             <Route path="/return" element={<Return />} />
+            {/* <Route path="/facialjs" element={<Landing />} /> */}
+
           </Routes>
         </BrowserRouter>
         {/* GOOGLE ANALYTICS */}

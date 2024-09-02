@@ -254,16 +254,16 @@ export default function Search() {
                 alt={result.name}
                 className="w-full h-48 object-cover rounded-t-lg"
               />
-              <h3 className="font-primary text-gold text-2xl mt-4">
+              <h3 className="font-primary text-gold font-bold text-2xl mt-4">
                 {language === "FR" ? result.name : result.nameEn}
               </h3>
-              <p className="font-primary text-black text-lg">
+              <p className="font-primary text-black dark:text-white font-semibold text-lg">
                 {language === "FR" ? result.description : result.descriptionEn}
               </p>
-              <p className="font-bold font-primary text-black">
+              <p className="font-bold font-primary text-3xl text-black dark:text-white dark:text-white">
                 ${result.price}
               </p>
-              <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300">
+              <button className="mt-4 w-full bg-light-purple text-black border border-black py-2 rounded-lg hover:bg-gold transition duration-300 ">
                 {t("search.cart")}
               </button>
             </div>

@@ -8,6 +8,7 @@ import { LanguageContext } from "../LanguageContext";
 import Footer from "./Footer";
 import Search from "./Search";
 import Novelties from "./Novelties";
+import WebcamCapture from "./WebcamCapture";
 
 export default function Accueil() {
   const { language } = useContext(LanguageContext);
@@ -49,6 +50,7 @@ export default function Accueil() {
       <Carousel />
       <Promotion />
       <Novelties />
+      {/* <WebcamCapture /> */}
       <Footer />
     </div>
   );

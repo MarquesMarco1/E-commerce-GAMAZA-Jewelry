@@ -174,7 +174,7 @@ export default function Header() {
             {Menus[active] && (
               <span
                 className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
-                  border-4 border-light-purple-20 dark:border-dark-mode-purple
+                  border-4 border-light-purple dark:border-dark-mode-purple
                   h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full ${AnimationNav(
                     active
                   )}`}
