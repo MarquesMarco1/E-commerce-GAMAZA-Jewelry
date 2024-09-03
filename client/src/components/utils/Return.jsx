@@ -18,6 +18,7 @@ export default function Return() {
     const formData = {
       session_id: sessionId,
       data: data,
+      user: localStorage.getItem("user"),
     };
 
     fetch(`${localhost}/api/return`, {
@@ -46,7 +47,7 @@ export default function Return() {
         <p>
           We appreciate your business! A confirmation email will be sent to{" "}
           {customerEmail}. If you have any questions, please email{" "}
-          <a href="mailto:orders@example.com">orders@example.com</a>.
+          <a href="mailto:orders@example.com">gamaza@gamaza.com</a>.
         </p>
       </section>
     );
