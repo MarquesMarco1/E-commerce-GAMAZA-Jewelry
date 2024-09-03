@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Bill;
+use App\Entity\Cart;
+use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Entity\Tracking;
 use App\Entity\User;
@@ -38,7 +40,7 @@ class ReturnController extends AbstractController
                 array_push($products, [$obj->getName(), $obj->getPrice(), $elem->quantity ]);
             }
 
-            $user = $entityManager->getRepository(User::class)->findOneBy(["email"=>$session->customer_details->email]);
+            $user = $entityManager->getRepository(User::class)->findOneBy(["email"=>$data["user"]]);
 
             if($user){
                 $tracking = new Tracking;
@@ -51,6 +53,14 @@ class ReturnController extends AbstractController
                 $entityManager->persist($tracking);
                 $entityManager->flush();
                 
+                $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user]);
+                $cartItem = $entityManager->getRepository(CartItem::class)->findBy(["cart"=>$cart]);
+                if($cartItem){
+                    foreach($cartItem as $elem){
+                        $entityManager->remove($elem);
+                        $entityManager->flush();
+                    }
+                }
             }else{
                 $email = (new TemplatedEmail())
                     ->from(new Address('gamaza@gamaza.com'))
@@ -76,7 +86,21 @@ class ReturnController extends AbstractController
                 $mailer->send($email);
             }
 
-            if($products && $session->customer_details->email && $product[1] && $product[2]){
+            if($data["user"]){
+                if($products && $product[1] && $product[2]){
+                    $bill = New Bill;
+                    $bill->setEmail($data["user"]);
+                    $bill->setProducts($products);
+                    $bill->setShippingAmount($product[1]);
+                    $now = new DateTime();
+                    $now->format("Y-m-d H:i:s");
+                    $bill->setLastUpdate($now);
+                    $bill->setTrackingNumber( $product[2]);
+                    $entityManager->persist($bill);
+                    $entityManager->flush();
+                }
+                
+            }else if($products && $session->customer_details->email && $product[1] && $product[2]){
                 $bill = New Bill;
                 $bill->setEmail($session->customer_details->email);
                 $bill->setProducts($products);
