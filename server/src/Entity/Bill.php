@@ -26,6 +26,9 @@ class Bill
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastUpdate = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $trackingNumber = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Bill
     public function setLastUpdate(\DateTimeInterface $lastUpdate): static
     {
         $this->lastUpdate = $lastUpdate;
+
+        return $this;
+    }
+
+    public function getTrackingNumber(): ?string
+    {
+        return $this->trackingNumber;
+    }
+
+    public function setTrackingNumber(string $trackingNumber): static
+    {
+        $this->trackingNumber = $trackingNumber;
 
         return $this;
     }

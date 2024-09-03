@@ -101,7 +101,7 @@ export default function ManageCommand() {
             <ul className=" bg-white dark:bg-dark-mode-light-purple text-gold border m-2.5 rounded-2xl p-2.5">
               <li key={elem.id}>
                 <h3>
-                  {t("commandManage.order")} : {elem.id}
+                  {t("commandManage.order")} : {elem.trackingNumber}
                 </h3>
                 <button onClick={() => showBill(elem)}>
                   Visualiser le facture

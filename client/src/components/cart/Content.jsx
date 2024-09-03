@@ -29,6 +29,7 @@ export default function Content() {
   const [shippingChoice, setShippingChoice] = useState([]);
   const [shippingOption, setShippingOption] = useState(0);
   const [shippingOptionValid, setShippingOptionValid] = useState(false);
+  const [tracking_num, setTracking_num] = useState("");
 
   const [isWaiting, setIsWaiting] = useState(true);
   const [cartState, setCartState] = useState(0);
@@ -218,6 +219,7 @@ export default function Content() {
           shipping_amount: shippingOption.amount,
           shipping_name: shippingOption.attributes[0],
           shipping_estimatedDays: shippingOption.estimatedDays,
+          tracking_num: tracking_num,
         },
       });
     } else if (cartState === 1) {
@@ -270,32 +272,9 @@ export default function Content() {
     });
 
     if (trans) {
-      if (localStorage.getItem("user")) {
-        const formData = {
-          user: localStorage.getItem("user"),
-          number: trans.objectId,
-          status: "PRE_TRANSIT",
-        };
-
-        await fetch(`${localhost}/api/tracking`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ formData }),
-        });
-      } else {
-        const formData = {
-          addressTo: addressTo.email,
-          number: trans.objectId,
-          status: "PRE_TRANSIT",
-        };
-
-        await fetch(`${localhost}/api/trackingNotLogin`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ formData }),
-        });
-      }
+      setTracking_num(trans.objectId);
     }
+
     setCartState(2);
   };
 
