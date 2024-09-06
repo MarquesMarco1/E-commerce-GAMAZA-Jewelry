@@ -25,6 +25,7 @@ module.exports = {
         white: "#F5F5F5",
         grey: "#DEDEE0",
         navbar: "#111827",
+        greyy : "rgb(161 161 170)"
       },
       backgroundImage: {
         login: "url('./assets/login.jpg')",
