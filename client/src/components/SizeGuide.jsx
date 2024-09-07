@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useCart } from "../CartContext";
 import { useNavigate, useParams } from "react-router-dom";
 import Save4later from "../assets/save4later.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
@@ -79,6 +81,13 @@ export default function SizeGuide(data) {
     setIsSizeGuideOpen(false);
   };
 
+  const notify = () =>
+    toast(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓"
+    );
+
   const handleAddToCart = async () => {
     const formData = {
       product: parseInt(id),
@@ -99,7 +108,8 @@ export default function SizeGuide(data) {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: "ADD_ITEM", payload: data.success });
-        navigate("/", { replace: true });
+        notify();
+        // navigate("/", { replace: true });
       }
     } else {
       const item = {
@@ -108,7 +118,7 @@ export default function SizeGuide(data) {
         size: selectedSize,
       };
       dispatch({ type: "ADD_ITEM", payload: item });
-      // navigate("/", { replace: true });
+      notify();
     }
   };
 
@@ -296,6 +306,8 @@ export default function SizeGuide(data) {
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </>
   );
 }
