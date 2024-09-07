@@ -7,7 +7,7 @@ import { Shippo } from "shippo";
 import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
-// import Promo from "./Promo";
+import Promo from "./Promo";
 
 export default function Content() {
   const { t } = useTranslation();
@@ -171,16 +171,6 @@ export default function Content() {
     }
   };
 
-  const handlePromoApply = async (code) => {
-    const response = await fetch(`${localhost}/api/coupon/${code}`);
-    if (response.ok) {
-      const data = await response.json();
-      setReduction(data.promo[0].rate);
-    } else {
-      setReduction(null);
-    }
-  };
-
   const handleShipping = async (address) => {
     const shippingCountry = await fetch(`${localhost}/api/shippingCountry`);
     const countryList = await shippingCountry.json();
@@ -338,8 +328,7 @@ export default function Content() {
           />
         ))}
       </div>
-      <div className="w-2/5  mr-8 flex flex-col justify-start">
-      {/* <Promo onApply={handlePromoApply} /> */}
+      <div className="w-2/5 mr-8 flex flex-col justify-start">
         <OrderSummary
           subTotal={subTotal}
           reduction={reduction}

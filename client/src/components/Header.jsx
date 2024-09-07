@@ -156,7 +156,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative bottom-0 md:top-0 w-full bg-light-purple dark:bg-dark-mode-purple px-6 rounded-t-xl md:rounded-b-none shadow-md p-4">
+      <header className="relative bottom-0 md:top-0 w-full bg-white-purple dark:bg-dark-mode-purple rounded-t-xl md:rounded-b-none shadow-lg shadow-gold p-2 ">
         <div className="flex flex-row justify-center items-center md:px-10 mb-2">
           <Link to={`/`}>
             <img
@@ -169,13 +169,14 @@ export default function Header() {
             G.A.M.A.Z.A. Co
           </h1>
         </div>
-        <div className="bg-white dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[8.4rem]">
+
+        {/* Navbar  */}
+        <div className="bg-light-purple bg-opacity-50 dark:bg-light-purple max-w-fit mx-auto flex justify-center px-6 rounded-t-xl max-h-[8.4rem]">
           <ul className="flex relative items-center">
             {Menus[active] && (
               <span
                 className={`bg-dark-purple dark:bg-dark-mode-light-purple duration-500
-                  border-4 border-light-purple-20 dark:border-dark-mode-purple
-                  h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full ${AnimationNav(
+                  h-16 w-16 absolute -top-5 left-[-1.2rem] transform transition-transform rounded-full  border-4 dark:border-dark-mode-purple border-white-purple ${AnimationNav(
                     active
                   )}`}
               >
@@ -206,9 +207,9 @@ export default function Header() {
                   }
                 >
                   <span
-                    className={`text-xl md:text-2xl cursor-pointer duration-500 font-primary ${
+                    className={`text-2xl cursor-pointer duration-500 font-bold font-primary ${
                       i === active &&
-                      "mt-[-2.5rem] text-gold dark:text-dark-purple font-primary font-extrabold"
+                      "mt-[-2.5rem] text-gold dark:text-white"
                     }`}
                   >
                     {menu.hasBadge ? (
@@ -222,7 +223,7 @@ export default function Header() {
                   </span>
 
                   <span
-                    className={`text-gold dark:text-dark-purple font-primary font-extrabold items-center justify-center ${
+                    className={`text-gold dark:text-white text-lg font-primary font-extrabold items-center text-center justify-center ${
                       active === i
                         ? "translate-y-4 duration-700 opacity-100"
                         : "opacity-0 translate-y-10"

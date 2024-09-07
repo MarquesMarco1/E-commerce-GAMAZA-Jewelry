@@ -5,7 +5,6 @@ import Promo from "./Promo";
 
 export default function OrderSummary({
   subTotal,
-  reduction,
   addressTo,
   shippingChoice,
   shippingOption,
@@ -19,7 +18,7 @@ export default function OrderSummary({
 }) {
   const [gift, setGift] = useState([]);
   const date = new Date().toISOString().split("T")[0];
-
+  const [reduction, setReduction] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,20 +38,20 @@ export default function OrderSummary({
     const response = await fetch(`${localhost}/api/coupon/${code}`);
     if (response.ok) {
       const data = await response.json();
-      // setReduction(data.promo[0].rate);
+      setReduction(data.promo[0].rate);
     } 
-    // else {
-    //   setReduction(null);
-    // }
+    else {
+      setReduction(null);
+    }
   };
 
   return (
-    <div className="bg-grey opacity-50 m-4 rounded-2xl p-4">
+    <div className="bg-grey m-4 rounded-2xl p-8">
+      <h1 className="font-primary font-bold text-3xl text-center m-2">Order</h1>
     <Promo onApply={handlePromoApply} />
-      <h1 className="font-primary text-3xl text-center m-2">Order</h1>
-      <div className="flex justify-between my-4">
-        <h3 className="font-primary text-xl text-center m-2">Subtotal&nbsp;</h3>
-        <h3 className="font-primary text-xl text-center m-2">
+    <div className="flex justify-between my-4">
+        <h3 className="font-primary font-bold  text-2xl text-center m-2">Subtotal&nbsp;</h3>
+        <h3 className="font-secondary text-3xl font-bold text-center m-2">
           {reduction ? (
             <>
               <span className="line-through">{subTotal}€</span>{" "}
@@ -63,11 +62,12 @@ export default function OrderSummary({
           )}
         </h3>
       </div>
+        <div className="border border-gold"/>
       <div className="flex justify-between">
-        <h3 className="font-primary text-xl text-center m-2">Address&nbsp;</h3>
-        <h3 className="font-primary text-xl text-center m-2">
+        <h3 className="font-primary text-2xl font-bold text-center m-2">Address&nbsp;</h3>
+        <h3 className="font-primary text-2xl font-bold  text-center m-2">
           {Object.keys(addressTo).length === 0 ? (
-            <button className="p-2 md:px-4 font-primary bg-gold border font-bold text-xs border-black text-white rounded-md hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple" 
+            <button className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple" 
             onClick={onOpenAddressPopup}
             >
               No address found
@@ -77,8 +77,9 @@ export default function OrderSummary({
           )}
         </h3>
       </div>
+      <div className="border border-gold"/>
       <div className="flex justify-between">
-        <h3 className="font-primary text-xl text-center m-2">
+        <h3 className="font-primary text-2xl font-bold text-center m-2">
           Shipping Method&nbsp;
         </h3>
         {isWaiting && cartState === 1 && <Loading />}
@@ -171,12 +172,12 @@ export default function OrderSummary({
           ))}
       </ul>
 
-      <div className="rounded-3xl bg-gold m-6 flex justify-center">
+      <div className="rounded-3xl bg-gold hover:bg-light-purple duration-300 ease-in-out m-6 flex justify-center">
         {addressTo.name === undefined ? (
           <Loading />
         ) : (
           <button
-            className="font-primary text-3xl font-bold text-center m-2"
+            className="font-primary text-3xl font-bold text-white text-center m-2"
             onClick={onCheckout}
           >
             {stateManager[cartState]}

@@ -131,38 +131,41 @@ export default function SizeGuide(data) {
   return (
     <>
       {sizeGuide.length > 0 && (
-        <div className="mb-4">
-          <label htmlFor="size" className="block text-lg font-primary">
+        <div className="mb-4 flex flex-col">
+          <label htmlFor="size" className="block text-2xl font-bold font-primary text-gold">
             {t("sizeGuidePage.tailleChoose")}
           </label>
           <select
             id="size"
             value={selectedSize}
             onChange={(e) => setSelectedSize(e.target.value)}
-            className="mt-2 p-2 border border-gray-300 rounded-lg w-full dark:bg-dark-mode-light-purple dark:text-gold"
+            className="w-1/3 mt-2 p-2 border text-xl font-primary border-gray-300 rounded-3xl dark:bg-dark-mode-light-purple text-light-purple font-bold dark:text-gold"
           >
             {sizeGuide.map((elem) => (
-              <option value={elem.name}>{elem.name}</option>
+              <option
+              className="block text-lg font-bold font-primary rounded-3xl text-light-purple dark:text-gold" 
+              value={elem.name}>{elem.name}</option>
             ))}
           </select>
           <button
             onClick={openSizeGuide}
-            className="mt-2 text-sm text-blue-500 underline"
+            className="mt-2 p-2 text-left text-md text-light-purple underline"
           >
             {t("sizeGuidePage.button")}
           </button>
         </div>
       )}
       <div className="mb-4">
-        <label htmlFor="quantity" className="block text-lg font-primary">
+        <label htmlFor="quantity" 
+        className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
           {t("specProduct.quantity")}:
         </label>
         <select
           id="quantity"
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
-          className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-        >
+          className="w-1/3 mt-2 p-2 border text-xl font-primary border-gray-300 rounded-3xl dark:bg-dark-mode-light-purple text-light-purple font-bold dark:text-gold"
+          >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>
               {num + 1}
@@ -172,18 +175,18 @@ export default function SizeGuide(data) {
       </div>
       <button
         onClick={handleAddToCart}
-        className="w-full bg-gold text-white px-4 py-2 rounded-lg mb-4"
+        className="w-full rounded-3xl bg-gold hover:bg-light-purple duration-300 ease-in-out font-primary font-bold text-xl text-white px-4 py-2 mb-4"
       >
         {t("specProduct.cart")}
       </button>
       <div className="mb-4">
-        <p className="block text-lg font-primary">
-          {t("specProduct.stockQty")} {product && product.stockQty}
+      <p className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+      {t("specProduct.stockQty")} {product && product.stockQty}
         </p>
       </div>
       <div className="mb-4">
-        <p className="block text-lg font-primary">
-          {t("specProduct.weight")} {product && product.weight}g
+      <p className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+      {t("specProduct.weight")} {product && product.weight}g
         </p>
       </div>
       {displayWishlist && (
@@ -196,10 +199,10 @@ export default function SizeGuide(data) {
       )}
       {isSizeGuideOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white dark:bg-dark-mode-light-purple p-4 max-w-lg max-h-full overflow-auto">
+          <div className="relative bg-white dark:bg-dark-mode-purple p-4 max-w-lg max-h-full overflow-auto">
             <button
               onClick={closeSizeGuide}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-2 right-2 text-gray-500 dark:text-gold hover:text-gray-700"
             >
               &times;
             </button>

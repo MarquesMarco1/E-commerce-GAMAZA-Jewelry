@@ -11,6 +11,7 @@ import lowStock from "../assets/lowInStock.svg"; // Image du 'low in stock'
 import soldOut from "../assets/soldOut.svg"; //Image du 'soldout'
 import StockAlert from "./utils/stockAlert"; // Alerte stock
 import ModeleProduct from "./ModeleProduct";
+import StoneProduct from "./StoneProduct";
 import SizeGuide from "./SizeGuide"; // Guide des tailles
 import ReviewForm from "./review/ReviewForm"; // Avis
 import { lastDayOfDecade } from "date-fns";
@@ -26,6 +27,7 @@ const SpecProduct = () => {
   const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture de l'alerte de stock
   const [productSelect, setproductSelect] = useState(null); // État pour stocker le produit sélectionné
   const [allModele, setAllModele] = useState([]); // État pour stocker tous les modèles du produit
+  const [allStones, setAllStones] = useState([]); // État pour stocker tous les modèles du produit
 
   const { language } = useContext(LanguageContext); // Utilisation du contexte de langue
 
@@ -69,6 +71,7 @@ const SpecProduct = () => {
       const data = await response.json();
 
       setAllModele(data.products);
+      setAllStones(data.products);
     }
   };
 
@@ -165,10 +168,10 @@ const SpecProduct = () => {
 
   return (
     <>
-      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple">
         <Header />
-        <nav className="bg-gray-200 py-2 px-6">
-          <ul className="flex space-x-4 p-4 text-gold font-primary font-bold hover:text-light-purple transition duration-300 ease-in-out">
+        <nav className="bg-light-blue opacity-50 py-2 px-6">
+          <ul className="flex space-x-4 p-4 text-xl text-dark-mode-purple dark:text-white font-primary font-bold hover:text-dark-purple dark:hover:text-dark-mode-purple transition duration-300 ease-in-out">
             <li>
               <Link to={`/`}>{t("specProduct.homepage")}</Link>
             </li>
@@ -188,15 +191,14 @@ const SpecProduct = () => {
             <li>{language === "FR" ? product.name : product.nameEn}</li>
           </ul>
         </nav>
-        <h1 className="text-gold text-5xl mb-6 font-primary text-center mt-4">
+        <h1 className="text-gold font-bold text-4xl mb-6 font-primary text-center mt-4">
           {language === "FR" ? product.name : product.nameEn}
         </h1>
         <main className="py-6 px-4 max-w-7xl mx-auto">
           <div className="flex space-x-8">
             <div className="flex flex-col items-center">
               <div
-                className="flex flex-col space-y-4 overflow-auto"
-                style={{ maxHeight: "600px" }}
+                className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
               >
                 {product.images &&
                   product.images.map((image, index) => (
@@ -227,35 +229,46 @@ const SpecProduct = () => {
               </div>
             </div>
             <div className="w-1/3">
-              <h2 className="text-gold text-2xl mb-6 font-primary">
-                {language === "FR"
+            <h2 className="font-primary text-light-purple dark:text-white text-center p-2 font-bold text-">
+            {language === "FR"
                   ? product.description
                   : product.descriptionEn}
               </h2>
               <p className="text-2xl mb-4">
                 {product.promotion.id !== 1 ? (
                   <>
-                    <span className=" dark:text-gold line-through">
-                      ${product.price}
+              <span className="font-medium line-through p-2 font-secondary text-3xl text-light-purple text-right dark:text-white">
+              ${product.price}
                     </span>{" "}
-                    <span className=" dark:text-gold">
+                    <span className=" dark:text-gold font-secondary font-bold ">
                       $
                       {product.price -
                         (product.price * product.promotion.pourcentage) / 100}
                     </span>
                   </>
                 ) : (
-                  <span>${product.price}</span>
+                  <span 
+                  className="font-bold p-2 font-secondary text-3xl text-light-purple dark:text-white"
+                  >${product.price}</span>
                 )}
               </p>
               <div className="mb-4  dark:text-gold"></div>
-              <div className="mb-4  dark:text-gold">
-                <label htmlFor="color" className="block text-lg font-primary">
-                  {t("specProduct.material")}
+              <div className="mb-4 flex flex-col dark:text-gold">
+                <label htmlFor="color">
+                <h2 className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+                {t("specProduct.material")}
+                </h2>
                 </label>
+                <h2 className={`font-bold p-2 m-2 font-primary text-md text-light-purple dark:text-white`}>
                 {allModele.length > 0 && <ModeleProduct data={allModele} />}
-              </div>
-
+                </h2>
+                <h2 className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+                {t("specProduct.stone")}
+                <h2 className={`font-bold p-2 m-2 font-primary text-sm text-light-purple dark:text-white`}>
+                {allStones && allStones.length !== null ? <StoneProduct data={allStones} /> : <div>Aucune pierre disponible pour ce produit.</div>}
+                </h2>
+                </h2>
+                </div>
               <SizeGuide data={product} />
             </div>
           </div>
@@ -271,7 +284,7 @@ const SpecProduct = () => {
 
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative bg-white p-4 max-w-3xl max-h-full overflow-auto">
+            <div className="relative bg-whitep-4 max-w-3xl max-h-full overflow-auto">
               <button
                 onClick={closeModal}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"

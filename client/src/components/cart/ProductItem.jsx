@@ -7,16 +7,15 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
         <div className="flex flex-col m-8">
             <div className="flex">
                 <img
-                    className="w-1/3 h-1/3 border-8 border-grey"
-                    src={`${item.product.images[0]}`}
+                      className="w-1/3 h-1/3 rounded-lg border-white-purple border-4 shadow-lg dark:shadow-gold"
+                      src={`${item.product.images[0]}`}
                     alt={item.product.name}
                 />
-                <div className="flex flex-col ml-4">
-                    <h2 className="font-primary font-bold text-3xl dark:text-white">
+                <div className="flex flex-col ml-8 text-center items-center">
+                <h3 className="font-primary text-gold font-bold text-center text-3xl">
                         {item.product.name}
-                    </h2>
-                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
-                        Price:&nbsp;
+                    
+                    <span className="font-bold p-2 font-secondary text-3xl text-gray-500 text-right dark:text-white">
                         {item.product.promotion.id !== 1 ? (
                             <>
                                 <h2 className="line-through">
@@ -39,21 +38,25 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                             <h2>{item.product.price * item.itemQty}€</h2>
                         )}
                     </span>
-                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
-                        Size:&nbsp;<h2>{item.size}</h2>
+                    </h3>
+                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                        Size:&nbsp;
+                        <h2 className='font-primary text-gray-500 dark:text-white'>{item.size}</h2>
                     </span>
-                    <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
-                        Material:&nbsp;<h2>{item.product.material.name}</h2>
+                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                        Material:&nbsp;
+                        <h2 className='font-primary text-gray-500 dark:text-white'>{item.product.material.name}</h2>
                     </span>
                     {item.product.stone && (
-                        <span className="font-primary font-medium flex text-2xl p-2 dark:text-white">
-                            Stone:&nbsp;<h2>{item.product.stone.name}</h2>
+                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                            Stone:&nbsp;
+                            <h2 className='font-primary text-gray-500 dark:text-white'>{item.product.stone.name}</h2>
                         </span>
                     )}
-                    <span className="flex text-2xl p-2 font-primary font-semibold dark:text-white">
-                        Quantity:&nbsp;
+                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 items-center font-bold text-2xl">
+                    Quantity:&nbsp;
                         <input
-                            className="border border-grey rounded-md dark:border-gold text-black dark:text-gold"
+                            className="border-2 border-grey p-2 m-2 rounded-3xl dark:border-gold dark:bg-dark-mode-purple text-gray-500 dark:text-white"
                             type="number"
                             min={0}
                             max={item.product.stockQty}
@@ -68,23 +71,27 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                     </span>
                 </div>
             </div>
+            {/* <div className="border border-gold"/> */}
             <div>
+            {/* <div className="border border-gold"/> */}
                 <div className="flex justify-around text-2xl p-2 mt-6">
                     <div>
-                        <button className="flex font-primary font-medium dark:text-white" onClick={() => onDelete(item)}>
+                        <button className="flex font-primary font-bold text-gold" 
+                        onClick={() => onDelete(item)}>
                             <img className="mr-4" src={Delete} alt="" />
                             Delete
                         </button>
                     </div>
                     {localStorage.getItem('user') && (
                         <div>
-                            <button className="flex font-primary font-medium dark:text-white" onClick={() => onSaveForLater(item)}>
+                            <button className="flex font-primary font-bold text-gold" onClick={() => onSaveForLater(item)}>
                                 <img className="mr-4" src={Save4later} alt="" />
                                 Save for later
                             </button>
                         </div>
                     )}
                 </div>
+            <div className="border border-gold"/>
             </div>
         </div>
     );

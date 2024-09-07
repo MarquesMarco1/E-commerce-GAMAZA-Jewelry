@@ -80,14 +80,14 @@ export default function CategoryPage() {
     <>
       <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
         <Header />
-        <ul className="flex flex-wrap space-x-4 p-4 text-gold font-primary font-bold hover:text-light-purple duration-300 ease-in-out">
+        <ul className="flex flex-wrap space-x-4 p-4 text-gold font-primary font-bold">
           <li>
             <Link to={`/`}>{t("categoryPage.homepage")}</Link>
           </li>
           <li>/</li>
           {name && <li>{name}</li>}
         </ul>
-        <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-primary">
+        <h1 className="text-gold text-center text-3xl md:text-5xl mb-9 font-bold font-primary">
           {name}
         </h1>
         
