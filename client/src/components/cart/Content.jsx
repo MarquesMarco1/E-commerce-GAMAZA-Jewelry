@@ -138,11 +138,9 @@ export default function Content() {
       });
 
       if (response.ok) {
-        console.log("Product deleted successfully from server");
         dispatch({ type: "REMOVE_ITEM", payload: item });
       }
     } else {
-      console.log("User not logged in, removing from local cart");
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
