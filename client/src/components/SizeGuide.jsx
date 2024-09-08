@@ -3,6 +3,9 @@ import localhost from "../config";
 import { useTranslation } from "react-i18next";
 import { useCart } from "../CartContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Save4later from "../assets/save4later.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SizeGuide(data) {
   const [category, setCategory] = useState("");
@@ -80,6 +83,24 @@ export default function SizeGuide(data) {
     setIsSizeGuideOpen(false);
   };
 
+  const notify = () => {
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  };
+
   const handleAddToCart = async () => {
     const formData = {
       product: parseInt(id),
@@ -100,7 +121,7 @@ export default function SizeGuide(data) {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: "ADD_ITEM", payload: data.success });
-        navigate("/", { replace: true });
+        notify();
       }
     } else {
       const item = {
@@ -109,14 +130,46 @@ export default function SizeGuide(data) {
         size: selectedSize,
       };
       dispatch({ type: "ADD_ITEM", payload: item });
+      notify();
     }
+  };
+
+  const saveForLater = async () => {
+    const formData = {
+      product: parseInt(id),
+      quantity: parseInt(quantity),
+      size: selectedSize,
+      user: localStorage.getItem("user"),
+    };
+    await fetch(`${localhost}/api/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter à ma liste de souhaits : ✓"
+        : "Add to Wishlist : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   const toggleWishlist = async () => {
     let savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
     if (isInWishlist) {
-      savedWishlist = savedWishlist.filter(item => item !== parseInt(id));
+      savedWishlist = savedWishlist.filter((item) => item !== parseInt(id));
     } else {
       savedWishlist.push(parseInt(id));
 
@@ -138,13 +191,31 @@ export default function SizeGuide(data) {
 
     localStorage.setItem("wishlist", JSON.stringify(savedWishlist));
     setIsInWishlist(!isInWishlist);
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter à ma liste de souhaits : ✓"
+        : "Add to Wishlist : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   return (
     <>
       {sizeGuide.length > 0 && (
         <div className="mb-4 flex flex-col">
-          <label htmlFor="size" className="block text-3xl font-bold font-primary text-dark-purple dark:text-gold">
+          <label
+            htmlFor="size"
+            className="block text-3xl font-bold font-primary text-dark-purple dark:text-gold"
+          >
             {t("sizeGuidePage.tailleChoose")}
           </label>
           <select
@@ -155,8 +226,11 @@ export default function SizeGuide(data) {
           >
             {sizeGuide.map((elem) => (
               <option
-              className="block text-lg font-bold font-primary rounded-3xl text-light-purple dark:text-gold" 
-              value={elem.name}>{elem.name}</option>
+                className="block text-lg font-bold font-primary rounded-3xl text-light-purple dark:text-gold"
+                value={elem.name}
+              >
+                {elem.name}
+              </option>
             ))}
           </select>
           <button
@@ -168,8 +242,10 @@ export default function SizeGuide(data) {
         </div>
       )}
       <div className="mb-4 flex flex-col">
-        <label htmlFor="quantity" 
-        className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+        <label
+          htmlFor="quantity"
+          className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold"
+        >
           {t("specProduct.quantity")}:
         </label>
         <select
@@ -177,7 +253,7 @@ export default function SizeGuide(data) {
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           className="w-1/3 mt-2 p-2 border font-primary border-gray-300 rounded-3xl dark:bg-dark-mode-purple text-light-purple font-bold dark:text-gold"
-          >
+        >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>
               {num + 1}
@@ -192,18 +268,21 @@ export default function SizeGuide(data) {
         {t("specProduct.cart")}
       </button>
       <div className="mb-4 flex flex-col">
-      <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
-      {t("specProduct.stockQty")} {product && product.stockQty}
+        <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+          {t("specProduct.stockQty")} {product && product.stockQty}
         </p>
       </div>
       <div className="mb-4 flex flex-col">
-      <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
-      {t("specProduct.weight")} {product && product.weight}g
+        <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+          {t("specProduct.weight")} {product && product.weight}g
         </p>
       </div>
       {displayWishlist && (
         <div className="mt-6 p-2 flex justify-center items-center">
-          <button className="flex font-primary text-3xl" onClick={toggleWishlist}>
+          <button
+            className="flex font-primary text-3xl"
+            onClick={toggleWishlist}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -219,9 +298,8 @@ export default function SizeGuide(data) {
               />
             </svg>
             <p className="font-bold font-primary text-3xl text-dark-purple dark:text-gold">
-
-            {t("cartPage.productSave")}
-        </p>
+              {t("cartPage.productSave")}
+            </p>
           </button>
         </div>
       )}
@@ -248,7 +326,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -266,7 +346,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.diamètre")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.diameter}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.diameter}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -282,7 +364,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -290,7 +374,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.value}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.value}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -306,7 +392,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -314,7 +402,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.value}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.value}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -327,6 +417,8 @@ export default function SizeGuide(data) {
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </>
   );
 }

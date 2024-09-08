@@ -14,7 +14,7 @@ import ModeleProduct from "./ModeleProduct";
 import StoneProduct from "./StoneProduct";
 import SizeGuide from "./SizeGuide"; // Guide des tailles
 import ReviewForm from "./review/ReviewForm"; // Avis
-import ReactImageMagnify from 'react-image-magnify'; // Zoom
+import ReactImageMagnify from "react-image-magnify"; // Zoom
 import { lastDayOfDecade } from "date-fns";
 
 const SpecProduct = () => {
@@ -197,9 +197,7 @@ const SpecProduct = () => {
         <main className="py-6 px-4 max-w-7xl mx-auto">
           <div className="flex space-x-8">
             <div className="flex flex-col items-center">
-              <div
-                className="flex flex-col space-y-4 overflow-auto max-h-[600px]"
-              >
+              <div className="flex flex-col space-y-4 overflow-auto max-h-[600px]">
                 {product.images &&
                   product.images.map((image, index) => (
                     <img
@@ -218,43 +216,43 @@ const SpecProduct = () => {
             </div>
             <div className="flex-1">
               <div className="mb-8 w-full max-w-4xl max-h-[750px]">
-              {selectedImage && (
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: product.name,
-                      isFluidWidth: true,
-                      src: selectedImage,
-                    },
-                    largeImage: {
-                      src: selectedImage,
-                      width: 1200,
-                      height: 1800,
-                    },
-                    enlargedImageContainerDimensions: {
-                      width: '200%',
-                      height: '200%',
-                    },
-                  }}
-                  className="object-contain w-full h-full rounded-md border border-gold shadow-md shadow-gold dark:border-gold cursor-pointer"
+                {selectedImage && (
+                  <ReactImageMagnify
+                    {...{
+                      smallImage: {
+                        alt: product.name,
+                        isFluidWidth: true,
+                        src: selectedImage,
+                      },
+                      largeImage: {
+                        src: selectedImage,
+                        width: 1200,
+                        height: 1800,
+                      },
+                      enlargedImageContainerDimensions: {
+                        width: "200%",
+                        height: "200%",
+                      },
+                    }}
+                    className="object-contain w-full h-full rounded-md border border-gold shadow-md shadow-gold dark:border-gold cursor-pointer"
                     enlargedImageContainerClassName="flex justify-center items-center"
                     enlargedImageClassName="object-contain"
-                  onClick={openModal}
+                    onClick={openModal}
                   />
                 )}
               </div>
             </div>
             <div className="w-1/2">
-            <h2 className="font-primary text-dark-purple dark:text-gold text-left p-2 font-bold text-2xl">
-            {language === "FR"
+              <h2 className="font-primary text-dark-purple dark:text-gold text-left p-2 font-bold text-2xl">
+                {language === "FR"
                   ? product.description
                   : product.descriptionEn}
               </h2>
               <p className="text-2xl mb-4">
                 {product.promotion.id !== 1 ? (
                   <>
-              <span className="font-medium line-through p-2 font-secondary text-3xl text-dark-purple text-right dark:text-gold">
-              ${product.price}
+                    <span className="font-medium line-through p-2 font-secondary text-3xl text-dark-purple text-right dark:text-gold">
+                      ${product.price}
                     </span>{" "}
                     <span className=" dark:text-gold font-secondary text-gold text-4xl font-bold ">
                       $
@@ -263,9 +261,9 @@ const SpecProduct = () => {
                     </span>
                   </>
                 ) : (
-                  <span 
-                  className="font-medium p-2 font-secondary text-3xl text-dark-purple dark:text-gold"
-                  >${product.price}</span>
+                  <span className="font-medium p-2 font-secondary text-3xl text-dark-purple dark:text-gold">
+                    ${product.price}
+                  </span>
                 )}
               </p>
               {product.length > 0 ? (
@@ -295,27 +293,35 @@ const SpecProduct = () => {
               ) : (
                 <p>No products available</p>
               )}
-            <div className="mb-4  dark:text-gold"></div>
+              <div className="mb-4  dark:text-gold"></div>
               <div className="mb-4 flex flex-col">
                 <label htmlFor="color">
-                <h2 className="font-bold font-primary p-2 text-3xl text-dark-purple dark:text-gold">
-                {t("specProduct.material")}
-                </h2>
+                  <h2 className="font-bold font-primary p-2 text-3xl text-dark-purple dark:text-gold">
+                    {t("specProduct.material")}
+                  </h2>
                 </label>
-                <h2 className={`font-bold p-2 font-primary text-xl text-dark-purple dark:text-gold`}>
-                {allModele.length > 0 && <ModeleProduct data={allModele} />}
+                <h2
+                  className={`font-bold p-2 font-primary text-xl text-dark-purple dark:text-gold`}
+                >
+                  {allModele.length > 0 && <ModeleProduct data={allModele} />}
                 </h2>
                 <h2 className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
-                {t("specProduct.stone")}
-                <h2 className={`font-bold p-2 font-primary text-lg text-dark-purple dark:text-gold`}>
-                {allStones && allStones.length !== null ? <StoneProduct data={allStones} /> : <div>Aucune pierre disponible pour ce produit.</div>}
+                  {t("specProduct.stone")}
+                  <h2
+                    className={`font-bold p-2 font-primary text-lg text-dark-purple dark:text-gold`}
+                  >
+                    {allStones && allStones.length !== null ? (
+                      <StoneProduct data={allStones} />
+                    ) : (
+                      <div>Aucune pierre disponible pour ce produit.</div>
+                    )}
+                  </h2>
                 </h2>
-                </h2>
-                </div>
+              </div>
               <SizeGuide data={product} />
               <ReviewForm id={id} />
-          </div>
             </div>
+          </div>
         </main>
 
         <Footer />

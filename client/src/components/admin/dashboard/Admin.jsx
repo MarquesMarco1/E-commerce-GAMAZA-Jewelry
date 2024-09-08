@@ -133,7 +133,7 @@ export default function Admin() {
 
   const manageShipping = () => {
     navigate("/manageShipping", { replace: true });
-  }
+  };
 
   return (
     <>
@@ -205,32 +205,36 @@ export default function Admin() {
                     <div style={{ textAlign: "end" }}>
                       <li>
                         <button
-                        className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
-                        onClick={() => editUser(elem.id)}>
+                          className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+                          onClick={() => editUser(elem.id)}
+                        >
                           {t("editProfil.edit")}
                         </button>
                       </li>
                       {!elem.roles.includes("ROLE_ADMIN") ? (
                         <li>
-                          <button 
-                          className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
-                          onClick={() => setAdmin(elem.id)}>
+                          <button
+                            className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+                            onClick={() => setAdmin(elem.id)}
+                          >
                             {t("adminPage.Badmin")}
                           </button>
                         </li>
                       ) : (
                         <li>
-                          <button 
-                          className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
-                          onClick={() => setUser(elem.id)}>
+                          <button
+                            className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+                            onClick={() => setUser(elem.id)}
+                          >
                             {t("adminPage.Buser")}
                           </button>
                         </li>
                       )}
                       <li>
-                        <button 
-                        className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
-                        onClick={() => deleteUser(elem.id)}>
+                        <button
+                          className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+                          onClick={() => deleteUser(elem.id)}
+                        >
                           {t("editProfil.delete")}
                         </button>
                       </li>
@@ -243,7 +247,7 @@ export default function Admin() {
             {/* // Manage Produts/Articles // */}
             {/* ///////////////////////////// */}
 
-            <div className="flex flex-col w-full	">
+            <div className="flex flex-col w-full">
               <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
               {products.length > 0 &&
                 products.map((elem) => (

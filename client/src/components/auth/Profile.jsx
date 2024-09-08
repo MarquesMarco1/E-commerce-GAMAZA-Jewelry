@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import Delete from "../../assets/delete.svg";
 import Cart from "../../assets/cart.svg";
 import { useCart } from "../../CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile() {
   const [profil, setProfil] = useState([]);
@@ -24,6 +26,24 @@ export default function Profile() {
       const data = await response.json();
       setWishlists(data.wishlist);
     }
+  };
+
+  const notify = () => {
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   const fetchData = async (email) => {
@@ -94,7 +114,7 @@ export default function Profile() {
     if (response.ok) {
       const data = await response.json();
       dispatch({ type: "ADD_ITEM", payload: data.success });
-      navigate("/", { replace: true });
+      notify();
     }
 
     deleteProduct(elem);
@@ -114,13 +134,15 @@ export default function Profile() {
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-            className="p-2 m-2 font-primary text-xl font-bold md:px-4 bg-light-purple border text-white rounded-md hover:bg-light-purple transition duration-300"
-            onClick={() => logout()}
+                className="p-2 m-2 font-primary text-xl font-bold md:px-4 bg-light-purple border text-white rounded-md hover:bg-light-purple transition duration-300"
+                onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
             </div>
-            <h1 className="mt-16 text-3xl	text-light-purple mb-2">My wishlist</h1>
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
+              My wishlist
+            </h1>
             <div className="border border-gray-400	w-4/4	"></div>
             <br></br>
             {wishlists.length > 0 &&
@@ -213,6 +235,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
