@@ -138,7 +138,6 @@ export default function Admin() {
     const getCsv = await fetch(`${localhost}/export/data`);
 
     const data = await getCsv.json();
-
     var fileDownload = require("react-file-download");
     if (data[0]) fileDownload(data[0], `stockAlert.csv`);
     if (data[1]) fileDownload(data[1], `tracking.csv`);
@@ -185,7 +184,7 @@ export default function Admin() {
               {t("adminPage.shipping")}
             </button>
             <button
-              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
               onClick={() => download_csv_file()}
             >
               {t("adminPage.export")}
