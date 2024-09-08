@@ -39,8 +39,7 @@ export default function OrderSummary({
     if (response.ok) {
       const data = await response.json();
       setReduction(data.promo[0].rate);
-    } 
-    else {
+    } else {
       setReduction(null);
     }
   };
@@ -48,9 +47,11 @@ export default function OrderSummary({
   return (
     <div className="bg-grey m-4 rounded-2xl p-8">
       <h1 className="font-primary font-bold text-3xl text-center m-2">Order</h1>
-    <Promo onApply={handlePromoApply} />
-    <div className="flex justify-between my-4">
-        <h3 className="font-primary font-bold  text-2xl text-center m-2">Subtotal&nbsp;</h3>
+      <Promo onApply={handlePromoApply} />
+      <div className="flex justify-between my-4">
+        <h3 className="font-primary font-bold  text-2xl text-center m-2">
+          Subtotal&nbsp;
+        </h3>
         <h3 className="font-secondary text-3xl font-bold text-center m-2">
           {reduction ? (
             <>
@@ -62,22 +63,33 @@ export default function OrderSummary({
           )}
         </h3>
       </div>
-        <div className="border border-gold"/>
+      <div className="border border-gold" />
       <div className="flex justify-between">
-        <h3 className="font-primary text-2xl font-bold text-center m-2">Address&nbsp;</h3>
+        <div>
+          <h3 className="font-primary text-2xl font-bold text-center m-2">
+            Address&nbsp;
+          </h3>
+          <button
+            className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple"
+            onClick={onOpenAddressPopup}
+          >
+            Change address
+          </button>
+        </div>
         <h3 className="font-primary text-2xl font-bold  text-center m-2">
           {Object.keys(addressTo).length === 0 ? (
-            <button className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple" 
-            onClick={onOpenAddressPopup}
+            <button
+              className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple"
+              onClick={onOpenAddressPopup}
             >
               No address found
-              </button>
+            </button>
           ) : (
             `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
           )}
         </h3>
       </div>
-      <div className="border border-gold"/>
+      <div className="border border-gold" />
       <div className="flex justify-between">
         <h3 className="font-primary text-2xl font-bold text-center m-2">
           Shipping Method&nbsp;

@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import Delete from "../../assets/delete.svg";
 import Cart from "../../assets/cart.svg";
 import { useCart } from "../../CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile() {
   const [profil, setProfil] = useState([]);
@@ -24,6 +26,24 @@ export default function Profile() {
       const data = await response.json();
       setWishlists(data.wishlist);
     }
+  };
+
+  const notify = () => {
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   const fetchData = async (email) => {
@@ -94,7 +114,7 @@ export default function Profile() {
     if (response.ok) {
       const data = await response.json();
       dispatch({ type: "ADD_ITEM", payload: data.success });
-      navigate("/", { replace: true });
+      notify();
     }
 
     deleteProduct(elem);
@@ -114,8 +134,8 @@ export default function Profile() {
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-            className="p-3 md:px-4 bg-gold border border-black text-white rounded-md hover:bg-light-purple transition duration-300"
-            onClick={() => logout()}
+                className="p-3 md:px-4 bg-gold border border-black text-white rounded-md hover:bg-light-purple transition duration-300"
+                onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
@@ -213,6 +233,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

@@ -5,6 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../LanguageContext";
 import Autocomplete from "./Autocomplete";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useCart } from "../CartContext";
 
 export default function Search() {
   const [product, setProduct] = useState([]);
@@ -20,6 +23,7 @@ export default function Search() {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [autocompleteData, setAutocompleteData] = useState([]);
   const [userInput, setUserInput] = useState("");
+  const { state: cart, dispatch } = useCart([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -149,13 +153,70 @@ export default function Search() {
     setSearchResults(list);
   };
 
+  const fetchIsLog = () => {
+    const email = localStorage.getItem("user");
+    if (email === null) {
+      return false;
+    }
+    return true;
+  };
+
+  const notify = () => {
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  };
+
+  const handleAddToCart = async (elem) => {
+    const formData = {
+      product: parseInt(elem.id),
+      quantity: parseInt(1),
+      size: "no size",
+      user: localStorage.getItem("user"),
+    };
+    if (fetchIsLog()) {
+      const response = await fetch(`${localhost}/api/cartItem`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: "ADD_ITEM", payload: data.success });
+        notify();
+      }
+    } else {
+      const item = {
+        itemQty: parseInt(1),
+        product: elem,
+        size: "no size",
+      };
+      dispatch({ type: "ADD_ITEM", payload: item });
+      notify();
+    }
+  };
+
   if (error)
     return (
       <div className="text-center py-4 text-red-500">
         Error: {error.message}
       </div>
     );
-    
+
   return (
     <div className="p-2 m-2 rounded-lg shadow-md">
       <form
@@ -247,7 +308,6 @@ export default function Search() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
         {searchResults.length > 0 &&
           searchResults.map((result) => (
-            <Link to={`/product/${result.id}`}>
             <div
               key={result.id}
               className="flex flex-col justify-between h-full bg-white-purple dark:bg-dark-mode-purple border border-gold rounded-lg p-5 shadow-lg shadow-gold"
@@ -267,13 +327,15 @@ export default function Search() {
                 {language === "FR" ? result.description : result.descriptionEn}
               </p>
               <button
-              className="mt-4 p-4 w-full font-primary font-bold rounded-3xl bg-gold text-xl text-white border border-gold py-2 hover:bg-light-purple transition duration-300 ">
+                className="mt-4 p-4 w-full font-primary font-bold rounded-3xl bg-gold text-xl text-white border border-gold py-2 hover:bg-light-purple transition duration-300 "
+                onClick={() => handleAddToCart(result)}
+              >
                 {t("search.cart")}
               </button>
             </div>
-          </Link>
           ))}
       </div>
+      <ToastContainer />
     </div>
   );
 }

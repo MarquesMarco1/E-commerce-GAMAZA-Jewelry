@@ -8,6 +8,8 @@ import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
 import Promo from "./Promo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Content() {
   const { t } = useTranslation();
@@ -166,6 +168,21 @@ export default function Content() {
 
       if (data.sucess) {
         dispatch({ type: "REMOVE_ITEM", payload: elem });
+        toast.success(
+          localStorage.getItem("language") === "FR"
+            ? "Ajouter à ma liste de souhaits : ✓"
+            : "Add to Wishlist : Done ✓",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
       }
     }
   };
@@ -329,6 +346,7 @@ export default function Content() {
         initialData={addressTo}
         savedAddresses={savedAddresses}
       />
+      <ToastContainer />
     </div>
   );
 }
