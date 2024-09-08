@@ -229,6 +229,7 @@
     "subTotal": "Total",
     "address": "Address",
     "notFound": "Address not filled",
-    "free":"Free"
+    "free": "Free",
+    "change": "Change address"
   }
 }

@@ -68,30 +68,31 @@ export default function OrderSummary({
         </h3>
       </div>
       <div className="border border-gold" />
-      <div className="flex justify-between">
-        <div>
-          <h3 className="font-primary text-2xl font-bold text-center m-2">
-            {t("cartPage.address")}&nbsp;
-          </h3>
+      <div>
+        <h3 className="font-primary text-2xl font-bold text-center m-2">
+          {t("cartPage.address")}&nbsp;
+        </h3>
+        <div className="flex justify-between">
           <button
-            className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple"
+            className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple m-2 p-2"
             onClick={onOpenAddressPopup}
           >
-            Change address
+            {t("cartPage.change")}
           </button>
+
+          <h3 className="font-primary text-2xl font-bold  text-center m-2">
+            {Object.keys(addressTo).length === 0 ? (
+              <button
+                className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple"
+                onClick={onOpenAddressPopup}
+              >
+                {t("cartPage.notFound")}
+              </button>
+            ) : (
+              `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
+            )}
+          </h3>
         </div>
-        <h3 className="font-primary text-2xl font-bold  text-center m-2">
-          {Object.keys(addressTo).length === 0 ? (
-            <button
-              className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple"
-              onClick={onOpenAddressPopup}
-            >
-              {t("cartPage.notFound")}
-            </button>
-          ) : (
-            `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
-          )}
-        </h3>
       </div>
       <div className="border border-gold" />
       <div className="flex justify-between">
