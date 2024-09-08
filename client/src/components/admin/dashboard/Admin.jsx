@@ -133,7 +133,7 @@ export default function Admin() {
 
   const manageShipping = () => {
     navigate("/manageShipping", { replace: true });
-  }
+  };
 
   return (
     <>

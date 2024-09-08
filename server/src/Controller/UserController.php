@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\CartItem;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -98,10 +99,23 @@ class UserController extends AbstractController
     public function deleteUser(User $user, EntityManagerInterface $entityManager, int $id)
     {
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(["user"=>$user->getId()]);
+        $cart_item = $entityManager->getRepository(CartItem::class)->findBy(["cart"=>$cart->getId()]);
+        if($cart_item){
+            foreach($cart_item as $item){
+                $entityManager->remove($item);
+                $entityManager->flush(); 
+            }
+            if($cart){
+                $entityManager->remove($cart);
+                $entityManager->flush();
+            }
+        }
+
         if($cart){
             $entityManager->remove($cart);
             $entityManager->flush();
         }
+        
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->json(['success' => true], 200);

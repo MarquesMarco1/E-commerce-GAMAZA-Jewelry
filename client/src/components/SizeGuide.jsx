@@ -81,12 +81,23 @@ export default function SizeGuide(data) {
     setIsSizeGuideOpen(false);
   };
 
-  const notify = () =>
-    toast(
+  const notify = () => {
+    toast.success(
       localStorage.getItem("language") === "FR"
         ? "Ajouter au panier : ✓"
-        : "Add to cart : Done ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
     );
+  };
 
   const handleAddToCart = async () => {
     const formData = {
@@ -136,6 +147,21 @@ export default function SizeGuide(data) {
       },
       body: JSON.stringify({ formData }),
     });
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter à ma liste de souhaits : ✓"
+        : "Add to Wishlist : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   return (
