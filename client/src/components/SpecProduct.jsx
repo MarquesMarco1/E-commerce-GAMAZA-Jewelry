@@ -121,7 +121,6 @@ const SpecProduct = () => {
     setIsZoomed(!isZoomed);
   };
 
-  // Affichage d'une erreur s'il y en a une
   if (error) {
     return (
       <div className="text-center py-4 text-red-500">

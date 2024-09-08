@@ -126,7 +126,7 @@ export default function Profile() {
         <Header></Header>
         <div className="mr-24	ml-24	flex justify-between font-secondary">
           <div className="w-3/5	 mr-8">
-            <h1 className="mt-16 text-3xl	text-gold mb-2">
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
               {t("profilPage.profil")}
             </h1>
             <div className="border border-gray-400	w-4/4	"></div>
@@ -134,13 +134,15 @@ export default function Profile() {
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-                className="p-3 md:px-4 bg-gold border border-black text-white rounded-md hover:bg-light-purple transition duration-300"
+                className="p-2 m-2 font-primary text-xl font-bold md:px-4 bg-light-purple border text-white rounded-md hover:bg-light-purple transition duration-300"
                 onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
             </div>
-            <h1 className="mt-16 text-3xl	text-gold mb-2">My wishlist</h1>
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
+              My wishlist
+            </h1>
             <div className="border border-gray-400	w-4/4	"></div>
             <br></br>
             {wishlists.length > 0 &&
@@ -154,7 +156,7 @@ export default function Profile() {
                         alt={elem.product.name}
                       />
                       <div className="flex flex-col ml-4">
-                        <h2 className="font-primary text-3xl text-gold">
+                        <h2 className="font-primary text-3xl text-light-purple">
                           {elem.product.name}
                         </h2>
                         <span className="font-primary flex text-2xl p-2">
@@ -224,10 +226,10 @@ export default function Profile() {
               ))}
           </div>
           <div className="w-2/5">
-            <h1 className="mt-16 text-3xl	text-gold mb-2">
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
               {t("profilPage.command")}
             </h1>
-            <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
+            <div className="border border-gray-400 w-4/4 dark:border-light-purple"></div>
             <br></br>
             <ManageCommand />
           </div>

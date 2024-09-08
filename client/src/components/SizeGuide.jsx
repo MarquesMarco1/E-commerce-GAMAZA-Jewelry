@@ -19,19 +19,21 @@ export default function SizeGuide(data) {
   let navigate = useNavigate();
   const { id } = useParams();
   const [displayWishlist, setDisplayWishlist] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
 
   const fetchIsLog = () => {
     const email = localStorage.getItem("user");
-    if (email === null) {
-      return false;
-    }
-    return true;
+    return email !== null;
   };
 
   useEffect(() => {
     if (fetchIsLog()) {
       setDisplayWishlist(true);
     }
+
+    const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setIsInWishlist(savedWishlist.includes(parseInt(id)));
+
     const fetchData = async () => {
       setCategory(data.data.category.name);
       setProduct(data.data);
@@ -71,7 +73,7 @@ export default function SizeGuide(data) {
       }
     };
     fetchData();
-  }, []);
+  }, [id, data]);
 
   const openSizeGuide = () => {
     setIsSizeGuideOpen(true);
@@ -120,7 +122,6 @@ export default function SizeGuide(data) {
         const data = await response.json();
         dispatch({ type: "ADD_ITEM", payload: data.success });
         notify();
-        // navigate("/", { replace: true });
       }
     } else {
       const item = {
@@ -164,11 +165,57 @@ export default function SizeGuide(data) {
     );
   };
 
+  const toggleWishlist = async () => {
+    let savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    if (isInWishlist) {
+      savedWishlist = savedWishlist.filter((item) => item !== parseInt(id));
+    } else {
+      savedWishlist.push(parseInt(id));
+
+      const formData = {
+        product: parseInt(id),
+        quantity: parseInt(quantity),
+        size: selectedSize,
+        user: localStorage.getItem("user"),
+      };
+
+      await fetch(`${localhost}/api/wishlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      });
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(savedWishlist));
+    setIsInWishlist(!isInWishlist);
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter à ma liste de souhaits : ✓"
+        : "Add to Wishlist : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  };
+
   return (
     <>
       {sizeGuide.length > 0 && (
         <div className="mb-4 flex flex-col">
-          <label htmlFor="size" className="block text-3xl font-bold font-primary text-dark-purple dark:text-gold">
+          <label
+            htmlFor="size"
+            className="block text-3xl font-bold font-primary text-dark-purple dark:text-gold"
+          >
             {t("sizeGuidePage.tailleChoose")}
           </label>
           <select
@@ -179,8 +226,11 @@ export default function SizeGuide(data) {
           >
             {sizeGuide.map((elem) => (
               <option
-              className="block text-lg font-bold font-primary rounded-3xl text-light-purple dark:text-gold" 
-              value={elem.name}>{elem.name}</option>
+                className="block text-lg font-bold font-primary rounded-3xl text-light-purple dark:text-gold"
+                value={elem.name}
+              >
+                {elem.name}
+              </option>
             ))}
           </select>
           <button
@@ -192,8 +242,10 @@ export default function SizeGuide(data) {
         </div>
       )}
       <div className="mb-4 flex flex-col">
-        <label htmlFor="quantity" 
-        className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+        <label
+          htmlFor="quantity"
+          className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold"
+        >
           {t("specProduct.quantity")}:
         </label>
         <select
@@ -201,7 +253,7 @@ export default function SizeGuide(data) {
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           className="w-1/3 mt-2 p-2 border font-primary border-gray-300 rounded-3xl dark:bg-dark-mode-purple text-light-purple font-bold dark:text-gold"
-          >
+        >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>
               {num + 1}
@@ -216,21 +268,37 @@ export default function SizeGuide(data) {
         {t("specProduct.cart")}
       </button>
       <div className="mb-4 flex flex-col">
-      <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
-      {t("specProduct.stockQty")} {product && product.stockQty}
+        <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+          {t("specProduct.stockQty")} {product && product.stockQty}
         </p>
       </div>
       <div className="mb-4 flex flex-col">
-      <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
-      {t("specProduct.weight")} {product && product.weight}g
+        <p className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
+          {t("specProduct.weight")} {product && product.weight}g
         </p>
       </div>
       {displayWishlist && (
         <div className="mt-6 p-2 flex justify-center items-center">
-          <button className="flex font-primary text-3xl" onClick={saveForLater}>
-            <img className="mr-4" src={Save4later} alt="" />
+          <button
+            className="flex font-primary text-3xl"
+            onClick={toggleWishlist}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill={isInWishlist ? "#ffc677" : "none"}
+              stroke="#ffc677"
+              className="w-8 h-8 mr-4 transition-all duration-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+            </svg>
             <p className="font-bold font-primary text-3xl text-dark-purple dark:text-gold">
-            Save for later
+              {t("cartPage.productSave")}
             </p>
           </button>
         </div>
@@ -258,7 +326,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -276,7 +346,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.diamètre")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.diameter}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.diameter}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -292,7 +364,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -300,7 +374,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.value}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.value}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -316,7 +392,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.taille")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.name}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.name}
+                          </li>
                         ))}
                       </ul>
                       <ul>
@@ -324,7 +402,9 @@ export default function SizeGuide(data) {
                           {t("sizeGuidePage.longueur")}
                         </li>
                         {sizeGuide.map((elem) => (
-                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">{elem.value}</li>
+                          <li className="border px-4 py-2 font-secondary text-dark-purple dark:text-gold">
+                            {elem.value}
+                          </li>
                         ))}
                       </ul>
                     </div>
