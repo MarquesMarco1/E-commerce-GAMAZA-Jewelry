@@ -102,7 +102,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className="dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-30 dark:bg-dark-mode-purple">
         <Header></Header>
         <div className="mr-24	ml-24	flex justify-between font-secondary">
           <div className="w-3/5	 mr-8">
@@ -114,8 +114,8 @@ export default function Profile() {
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-                className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
-                onClick={() => logout()}
+            className="p-3 md:px-4 bg-gold border border-black text-white rounded-md hover:bg-light-purple transition duration-300"
+            onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
