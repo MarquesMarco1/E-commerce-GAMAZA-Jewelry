@@ -187,6 +187,16 @@ export default function Content() {
     }
   };
 
+  const handlePromoApply = async (code) => {
+    const response = await fetch(`${localhost}/api/coupon/${code}`);
+    if (response.ok) {
+      const data = await response.json();
+      setReduction(data.promo[0].rate);
+    } else {
+      setReduction(null);
+    }
+  };
+
   const handleShipping = async (address) => {
     const shippingCountry = await fetch(`${localhost}/api/shippingCountry`);
     const countryList = await shippingCountry.json();
@@ -216,8 +226,6 @@ export default function Content() {
 
   const checkout = async () => {
     if (cartState === 2) {
-      // console.log(`adressTo => ${JSON.stringify(addressTo)}; shippingOptions => ${JSON.stringify(shippingOption)}`)
-      // console.log({adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays})
       navigate("/checkout", {
         state: {
           adress: JSON.stringify(addressTo),
@@ -331,7 +339,7 @@ export default function Content() {
           shippingOption={shippingOption}
           shippingOptionValid={shippingOptionValid}
           isWaiting={isWaiting}
-          cartState={cartState}
+          // cartState={cartState}
           stateManager={stateManager}
           onShippingOptionChange={setShippingOption}
           onCheckout={checkout}

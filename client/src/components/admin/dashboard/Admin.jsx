@@ -11,7 +11,6 @@ import Header from "../../Header";
 import Footer from "../../Footer";
 import NavBarAdmin from "../../utils/navbarAdmin";
 import { useTranslation } from "react-i18next";
-import Organizer from "./Organizer";
 
 export default function Admin() {
   let navigate = useNavigate();
@@ -135,16 +134,25 @@ export default function Admin() {
     navigate("/manageShipping", { replace: true });
   };
 
+  const download_csv_file = async () => {
+    const getCsv = await fetch(`${localhost}/export/data`);
+
+    const data = await getCsv.json();
+    var fileDownload = require("react-file-download");
+    if (data[0]) fileDownload(data[0], `stockAlert.csv`);
+    if (data[1]) fileDownload(data[1], `tracking.csv`);
+  };
+
   return (
     <>
       <div className="bg-light-purple bg-opacity-30 dark:bg-dark-mode-purple">
         <Header></Header>
         <div className="mr-24	ml-24	">
           <NavBarAdmin></NavBarAdmin>
+
           <div className="border border-gold	w-3/4	"></div>
           <br></br>
 
-          <Organizer />
           {/* //////////////////////// */}
           {/* // Navigate to a CRUD // */}
           {/* //////////////////////// */}
@@ -174,6 +182,12 @@ export default function Admin() {
               onClick={() => manageShipping()}
             >
               {t("adminPage.shipping")}
+            </button>
+            <button
+              className="rounded-lg bg-gold dark:bg-dark-mode-light-purple font-primary text-white p-2.5 mt-2"
+              onClick={() => download_csv_file()}
+            >
+              {t("adminPage.export")}
             </button>
             <br></br>
           </div>
