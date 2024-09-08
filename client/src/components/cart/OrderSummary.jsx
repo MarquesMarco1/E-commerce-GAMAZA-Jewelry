@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loading from "../utils/Loading";
 import localhost from "../../config";
 import Promo from "./Promo";
+import { useTranslation } from "react-i18next";
 
 export default function OrderSummary({
   subTotal,
@@ -19,6 +20,7 @@ export default function OrderSummary({
   const [gift, setGift] = useState([]);
   const date = new Date().toISOString().split("T")[0];
   const [reduction, setReduction] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,10 +49,10 @@ export default function OrderSummary({
 
   return (
     <div className="bg-grey m-4 rounded-2xl p-8">
-      <h1 className="font-primary font-bold text-3xl text-center m-2">Order</h1>
+      <h1 className="font-primary font-bold text-3xl text-center m-2">{t("cartPage.order")}</h1>
     <Promo onApply={handlePromoApply} />
     <div className="flex justify-between my-4">
-        <h3 className="font-primary font-bold  text-2xl text-center m-2">Subtotal&nbsp;</h3>
+        <h3 className="font-primary font-bold  text-2xl text-center m-2">{t("cartPage.subTotal")}&nbsp;</h3>
         <h3 className="font-secondary text-3xl font-bold text-center m-2">
           {reduction ? (
             <>
@@ -64,13 +66,13 @@ export default function OrderSummary({
       </div>
         <div className="border border-gold"/>
       <div className="flex justify-between">
-        <h3 className="font-primary text-2xl font-bold text-center m-2">Address&nbsp;</h3>
+        <h3 className="font-primary text-2xl font-bold text-center m-2">{t("cartPage.address")}&nbsp;</h3>
         <h3 className="font-primary text-2xl font-bold  text-center m-2">
           {Object.keys(addressTo).length === 0 ? (
             <button className="p-4 md:px-4 font-primary bg-gold border font-bold text-lg text-white rounded-3xl hover:bg-light-purple transition duration-300 dark:hover:bg-dark-mode-light-purple" 
             onClick={onOpenAddressPopup}
             >
-              No address found
+            {t("cartPage.notFound")}
               </button>
           ) : (
             `${addressTo.country}, ${addressTo.state} ${addressTo.zip}, ${addressTo.city}, ${addressTo.street1}`
@@ -80,7 +82,7 @@ export default function OrderSummary({
       <div className="border border-gold"/>
       <div className="flex justify-between">
         <h3 className="font-primary text-2xl font-bold text-center m-2">
-          Shipping Method&nbsp;
+          {t("cartPage.shippingMethod")}&nbsp;
         </h3>
         {isWaiting && cartState === 1 && <Loading />}
         <div>
@@ -115,7 +117,7 @@ export default function OrderSummary({
                         <p>{(elem.amount * 0.91).toFixed()}€</p>
                       </div>
                       <div className="text-gray-600 font-bold">
-                        Estimated days: {elem.estimatedDays} days
+                        {t("cartPage.estimatedTime")}: {elem.estimatedDays} {t("cartPage.days")}
                       </div>
                     </div>
                   </li>
@@ -148,7 +150,7 @@ export default function OrderSummary({
                       <p>{(shippingOption.amount * 0.91).toFixed()}€</p>
                     </div>
                     <div className="text-gray-600 font-bold">
-                      Estimated days: {shippingOption.estimatedDays} days
+                      {t("cartPage.estimatedTime")}: {shippingOption.estimatedDays} {t("cartPage.days")}
                     </div>
                   </div>
                 </li>
@@ -164,8 +166,8 @@ export default function OrderSummary({
             <li className="flex justify-between	mb-2">
               <input type="radio" name="gift" />
               <p>
-                C'est un cadeau <br />
-                <span className="text-gold">Offert</span>
+              {t("cartPage.isGift")} <br />
+                <span className="text-gold">{t("cartPage.free")}</span>
               </p>
               <img src={elem.image} alt={elem.id} className="w-1/4 h-1/4" />
             </li>

@@ -107,8 +107,8 @@ export default function AddressPopup({
             {savedAddresses.length > 0 && (
               <div className="m-4 ml-6 px-40">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  Select your address:
-                  <select
+                {t("addressPopup.addressOption")}
+                <select
                     className="block appearance-none w-full bg-gray-200 border border-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     onChange={(e) => setSelectedAddressIndex(e.target.value)}
                     value={selectedAddressIndex || ""}
@@ -135,8 +135,8 @@ export default function AddressPopup({
             {/* <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary font-bold text-gold"> */}
             <div className="w-full md:w-1/2 px-6 mb-6 md:mb-0">
               <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                Name:
-                <input
+              {t("addressPopup.addressName")}
+              <input
                   // className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
@@ -149,7 +149,7 @@ export default function AddressPopup({
             </div>
             <div className="w-full md:w-1/2 px-6">
               <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                Email:
+              {t("addressPopup.addressEmail")}
                 <input
                   className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
@@ -163,8 +163,8 @@ export default function AddressPopup({
             <div className="flex my-4 mb-2 px-24">
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  Phone:
-                  <input
+                {t("addressPopup.addressPhone")}
+                <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={phone}
@@ -174,8 +174,8 @@ export default function AddressPopup({
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  Company:
-                  <input
+                {t("addressPopup.addressCompany")}
+                <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={company}
@@ -185,8 +185,8 @@ export default function AddressPopup({
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  Country:
-                  <input
+                {t("addressPopup.addressCountry")}
+                <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={country}
@@ -200,8 +200,8 @@ export default function AddressPopup({
             <div className="flex flex-wrap mb-2 my-2 px-24">
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  ZIP:
-                  <input
+                {t("addressPopup.addressZIP")}
+                <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={zip}
@@ -213,7 +213,7 @@ export default function AddressPopup({
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  State:
+                    {t("addressPopup.adressState")}
                   <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
@@ -226,8 +226,8 @@ export default function AddressPopup({
               </div>
               <div className="w-full md:w-1/3 px-6 mb-4 md:mb-0">
                 <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                  City:
-                  <input
+                {t("addressPopup.addressCity")}
+                <input
                     className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={city}
@@ -240,7 +240,7 @@ export default function AddressPopup({
             </div>
             <div className="w-full px-40 m-4">
               <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
-                Street 1:
+              {t("addressPopup.addressStreet")}
                 <input
                   className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
@@ -256,7 +256,7 @@ export default function AddressPopup({
                 className="text-white bg-gold hover:bg-light-purple focus:ring-4 focus:outline-none focus:ring-gold font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center dark:bg-dark-mode-light-purple dark:hover:bg-light-purple dark:focus:ring-light-purple"
                 onClick={handleSave}
               >
-                Confirm
+                      {t("addressPopup.confirm")}
               </button>
             </div>
             {/* </form> */}
