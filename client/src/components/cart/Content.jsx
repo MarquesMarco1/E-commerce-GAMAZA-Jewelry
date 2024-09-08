@@ -129,13 +129,13 @@ export default function Content() {
   const handleQtyChange = (item) => {
     dispatch({ type: "UPDATE_ITEM", payload: item });
   };
-
+  
   const deleteProduct = async (item) => {
     if (localStorage.getItem("user")) {
       const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
         method: "DELETE",
       });
-
+      
       if (response.ok) {
         console.log("Product deleted successfully from server");
         dispatch({ type: "REMOVE_ITEM", payload: item });
@@ -153,7 +153,7 @@ export default function Content() {
       quantity: parseInt(elem.itemQty),
       size: elem.size,
     };
-
+    
     const response = await fetch(`${localhost}/api/wishlist`, {
       method: "POST",
       headers: {
@@ -161,16 +161,16 @@ export default function Content() {
       },
       body: JSON.stringify({ formData }),
     });
-
+    
     if (response.ok) {
       const data = await response.json();
-
+      
       if (data.sucess) {
         dispatch({ type: "REMOVE_ITEM", payload: elem });
       }
     }
   };
-
+  
   const handlePromoApply = async (code) => {
     const response = await fetch(`${localhost}/api/coupon/${code}`);
     if (response.ok) {
@@ -180,7 +180,7 @@ export default function Content() {
       setReduction(null);
     }
   };
-
+  
   const handleShipping = async (address) => {
     const shippingCountry = await fetch(`${localhost}/api/shippingCountry`);
     const countryList = await shippingCountry.json();
@@ -207,11 +207,9 @@ export default function Content() {
       return;
     }
   };
-
+  
   const checkout = async () => {
     if (cartState === 2) {
-      // console.log(`adressTo => ${JSON.stringify(addressTo)}; shippingOptions => ${JSON.stringify(shippingOption)}`)
-      // console.log({adress: JSON.stringify(addressTo), shipping_amount : shippingOption.amount,shipping_name: shippingOption.attributes[0], shipping_estimatedDays: shippingOption.estimatedDays})
       navigate("/checkout", {
         state: {
           adress: JSON.stringify(addressTo),

@@ -98,7 +98,8 @@
     "price": "Price :",
     "manageCategory": "Manage Category :",
     "promotion": "Promotion",
-    "shipping": "Shipping"
+    "shipping": "Shipping", 
+    "export": "Export Data"
   },
   "createProduct": {
     "title": "Create a product",

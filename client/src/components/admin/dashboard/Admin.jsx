@@ -11,7 +11,6 @@ import Header from "../../Header";
 import Footer from "../../Footer";
 import NavBarAdmin from "../../utils/navbarAdmin";
 import { useTranslation } from "react-i18next";
-import Organizer from "./Organizer";
 
 export default function Admin() {
   let navigate = useNavigate();
@@ -133,61 +132,76 @@ export default function Admin() {
 
   const manageShipping = () => {
     navigate("/manageShipping", { replace: true });
-  }
+  };
+
+  const download_csv_file = async () => {
+    const getCsv = await fetch(`${localhost}/export/data`);
+
+    const data = await getCsv.json();
+
+    var fileDownload = require("react-file-download");
+    if (data[0]) fileDownload(data[0], `stockAlert.csv`);
+    if (data[1]) fileDownload(data[1], `tracking.csv`);
+  };
 
   return (
     <>
-      <div className="dark:bg-dark-mode-purple">
+      <div className='dark:bg-dark-mode-purple'>
         <Header></Header>
-        <div className="mr-24	ml-24	">
+        <div className='mr-24	ml-24	'>
           <NavBarAdmin></NavBarAdmin>
-          <div className="border border-grey	w-2/4	"></div>
+          <div className='border border-grey	w-2/4	'></div>
           <br></br>
 
-          <Organizer />
           {/* //////////////////////// */}
           {/* // Navigate to a CRUD // */}
           {/* //////////////////////// */}
 
-          <div className="flex flex-col	">
-            <Link to={`/createArticle`} className="w-max text-gold">
+          <div className='flex flex-col	'>
+            <Link to={`/createArticle`} className='w-max text-gold'>
               {t("adminPage.product")}
             </Link>
-            <Link to={`/createCategory`} className="w-max text-gold">
+            <Link to={`/createCategory`} className='w-max text-gold'>
               {t("adminPage.category")}
             </Link>
-            <Link to={`/createUser`} className="w-max text-gold">
+            <Link to={`/createUser`} className='w-max text-gold'>
               {t("adminPage.user")}
             </Link>
-            <Link to={`/admin/code`} className="w-max text-gold">
+            <Link to={`/admin/code`} className='w-max text-gold'>
               {t("adminPage.code")}
             </Link>
             <button
-              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              className='rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2'
               onClick={() => addPromo()}
             >
               {t("adminPage.promotion")}
             </button>
 
             <button
-              className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2"
+              className='rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2'
               onClick={() => manageShipping()}
             >
               {t("adminPage.shipping")}
             </button>
+            <button
+              className='rounded-lg bg-light-purple dark:bg-dark-mode-light-purple text-gold p-2.5 mt-2'
+              onClick={() => download_csv_file()}
+            >
+              {t("adminPage.export")}
+            </button>
             <br></br>
           </div>
 
-          <div className="flex justify-between	">
+          <div className='flex justify-between	'>
             {/* ////////////////// */}
             {/* // Manage users // */}
             {/* ////////////////// */}
 
-            <div className="flex flex-col w-full	">
-              <h2 className="text-gold">{t("adminPage.manageUser")}</h2>
+            <div className='flex flex-col w-full	'>
+              <h2 className='text-gold'>{t("adminPage.manageUser")}</h2>
               {users.length > 0 &&
                 users.map((elem) => (
-                  <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80">
+                  <ul className='m-2.5 rounded-2xl p-2.5	bg-grey opacity-80'>
                     <div>
                       <li>
                         {t("adminPage.FullName")}{" "}
@@ -235,11 +249,11 @@ export default function Admin() {
             {/* // Manage Produts/Articles // */}
             {/* ///////////////////////////// */}
 
-            <div className="flex flex-col w-full	">
-              <h2 className="text-gold">{t("adminPage.manageProduct")}</h2>
+            <div className='flex flex-col w-full	'>
+              <h2 className='text-gold'>{t("adminPage.manageProduct")}</h2>
               {products.length > 0 &&
                 products.map((elem) => (
-                  <ul className="m-2.5  rounded-2xl p-2.5	bg-grey opacity-80">
+                  <ul className='m-2.5  rounded-2xl p-2.5	bg-grey opacity-80'>
                     <div>
                       <li>
                         {t("adminPage.title")}{" "}
@@ -271,11 +285,11 @@ export default function Admin() {
         {/* // Manage Category         // */}
         {/* ///////////////////////////// */}
 
-        <div className="flex flex-col w-full	">
-          <h2 className="text-gold">{t("adminPage.manageCategory")}</h2>
+        <div className='flex flex-col w-full	'>
+          <h2 className='text-gold'>{t("adminPage.manageCategory")}</h2>
           {category.length > 0 &&
             category.map((elem) => (
-              <ul className="m-2.5 rounded-2xl p-2.5	bg-grey opacity-80	">
+              <ul className='m-2.5 rounded-2xl p-2.5	bg-grey opacity-80	'>
                 <div>
                   <li>
                     {t("adminPage.title")}{" "}
