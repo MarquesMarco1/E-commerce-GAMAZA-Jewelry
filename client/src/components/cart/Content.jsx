@@ -8,6 +8,8 @@ import AddressPopup from "./AddressPopup";
 import ProductItem from "./ProductItem";
 import OrderSummary from "./OrderSummary";
 import Promo from "./Promo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Content() {
   const { t } = useTranslation();
@@ -29,6 +31,7 @@ export default function Content() {
   const [shippingChoice, setShippingChoice] = useState([]);
   const [shippingOption, setShippingOption] = useState(0);
   const [shippingOptionValid, setShippingOptionValid] = useState(false);
+  const [tracking_num, setTracking_num] = useState("");
 
   const [isWaiting, setIsWaiting] = useState(true);
   const [cartState, setCartState] = useState(0);
@@ -129,19 +132,17 @@ export default function Content() {
   const handleQtyChange = (item) => {
     dispatch({ type: "UPDATE_ITEM", payload: item });
   };
-  
+
   const deleteProduct = async (item) => {
     if (localStorage.getItem("user")) {
       const response = await fetch(`${localhost}/api/cartItem/${item.id}`, {
         method: "DELETE",
       });
-      
+
       if (response.ok) {
-        console.log("Product deleted successfully from server");
         dispatch({ type: "REMOVE_ITEM", payload: item });
       }
     } else {
-      console.log("User not logged in, removing from local cart");
       dispatch({ type: "REMOVE_ITEM", payload: item });
     }
   };
@@ -153,7 +154,7 @@ export default function Content() {
       quantity: parseInt(elem.itemQty),
       size: elem.size,
     };
-    
+
     const response = await fetch(`${localhost}/api/wishlist`, {
       method: "POST",
       headers: {
@@ -161,16 +162,31 @@ export default function Content() {
       },
       body: JSON.stringify({ formData }),
     });
-    
+
     if (response.ok) {
       const data = await response.json();
-      
+
       if (data.sucess) {
         dispatch({ type: "REMOVE_ITEM", payload: elem });
+        toast.success(
+          localStorage.getItem("language") === "FR"
+            ? "Ajouter à ma liste de souhaits : ✓"
+            : "Add to Wishlist : Done ✓",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
       }
     }
   };
-  
+
   const handlePromoApply = async (code) => {
     const response = await fetch(`${localhost}/api/coupon/${code}`);
     if (response.ok) {
@@ -180,7 +196,7 @@ export default function Content() {
       setReduction(null);
     }
   };
-  
+
   const handleShipping = async (address) => {
     const shippingCountry = await fetch(`${localhost}/api/shippingCountry`);
     const countryList = await shippingCountry.json();
@@ -207,7 +223,7 @@ export default function Content() {
       return;
     }
   };
-  
+
   const checkout = async () => {
     if (cartState === 2) {
       navigate("/checkout", {
@@ -216,6 +232,7 @@ export default function Content() {
           shipping_amount: shippingOption.amount,
           shipping_name: shippingOption.attributes[0],
           shipping_estimatedDays: shippingOption.estimatedDays,
+          tracking_num: tracking_num,
         },
       });
     } else if (cartState === 1) {
@@ -268,32 +285,9 @@ export default function Content() {
     });
 
     if (trans) {
-      if (localStorage.getItem("user")) {
-        const formData = {
-          user: localStorage.getItem("user"),
-          number: trans.objectId,
-          status: "PRE_TRANSIT",
-        };
-
-        await fetch(`${localhost}/api/tracking`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ formData }),
-        });
-      } else {
-        const formData = {
-          addressTo: addressTo.email,
-          number: trans.objectId,
-          status: "PRE_TRANSIT",
-        };
-
-        await fetch(`${localhost}/api/trackingNotLogin`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ formData }),
-        });
-      }
+      setTracking_num(trans.objectId);
     }
+
     setCartState(2);
   };
 
@@ -336,8 +330,7 @@ export default function Content() {
           />
         ))}
       </div>
-      <div className="w-2/5  mr-8 flex flex-col justify-start">
-        <Promo onApply={handlePromoApply} />
+      <div className="w-2/5 mr-8 flex flex-col justify-start">
         <OrderSummary
           subTotal={subTotal}
           reduction={reduction}
@@ -346,7 +339,7 @@ export default function Content() {
           shippingOption={shippingOption}
           shippingOptionValid={shippingOptionValid}
           isWaiting={isWaiting}
-          cartState={cartState}
+          // cartState={cartState}
           stateManager={stateManager}
           onShippingOptionChange={setShippingOption}
           onCheckout={checkout}
@@ -361,6 +354,7 @@ export default function Content() {
         initialData={addressTo}
         savedAddresses={savedAddresses}
       />
+      <ToastContainer />
     </div>
   );
 }

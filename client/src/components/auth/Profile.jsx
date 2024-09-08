@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import Delete from "../../assets/delete.svg";
 import Cart from "../../assets/cart.svg";
 import { useCart } from "../../CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile() {
   const [profil, setProfil] = useState([]);
@@ -24,6 +26,24 @@ export default function Profile() {
       const data = await response.json();
       setWishlists(data.wishlist);
     }
+  };
+
+  const notify = () => {
+    toast.success(
+      localStorage.getItem("language") === "FR"
+        ? "Ajouter au panier : ✓"
+        : "Add to cart : Done ✓",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   const fetchData = async (email) => {
@@ -94,7 +114,7 @@ export default function Profile() {
     if (response.ok) {
       const data = await response.json();
       dispatch({ type: "ADD_ITEM", payload: data.success });
-      navigate("/", { replace: true });
+      notify();
     }
 
     deleteProduct(elem);
@@ -102,11 +122,11 @@ export default function Profile() {
 
   return (
     <>
-      <div className="dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-30 dark:bg-dark-mode-purple">
         <Header></Header>
         <div className="mr-24	ml-24	flex justify-between font-secondary">
           <div className="w-3/5	 mr-8">
-            <h1 className="mt-16 text-3xl	text-gold mb-2">
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
               {t("profilPage.profil")}
             </h1>
             <div className="border border-gray-400	w-4/4	"></div>
@@ -114,13 +134,15 @@ export default function Profile() {
             <ManageProfil data={profil} />
             <div className="text-center">
               <button
-                className="rounded-lg bg-light-purple dark:bg-dark-mode-light-purple p-2.5 mt-2 text-gold"
+                className="p-2 m-2 font-primary text-xl font-bold md:px-4 bg-light-purple border text-white rounded-md hover:bg-light-purple transition duration-300"
                 onClick={() => logout()}
               >
                 {t("profilPage.logout")}
               </button>
             </div>
-            <h1 className="mt-16 text-3xl	text-gold mb-2">My wishlist</h1>
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
+              My wishlist
+            </h1>
             <div className="border border-gray-400	w-4/4	"></div>
             <br></br>
             {wishlists.length > 0 &&
@@ -134,7 +156,7 @@ export default function Profile() {
                         alt={elem.product.name}
                       />
                       <div className="flex flex-col ml-4">
-                        <h2 className="font-primary text-3xl text-gold">
+                        <h2 className="font-primary text-3xl text-light-purple">
                           {elem.product.name}
                         </h2>
                         <span className="font-primary flex text-2xl p-2">
@@ -204,15 +226,16 @@ export default function Profile() {
               ))}
           </div>
           <div className="w-2/5">
-            <h1 className="mt-16 text-3xl	text-gold mb-2">
+            <h1 className="mt-16 text-3xl	text-light-purple mb-2">
               {t("profilPage.command")}
             </h1>
-            <div className="border border-gray-400 w-4/4 dark:border-gold"></div>
+            <div className="border border-gray-400 w-4/4 dark:border-light-purple"></div>
             <br></br>
             <ManageCommand />
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

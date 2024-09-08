@@ -262,12 +262,6 @@ const Authentication = () => {
                     autoComplete="new-password"
                     required
                   />
-                  <a
-                    href="#"
-                    className="font-bold font-primary text-dark-purple hover:text-light-purple dark:text-gold"
-                  >
-                    {t("auth.no-account")}
-                  </a>
                   <button className="w-3/4 p-3 bg-light-purple text-3xl font-bold text-black rounded-lg hover:bg-gold font-primary dark:bg-dark-mode-light-purple dark:text-gold dark:hover:bg-white">
                     {t("auth.register")}
                   </button>
