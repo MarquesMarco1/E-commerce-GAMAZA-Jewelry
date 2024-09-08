@@ -98,16 +98,16 @@ export default function CategoryPage() {
               return (
                 <li
                   key={elem.id}
-                  className="border border-gray-300 p-4 rounded-lg dark:border-gold"
+                  className="border border-gold p-4 rounded-lg shadow-md shadow-gold"
                 >
                   <Link to={`/product/${elem.id}`}>
                     <img
-                      className="w-full h-48 object-cover mb-4"
+                      className="w-full rounded-t-lg h-80 object-cover mb-4"
                       src={elem.images}
                       alt={language === "FR" ? elem.name : elem.nameEn}
                     />
 
-                    <p className="text-center font-primary dark:text-gold">
+                    <p className="text-center font-primary text-2xl font-bold text-dark-purple dark:text-gold">
                       {language === "FR" ? elem.name : elem.nameEn}
                     </p>
                     <div className="flex items-center">
@@ -116,7 +116,7 @@ export default function CategoryPage() {
                         src={stockColorCode}
                         alt={stockText}
                       />
-                      <p className="text-left font-primary dark:text-gold">
+                      <p className="text-left font-primary font-bold text-xl text-dark-purple dark:text-gold">
                         {stockText}
                       </p>
                     </div>

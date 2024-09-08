@@ -14,7 +14,7 @@ export default function StoneProduct(data) {
 
 
   return (
-    <div className="flex flex-row justify-around">
+    <div className="flex flex-row justify-evenly">
       {stone.length > 0 && 
         stone.map((elem) => {
           if(elem.stone !== null) {
@@ -24,7 +24,7 @@ export default function StoneProduct(data) {
               {language === "FR" ? elem.stone.name : elem.stone.nameEn}
               </p>
             <img
-              className={`w-20 h-20 cursor-pointer border-2 object-cover rounded-md border-grey`}
+              className={`w-24 h-24 cursor-pointer border-2 object-contain bg-white rounded-lg border-grey`}
               src={elem.stone.image}
               alt={elem.image} />
             </div>

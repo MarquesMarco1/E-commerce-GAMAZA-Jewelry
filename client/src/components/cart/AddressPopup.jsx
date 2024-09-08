@@ -86,7 +86,7 @@ export default function AddressPopup({
     <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
         <div className="border dark:border-gold rounded-lg relative flex flex-col w-full bg-white dark:bg-dark-mode-purple outline-none focus:outline-none shadow-lg dark:shadow-gold">
-          <div className="flex items-start justify-between p-5 border-b border-solid border-grey dark:border-gold rounded-t shadow-lg">
+          <div className="flex items-start justify-between p-5 border-b border-solid border-grey dark:border-gold rounded-t shadow-md dark:shadow-gold">
             {/* <form class="w-full max-w-lg"> */}
             {/* <div className="flex flex-col justifxy-center items-center"> */}
             <h1 className="font-primary font-bold text-gold text-xl mb-4">
@@ -94,10 +94,10 @@ export default function AddressPopup({
             </h1>
             <button
               classN
-              ame="p-1 ml-auto bg-transparent border-0 text-gold float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              ame="p-1 ml-auto bg-transparent border-0 text-gold float-right text-4xl leading-none font-semibold outline-none focus:outline-none"
               onClick={onClose}
             >
-              <span className="bg-transparent text-gold h-6 w-6 text-2xl block outline-none focus:outline-none">
+              <span className="bg-transparent text-gold h-6 w-6 text-3xl block outline-none focus:outline-none">
                 ×
               </span>
             </button>
@@ -106,10 +106,10 @@ export default function AddressPopup({
           <div className="flex flex-wrap my-2 mx-2 mb-6">
             {savedAddresses.length > 0 && (
               <div className="m-4 ml-6 px-40">
-                <label className="block uppercase tracking-wide text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   Select your address:
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     onChange={(e) => setSelectedAddressIndex(e.target.value)}
                     value={selectedAddressIndex || ""}
                   >
@@ -132,13 +132,13 @@ export default function AddressPopup({
                 </label>
               </div>
             )}
-            {/* <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary font-bold text-gold"> */}
+            {/* <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary font-bold text-gold"> */}
             <div className="w-full md:w-1/2 px-6 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+              <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                 Name:
                 <input
-                  // className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  // className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -148,10 +148,10 @@ export default function AddressPopup({
               </label>
             </div>
             <div className="w-full md:w-1/2 px-6">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+              <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                 Email:
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -162,10 +162,10 @@ export default function AddressPopup({
             </div>
             <div className="flex my-4 mb-2 px-24">
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   Phone:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -173,10 +173,10 @@ export default function AddressPopup({
                 </label>
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   Company:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
@@ -184,10 +184,10 @@ export default function AddressPopup({
                 </label>
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   Country:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
@@ -199,10 +199,10 @@ export default function AddressPopup({
             </div>
             <div className="flex flex-wrap mb-2 my-2 px-24">
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   ZIP:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
@@ -212,10 +212,10 @@ export default function AddressPopup({
                 </label>
               </div>
               <div className="w-full md:w-1/3 px-6 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   State:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
@@ -225,10 +225,10 @@ export default function AddressPopup({
                 </label>
               </div>
               <div className="w-full md:w-1/3 px-6 mb-4 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+                <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                   City:
                   <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -239,10 +239,10 @@ export default function AddressPopup({
               </div>
             </div>
             <div className="w-full px-40 m-4">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 font-primary text-gold">
+              <label className="block uppercase tracking-wide text-sm font-bold mb-2 font-primary text-gold">
                 Street 1:
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   value={street1}
                   onChange={(e) => setStreet1(e.target.value)}
@@ -253,7 +253,7 @@ export default function AddressPopup({
             </div>
             <div className="flex justify-center w-full items-center">
               <button
-                className="text-gold bg-light-purple hover:bg-dark-purple focus:ring-4 focus:outline-none focus:ring-gold font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center dark:bg-dark-mode-light-purple dark:hover:bg-light-purple dark:focus:ring-light-purple"
+                className="text-white bg-gold hover:bg-light-purple focus:ring-4 focus:outline-none focus:ring-gold font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center dark:bg-dark-mode-light-purple dark:hover:bg-light-purple dark:focus:ring-light-purple"
                 onClick={handleSave}
               >
                 Confirm

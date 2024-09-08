@@ -16,7 +16,7 @@ module.exports = {
         "light-purple-50": "rgba(205, 146, 242, 0.5)",
         "light-blue": "rgba(196,174,246,255)",
         "dark-purple": "#d9a9ff",
-        "dark-mode-purple": "#150536",
+        "dark-mode-purple": "#160438",
         "dark-mode-light-purple": "#6D4FAE",
         black: "#0C0910",
         white: "#F5F5F5",

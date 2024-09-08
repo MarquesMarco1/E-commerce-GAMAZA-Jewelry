@@ -255,7 +255,7 @@ export default function Search() {
               <img
                 src={result.images}
                 alt={result.name}
-                className="w-full h-48 object-cover rounded-t-lg"
+                className="w-full h-80 object-cover rounded-t-lg"
               />
               <h3 className="font-primary text-gold font-extrabold text-center p-2 text-3xl mt-4">
                 {language === "FR" ? result.name : result.nameEn}

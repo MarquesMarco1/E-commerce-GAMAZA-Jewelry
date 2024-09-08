@@ -26,7 +26,7 @@ export default function Accueil() {
   }, [language]);
 
   return (
-    <div className="bg-light-purple bg-opacity-50 dark:bg-dark-mode-light-purple shadow-md ">
+    <div className="bg-light-purple bg-opacity-30 dark:bg-dark-mode-light-purple shadow-md ">
       <Header />
       <div className="mt-8 flex items-center justify-center bg-white-purple dark:bg-dark-mode-purple shadow-md shadow-gold p-4 m-2 rounded-lg">
         <ul className="flex flex-row lg:flex-nowrap justify-center gap-4 md:gap-6 lg:gap-8">

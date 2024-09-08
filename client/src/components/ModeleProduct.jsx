@@ -14,7 +14,7 @@ export default function ModeleProduct(data) {
   }, [data, language]);
 
   return (
-    <div className="flex flex-row justify-around">
+    <div className="flex flex-row justify-evenly">
       {modele &&
         modele.map((elem) => (
           <div key={elem.id} className="flex flex-col">
@@ -23,7 +23,7 @@ export default function ModeleProduct(data) {
             </p>
             <Link to={`/product/${elem.id}`}>
               <img
-                className="w-20 h-20 cursor-pointer border-2 rounded-md border-grey"
+                className="w-24 h-24 cursor-pointer border-2 rounded-lg border-grey"
                 src={elem.images}
                 alt={elem.images}
               />

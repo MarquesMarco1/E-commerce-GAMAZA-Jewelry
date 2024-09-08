@@ -14,6 +14,7 @@ import ModeleProduct from "./ModeleProduct";
 import StoneProduct from "./StoneProduct";
 import SizeGuide from "./SizeGuide"; // Guide des tailles
 import ReviewForm from "./review/ReviewForm"; // Avis
+import ReactImageMagnify from 'react-image-magnify'; // Zoom
 import { lastDayOfDecade } from "date-fns";
 
 const SpecProduct = () => {
@@ -21,7 +22,7 @@ const SpecProduct = () => {
   const { t } = useTranslation(); // Utilisation du hook de traduction
   const [product, setProduct] = useState(null); // État pour stocker les informations du produit
   const [error, setError] = useState(null); // État pour stocker les erreurs
-  const [selectedImage, setSelectedImage] = useState(""); // État pour stocker l'image sélectionnée
+  const [selectedImage, setSelectedImage] = useState(null); // État pour stocker l'image sélectionnée
   const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture du modal
   const [isZoomed, setIsZoomed] = useState(false); // État pour gérer le zoom de l'image
   const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture de l'alerte de stock
@@ -171,7 +172,7 @@ const SpecProduct = () => {
       <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-light-purple">
         <Header />
         <nav className="bg-light-blue opacity-50 py-2 px-6">
-          <ul className="flex space-x-4 p-4 text-xl text-dark-mode-purple dark:text-white font-primary font-bold hover:text-dark-purple dark:hover:text-dark-mode-purple transition duration-300 ease-in-out">
+          <ul className="flex space-x-4 p-4 text-xl text-dark-mode-purple dark:text-gold font-primary font-bold hover:text-gold dark:hover:text-dark-mode-purple transition duration-300 ease-in-out">
             <li>
               <Link to={`/`}>{t("specProduct.homepage")}</Link>
             </li>
@@ -191,7 +192,7 @@ const SpecProduct = () => {
             <li>{language === "FR" ? product.name : product.nameEn}</li>
           </ul>
         </nav>
-        <h1 className="text-gold font-bold text-4xl mb-6 font-primary text-center mt-4">
+        <h1 className="text-dark-purple dark:text-gold font-bold text-5xl mb-6 font-primary text-center mt-4">
           {language === "FR" ? product.name : product.nameEn}
         </h1>
         <main className="py-6 px-4 max-w-7xl mx-auto">
@@ -217,19 +218,35 @@ const SpecProduct = () => {
               </div>
             </div>
             <div className="flex-1">
-              <div className="flex items-center justify-center mb-4 w-full max-w-4xl h-[600px] bg-gray-100">
-                {selectedImage && (
-                  <img
-                    className="object-contain w-full h-full cursor-pointer"
-                    src={selectedImage}
-                    alt={product.name}
-                    onClick={openModal}
+              <div className="mb-8 w-full max-w-4xl max-h-[750px]">
+              {selectedImage && (
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: product.name,
+                      isFluidWidth: true,
+                      src: selectedImage,
+                    },
+                    largeImage: {
+                      src: selectedImage,
+                      width: 1200,
+                      height: 1800,
+                    },
+                    enlargedImageContainerDimensions: {
+                      width: '200%',
+                      height: '200%',
+                    },
+                  }}
+                  className="object-contain w-full h-full rounded-md border border-gold shadow-md shadow-gold dark:border-gold cursor-pointer"
+                    enlargedImageContainerClassName="flex justify-center items-center"
+                    enlargedImageClassName="object-contain"
+                  onClick={openModal}
                   />
                 )}
               </div>
             </div>
-            <div className="w-1/3">
-            <h2 className="font-primary text-light-purple dark:text-white text-center p-2 font-bold text-">
+            <div className="w-1/2">
+            <h2 className="font-primary text-dark-purple dark:text-gold text-left p-2 font-bold text-2xl">
             {language === "FR"
                   ? product.description
                   : product.descriptionEn}
@@ -237,10 +254,10 @@ const SpecProduct = () => {
               <p className="text-2xl mb-4">
                 {product.promotion.id !== 1 ? (
                   <>
-              <span className="font-medium line-through p-2 font-secondary text-3xl text-light-purple text-right dark:text-white">
+              <span className="font-medium line-through p-2 font-secondary text-3xl text-dark-purple text-right dark:text-gold">
               ${product.price}
                     </span>{" "}
-                    <span className=" dark:text-gold font-secondary font-bold ">
+                    <span className=" dark:text-gold font-secondary text-gold text-4xl font-bold ">
                       $
                       {product.price -
                         (product.price * product.promotion.pourcentage) / 100}
@@ -248,32 +265,59 @@ const SpecProduct = () => {
                   </>
                 ) : (
                   <span 
-                  className="font-bold p-2 font-secondary text-3xl text-light-purple dark:text-white"
+                  className="font-medium p-2 font-secondary text-3xl text-dark-purple dark:text-gold"
                   >${product.price}</span>
                 )}
               </p>
-              <div className="mb-4  dark:text-gold"></div>
-              <div className="mb-4 flex flex-col dark:text-gold">
+              {product.length > 0 ? (
+                product.map((elem) => (
+                  <div key={elem.id} className="flex items-center">
+                    <img
+                      className="w-6 h-6"
+                      src={stockColorCode}
+                      alt={stockText}
+                    />
+                    <p className="text-left font-primary font-bold text-xl text-dark-purple dark:text-gold">
+                      {stockText}
+                    </p>
+                    {stockText === "Sold out" && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleStockAlert(elem);
+                        }}
+                        className="text-grey-500 underline dark:text-gold"
+                      >
+                        Notify me when back in stock
+                      </button>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>No products available</p>
+              )}
+            <div className="mb-4  dark:text-gold"></div>
+              <div className="mb-4 flex flex-col">
                 <label htmlFor="color">
-                <h2 className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+                <h2 className="font-bold font-primary p-2 text-3xl text-dark-purple dark:text-gold">
                 {t("specProduct.material")}
                 </h2>
                 </label>
-                <h2 className={`font-bold p-2 m-2 font-primary text-md text-light-purple dark:text-white`}>
+                <h2 className={`font-bold p-2 font-primary text-xl text-dark-purple dark:text-gold`}>
                 {allModele.length > 0 && <ModeleProduct data={allModele} />}
                 </h2>
-                <h2 className="font-bold p-2 font-primary text-2xl text-gold dark:text-white">
+                <h2 className="font-bold p-2 font-primary text-3xl text-dark-purple dark:text-gold">
                 {t("specProduct.stone")}
-                <h2 className={`font-bold p-2 m-2 font-primary text-sm text-light-purple dark:text-white`}>
+                <h2 className={`font-bold p-2 font-primary text-lg text-dark-purple dark:text-gold`}>
                 {allStones && allStones.length !== null ? <StoneProduct data={allStones} /> : <div>Aucune pierre disponible pour ce produit.</div>}
                 </h2>
                 </h2>
                 </div>
               <SizeGuide data={product} />
-            </div>
+              <ReviewForm id={id} />
           </div>
+            </div>
         </main>
-        <ReviewForm id={id} />
 
         <Footer />
         <StockAlert
@@ -284,7 +328,7 @@ const SpecProduct = () => {
 
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative bg-whitep-4 max-w-3xl max-h-full overflow-auto">
+            <div className="relative bg-white p-4 max-w-3xl max-h-full overflow-auto">
               <button
                 onClick={closeModal}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"

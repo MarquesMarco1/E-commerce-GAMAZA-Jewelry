@@ -137,7 +137,7 @@ export default function Admin() {
 
   return (
     <>
-      <div className="bg-light-purple bg-opacity-20 dark:bg-dark-mode-purple">
+      <div className="bg-light-purple bg-opacity-30 dark:bg-dark-mode-purple">
         <Header></Header>
         <div className="mr-24	ml-24	">
           <NavBarAdmin></NavBarAdmin>

@@ -22,7 +22,7 @@ useEffect(() => {
   return (
     <>
       <Header />
-      <div className="p-4 -mb-10 bg-whiter''''rvce(rzey eeye&-purple bg-opacity-50 dark:bg-dark-mode-light-purple">
+      <div className="p-2 bg-light-purple bg-opacity-30 dark:bg-dark-mode-purple">
         <div className="m-8">
           {nbrArticle >= 0 && nbrArticle !== 1 && (
             <h1 className="font-primary font-bold text-3xl text-gold mr-4">
@@ -34,7 +34,7 @@ useEffect(() => {
               {`My Cart (` + nbrArticle + ` article)`}
             </h1>
           )}
-          <div className="border border-white-purple w-2/4" /> 
+          <div className="border border-gold w-2/4" /> 
         </div>
         <div><Content /></div>
       </div>

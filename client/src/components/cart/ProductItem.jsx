@@ -11,11 +11,11 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                       src={`${item.product.images[0]}`}
                     alt={item.product.name}
                 />
-                <div className="flex flex-col ml-8 text-center items-center">
-                <h3 className="font-primary text-gold font-bold text-center text-3xl">
+                <div className="flex flex-col m-4 items-center">
+                <h3 className="font-primary text-gold font-bold text-center items-center text-3xl">
                         {item.product.name}
                     
-                    <span className="font-bold p-2 font-secondary text-3xl text-gray-500 text-right dark:text-white">
+                    <span className="font-bold p-4 font-secondary text-3xl text-light-purple text-right dark:text-white">
                         {item.product.promotion.id !== 1 ? (
                             <>
                                 <h2 className="line-through">
@@ -39,24 +39,24 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                         )}
                     </span>
                     </h3>
-                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                    <span className="font-secondary text-dark-purple dark:text-white flex flex-row p-4 font-bold text-2xl text-left">
                         Size:&nbsp;
-                        <h2 className='font-primary text-gray-500 dark:text-white'>{item.size}</h2>
+                        <h2 className='font-primary text-dark-purple dark:text-white'>{item.size}</h2>
                     </span>
-                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                    <span className="font-secondary text-dark-purple dark:text-white flex flex-row p-4 font-bold text-2xl">
                         Material:&nbsp;
-                        <h2 className='font-primary text-gray-500 dark:text-white'>{item.product.material.name}</h2>
+                        <h2 className='font-primary text-dark-purple dark:text-white'>{item.product.material.name}</h2>
                     </span>
                     {item.product.stone && (
-                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 font-bold text-2xl">
+                    <span className="font-secondary text-dark-purple dark:text-white flex flex-row p-4 font-bold text-2xl">
                             Stone:&nbsp;
-                            <h2 className='font-primary text-gray-500 dark:text-white'>{item.product.stone.name}</h2>
+                            <h2 className='font-primary text-dark-purple dark:text-white'>{item.product.stone.name}</h2>
                         </span>
                     )}
-                    <span className="font-secondary text-gray-500 dark:text-white flex flex-row p-4 items-center font-bold text-2xl">
+                    <span className="font-secondary text-dark-purple dark:text-white flex flex-row p-4 items-center font-bold text-2xl">
                     Quantity:&nbsp;
                         <input
-                            className="border-2 border-grey p-2 m-2 rounded-3xl dark:border-gold dark:bg-dark-mode-purple text-gray-500 dark:text-white"
+                            className="border-2 border-grey p-2 m-2 rounded-3xl dark:border-gold dark:bg-dark-mode-purple text-dark-purple dark:text-white"
                             type="number"
                             min={0}
                             max={item.product.stockQty}
@@ -78,7 +78,7 @@ export default function ProductItem({ item, onDelete, onSaveForLater, onQtyChang
                     <div>
                         <button className="flex font-primary font-bold text-gold" 
                         onClick={() => onDelete(item)}>
-                            <img className="mr-4" src={Delete} alt="" />
+                            <img className="mr-4 text-gold" src={Delete} alt="" />
                             Delete
                         </button>
                     </div>
